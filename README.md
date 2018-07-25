@@ -9,7 +9,7 @@ H5 自适应苏州实时公交查询系统
 
 ## 安装方法：
 ```php
-git clone https://gitee.com/lisgroup/suzhou_bus.git
+git clone https://gitee.com/lisgroup/vueBus.git
 composer install
 ```
 
