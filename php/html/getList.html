@@ -1,0 +1,38 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<table cellspacing="0" border="1">
+    <tbody><tr>
+        <th>线路</th>
+        <th>方向</th>
+    </tr>
+    <tr>
+        <td>
+            <a onclick="changeDo(this)" href="javascript:;" data-href="APTSLine.aspx?LineGuid=547E0449-A28B-1770-B4CA-31A11D6A3C72&amp;LineInfo=55(%E4%BC%97%E6%B3%BE%E7%A4%BE%E5%8C%BA%E5%81%9C%E8%BD%A6%E5%9C%BA)">55</a>
+        </td>
+        <td>众泾社区停车场</td>
+    </tr>
+    <tr>
+        <td>
+            <a onclick="changeDo(this)" data-href="APTSLine.aspx?LineGuid=0C951BD5-0D4A-DED6-6686-F225C11F48BB&amp;LineInfo=55(%E8%B6%8A%E6%BA%AA%E9%A6%96%E6%9C%AB%E7%AB%99)">55</a>
+        </td>
+        <td>越溪首末站</td>
+    </tr>
+    </tbody>
+</table>
+<div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;"><div id="trans-tooltip"><div id="tip-left-top" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left-top.png);"></div><div id="tip-top" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-top.png) repeat-x;"></div><div id="tip-right-top" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right-top.png);"></div><div id="tip-right" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right.png) repeat-y;"></div><div id="tip-right-bottom" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right-bottom.png);"></div><div id="tip-bottom" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-bottom.png) repeat-x;"></div><div id="tip-left-bottom" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left-bottom.png);"></div><div id="tip-left" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left.png);"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-arrow-bottom.png);"></div><div id="tip-arrow-top" style="background: url(chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-arrow-top.png);"></div></div>
+</body>
+</html>
+<script>
+    function changeDo(obj) {
+        var href = $(obj).data('href');
+        $.post('index/index/busLine', {href:href}, function (data) {
+            if (data.code == 1) {
+                $('#msg').html(data.msg);
+            }
+        });
+    }
+</script>
