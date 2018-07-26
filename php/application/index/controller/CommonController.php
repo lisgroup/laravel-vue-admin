@@ -6,6 +6,13 @@ use think\Controller;
 
 class CommonController extends Controller
 {
+    public function _initialize()
+    {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        header('Access-Control-Allow-Methods: GET, POST, PUT,DELETE,OPTIONS,PATCH');
+    }
+
     public function index()
     {
         return $this->fetch();
