@@ -198,14 +198,16 @@ class BusRepository
 
     /**
      * 获取实时公交数据 table 列表
+     * @param $path
      * @param $get
-     * @return bool
+     * @return array|bool
      */
-    public function getLine($get)
+    public function getLine($path, $get)
     {
-        if (empty($get['url']) || empty($get['LineInfo']))
+        if (empty($path) || empty($get['cid']) || empty($get['LineGuid']) || empty($get['LineInfo']))
             return false;
-        $url = 'http://www.szjt.gov.cn/BusQuery/'.$get['url'].'&LineGuid='.$get['LineGuid'].'&LineInfo='.$get['LineInfo'];
+        $paramString = http_build_query($get);
+        $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
         //实时公交返回的网页数据
         $queryList = QueryList::get($url);
 
@@ -214,22 +216,21 @@ class BusRepository
             'content' => ['#MainContent_DATA', 'html']       //具体线路table表格
         ];
 
+        $rules = [
+            'to' => ['#MainContent_LineInfo', 'text'],  //方向
+            //采集 tr 下的 td 标签的 text 文本
+            'stationName' => ['#MainContent_DATA tr td:nth-child(1)', 'text'], // 站台
+            'stationCode' => ['#MainContent_DATA tr td:nth-child(2)', 'text'], // 编号
+            'carCode' => ['#MainContent_DATA tr td:nth-child(3)', 'text'],  // 车牌
+            'ArrivalTime' => ['#MainContent_DATA tr td:nth-child(4)', 'text'], // 进站时间
+        ];
+
         //$arrayData = QueryList::Query($line, $rules)->data;
-        $arrayData = $queryList->rules($rules)->query()->getData();
-        if (!isset($arrayData[0])) {
-            return false;
-        }
+        $arrayData = $queryList->rules($rules)->query()->getData()->all();
+        $to = $arrayData[0]['to'];
+        unset($arrayData[0]['to']);
 
-        $data = $arrayData[0];
-
-        //替换样式，自适应显示
-        $find = ['<?xml version="1.0" encoding="utf-16"?>', '<table ', "href="];
-        $replace = ['', '<table class="layui-table" lay-even="" lay-skin="row" ', "onclick='changeName(this)' href='javascript:;' data-href="];
-
-        $html = str_replace($find, $replace, $data['content']);
-        $html = '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;color:green;"><legend>'.$data['to'].' 方向&nbsp;<button class="layui-btn layui-btn-normal" onclick="location.reload();">刷新</button></legend></fieldset>'.$html;
-
-        return $html;
+        return ['to' => $to, 'line' => $arrayData];
     }
 
     private function __construct($config)

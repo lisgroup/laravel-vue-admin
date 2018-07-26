@@ -100,38 +100,24 @@ EOF;
      */
     public function busLine()
     {
-        if (request()->isAjax()) {
-            $href = input('post.href', '', 'htmlspecialchars');
+        $data = [];
+        // $href = 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4&LineGuid=9d090af5-c5c6-4db8-b34e-2e8af4f63216&LineInfo=1(公交一路新村)';
+        // $parseUrl = parse_url($href);
+        // var_dump($parseUrl);
+        // parse_str($parseUrl['query'], $params);
 
-            $html = BusRepository::getInstent()->getLine($href);
-
-            if ($html) {
-                $this->assign('html', $html);
-                $this->success($html);
-            } else {
-                $this->error('网络异常，请稍后重试');
-            }
-            $this->success($html);
-
-            /*$url = 'http://www.szjt.gov.cn/BusQuery/'.$href;
-            //实时公交返回的网页数据
-            $line = httpGet($url);
-            $rules = [
-                'to' => ['#MainContent_LineInfo', 'text'],  //方向
-                'content' => ['#MainContent_DATA', 'html']       //具体线路table表格
-            ];
-            $arrayData = QueryList::Query($line, $rules)->data;
-            if (!isset($arrayData[0]))
-                return $this->error('网络异常，请稍后重试');
-            $data = $arrayData[0];
-
-            //替换样式，自适应显示
-            $find = ['<?xml version="1.0" encoding="utf-16"?>', '<table ', "href="];
-            $replace = ['', '<table class="layui-table" lay-even="" lay-skin="row" ', "onclick='changeName(this)' href='javascript:;' data-href="];
-            $html = str_replace($find, $replace, $data['content']);
-            $html = '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;color:green;"><legend>'.$data['to'].' 方向</legend></fieldset>'.$html;
-            return $this->success($html);*/
+        // var_dump($_POST);
+        $post = input('post.', '', 'htmlspecialchars');
+        // 'href' => string 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4' (length=54)  'LineGuid' => string '9d090af5-c5c6-4db8-b34e-2e8af4f63216' (length=36)  'LineInfo' => string '1(公交一路新村)' (length=21)
+        if (!empty($post) && !empty($post['href']) && !empty($post['LineGuid']) && !empty($post['LineInfo'])) {
+            $parseUrl = parse_url($post['href']);
+            parse_str($parseUrl['query'], $params);
+            unset($post['href']);
+            $post['cid'] = $params['cid'];
+            $data = BusRepository::getInstent()->getLine($parseUrl['path'], $post);
         }
+
+        return $this->exportData($data);
     }
 
     /**
