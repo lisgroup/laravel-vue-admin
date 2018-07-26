@@ -52,16 +52,16 @@
         this.$ajax.get(url).then(res => {
           let data = res.data;
           if (data.error_code === 0) {
-            console.log(res.data);
+            // console.log(res.data);
             this.tableData = res.data.result;
           }
         }).catch(err => {
-          console.log(err);
+          // console.log(err);
         });
       },
       handleCheck(index, link) {
         this.$router.push({name: 'line', query: {href: link}});
-        console.log(link);
+        // console.log(link);
       }
     }
   }

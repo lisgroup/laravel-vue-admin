@@ -76,17 +76,17 @@
       handleReload(href) {
         let url = "/busLine";
         if (!href) {
-          console.log(href);
+          // console.log(href);
           href = this.$route.query.href;
         }
-        console.log(href);
+        // console.log(href);
         let param = "href=" + href;
         this.$ajax.post(url, param).then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           this.to = res.data.result.to;
           this.tableLine = res.data.result.line;
         }).catch(err => {
-          console.log(err);
+          // console.log(err);
         });
       },
       goSearch() {
@@ -103,11 +103,11 @@
         this.$ajax.get(url).then(res => {
           let data = res.data;
           if (data.error_code === 0) {
-            console.log(res.data);
+            // console.log(res.data);
             this.tableData = res.data.result;
           }
         }).catch(err => {
-          console.log(err);
+          // console.log(err);
         });
       },
       handleCheck(index, link) {
@@ -117,7 +117,7 @@
         }
         // this.$router.push({ name: 'line', query: { href: link } });
         this.handleReload(link);
-        console.log(link);
+        // console.log(link);
       }
     }
   }
