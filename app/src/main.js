@@ -8,6 +8,8 @@ Vue.use(VueRouter)
 import Axios from 'axios'
 // Axios:挂载原型
 Vue.prototype.$ajax = Axios
+// 默认 URL 配置
+Axios.defaults.baseURL = 'http://localhost/vueBus/php/index.php/index/index';
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'

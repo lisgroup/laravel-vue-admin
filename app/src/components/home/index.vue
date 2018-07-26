@@ -48,7 +48,7 @@
           return false;
         }
         this.isShow = true;
-        let url = "http://localhost/vueBus/php/index.php/index/index/getList?linename=" + line;
+        let url = "/getList?linename=" + line;
         this.$ajax.get(url).then(res => {
           let data = res.data;
           if (data.error_code === 0) {
