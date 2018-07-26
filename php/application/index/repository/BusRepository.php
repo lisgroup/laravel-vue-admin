@@ -113,7 +113,7 @@ class BusRepository
      * @param $line
      * @param $data
      * @param bool $refresh
-     * @return bool|mixed|string
+     * @return array
      */
     private function getPostBusList($line, $data, $refresh = false)
     {
@@ -121,7 +121,7 @@ class BusRepository
         is_dir(ROOT_PATH.'/runtime/bus') || mkdir(ROOT_PATH.'/runtime/bus', 0777, true);
 
         // 2.0 判断是否已经有此条线路搜索
-        if ($refresh || !file_exists(ROOT_PATH.'/runtime/bus/post_replace_'.$line.'.html')) {
+        if ($refresh || !file_exists(ROOT_PATH.'/runtime/bus/serialize_'.$line.'.txt')) {
 
             //2.2 文件不存在，模拟表单提交 //POST curl 模拟表单提交数据
 
@@ -132,39 +132,38 @@ class BusRepository
              */
             $queryList = QueryList::post($this->url, $data);
 
-            //根据线路信息，替换其中的a标签
-            $rules = [
+            // 根据线路信息，替换其中的 a 标签
+            /*$rules = [
                 'content' => array('#MainContent_DATA', 'html')
+            ];*/
+            $rules = [
+                //采集a标签的href属性
+                'link' => ['#MainContent_DATA tr td a', 'href'],
+                //采集a标签的text文本
+                'bus' => ['#MainContent_DATA tr td a', 'text'],
+                //采集 tr 下第二个 td 标签的 text文本
+                'FromTo' => ['#MainContent_DATA tr td:nth-child(2)', 'text']
             ];
             // $arrayData = QueryList::Query($c_post, $rules)->data;
             $arrayData = $queryList->rules($rules)->query()->getData();
-            if (!isset($arrayData[0])) {
-                return false;
-            }
-
-            $data = $arrayData[0];
-            /*$html = str_replace("<table ", "<table class=\"layui-table\" lay-even=\"\" lay-skin=\"row\" ", $data['content']);
-            $html = str_replace("href=", "onclick='changeDo(this)' href='javascript:;' data-href=", $html);*/
-            //替换样式
-            $find = ['<?xml version="1.0" encoding="utf-16"?>', '<table ', "href="];
-            $replace = ['', '<table class="layui-table" lay-even="" lay-skin="row" ', "onclick='changeDo(this)' href='javascript:;' data-href="];
-            $html = str_replace($find, $replace, $data['content']);
+            $str = serialize($arrayData->all());
             //缓存 此条线路替换a标签的数据
-            $fileName = ROOT_PATH.'/runtime/bus/post_replace_'.$line.'.html';
-            file_put_contents($fileName, $html);
+            $fileName = ROOT_PATH.'/runtime/bus/serialize_'.$line.'.txt';
+            file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
         } else {
             // 2.1 文件存在直接读取
-            $html = file_get_contents(ROOT_PATH.'/runtime/bus/post_replace_'.$line.'.html');//线路列表
+            $serialize = file_get_contents(ROOT_PATH.'/runtime/bus/serialize_'.$line.'.txt');//线路列表
+            $arrayData = unserialize($serialize);
         }
 
-        return $html;
+        return $arrayData;
     }
 
     /**
      * @param string $line
      * @param bool $refresh 是否强制更新结果
-     * @return bool|string
+     * @return array
      */
     public function getList($line, $refresh = false)
     {
@@ -174,8 +173,7 @@ class BusRepository
         // 2. 获取 Token
         $data = $this->getToken();
 
-        $html = '<table class="layui-table" lay-even="" lay-skin="row" cellspacing="0" border="1">
-<tr><th>线路</th><th>方向</th></tr></table>';
+        $listData = [];
         if ($data) {
             // 1.4 构造请求参数
             $input = [
@@ -186,11 +184,11 @@ class BusRepository
             $data = array_merge($data, $input);
 
             // 3. 获取线路列表
-            $html = $this->getPostBusList($line, $data, $refresh);
+            $listData = $this->getPostBusList($line, $data, $refresh);
         }
 
 
-        return $html;
+        return $listData;
     }
 
 
