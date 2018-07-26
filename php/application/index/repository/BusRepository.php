@@ -42,6 +42,10 @@ class BusRepository
     {
         //17年5月9日新增 搜索历史的功能 写入cookie的操作
         $cookie_line = Cookie::get('cookie_line');
+        if (!is_array($cookie_line)) {
+            $cookie_line = [];
+            Cookie::set('cookie_line', []);
+        }
         //17年5月11修复最新搜索排序在最后的问题。//array_push($cookie_line, $line); //合并数据 $cookie_line = array_unique($cookie_line); //去除重复
         //1.先搜索数组中是否存在元素,搜索到后删除，然后合并 ,修复$i = 0 的bug
         if (($i = array_search($line, $cookie_line)) !== false) unset($cookie_line[$i]);
