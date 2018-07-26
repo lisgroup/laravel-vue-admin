@@ -28,7 +28,7 @@
         </el-table>
 
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;color:green;">
-            <legend>{{to}}&nbsp;<button class="layui-btn layui-btn-normal" @click="handleReload">刷新</button>
+            <legend>{{to}}&nbsp;<button class="layui-btn layui-btn-normal" @click="handleReload()">刷新</button>
             </legend>
         </fieldset>
         <el-table
@@ -73,9 +73,12 @@
       this.handleReload();
     },
     methods: {
-      handleReload() {
+      handleReload(href) {
         let url = "http://localhost/vueBus/php/index.php/index/index/busLine";
-        let href = this.$route.query.href;
+        if (!href) {
+          console.log(href);
+          href = this.$route.query.href;
+        }
         console.log(href);
         let param = "href=" + href;
         this.$ajax.post(url, param).then(res => {
@@ -108,7 +111,12 @@
         });
       },
       handleCheck(index, link) {
-        this.$router.push({ name: 'line', query: { href: link } });
+        // console.log(this.tableData.length);
+        if (this.tableData.length > 5) {
+          this.isShow = false;
+        }
+        // this.$router.push({ name: 'line', query: { href: link } });
+        this.handleReload(link);
         console.log(link);
       }
     }
