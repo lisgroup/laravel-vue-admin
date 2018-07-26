@@ -31,7 +31,7 @@
 
 <style scoped>
     .el-input {
-        width: 582px;
+        width: 97%;
     }
 
     .input-with-select .el-input-group__prepend {

@@ -5,11 +5,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 20%;">线路:</label>
                     <div style="width: 50%;float: left;">
-                        <input type="text" name="linename" lay-verify="required" placeholder="线路名称，例：快线1, 55" autocomplete="off" class="layui-input" value="">
-                        <input type="hidden" name="__token__" id="token" value="a26057366e1dd1eef9c47738fb3f6e11" />
+                        <input type="text" name="linename" lay-verify="required" placeholder="线路名称，例：快线1, 55"
+                               autocomplete="off" class="layui-input" value="" v-model="lineName">
+                        <input type="hidden" name="__token__" id="token" value="a26057366e1dd1eef9c47738fb3f6e11"/>
                     </div>
                     <div style="float: left">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1" id="submit">搜索</button>
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1" id="submit" @click="search">搜索
+                        </button>
                     </div>
                 </div>
                 <!--<div class="layui-form-item">
@@ -30,7 +32,24 @@
 
 <script>
   export default {
-    name: "home"
+    name: "home",
+    data() {
+        return {
+          lineName: ''
+        }
+    },
+    created() {
+
+    },
+    methods: {
+      search(e) {
+        // 阻止表单默认提交
+        e.preventDefault();
+        let line = this.lineName;
+        // 发送后台请求
+        // this.$ajax.get()
+      }
+    }
   }
 </script>
 
