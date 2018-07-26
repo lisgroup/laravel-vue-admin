@@ -3,6 +3,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+// Axios:引入axios
+import Axios from 'axios';
+// Axios:挂载原型
+Vue.prototype.$ajax = Axios;
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
+
 // 引入 layUI css
 import 'layui-src/dist/css/layui.css'
 
@@ -14,6 +23,7 @@ Vue.component('NavBar', NavBar); // 使用最好以 nav-bar
 // 引入自己的vue文件 开始
 import App from './App.vue'
 import Home from './components/home/home.vue'
+import Index from './components/home/index.vue'
 
 Vue.config.productionTip = false
 
@@ -21,8 +31,9 @@ Vue.config.productionTip = false
 let router = new VueRouter({
   // VueRouter：配置路由规则
   routes: [
-    { path: '/', redirect: { name: 'home' } },
-    { path: '/home', name: 'home', component: Home }
+    { path: '/', redirect: { name: 'index' } },
+    { path: '/home', name: 'home', component: Home },
+    { path: '/index', name: 'index', component: Index }
   ]
 })
 
