@@ -23,16 +23,76 @@ class IndexController extends CommonController
         return $this->fetch();
     }
 
+    public function bus()
+    {
+        $str = <<<EOF
+{
+	"resultcode": "200",
+	"reason": "success",
+	"result": [{
+			"bus": "115",
+			"FromTo": "独墅湖高教区首末站=>沪宁城铁园区站广场",
+			"code": "edc1ecd6-2bf8-4b08-8727-385bb8943b9d",
+			"carCode": "苏E-S6051",
+			"time": "15:56:03",
+			"distance": "5"
+		},
+		{
+			"bus": "128",
+			"FromTo": "车坊首末站=>阳澄人家西",
+			"code": "7e5f894b-db9a-43da-b5eb-8c6a170db5b8",
+			"carCode": "苏E-S6051",
+			"time": "15:56:03",
+			"distance": "5"
+		},
+		{
+			"bus": "146",
+			"FromTo": "独墅湖高教区首末站=>虎丘首末站",
+			"code": "ab9fdefc-a31d-461f-bbdf-030ee15d41e7",
+			"carCode": "苏E-2U082",
+			"time": "15:54:09",
+			"distance": "3"
+		},
+		{
+			"bus": "156",
+			"FromTo": "车坊首末站=>官渎里立交换乘枢纽站",
+			"code": "89bd6613-be78-4981-a90a-b00b26eea9af",
+			"carCode": "无",
+			"time": "",
+			"distance": "无车"
+		},
+		{
+			"bus": "177",
+			"FromTo": "启月街首末站=>玉皇宫首末站",
+			"code": "e0855aea-89f2-4881-a582-4950272fbdb0",
+			"carCode": "无",
+			"time": "",
+			"distance": "无车"
+		}
+	]
+}
+EOF;
+        $data = json_decode($str, true);
+
+        return $data;
+    }
+
+    public function lines()
+    {
+        $str = '{"resultcode":"200","reason":"success","result":[{"stationName":"独墅湖高教区首末站","stationCode":"FGT","carCode":"","ArrivalTime":""},{"stationName":"职业技术学院北","stationCode":"PUF","carCode":"","ArrivalTime":""},{"stationName":"园区服务外包学院","stationCode":"RVV","carCode":"","ArrivalTime":""},{"stationName":"苏州评弹学校","stationCode":"RVT","carCode":"","ArrivalTime":""},{"stationName":"裕新路松涛街西","stationCode":"RVR","carCode":"","ArrivalTime":""},{"stationName":"腾飞创新园南","stationCode":"RUV","carCode":"苏E-2N173","ArrivalTime":"16:05:39"},{"stationName":"腾飞创新园","stationCode":"RET","carCode":"","ArrivalTime":""},{"stationName":"生物纳米园","stationCode":"EFP","carCode":"","ArrivalTime":""},{"stationName":"创意产业园西","stationCode":"MDD","carCode":"","ArrivalTime":""},{"stationName":"创意产业园东","stationCode":"MDG","carCode":"","ArrivalTime":""},{"stationName":"崇文路雪堂街西","stationCode":"MDE","carCode":"","ArrivalTime":""},{"stationName":"东大研究院","stationCode":"GSP","carCode":"","ArrivalTime":""},{"stationName":"翰林邻里中心","stationCode":"FCS","carCode":"","ArrivalTime":""},{"stationName":"西交大","stationCode":"DHB","carCode":"","ArrivalTime":""},{"stationName":"南大研究生院","stationCode":"HGA","carCode":"","ArrivalTime":""},{"stationName":"人大国际学院东","stationCode":"FZZ","carCode":"","ArrivalTime":""},{"stationName":"莲花新村五区","stationCode":"MMZ","carCode":"苏E-2N017","ArrivalTime":"16:08:42"},{"stationName":"莲花新村三区","stationCode":"GDX","carCode":"","ArrivalTime":""},{"stationName":"莲花新村四区","stationCode":"ETG","carCode":"","ArrivalTime":""},{"stationName":"敦煌路","stationCode":"DCH","carCode":"","ArrivalTime":""},{"stationName":"联丰广场","stationCode":"GFR","carCode":"苏E-2N288","ArrivalTime":"16:09:52"},{"stationName":"荷韵新村","stationCode":"ECR","carCode":"","ArrivalTime":""},{"stationName":"大地乐章东","stationCode":"HHS","carCode":"","ArrivalTime":""},{"stationName":"橄榄湾","stationCode":"CGK","carCode":"","ArrivalTime":""},{"stationName":"金姬墩","stationCode":"FJA","carCode":"","ArrivalTime":""},{"stationName":"西洲路","stationCode":"EEY","carCode":"","ArrivalTime":""},{"stationName":"旺墩路","stationCode":"FXC","carCode":"","ArrivalTime":""},{"stationName":"园区行政中心西","stationCode":"EBM","carCode":"","ArrivalTime":""},{"stationName":"星湖街沈浒路","stationCode":"ETJ","carCode":"","ArrivalTime":""},{"stationName":"星湖立交南","stationCode":"BRD","carCode":"","ArrivalTime":""},{"stationName":"上娄路","stationCode":"BZT","carCode":"苏E-2N072","ArrivalTime":"16:05:12"},{"stationName":"珠泾路葑亭大道南","stationCode":"PPT","carCode":"","ArrivalTime":""},{"stationName":"青青家园","stationCode":"RBD","carCode":"苏E-2N305","ArrivalTime":"16:03:41"},{"stationName":"沪宁城铁园区站广场","stationCode":"PPV","carCode":"苏E-2N107","ArrivalTime":"15:52:33"}]}';
+
+        return json_decode($str, true);
+    }
+
     //采集 bus 网址是表单数据
     public function getList()
     {
-        //17年5月9日新增 搜索历史的功能
-        $cookie_line = Cookie::get('cookie_line');
-        $this->assign('cookie_line', $cookie_line);
-
         $line = input('get.linename', '', 'htmlspecialchars');
         $line = preg_replace('/快\b(\d)/', '快线$1号', $line);
         $list = BusRepository::getInstent()->getList($line);
+
+        echo '<pre>';
+        print_r($list);exit();
 
         $this->assign('list', $list);
 
