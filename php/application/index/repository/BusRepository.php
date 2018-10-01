@@ -9,6 +9,7 @@
 namespace app\index\repository;
 
 
+use app\index\model\Cron;
 use QL\QueryList;
 use think\Cache;
 use think\Cookie;
@@ -122,10 +123,10 @@ class BusRepository
     private function getPostBusList($line, $data, $refresh = false)
     {
         /**************************    2. 模拟表单请求获取查询线路列表     ****************************/
-        is_dir(ROOT_PATH.'/runtime/bus') || mkdir(ROOT_PATH.'/runtime/bus', 0777, true);
+        is_dir(ROOT_PATH . '/runtime/bus') || mkdir(ROOT_PATH . '/runtime/bus', 0777, true);
 
         // 2.0 判断是否已经有此条线路搜索
-        if ($refresh || !file_exists(ROOT_PATH.'/runtime/bus/serialize_'.$line.'.txt')) {
+        if ($refresh || !file_exists(ROOT_PATH . '/runtime/bus/serialize_' . $line . '.txt')) {
 
             //2.2 文件不存在，模拟表单提交 //POST curl 模拟表单提交数据
 
@@ -152,12 +153,12 @@ class BusRepository
             $arrayData = $queryList->rules($rules)->query()->getData();
             $str = serialize($arrayData->all());
             //缓存 此条线路替换a标签的数据
-            $fileName = ROOT_PATH.'/runtime/bus/serialize_'.$line.'.txt';
+            $fileName = ROOT_PATH . '/runtime/bus/serialize_' . $line . '.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
         } else {
             // 2.1 文件存在直接读取
-            $serialize = file_get_contents(ROOT_PATH.'/runtime/bus/serialize_'.$line.'.txt');//线路列表
+            $serialize = file_get_contents(ROOT_PATH . '/runtime/bus/serialize_' . $line . '.txt');//线路列表
             $arrayData = unserialize($serialize);
         }
 
@@ -165,6 +166,7 @@ class BusRepository
     }
 
     /**
+     * 查询公交如：快线1号 展示列表
      * @param string $line
      * @param bool $refresh 是否强制更新结果
      * @return array
@@ -197,7 +199,7 @@ class BusRepository
 
 
     /**
-     * 获取实时公交数据 table 列表
+     * 获取实时公交站台数据 table 列表
      * @param $path
      * @param $get
      * @return array|bool
@@ -207,14 +209,14 @@ class BusRepository
         if (empty($path) || empty($get['cid']) || empty($get['LineGuid']) || empty($get['LineInfo']))
             return false;
         $paramString = http_build_query($get);
-        $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
+        $url = 'http://www.szjt.gov.cn/BusQuery/' . $path . '?' . $paramString;
         //实时公交返回的网页数据
         $queryList = QueryList::get($url);
 
-        $rules = [
+        /*$rules = [
             'to' => ['#MainContent_LineInfo', 'text'],  //方向
             'content' => ['#MainContent_DATA', 'html']       //具体线路table表格
-        ];
+        ];*/
 
         $rules = [
             'to' => ['#MainContent_LineInfo', 'text'],  //方向
@@ -232,6 +234,28 @@ class BusRepository
 
         return ['to' => $to, 'line' => $arrayData];
     }
+
+
+    /**
+     * @return int|string
+     */
+    public function getCronSave()
+    {
+        $post = [
+            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
+            'LineGuid' => 'af9b209b-f99d-4184-af7d-e6ac105d8e7f',
+            'LineInfo' => '快线1号(木渎公交换乘枢纽站)',
+        ];
+//        $data = $this->getLine('APTSLine.aspx', $post)['line'];
+//        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $content = '[{"stationName":"星塘公交中心","stationCode":"ADU","carCode":"","ArrivalTime":""},{"stationName":"园区青少年中心","stationCode":"DHJ","carCode":"","ArrivalTime":""},{"stationName":"园区行政中心","stationCode":"APM","carCode":"","ArrivalTime":""},{"stationName":"园区人力资源中心","stationCode":"FJT","carCode":"","ArrivalTime":""},{"stationName":"西洲路","stationCode":"AXZ","carCode":"","ArrivalTime":""},{"stationName":"金姬墩","stationCode":"CMP","carCode":"","ArrivalTime":""},{"stationName":"橄榄湾","stationCode":"HHE","carCode":"","ArrivalTime":""},{"stationName":"石港路东","stationCode":"CHK","carCode":"","ArrivalTime":""},{"stationName":"荣域花园","stationCode":"BAY","carCode":"","ArrivalTime":""},{"stationName":"独墅湖大道通园路","stationCode":"JSA","carCode":"","ArrivalTime":""},{"stationName":"汽车南站东","stationCode":"BKR","carCode":"","ArrivalTime":""},{"stationName":"赛格电子市场","stationCode":"GTN","carCode":"","ArrivalTime":""},{"stationName":"香缇华苑北","stationCode":"FHV","carCode":"","ArrivalTime":""},{"stationName":"新区实小竹园路校区","stationCode":"DRU","carCode":"","ArrivalTime":""},{"stationName":"名馨花园","stationCode":"RZC","carCode":"","ArrivalTime":""},{"stationName":"明基医院","stationCode":"FMY","carCode":"","ArrivalTime":""},{"stationName":"新区一中","stationCode":"BVT","carCode":"","ArrivalTime":""},{"stationName":"新升新苑南","stationCode":"DPA","carCode":"","ArrivalTime":""},{"stationName":"新区水厂","stationCode":"BBU","carCode":"","ArrivalTime":""},{"stationName":"竹园路金枫路西","stationCode":"HYM","carCode":"","ArrivalTime":""},{"stationName":"新华路","stationCode":"BHM","carCode":"","ArrivalTime":""},{"stationName":"南浜","stationCode":"GGC","carCode":"苏E-3L507","ArrivalTime":"22:59:12"}]';
+
+        // 入库操作
+        $date = date('Y-m-d H:i:s');
+        $rs = Cron::insert(['content' => $content, 'create_time' => $date, 'update_time' => $date]);
+        return $rs;
+    }
+
 
     private function __construct($config)
     {
