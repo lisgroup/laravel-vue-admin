@@ -45,7 +45,7 @@
       search(e) {
         // 阻止表单默认提交
         e.preventDefault();
-        let line = this.lineName;
+        // let line = this.lineName;
         // 发送后台请求
         // this.$ajax.get()
       }

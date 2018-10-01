@@ -38,20 +38,22 @@
             <el-table-column
                     prop="stationName"
                     label="站台"
-                    width="180">
+                    width="">
             </el-table-column>
-            <el-table-column
-                    prop="stationCode"
-                    label="编号"
-                    width="180">
-            </el-table-column>
+            <!--<el-table-column-->
+                    <!--prop="stationCode"-->
+                    <!--label="编号"-->
+                    <!--width="100">-->
+            <!--</el-table-column>-->
             <el-table-column
                     prop="carCode"
-                    label="车牌">
+                    label="车牌"
+                    width="">
             </el-table-column>
             <el-table-column
                     prop="ArrivalTime"
-                    label="进站时间">
+                    label="进站时间"
+                    width="">
             </el-table-column>
         </el-table>
     </div>
