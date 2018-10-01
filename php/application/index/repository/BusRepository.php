@@ -246,9 +246,8 @@ class BusRepository
             'LineGuid' => 'af9b209b-f99d-4184-af7d-e6ac105d8e7f',
             'LineInfo' => '快线1号(木渎公交换乘枢纽站)',
         ];
-//        $data = $this->getLine('APTSLine.aspx', $post)['line'];
-//        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
-        $content = '[{"stationName":"星塘公交中心","stationCode":"ADU","carCode":"","ArrivalTime":""},{"stationName":"园区青少年中心","stationCode":"DHJ","carCode":"","ArrivalTime":""},{"stationName":"园区行政中心","stationCode":"APM","carCode":"","ArrivalTime":""},{"stationName":"园区人力资源中心","stationCode":"FJT","carCode":"","ArrivalTime":""},{"stationName":"西洲路","stationCode":"AXZ","carCode":"","ArrivalTime":""},{"stationName":"金姬墩","stationCode":"CMP","carCode":"","ArrivalTime":""},{"stationName":"橄榄湾","stationCode":"HHE","carCode":"","ArrivalTime":""},{"stationName":"石港路东","stationCode":"CHK","carCode":"","ArrivalTime":""},{"stationName":"荣域花园","stationCode":"BAY","carCode":"","ArrivalTime":""},{"stationName":"独墅湖大道通园路","stationCode":"JSA","carCode":"","ArrivalTime":""},{"stationName":"汽车南站东","stationCode":"BKR","carCode":"","ArrivalTime":""},{"stationName":"赛格电子市场","stationCode":"GTN","carCode":"","ArrivalTime":""},{"stationName":"香缇华苑北","stationCode":"FHV","carCode":"","ArrivalTime":""},{"stationName":"新区实小竹园路校区","stationCode":"DRU","carCode":"","ArrivalTime":""},{"stationName":"名馨花园","stationCode":"RZC","carCode":"","ArrivalTime":""},{"stationName":"明基医院","stationCode":"FMY","carCode":"","ArrivalTime":""},{"stationName":"新区一中","stationCode":"BVT","carCode":"","ArrivalTime":""},{"stationName":"新升新苑南","stationCode":"DPA","carCode":"","ArrivalTime":""},{"stationName":"新区水厂","stationCode":"BBU","carCode":"","ArrivalTime":""},{"stationName":"竹园路金枫路西","stationCode":"HYM","carCode":"","ArrivalTime":""},{"stationName":"新华路","stationCode":"BHM","carCode":"","ArrivalTime":""},{"stationName":"南浜","stationCode":"GGC","carCode":"苏E-3L507","ArrivalTime":"22:59:12"}]';
+        $data = $this->getLine('APTSLine.aspx', $post)['line'];
+        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
 
         // 入库操作
         $date = date('Y-m-d H:i:s');
