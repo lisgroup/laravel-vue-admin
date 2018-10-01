@@ -6,15 +6,9 @@
  * Time: 0:23
  */
 
-class myCron {
+include_once __DIR__ . '/function.php';
 
+$url = 'https://www.guke1.com/php/index.php/index/index/cron';
+$result = httpGet($url);
+echo $result;
 
-    public function __construct($config)
-    {
-
-    }
-    public function query()
-    {
-
-    }
-}
