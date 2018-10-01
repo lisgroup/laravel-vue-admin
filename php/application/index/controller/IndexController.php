@@ -131,7 +131,7 @@ EOF;
 
         //‌array ('url' => 'APTSLine.aspx?LineGuid=547E0449-A28B-1770-B4CA-31A11D6A3C72','LineInfo' => '55(众泾社区停车场)',)
         $get = input('get.', '', 'htmlspecialchars');
-        $html = BusRepository::getInstent()->getLine($get);
+        $html = BusRepository::getInstent()->getLine($get, $get);
 
         if ($html) {
             $this->assign('html', $html);
@@ -139,5 +139,16 @@ EOF;
         }
         $this->redirect('/');
         return false;
+    }
+
+
+    /**
+     * 定时任务执行实时公交入库操作
+     * @return array
+     */
+    public function cron()
+    {
+        $data = BusRepository::getInstent()->getCronSave();
+        return $this->exportData($data);
     }
 }
