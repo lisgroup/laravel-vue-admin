@@ -36,6 +36,94 @@ class BusRepository
     }
 
     /**
+     * 处理以前存储的数据 Task
+     * @return int
+     */
+    public function busTask()
+    {
+        // 1. 定义任务的 起始 - 终止 目录
+        $rs = 0;
+        // 2， 开始循环每个目录，查找其中的文件
+        for ($month = '07'; $month < 11; $month++) {
+            for ($day = '01'; $day <= 32; $day++) {
+                $dirMudu = ROOT_PATH . 'crontab/2018' . $month . $day . '/line_k1_to_mudu/';
+                $dirXing = ROOT_PATH . 'crontab/2018' . $month . $day . '/line_k1_to_xingtang_/';
+
+                // 3. 最终遍历目录下的文件
+                for ($i = 1; $i <= 300; $i++) {
+                    // 3.1 mudu 目录下的文件操作
+                    $file = $dirMudu . $i . '.html';
+                    if (file_exists($file)) {
+                        /**********************   line1  start ************************/
+                        // $file = 'E:\www\vueBus\php\crontab/20181001/line_k1_to_mudu/1.html';
+                        $data = $this->getDataByQueryList($file);
+
+                        $content = json_encode($data['line'], JSON_UNESCAPED_UNICODE);
+
+                        // 入库操作1 ----- 木渎  '快线1号(星塘公交中心首末站)';
+                        $date = date('Y-m-d H:i:s');
+                        $rs1 = db('cron')->insert(['line_info' => '快线1号(木渎公交换乘枢纽站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        /**********************   line1  end ************************/
+                    }
+
+                    // 3.1 mudu 目录下的文件操作
+                    $file2 = $dirXing . $i . '.html';
+                    if (file_exists($file2)) {
+                        /**********************   line1  start ************************/
+                        // $file = 'E:\www\vueBus\php\crontab/20181001/line_k1_to_mudu/1.html';
+                        $data = $this->getDataByQueryList($file2);
+
+                        $content = json_encode($data['line'], JSON_UNESCAPED_UNICODE);
+
+                        // 入库操作1 ----- 木渎  '快线1号(星塘公交中心首末站)';
+                        $date = date('Y-m-d H:i:s');
+                        $rs2 = db('cron')->insert(['line_info' => '快线1号(星塘公交中心首末站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        /**********************   line1  end ************************/
+                    }
+                    if ($rs1 && $rs2) {
+                        $rs = 1;
+                    } elseif ($rs1 && !$rs2) {
+                        $rs = 2;
+                    } elseif (!$rs1 && $rs2) {
+                        $rs = 3;
+                    } else {
+                        $rs = 4;
+                    }
+                    sleep(1);
+                }
+            }
+        }
+        return $rs;
+    }
+
+    /**
+     * 根据文件路径，读取内容并处理数据返回 array 格式
+     * @param $file
+     * @return array
+     */
+    private function getDataByQueryList($file)
+    {
+        // 1. 读取文件内容
+        $html = file_get_contents($file);
+        // 2. 设置查询规则
+        $rules = [
+            'to' => ['#MainContent_LineInfo', 'text'],  //方向
+            //采集 tr 下的 td 标签的 text 文本
+            'stationName' => ['#MainContent_DATA tr td:nth-child(1)', 'text'], // 站台
+            'stationCode' => ['#MainContent_DATA tr td:nth-child(2)', 'text'], // 编号
+            'carCode' => ['#MainContent_DATA tr td:nth-child(3)', 'text'],  // 车牌
+            'ArrivalTime' => ['#MainContent_DATA tr td:nth-child(4)', 'text'], // 进站时间
+        ];
+
+        // 3. 查询数据。过程:设置HTML=>设置采集规则=>执行采集=>获取采集结果数据
+        $arrayData = \QL\QueryList::html($html)->rules($rules)->query()->getData()->all();
+        $to = $arrayData[0]['to'];
+        unset($arrayData[0]['to']);
+
+        return ['to' => $to, 'line' => $arrayData];
+    }
+
+    /**
      * 1. 设置查询线路的 cookie
      * @param $line
      */

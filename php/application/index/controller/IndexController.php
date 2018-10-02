@@ -13,14 +13,14 @@ class IndexController extends CommonController
      */
     public function index()
     {
-        //17年5月9日新增 搜索历史的功能
-        $cookie_line = Cookie::get('cookie_line');
-        if (!is_array($cookie_line)) {
-            $cookie_line = [];
-            Cookie::set('cookie_line', []);
+        if (IS_CLI) {
+            BusRepository::getInstent()->busTask();
+
+            return ['code' => 0, 'msg' => 'success', 'result' => $rs1];
+
+        } else {
+            return ['code' => 0, 'msg' => 'success'];
         }
-        $this->assign('cookie_line', $cookie_line);
-        return $this->fetch();
     }
 
     public function bus()
