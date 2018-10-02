@@ -241,6 +241,7 @@ class BusRepository
      */
     public function getCronSave()
     {
+        /**********************   line1  start ************************/
         $post = [
             'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
             'LineGuid' => 'af9b209b-f99d-4184-af7d-e6ac105d8e7f',
@@ -249,9 +250,35 @@ class BusRepository
         $data = $this->getLine('APTSLine.aspx', $post)['line'];
         $content = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-        // 入库操作
+        // 入库操作1 ----- 木渎
         $date = date('Y-m-d H:i:s');
-        $rs = Cron::insert(['content' => $content, 'create_time' => $date, 'update_time' => $date]);
+        $rs1 = Cron::insert(['line_info' => $post['LineInfo'], 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+        /**********************   line1  end ************************/
+
+        /**********************   line2  start ************************/
+        $toXingtang = [
+            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
+            'LineGuid' => '921f91ad-757e-49d6-86ae-8e5f205117be',
+            'LineInfo' => '快线1号(星塘公交中心首末站)',
+        ];
+
+        $data = $this->getLine('APTSLine.aspx', $toXingtang)['line'];
+        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+        // 入库操作2 ----- 星塘
+        $date = date('Y-m-d H:i:s');
+        $rs2 = Cron::insert(['line_info' => $toXingtang['LineInfo'], 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+        /**********************   line2  end ************************/
+
+        if ($rs1 && $rs2) {
+            $rs = 1;
+        } elseif ($rs1 && !$rs2) {
+            $rs = 2;
+        } elseif (!$rs1 && $rs2) {
+            $rs = 3;
+        } else {
+            $rs = 4;
+        }
         return $rs;
     }
 
