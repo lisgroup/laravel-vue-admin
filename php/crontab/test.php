@@ -20,4 +20,5 @@ do {
     if (date('Hi') > 2200) {
         $i = 0;
     }
+    sleep(200);
 } while ($i > 0);

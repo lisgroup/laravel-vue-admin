@@ -252,7 +252,7 @@ class BusRepository
 
         // 入库操作1 ----- 木渎
         $date = date('Y-m-d H:i:s');
-        $rs1 = Cron::insert(['line_info' => $post['LineInfo'], 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+        $rs1 = db('cron')->insert(['line_info' => $post['LineInfo'], 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
         /**********************   line1  end ************************/
 
         /**********************   line2  start ************************/
@@ -267,7 +267,7 @@ class BusRepository
 
         // 入库操作2 ----- 星塘
         $date = date('Y-m-d H:i:s');
-        $rs2 = Cron::insert(['line_info' => $toXingtang['LineInfo'], 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+        $rs2 = db('cron')->insert(['line_info' => $toXingtang['LineInfo'], 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
         /**********************   line2  end ************************/
 
         if ($rs1 && $rs2) {
