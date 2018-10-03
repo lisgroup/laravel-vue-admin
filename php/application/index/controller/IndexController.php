@@ -15,9 +15,7 @@ class IndexController extends CommonController
     {
         if (IS_CLI) {
             $rs1 = BusRepository::getInstent()->busTask();
-
             return ['code' => 0, 'msg' => 'success', 'result' => $rs1];
-
         } else {
             return ['code' => 0, 'msg' => 'success'];
         }
