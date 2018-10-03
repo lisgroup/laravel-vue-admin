@@ -42,7 +42,7 @@ class BusRepository
     public function busTask()
     {
         // 1. 定义任务的 起始 - 终止 目录
-        $rs = 0;
+        $rs = $rs1 = $rs2 = 0;
         // 2， 开始循环每个目录，查找其中的文件
         for ($month = '07'; $month < 11; $month++) {
             for ($day = '01'; $day <= 32; $day++) {
@@ -61,8 +61,9 @@ class BusRepository
                         $content = json_encode($data['line'], JSON_UNESCAPED_UNICODE);
 
                         // 入库操作1 ----- 木渎  '快线1号(星塘公交中心首末站)';
-                        $date = date('Y-m-d H:i:s');
-                        $rs1 = db('cron')->insert(['line_info' => '快线1号(木渎公交换乘枢纽站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        $date = date('Y-m-d H:i:s', filemtime($file));
+                        $rs1 = db('cronlist')->insert(['line_info' => '快线1号(木渎公交换乘枢纽站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        usleep(10000);
                         /**********************   line1  end ************************/
                     }
 
@@ -76,8 +77,9 @@ class BusRepository
                         $content = json_encode($data['line'], JSON_UNESCAPED_UNICODE);
 
                         // 入库操作1 ----- 木渎  '快线1号(星塘公交中心首末站)';
-                        $date = date('Y-m-d H:i:s');
-                        $rs2 = db('cron')->insert(['line_info' => '快线1号(星塘公交中心首末站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        $date = date('Y-m-d H:i:s', filemtime($file2));
+                        $rs2 = db('cronlist')->insert(['line_info' => '快线1号(星塘公交中心首末站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        usleep(10000);
                         /**********************   line1  end ************************/
                     }
                     if ($rs1 && $rs2) {
@@ -89,7 +91,6 @@ class BusRepository
                     } else {
                         $rs = 4;
                     }
-                    sleep(1);
                 }
             }
         }
