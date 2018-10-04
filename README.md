@@ -33,7 +33,7 @@ server {
     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
     ssl_prefer_server_ciphers on;
 
-    # 文件不存在，转发 index.php 处理
+    # 文件不存在 转发 index.php 处理
     location / {
         if (!-e $request_filename) {
             rewrite ^(.*)$ /index.php?s=/$1 last;
