@@ -3,7 +3,6 @@
 namespace app\index\controller;
 
 use app\index\repository\BusRepository;
-use think\Cookie;
 
 class IndexController extends CommonController
 {
