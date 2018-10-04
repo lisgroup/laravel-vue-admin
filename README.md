@@ -10,11 +10,49 @@ H5 自适应苏州实时公交查询系统
 ## 安装方法：
 ```php
 git clone https://gitee.com/lisgroup/vueBus.git
+cd php
 composer install
 ```
 
+## 域名绑定
+域名需要绑定到根目录，即项目的 php/public 目录下。
+
+Nginx 示例配置
+```shell
+server {
+    listen 443;
+    root /www/vueBus/php/public;
+    server_name www.guke1.com; # 改为绑定证书的域名
+    
+    # ssl 配置
+    ssl on;
+    ssl_certificate /etc/bundle.crt; # 改为自己申请得到的 crt 文件的名称
+    ssl_certificate_key /etc/my.key; # 改为自己申请得到的 key 文件的名称
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+    ssl_prefer_server_ciphers on;
+
+    # 文件不存在，转发 index.php 处理
+    location / {
+        if (!-e $request_filename) {
+            rewrite ^(.*)$ /index.php?s=/$1 last;
+            break;
+        }
+    }
+    
+    location ~ [^/]\.php(/|$) {
+        fastcgi_pass  unix:/tmp/php-cgi.sock;
+        fastcgi_index index.php;
+        include fastcgi.conf;
+        include pathinfo.conf;
+    }
+}
+```
+
+
 ## 使用方法
-浏览器访问： http://域名 ，可以查看
+浏览器访问： https://www.guke1.com ，可以查看
 
 在输入框输入查询的公交车，（如：快1）点击搜索后，会出现搜索到的车次，再次点击需要查询车次的方向，即可查看实时公交状态。
 
