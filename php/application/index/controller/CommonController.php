@@ -1,4 +1,10 @@
 <?php
+/**
+ * Desc: 父类一些声明和输出操作
+ * User: lisgroup
+ * Date: 18-10-03
+ * Time: 11:52
+ */
 
 namespace app\index\controller;
 

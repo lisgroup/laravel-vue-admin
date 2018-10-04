@@ -1,9 +1,9 @@
 <?php
 /**
- * Desc: Bus 获取
+ * Desc: BusRepository 仓库类
  * User: lisgroup
- * Date: 17-12-29
- * Time: 下午1:52
+ * Date: 18-10-03
+ * Time: 15:50
  */
 
 namespace app\index\repository;
