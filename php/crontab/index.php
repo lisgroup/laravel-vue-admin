@@ -8,7 +8,7 @@
 
 include_once __DIR__ . '/function.php';
 
-$url = 'https://www.guke1.com/php/index.php/index/index/cron';
+$url = 'https://www.guke1.com/index/index/cron';
 
 $i = 1;
 do {
