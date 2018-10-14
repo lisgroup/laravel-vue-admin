@@ -56,7 +56,27 @@ server {
         try_files $fastcgi_script_name =404;
     }
 
-    
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+    	expires     30d;
+    }
+
+    location ~ .*\.(js|css)$
+    {
+    	expires     2d;
+    }
+
+    location ~ /.well-known
+    {
+    	allow all;
+    }
+
+    location ~ /\.
+    {
+    	deny all;
+    }
+
+    access_log /home/wwwlogs/www.log
 }
 
 ```
