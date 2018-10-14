@@ -47,12 +47,7 @@ class IndexController extends CommonController
     public function busLine()
     {
         $data = [];
-        // $href = 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4&LineGuid=9d090af5-c5c6-4db8-b34e-2e8af4f63216&LineInfo=1(公交一路新村)';
-        // $parseUrl = parse_url($href);
-        // var_dump($parseUrl);
-        // parse_str($parseUrl['query'], $params);
-
-        // var_dump($_POST);
+        // 根据 POST 数据，获取路线信息
         $post = input('post.', '', 'htmlspecialchars');
         // 'href' => string 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4' (length=54)  'LineGuid' => string '9d090af5-c5c6-4db8-b34e-2e8af4f63216' (length=36)  'LineInfo' => string '1(公交一路新村)' (length=21)
         if (!empty($post) && !empty($post['href']) && !empty($post['LineGuid']) && !empty($post['LineInfo'])) {
