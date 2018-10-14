@@ -29,6 +29,9 @@ npm run dev
 # 打包(可选)
 npm run build
 # 将 dist 目录下的文件 copy 到 php/public 目录。
+
+# 直接打包到 php/public 目录(注意备份 public/index.php 文件)
+npm run buildpro
 ```
 
 ## 域名绑定
