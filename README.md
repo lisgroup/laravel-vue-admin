@@ -12,15 +12,15 @@ H5 自适应苏州实时公交查询系统
 ## 安装方法：
 为了方便自己使用，已经讲打包好的代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
-1. 安装 php 环境
+1. 安装 php 环境 (必须)
 ```php
 git clone https://gitee.com/lisgroup/vueBus.git
 cd vueBus/php
 composer install
 ```
-2. 可选，安装 npm 扩展
+~~2. 可选，安装 npm 扩展~~
 ```node
-# 切换到上级目录 app 目录下
+# 切换到上级 app 目录下
 cd ../app
 npm i
 # 本地测试
