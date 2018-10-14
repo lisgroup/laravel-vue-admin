@@ -44,10 +44,21 @@ server {
     location ~ [^/]\.php(/|$) {
         fastcgi_pass  unix:/tmp/php-cgi.sock;
         fastcgi_index index.php;
-        include fastcgi.conf;
-        include pathinfo.conf;
+        # include fastcgi.conf;
+        # PHP only, required if PHP built with --enable-force-cgi-redirect
+        fastcgi_param REDIRECT_STATUS  200;
+        # fastcgi_param PHP_ADMIN_VALUE "open_basedir=$documment_root/:/tmp/:/proc";
+        fastcgi_param PHP_ADMIN_VALUE "open_basedir=$documment_root/../:/tmp/:/proc";
+
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        set $path_info $fastcgi_path_info;
+        fastcgi_param PATH_INFO  $path_info;
+        try_files $fastcgi_script_name =404;
     }
+
+    
 }
+
 ```
 
 
