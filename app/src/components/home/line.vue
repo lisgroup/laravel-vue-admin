@@ -32,6 +32,7 @@
             </legend>
         </fieldset>
         <el-table
+                v-loading="loading"
                 :data="tableLine"
                 border
                 style="width: 100%">
@@ -64,6 +65,7 @@
     name: "index",
     data() {
       return {
+        loading: false,
         isShow: false,
         input: '',
         to: '',
@@ -76,6 +78,7 @@
     },
     methods: {
       handleReload(href) {
+        this.loading = true;
         let url = "/busLine";
         if (!href) {
           // console.log(href);
@@ -84,6 +87,7 @@
         // console.log(href);
         let param = "href=" + href;
         this.$ajax.post(url, param).then(res => {
+          this.loading = false;
           // console.log(res.data);
           this.to = res.data.result.to;
           this.tableLine = res.data.result.line;
