@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-input placeholder="线路名称，例：快线1, 55" v-model="input">
+        <el-input placeholder="线路名称，例：快线1, 55" v-model="input" @keyup.enter.native="goSearch">
             <template slot="prepend">线路</template>
             <el-button slot="append" icon="el-icon-search" @click="goSearch">搜索</el-button>
         </el-input>
@@ -87,13 +87,16 @@
         // console.log(href);
         let param = "href=" + href;
         this.$ajax.post(url, param).then(res => {
-          this.loading = false;
+          // this.loading = false;
           // console.log(res.data);
           this.to = res.data.result.to;
           this.tableLine = res.data.result.line;
         }).catch(err => {
           // console.log(err);
         });
+        setTimeout(() => {
+          this.loading = false;
+        }, 1000);
       },
       goSearch() {
         let line = this.input;
