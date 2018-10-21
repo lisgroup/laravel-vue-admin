@@ -8,8 +8,14 @@ Vue.use(VueRouter)
 import Axios from 'axios'
 // Axios:挂载原型
 Vue.prototype.$ajax = Axios
+
+// 判断是否开发模式设置 URL
+const debug = process.env.NODE_ENV !== 'production'
+// 本地生产开发配置
+const my_host = debug ? 'http://localhost/vueBus/php/index/index' : 'https://www.guke1.com/index/index';
 // 默认 URL 配置
-Axios.defaults.baseURL = 'https://www.guke1.com/index/index';
+Axios.defaults.baseURL = my_host;
+
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
