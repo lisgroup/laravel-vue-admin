@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-input placeholder="线路名称，例：快线1, 55" v-model="input">
+        <el-input placeholder="线路名称，例：快线1, 55" v-model="input" @keyup.enter.native="goSearch">
             <template slot="prepend">线路</template>
             <el-button slot="append" icon="el-icon-search" @click="goSearch">搜索</el-button>
         </el-input>
