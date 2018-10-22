@@ -9,8 +9,8 @@
 $pwd = getcwd();
 echo $pwd;
 $pwd = '~/bus';
-$command = 'cd ' . $pwd . ' && git pull';
+$command = 'cd '.$pwd.' && git pull';
 $output = shell_exec($command);
-print $output;
+print_r($output);
 
 // shell_exec('cd bus/token/app && npm run build');
