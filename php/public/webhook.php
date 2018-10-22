@@ -8,9 +8,9 @@
 
 $pwd = getcwd();
 echo $pwd;
-$pwd = '~/bus';
+$pwd = '~/vueBus';
 $command = 'cd '.$pwd.' && git pull';
-$output = shell_exec('cd /home/ubuntu/bus && git pull');
+$output = shell_exec($command);
 var_dump($output);
 
 // shell_exec('cd bus/token/app && npm run build');
