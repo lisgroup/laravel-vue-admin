@@ -6,8 +6,7 @@
  * Time: 14:36
  */
 
-$pwd = getcwd();
-echo $pwd;
+// $pwd = getcwd();
 $pwd = '~/vueBus';
 $command = 'cd '.$pwd.' && git pull';
 $output = shell_exec($command);
