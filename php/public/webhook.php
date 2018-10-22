@@ -11,6 +11,6 @@ echo $pwd;
 $pwd = '~/bus';
 $command = 'cd '.$pwd.' && git pull';
 $output = shell_exec($command);
-print_r($output);
+var_dump($output);
 
 // shell_exec('cd bus/token/app && npm run build');
