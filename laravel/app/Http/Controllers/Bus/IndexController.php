@@ -49,7 +49,9 @@ class IndexController extends CommonController
     {
         $data = [];
         // 根据 POST 数据，获取路线信息
-        $post = input('post.', '', 'htmlspecialchars');
+        // $request->input('href', '');
+        // $post = input('post.', '', 'htmlspecialchars');
+        $post = $request->all();
         // 'href' => string 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4' (length=54)  'LineGuid' => string '9d090af5-c5c6-4db8-b34e-2e8af4f63216' (length=36)  'LineInfo' => string '1(公交一路新村)' (length=21)
         if (!empty($post) && !empty($post['href']) && !empty($post['LineGuid']) && !empty($post['LineInfo'])) {
             $parseUrl = parse_url($post['href']);
