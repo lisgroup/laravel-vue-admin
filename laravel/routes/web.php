@@ -10,7 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Models\Cron;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('search', function () {
+    // 为查看方便都转成数组
+    dump(Cron::all()->toArray());
 });
