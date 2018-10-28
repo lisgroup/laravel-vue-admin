@@ -17,7 +17,51 @@ composer install
 在输入框输入查询的公交车，（如：快1）点击搜索后，会出现搜索到的车次，再次点击需要查询车次的方向，即可查看实时公交状态。
 
 ## 开发记录
-1. 创建模型和数据迁移
+
+1. 创建一个 Crons 表迁移和模型
 ```php
 php artisan make:model Models/Cron -m
 ```
+
+2. 添加表的相应字段
+
+/database/migrations/2018_10_27_151143_create_crons_table.php
+```
+/**
+ * Run the migrations.
+ *
+ * @return void
+ */
+public function up()
+{
+    Schema::create('crons', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('line_info')->default('')->comment('班次');
+        $table->mediumText('content')->comment('内容');
+        $table->timestamps();
+    });
+}
+```
+2.1 修改 `.env` 数据库配置项；
+```
+DB_DATABASE=test
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+2.2 运行迁移生成表;
+```
+php artisan migrate
+```
+3. 添加路由
+```
+/routes/web.php
+```
+<?php
+use App\Models\Cron;
+
+Route::get('search', function () {
+    // 为查看方便都转成数组
+    dump(Cron::all()->toArray());
+});
+```
+
