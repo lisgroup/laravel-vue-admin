@@ -20,3 +20,11 @@ Route::get('search', function () {
     // 为查看方便都转成数组
     dump(Cron::all()->toArray());
 });
+
+/******** 公共接口处理类 *********/
+Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
+    // 1. 首页测试
+    Route::get('index', 'IndexController@index');
+    Route::get('getList', 'IndexController@getList');
+    Route::get('busLine', 'IndexController@busLine');
+});
