@@ -195,7 +195,8 @@ class BusRepository
 
             // cache('inputData', $data, 86400);
             // Redis::set('token', $data, 86400);
-            Cache::add('token', $data, 60 * 24 * 60);
+            // 缓存的是分钟数
+            Cache::add('token', $data, 180 * 24 * 60);
         }
 
         return $data;
@@ -204,11 +205,10 @@ class BusRepository
     /**
      * 3. 发送 POST 请求获取查询的线路列表
      * @param $line
-     * @param $data
      * @param bool $refresh
      * @return array
      */
-    private function getPostBusList($line, $data, $refresh = false)
+    private function getPostBusList($line, $refresh = false)
     {
         /**************************    2. 模拟表单请求获取查询线路列表     ****************************/
         $path = storage_path('framework/bus');
@@ -216,6 +216,19 @@ class BusRepository
 
         // 2.0 判断是否已经有此条线路搜索
         if ($refresh || !file_exists($path . '/serialize_' . $line . '.txt')) {
+            // 1. 获取 Token
+            $data = $this->getToken();
+
+            if (!$data) {
+                return [];
+            }
+            // 1.4 构造请求参数
+            $input = [
+                'ctl00$MainContent$LineName' => $line,        //线路番号
+                'ctl00$MainContent$SearchLine' => '搜索',     //搜索
+            ];
+            //merge 用户输入的线路数据
+            $data = array_merge($data, $input);
 
             //2.2 文件不存在，模拟表单提交 //POST curl 模拟表单提交数据
 
@@ -268,23 +281,8 @@ class BusRepository
         // 1. 设置线路查询的 cookie
         // $this->setLineCookie($line);
 
-        // 2. 获取 Token
-        $data = $this->getToken();
-
-        $listData = [];
-        if ($data) {
-            // 1.4 构造请求参数
-            $input = [
-                'ctl00$MainContent$LineName' => $line,        //线路番号
-                'ctl00$MainContent$SearchLine' => '搜索',     //搜索
-            ];
-            //merge 用户输入的线路数据
-            $data = array_merge($data, $input);
-
-            // 3. 获取线路列表
-            $listData = $this->getPostBusList($line, $data, $refresh);
-        }
-
+        /*** start 逻辑修改： 直接查询是否有此线路的数据 *********/
+        $listData = $this->getPostBusList($line, $refresh);
 
         return $listData;
     }
