@@ -9,9 +9,8 @@
 namespace App\Http\Repository;
 
 
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 use QL\QueryList;
-use think\Cache;
 use think\Cookie;
 
 class BusRepository
@@ -157,7 +156,7 @@ class BusRepository
     public function getToken($refresh = false)
     {
         /**************     18-01-10 修改获取表单 token 的方法         **************/
-        if ($refresh || !$data = Redis::get('token')) {
+        if ($refresh || !$data = Cache::get('token')) {
             // 1.1 获取提交表单的 token  //缓存data post表单提交参数数据
             //缓存公交线标题提交的参数信息（默认缓存一天）
             /*if (file_exists(ROOT_PATH.'/runtime/bus.html') && filemtime(ROOT_PATH.'/runtime/bus.html') + 86400 > time()) {
@@ -195,8 +194,8 @@ class BusRepository
             $data = $arrayData[0];
 
             // cache('inputData', $data, 86400);
-
-            Redis::set('token', $data, 86400);
+            // Redis::set('token', $data, 86400);
+            Cache::add('token', $data, 60 * 24 * 60);
         }
 
         return $data;
@@ -212,10 +211,11 @@ class BusRepository
     private function getPostBusList($line, $data, $refresh = false)
     {
         /**************************    2. 模拟表单请求获取查询线路列表     ****************************/
-        is_dir(ROOT_PATH . '/runtime/bus') || mkdir(ROOT_PATH . '/runtime/bus', 0777, true);
+        $path = storage_path('framework/bus');
+        is_dir($path) || mkdir($path, 0777, true);
 
         // 2.0 判断是否已经有此条线路搜索
-        if ($refresh || !file_exists(ROOT_PATH . '/runtime/bus/serialize_' . $line . '.txt')) {
+        if ($refresh || !file_exists($path . '/serialize_' . $line . '.txt')) {
 
             //2.2 文件不存在，模拟表单提交 //POST curl 模拟表单提交数据
 
@@ -242,12 +242,12 @@ class BusRepository
             $arrayData = $queryList->rules($rules)->query()->getData();
             $str = serialize($arrayData->all());
             //缓存 此条线路替换a标签的数据
-            $fileName = ROOT_PATH . '/runtime/bus/serialize_' . $line . '.txt';
+            $fileName = $path . '/serialize_' . $line . '.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
         } else {
             // 2.1 文件存在直接读取
-            $serialize = file_get_contents(ROOT_PATH . '/runtime/bus/serialize_' . $line . '.txt');//线路列表
+            $serialize = file_get_contents($path . '/serialize_' . $line . '.txt');//线路列表
             $arrayData = unserialize($serialize);
         }
 
@@ -262,6 +262,9 @@ class BusRepository
      */
     public function getList($line, $refresh = false)
     {
+        if (empty($line)) {
+            return [];
+        }
         // 1. 设置线路查询的 cookie
         // $this->setLineCookie($line);
 
