@@ -6,10 +6,9 @@
  * Time: 15:50
  */
 
-namespace app\index\repository;
+namespace App\Http\Repository;
 
 
-use app\index\model\Cron;
 use QL\QueryList;
 use think\Cache;
 use think\Cookie;
@@ -263,7 +262,7 @@ class BusRepository
     public function getList($line, $refresh = false)
     {
         // 1. 设置线路查询的 cookie
-        $this->setLineCookie($line);
+        // $this->setLineCookie($line);
 
         // 2. 获取 Token
         $data = $this->getToken();

@@ -8,7 +8,8 @@
 
 namespace App\Http\Controllers\Bus;
 
-use app\index\repository\BusRepository;
+use App\Http\Repository\BusRepository;
+use Illuminate\Http\Request;
 
 class IndexController extends CommonController
 {
@@ -30,9 +31,9 @@ class IndexController extends CommonController
      * 采集 bus 网址是表单数据
      * @return array
      */
-    public function getList()
+    public function getList(Request $request)
     {
-        $line = input('get.linename', '', 'htmlspecialchars');
+        $line = $request['linename'];
         $line = preg_replace('/快\b(\d)/', '快线$1号', $line);
         $list = BusRepository::getInstent()->getList($line);
 
@@ -44,7 +45,7 @@ class IndexController extends CommonController
      * 获取实时公交数据table列表，数据来自 szjt.gov.cn，需要限制访问频率，1秒一次请求
      * @return array
      */
-    public function busLine()
+    public function busLine(Request $request)
     {
         $data = [];
         // 根据 POST 数据，获取路线信息
