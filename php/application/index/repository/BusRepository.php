@@ -172,7 +172,6 @@ class BusRepository
              * $html = httpGet($this->url);
              * $arrayData = $this->ql->html($html)->rules($rules)->query()->getData();
              */
-            QueryList::get($this->url);
             $queryList = QueryList::get($this->url);
 
             // 1.2 自定义采集规则

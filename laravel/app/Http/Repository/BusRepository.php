@@ -9,6 +9,7 @@
 namespace App\Http\Repository;
 
 
+use Illuminate\Support\Facades\Redis;
 use QL\QueryList;
 use think\Cache;
 use think\Cookie;
@@ -156,7 +157,7 @@ class BusRepository
     public function getToken($refresh = false)
     {
         /**************     18-01-10 修改获取表单 token 的方法         **************/
-        if ($refresh || !$data = Cache::get('token')) {
+        if ($refresh || !$data = Redis::get('token')) {
             // 1.1 获取提交表单的 token  //缓存data post表单提交参数数据
             //缓存公交线标题提交的参数信息（默认缓存一天）
             /*if (file_exists(ROOT_PATH.'/runtime/bus.html') && filemtime(ROOT_PATH.'/runtime/bus.html') + 86400 > time()) {
@@ -166,12 +167,12 @@ class BusRepository
                 $html = httpGet($url);
                 file_put_contents(ROOT_PATH.'/runtime/bus.html', $html);
             }*/
+
             /**
              * 18年5月15日更新版本
              * $html = httpGet($this->url);
              * $arrayData = $this->ql->html($html)->rules($rules)->query()->getData();
              */
-            QueryList::get($this->url);
             $queryList = QueryList::get($this->url);
 
             // 1.2 自定义采集规则
@@ -195,7 +196,7 @@ class BusRepository
 
             // cache('inputData', $data, 86400);
 
-            Cache::set('token', $data, 86400);
+            Redis::set('token', $data, 86400);
         }
 
         return $data;
