@@ -96,8 +96,9 @@
         });
         setTimeout(() => {
           this.loading = false;
-        }, 1000);
+        }, 500);
       },
+
       goSearch() {
         let line = this.input;
         if (!line) {
