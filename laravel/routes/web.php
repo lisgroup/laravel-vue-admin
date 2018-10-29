@@ -21,10 +21,18 @@ Route::get('search', function () {
     dump(Cron::all()->toArray());
 });
 
+Route::any('_token', function() {
+    return [
+        'code' => 0,
+        'reason' => '成功',
+        'result' => csrf_token()
+    ];
+});
+
 /******** 公共接口处理类 *********/
 Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
     // 1. 首页测试
     Route::get('index', 'IndexController@index');
     Route::get('getList', 'IndexController@getList');
-    Route::get('busLine', 'IndexController@busLine');
+    Route::any('busLine', 'IndexController@busLine');
 });
