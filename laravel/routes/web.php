@@ -21,9 +21,9 @@ Route::get('search', function () {
     dump(Cron::all()->toArray());
 });
 
-Route::any('_token', function() {
+Route::any('/api/_token', function() {
     return [
-        'code' => 0,
+        'error_code' => 0,
         'reason' => '成功',
         'result' => csrf_token()
     ];
