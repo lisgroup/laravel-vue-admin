@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Http\Repository\BusRepository;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
@@ -38,6 +39,8 @@ class Kernel extends ConsoleKernel
             $path = storage_path('framework/cache/');
             is_dir($path) || mkdir($path, 777, true);
             file_put_contents($path.'/cache.txt', $query->getHtml().PHP_EOL, FILE_APPEND);
+            // 每隔五分钟入库操作
+            BusRepository::getInstent()->cronTaskTable();
         })->everyFiveMinutes()->between('5:00', '23:00');
     }
 
