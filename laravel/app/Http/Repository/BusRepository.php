@@ -334,10 +334,8 @@ class BusRepository
         $content = json_encode($data, JSON_UNESCAPED_UNICODE);
 
         // 入库操作 1 ----- 木渎
-        // $date = date('Y-m-d H:i:s');
         $cron = ['line_info' => $post['LineInfo'], 'content' => $content];
-        $model = new Cron($cron);
-        $rs1 = $model->save();
+        $rs1 = $this->saveCronData($cron);
         /**********************   line1  end ************************/
 
         /**********************   line2  start ************************/
@@ -351,10 +349,8 @@ class BusRepository
         $content = json_encode($data, JSON_UNESCAPED_UNICODE);
 
         // 入库操作 2 ----- 星塘
-        // $date = date('Y-m-d H:i:s');
         $cron = ['line_info' => $toXingtang['LineInfo'], 'content' => $content];
-        $model = new Cron($cron);
-        $rs2 = $model->save();
+        $rs2 = $this->saveCronData($cron);
         /**********************   line2  end ************************/
 
         if ($rs1 && $rs2) {
@@ -369,6 +365,11 @@ class BusRepository
         return $rs;
     }
 
+    private function saveCronData($cron)
+    {
+        $model = new Cron($cron);
+        return $model->save();
+    }
 
     private function __construct($config)
     {
