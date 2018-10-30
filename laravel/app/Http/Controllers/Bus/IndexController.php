@@ -20,8 +20,8 @@ class IndexController extends CommonController
     public function index()
     {
         if (PHP_SAPI == 'cli') {
-            $result = BusRepository::getInstent()->busTask();
-            return ['code' => 0, 'msg' => 'success', 'result' => $result];
+            // $result = BusRepository::getInstent()->busTask();
+            return ['code' => 0, 'msg' => 'success', 'result' => ['data' => 'task '.date('Y-m-d H:i:s')]];
         } else {
             return ['code' => 0, 'msg' => 'success'];
         }
