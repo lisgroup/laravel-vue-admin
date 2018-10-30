@@ -338,6 +338,8 @@ class BusRepository
                 if (!$rs) {
                     // 任务失败的记录日志中
                     Log::error('CronTasks 执行失败: 线路名称 '.$post['LineInfo'], $cron);
+                } else {
+                    Log::info('CronTasks 执行成功: 线路名称 '.$post['LineInfo']);
                 }
             } else {
                 Log::error('CronTasks 获取 bus 数据失败: 线路名称 '.$post['LineInfo'], $post);
