@@ -34,10 +34,10 @@ class Kernel extends ConsoleKernel
             Log::info('定时任务：'.date('Y-m-d H:i:s'));
             // 测试定时 HTTP 请求
             $url = "http://118.25.87.12/token/php/index.php/hello/123";
-            $list = QueryList::get($url);
+            $query = QueryList::get($url);
             $path = storage_path('framework/cache/');
             is_dir($path) || mkdir($path, 777, true);
-            file_put_contents($path.'/cache.txt', $list);
+            file_put_contents($path.'/cache.txt', $query->getHtml());
         })->everyMinute()->between('5:00', '23:00');
     }
 
