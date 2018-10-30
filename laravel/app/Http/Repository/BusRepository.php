@@ -10,8 +10,10 @@ namespace App\Http\Repository;
 
 
 use App\Models\Cron;
+use App\Models\CronTask;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Log;
 use QL\QueryList;
 
 class BusRepository
@@ -315,6 +317,33 @@ class BusRepository
         unset($arrayData[0]['to']);
 
         return ['to' => $to, 'line' => $arrayData];
+    }
+
+    public function cronTaskTable()
+    {
+        $tasks = CronTask::where('is_task', 1)->get();
+        foreach ($tasks as $task) {
+            /**********************   line1  start ************************/
+            $post = [
+                'cid' => $task['cid'],
+                'LineGuid' => $task['LineGuid'],
+                'LineInfo' => $task['LineInfo'],
+            ];
+            $data = $this->getLine('APTSLine.aspx', $post)['line'];
+            $content = json_encode($data, JSON_UNESCAPED_UNICODE);
+            if (!empty($content)) {
+                // 入库操作 1 ----- 木渎
+                $cron = ['line_info' => $post['LineInfo'], 'content' => $content];
+                $rs = $this->saveCronData($cron);
+                if (!$rs) {
+                    // 任务失败的记录日志中
+                    Log::error('CronTasks 执行失败: 线路名称 '.$post['LineInfo'], $cron);
+                }
+            } else {
+                Log::error('CronTasks 获取 bus 数据失败: 线路名称 '.$post['LineInfo'], $post);
+            }
+            /**********************   line1  end ************************/
+        }
     }
 
 
