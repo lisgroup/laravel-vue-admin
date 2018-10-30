@@ -129,6 +129,31 @@ DB_PASSWORD=root
 ```
 php artisan migrate
 ```
+2.3 创建填充文件;
+```
+php artisan make:seed CronTasksTableSeeder
+```
+2.4 生成测试数据;
+```
+public function run()
+{
+    DB::table('articles')->insert([
+        [
+            'title' => 'TNTSearch',
+            'content' => '一个用PHP编写的功能齐全的全文搜索引擎'
+        ],
+        [
+            'title' => 'jieba-php',
+            'content' => '"结巴"中文分词:做最好的php中文分词、中文断词组件'
+        ]
+    ]);
+}
+```
+运行填充；
+```
+php artisan db:seed --class=ArticlesTableSeeder
+```
+
 3. 添加路由
 ```
 /routes/web.php
