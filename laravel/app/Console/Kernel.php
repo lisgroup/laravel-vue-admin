@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
+use QL\QueryList;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,6 +28,17 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function()
+        {
+            // 定时任务
+            Log::info('定时任务：'.date('Y-m-d H:i:s'));
+            // 测试定时 HTTP 请求
+            $url = "http://118.25.87.12/token/php/index.php/hello/123";
+            $list = QueryList::get($url);
+            $path = storage_path('framework/cache/');
+            is_dir($path) || mkdir($path, 777, true);
+            file_put_contents($path.'/cache.txt', $list);
+        })->everyFiveMinutes()->between('5:00', '23:00');
     }
 
     /**
