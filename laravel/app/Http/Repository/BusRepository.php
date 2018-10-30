@@ -10,8 +10,8 @@ namespace App\Http\Repository;
 
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 use QL\QueryList;
-use think\Cookie;
 
 class BusRepository
 {
@@ -133,7 +133,7 @@ class BusRepository
         $cookie_line = Cookie::get('cookie_line');
         if (!is_array($cookie_line)) {
             $cookie_line = [];
-            Cookie::set('cookie_line', []);
+            Cookie::get('cookie_line', []);
         }
         //17年5月11修复最新搜索排序在最后的问题。//array_push($cookie_line, $line); //合并数据 $cookie_line = array_unique($cookie_line); //去除重复
         //1.先搜索数组中是否存在元素,搜索到后删除，然后合并 ,修复$i = 0 的bug
@@ -144,7 +144,7 @@ class BusRepository
 
         // setcookie('cookie_line', serialize($cookie_line), time() + 3600 * 24 * 30);
         //$response->setCookie('cookie_line', serialize($cookie_line), time() + 3600 * 24 * 30);
-        Cookie::set('cookie_line', $cookie_line);
+        Cookie::get('cookie_line', $cookie_line);
         // Cookie::set('cookie_line', $cookie_line);
     }
 
