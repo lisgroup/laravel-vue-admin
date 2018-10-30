@@ -6,10 +6,87 @@
 git clone https://gitee.com/lisgroup/vueBus.git
 cd vueBus/laravel
 composer install
+cp .env.example .env
 ```
+
+2. 配置项修改 .env 文件数据库
+```php
+# 修改数据库配置
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=test
+DB_USERNAME=root
+DB_PASSWORD=root
+
+# 如 redis 可用建议修改
+CACHE_DRIVER=redis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
+
+3. 启动 laravels 服务监听 5200 端口
+```php
+php artisan laravels start -d
+```
+更多细节参考：[https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md](https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md)
 
 ## 域名绑定
 域名需要绑定到根目录，即项目的 php/public 目录下。
+
+### nginx 配置参考：
+```php
+#gzip on;
+#gzip_min_length 1024;
+#gzip_comp_level 2;
+#gzip_types text/plain text/css text/javascript application/json application/javascript application/x-javascript application/xml application/x-httpd-php image/jpeg image/gif image/png font/ttf font/otf image/svg+xml;
+#gzip_vary on;
+#gzip_disable "msie6";
+upstream laravels {
+    # By IP:Port
+    server 127.0.0.1:5200 weight=5 max_fails=3 fail_timeout=30s;
+    # By UnixSocket Stream file
+    #server unix:/xxxpath/laravel-s-test/storage/laravels.sock weight=5 max_fails=3 fail_timeout=30s;
+    #server 192.168.1.1:5200 weight=3 max_fails=3 fail_timeout=30s;
+    #server 192.168.1.2:5200 backup;
+}
+server {
+    listen 80;
+    # 别忘了绑Host哟
+    server_name www.bus.com;
+    root /home/www/vueBus/laravel/public;
+    access_log /home/wwwlogs/nginx/$server_name.access.log;
+    autoindex off;
+    index index.html index.htm;
+    # Nginx处理静态资源(建议开启gzip)，LaravelS处理动态资源。
+    location / {
+        try_files $uri $uri/index.html @laravels;
+    }
+    # 当请求PHP文件时直接响应404，防止暴露public/*.php
+    #location ~* \.php$ {
+    #    return 404;
+    #}
+    location @laravels {
+        proxy_http_version 1.1;
+        # proxy_connect_timeout 60s;
+        # proxy_send_timeout 60s;
+        # proxy_read_timeout 120s;
+        proxy_set_header Connection "keep-alive";
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Real-PORT $remote_port;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header Scheme $scheme;
+        proxy_set_header Server-Protocol $server_protocol;
+        proxy_set_header Server-Name $server_name;
+        proxy_set_header Server-Addr $server_addr;
+        proxy_set_header Server-Port $server_port;
+        proxy_pass http://laravels;
+    }
+}
+```
+
 
 ## 使用方法
 浏览器访问绑定的域名即可查看
