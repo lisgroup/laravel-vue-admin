@@ -11,7 +11,7 @@ class CronTasksTableSeeder extends Seeder
      */
     public function run()
     {
-        \Illuminate\Support\Facades\DB::table('cron_tasks')->insert([
+        DB::table('cron_tasks')->insert([
             [
                 'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
                 'LineGuid' => '921f91ad-757e-49d6-86ae-8e5f205117be',

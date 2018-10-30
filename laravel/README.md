@@ -30,6 +30,7 @@ REDIS_PORT=6379
 ```php
 php artisan migrate
 php artisan make:seed CronTasksTableSeeder
+php artisan db:seed --class=CronTasksTableSeeder
 ```
 
 4. 启动 laravels 服务监听 5200 端口
@@ -143,7 +144,7 @@ php artisan make:seed CronTasksTableSeeder
 ```
 public function run()
 {
-    \Illuminate\Support\Facades\DB::table('cron_tasks')->insert([
+    DB::table('cron_tasks')->insert([
         [
             'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
             'LineGuid' => '921f91ad-757e-49d6-86ae-8e5f205117be',
