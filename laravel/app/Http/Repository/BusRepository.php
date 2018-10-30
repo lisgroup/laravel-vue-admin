@@ -9,6 +9,7 @@
 namespace App\Http\Repository;
 
 
+use App\Models\Cron;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use QL\QueryList;
@@ -124,7 +125,7 @@ class BusRepository
     }
 
     /**
-     * 1. 设置查询线路的 cookie
+     * 1. ~~设置查询线路的 cookie 前后端分离时废弃~~
      * @param $line
      */
     public function setLineCookie($line)
@@ -149,7 +150,7 @@ class BusRepository
     }
 
     /**
-     * 2. 获取 Token 的方法
+     * 2. 获取 Token 的方法，使用 Laravel 的 Cache 缓存，配置在 .env 下 CACHE_DRIVER=file|database|redis
      * @param bool $refresh
      * @return array|bool
      */
@@ -158,15 +159,6 @@ class BusRepository
         /**************     18-01-10 修改获取表单 token 的方法         **************/
         if ($refresh || !$data = Cache::get('token')) {
             // 1.1 获取提交表单的 token  //缓存data post表单提交参数数据
-            //缓存公交线标题提交的参数信息（默认缓存一天）
-            /*if (file_exists(ROOT_PATH.'/runtime/bus.html') && filemtime(ROOT_PATH.'/runtime/bus.html') + 86400 > time()) {
-                $html = file_get_contents(ROOT_PATH.'/runtime/bus.html');
-            } else {
-                //重新生成缓存文件
-                $html = httpGet($url);
-                file_put_contents(ROOT_PATH.'/runtime/bus.html', $html);
-            }*/
-
             /**
              * 18年5月15日更新版本
              * $html = httpGet($this->url);
@@ -327,6 +319,7 @@ class BusRepository
 
 
     /**
+     * laravel 下的定时任务
      * @return int|string
      */
     public function getCronSave()
@@ -340,9 +333,11 @@ class BusRepository
         $data = $this->getLine('APTSLine.aspx', $post)['line'];
         $content = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-        // 入库操作1 ----- 木渎
-        $date = date('Y-m-d H:i:s');
-        $rs1 = db('cron')->insert(['line_info' => $post['LineInfo'], 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+        // 入库操作 1 ----- 木渎
+        // $date = date('Y-m-d H:i:s');
+        $cron = ['line_info' => $post['LineInfo'], 'content' => $content];
+        $model = new Cron($cron);
+        $rs1 = $model->save();
         /**********************   line1  end ************************/
 
         /**********************   line2  start ************************/
@@ -355,9 +350,11 @@ class BusRepository
         $data = $this->getLine('APTSLine.aspx', $toXingtang)['line'];
         $content = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-        // 入库操作2 ----- 星塘
-        $date = date('Y-m-d H:i:s');
-        $rs2 = db('cron')->insert(['line_info' => $toXingtang['LineInfo'], 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+        // 入库操作 2 ----- 星塘
+        // $date = date('Y-m-d H:i:s');
+        $cron = ['line_info' => $toXingtang['LineInfo'], 'content' => $content];
+        $model = new Cron($cron);
+        $rs2 = $model->save();
         /**********************   line2  end ************************/
 
         if ($rs1 && $rs2) {
