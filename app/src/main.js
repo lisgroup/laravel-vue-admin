@@ -12,7 +12,7 @@ Vue.prototype.$ajax = Axios
 // 判断是否开发模式设置 URL
 const debug = process.env.NODE_ENV !== 'production'
 // 本地生产开发配置
-const my_host = debug ? 'http://localhost/bus/laravel/public/index.php/api/' : 'https://www.guke1.com/api/';
+const my_host = debug ? 'http://localhost/vueBus/laravel/public/index.php/api/' : 'https://www.guke1.com/api/';
 // 默认 URL 配置
 Axios.defaults.baseURL = my_host;
 

@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
             $path = storage_path('framework/cache/');
             is_dir($path) || mkdir($path, 777, true);
             file_put_contents($path.'/cache.txt', $query->getHtml().PHP_EOL, FILE_APPEND);
-        })->everyMinute()->between('5:00', '23:00');
+        })->everyFiveMinutes()->between('5:00', '23:00');
     }
 
     /**
