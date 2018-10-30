@@ -18,6 +18,9 @@ class CreateCronTasksTable extends Migration
             $table->string('cid')->default('')->comment('cid');
             $table->string('LineGuid')->default('')->comment('guid');
             $table->string('LineInfo')->default('')->comment('班次');
+            $table->tinyInteger('is_task')->default('1')->comment('是否启动：1 启动，0 关闭');
+            $table->time('start_at')->comment('开始时间');
+            $table->time('end_at')->comment('结束时间');
             $table->timestamps();
         });
     }
