@@ -26,7 +26,13 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
 
-3. 启动 laravels 服务监听 5200 端口
+3. 运行数据迁移和填充
+```php
+php artisan migrate
+php artisan make:seed CronTasksTableSeeder
+```
+
+4. 启动 laravels 服务监听 5200 端口
 ```php
 php artisan laravels start -d
 ```
@@ -137,21 +143,27 @@ php artisan make:seed CronTasksTableSeeder
 ```
 public function run()
 {
-    DB::table('articles')->insert([
+    \Illuminate\Support\Facades\DB::table('cron_tasks')->insert([
         [
-            'title' => 'TNTSearch',
-            'content' => '一个用PHP编写的功能齐全的全文搜索引擎'
+            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
+            'LineGuid' => '921f91ad-757e-49d6-86ae-8e5f205117be',
+            'LineInfo' => '快线1号(星塘公交中心)',
+            'start_at' => '05:00:00',
+            'end_at' => '23:10:00',
         ],
         [
-            'title' => 'jieba-php',
-            'content' => '"结巴"中文分词:做最好的php中文分词、中文断词组件'
+            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
+            'LineGuid' => 'af9b209b-f99d-4184-af7d-e6ac105d8e7f',
+            'LineInfo' => '快线1号(木渎公交换乘枢纽站)',
+            'start_at' => '05:00:00',
+            'end_at' => '23:10:00',
         ]
     ]);
 }
 ```
 运行填充；
 ```
-php artisan db:seed --class=ArticlesTableSeeder
+php artisan db:seed --class=CronTasksTableSeeder
 ```
 
 3. 添加路由
