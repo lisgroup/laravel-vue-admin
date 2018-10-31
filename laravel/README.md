@@ -1,14 +1,3 @@
-H5 自适应苏州实时公交查询系统
-===============
-## 前后端分离设计
-前端代码在 app 目录，后端代码在 php 目录下、
-
-> PHP 的运行环境要求 PHP7.0 以上。
-1. PHP >= 7.0
-2. PDO PHP Extension
-3. MBstring PHP Extension
-4. CURL PHP Extension
-
 ## 安装方法：
 为了方便自己使用，已经讲打包好的代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
@@ -19,6 +8,7 @@ cd vueBus/laravel
 composer install
 cp .env.example .env
 ```
+
 2. 配置项修改 .env 文件数据库
 ```php
 # 修改数据库配置
@@ -36,102 +26,23 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
 
-3. 运行数据迁移和填充(可选)
+3. 运行数据迁移和填充
 ```php
 php artisan migrate
 php artisan make:seed CronTasksTableSeeder
 php artisan db:seed --class=CronTasksTableSeeder
 ```
 
-4. 启动 laravels 服务监听 5200 端口(可选：需安装 swoole 扩展)
+4. 启动 laravels 服务监听 5200 端口
 ```php
 php artisan laravels start -d
 ```
 更多细节参考：[https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md](https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md)
 
-5. 启动定时任务(可选)
-```shell
-# 使用 crontab 的定时任务调用 php artisan 调度任务：
-crontab -e
-
-# 追加如下内容： 
-
-* * * * * php /home/ubuntu/vueBus/laravel/artisan schedule:run >> /dev/null 2>&1
-
-# 最后 ctrl + o 保存退出即可。
-```
-
-~~6. 可选，安装 npm 扩展~~
-```node
-# 切换到上级 app 目录下
-cd ../app
-npm i
-# 本地测试
-npm run dev
-
-# 打包(可选)
-npm run build
-# 将 dist 目录下的文件 copy 到 php/public 目录。
-
-# 直接打包到 php/public 目录(注意备份 public/index.php 文件)
-npm run buildpro
-```
-
 ## 域名绑定
 域名需要绑定到根目录，即项目的 php/public 目录下。
 
-1. 未启动 laravels 的 Nginx 示例配置：
-```shell
-server {
-    listen 443;
-    root /www/vueBus/laravel/public;
-    server_name www.guke1.com; # 改为绑定证书的域名
-    
-    # ssl 配置
-    ssl on;
-    ssl_certificate /etc/bundle.crt; # 改为自己申请得到的 crt 文件的名称
-    ssl_certificate_key /etc/my.key; # 改为自己申请得到的 key 文件的名称
-    ssl_session_timeout 5m;
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
-    ssl_prefer_server_ciphers on;
-
-    # 文件不存在 转发 index.php 处理
-    location / {
-        #index index.php;
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-    
-    location ~ (\.php)$ {
-        fastcgi_pass  unix:/tmp/php-cgi.sock;
-        fastcgi_index  index.php;
-        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        fastcgi_param  PHP_ADMIN_VALUE "open_basedir=$document_root/../:/tmp/:/proc/";
-        include        fastcgi_params;
-        fastcgi_param  PATH_INFO $fastcgi_script_name;
-    }
-
-    location ~ .*\.(css|img|js|gif|jpg|jpeg|png|bmp|swf)$
-    {
-        root $root_path; 
-        expires     30d;
-    }
-
-    location ~ /.well-known
-    {
-    	allow all;
-    }
-
-    location ~ /\.
-    {
-    	deny all;
-    }
-
-    access_log /home/wwwlogs/laravel.log
-    error_log /home/wwwlogs/laravel_error.log;
-}
-```
-2. 启动 laravels 的 Nginx 示例配置：
+### nginx 配置参考：
 ```php
 #gzip on;
 #gzip_min_length 1024;
@@ -183,8 +94,93 @@ server {
 }
 ```
 
+
 ## 使用方法
-浏览器访问： https://www.guke1.com ，可以查看
+浏览器访问绑定的域名即可查看
 
 在输入框输入查询的公交车，（如：快1）点击搜索后，会出现搜索到的车次，再次点击需要查询车次的方向，即可查看实时公交状态。
+
+## 开发记录
+
+1. 创建一个 Crons 表迁移和模型
+```php
+php artisan make:model Models/Cron -m
+```
+
+2. 添加表的相应字段
+
+/database/migrations/2018_10_27_151143_create_crons_table.php
+```
+/**
+ * Run the migrations.
+ *
+ * @return void
+ */
+public function up()
+{
+    Schema::create('crons', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('line_info')->default('')->comment('班次');
+        $table->mediumText('content')->comment('内容');
+        $table->timestamps();
+    });
+}
+```
+2.1 修改 `.env` 数据库配置项；
+```
+DB_DATABASE=test
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+2.2 运行迁移生成表;
+```
+php artisan migrate
+```
+2.3 创建填充文件;
+```
+php artisan make:seed CronTasksTableSeeder
+```
+2.4 生成测试数据;
+```
+public function run()
+{
+    DB::table('cron_tasks')->insert([
+        [
+            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
+            'LineGuid' => '921f91ad-757e-49d6-86ae-8e5f205117be',
+            'LineInfo' => '快线1号(星塘公交中心)',
+            'start_at' => '05:00:00',
+            'end_at' => '23:10:00',
+        ],
+        [
+            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
+            'LineGuid' => 'af9b209b-f99d-4184-af7d-e6ac105d8e7f',
+            'LineInfo' => '快线1号(木渎公交换乘枢纽站)',
+            'start_at' => '05:00:00',
+            'end_at' => '23:10:00',
+        ]
+    ]);
+}
+```
+运行填充；
+```
+php artisan db:seed --class=CronTasksTableSeeder
+```
+
+3. 添加路由
+```
+/routes/web.php
+```
+<?php
+use App\Models\Cron;
+
+Route::get('search', function () {
+    // 为查看方便都转成数组
+    dump(Cron::all()->toArray());
+});
+```
+
+
+## 待完成工作
+1. 查询的公交线路存入数据库保存。（目前保存在文件中）
 
