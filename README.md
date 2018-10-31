@@ -49,7 +49,19 @@ php artisan laravels start -d
 ```
 更多细节参考：[https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md](https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md)
 
-~~5. 可选，安装 npm 扩展~~
+5. 启动定时任务(可选)
+```shell
+# 使用 crontab 的定时任务调用 php artisan 调度任务：
+crontab -e
+
+# 追加如下内容： 
+
+* * * * * php /home/ubuntu/vueBus/laravel/artisan schedule:run >> /dev/null 2>&1
+
+# 最后 ctrl + o 保存退出即可。
+```
+
+~~6. 可选，安装 npm 扩展~~
 ```node
 # 切换到上级 app 目录下
 cd ../app
