@@ -9,6 +9,7 @@
 namespace App\Http\Repository;
 
 
+use App\Models\BusLine;
 use App\Models\Cron;
 use App\Models\CronTask;
 use Illuminate\Support\Facades\Cache;
@@ -255,15 +256,16 @@ class BusRepository
             // 车次入库操作
             foreach ($arrayData as $arrayDatum) {
                 /**
-                 * ‌array (
-                'link' => 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4&LineGuid=21aea961-b944-4b41-919f-e1e31049e254&LineInfo=158(园区综合保税区东区首末站)',
-                'bus' => '158',
-                'FromTo' => '园区综合保税区东区首末站',
-                )*/
-                // 解析 link
+                 * $arrayDatum 示例如下：
+                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21aea96***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
+                 */
+                // 解析 link 转数组操作
                 $arr = parse_url($arrayDatum['link']); // ['path' => 'APTSLine.aspx','query' => 'cid=175ecd8d-c39***']
-                parse_str($arr['query'], $array);
-
+                parse_str($arr['query'], $lines); // ['cid' => '175ec','LineGuid' => '21aea96','LineInfo' => '15**',]
+                $lines['expiration'] = time() + 180 * 24 * 3600;
+                $lines['name'] = $arrayDatum['bus'];
+                $lines['FromTo'] = $arrayDatum['FromTo'];
+                $rs = $this->saveBusLines($lines);
             }
         } else {
             // 2.1 文件存在直接读取
@@ -332,6 +334,9 @@ class BusRepository
         return ['to' => $to, 'line' => $arrayData];
     }
 
+    /**
+     * 定时任务：artisan 执行入库操作
+     */
     public function cronTaskTable()
     {
         $tasks = CronTask::where('is_task', 1)->get();
@@ -360,7 +365,6 @@ class BusRepository
             /**********************   line1  end ************************/
         }
     }
-
 
     /**
      * laravel 下的定时任务
@@ -410,13 +414,24 @@ class BusRepository
     }
 
     /**
-     * cron 表入库操作
+     * crons 表入库操作
      * @param $cron
      * @return bool
      */
     private function saveCronData($cron)
     {
         $model = new Cron($cron);
+        return $model->save();
+    }
+
+    /**
+     * bus_lines 表入库操作
+     * @param $cron
+     * @return bool
+     */
+    private function saveBusLines($lines)
+    {
+        $model = new BusLine($lines);
         return $model->save();
     }
 
