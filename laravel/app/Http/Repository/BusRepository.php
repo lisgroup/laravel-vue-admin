@@ -384,13 +384,25 @@ class BusRepository
 
     /**
      * bus_lines 表入库操作
-     * @param $cron
+     * @param array $lines
      * @return bool
      */
     private function saveBusLines($lines)
     {
-        $model = new BusLine($lines);
-        return $model->save();
+        /**
+         * 入库前需要先判断是否已经存在
+         */
+        if (!empty($lines)) {
+            $line = BusLine::where('name', $lines['name'])->where('FromTo', $lines['FromTo'])->first();
+            if (!empty($line)) {
+                $rs = BusLine::where('id', $line['id'])->update($lines);
+            } else {
+                $model = new BusLine($lines);
+                $rs = $model->save();
+            }
+            return $rs;
+        }
+        return false;
     }
 
     private function __construct($config)
