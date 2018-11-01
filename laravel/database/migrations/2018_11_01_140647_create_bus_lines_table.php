@@ -19,7 +19,7 @@ class CreateBusLinesTable extends Migration
             $table->string('cid')->default('175ecd8d-c39d-4116-83ff-109b946d7cb4')->comment('cid');
             $table->string('LineGuid')->default('')->comment('guid');
             $table->string('LineInfo')->default('')->comment('班次');
-            $table->string('FromTo')->default('')->comment('方向');
+            $table->string('FromTo')->default('')->comment('方向')->index();
             $table->integer('expiration');
             $table->timestamps();
         });
