@@ -265,7 +265,12 @@ class BusRepository
                 $lines['expiration'] = time() + 180 * 24 * 3600;
                 $lines['name'] = $arrayDatum['bus'];
                 $lines['FromTo'] = $arrayDatum['FromTo'];
-                $rs = $this->saveBusLines($lines);
+                if (!$this->saveBusLines($lines)) {
+                    // 线路入库失败的记录日志中供查询
+                    Log::error('BubLines 入库执行失败 error: 线路名称 '.$lines['LineInfo'], $lines);
+                } else {
+                    Log::info('BubLines 入库执行 success: 线路名称 '.$lines['LineInfo']);
+                }
             }
         } else {
             // 2.1 文件存在直接读取
@@ -364,53 +369,6 @@ class BusRepository
             }
             /**********************   line1  end ************************/
         }
-    }
-
-    /**
-     * laravel 下的定时任务
-     * @return int|string
-     */
-    public function getCronSave()
-    {
-        /**********************   line1  start ************************/
-        $post = [
-            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
-            'LineGuid' => 'af9b209b-f99d-4184-af7d-e6ac105d8e7f',
-            'LineInfo' => '快线1号(木渎公交换乘枢纽站)',
-        ];
-        $data = $this->getLine('APTSLine.aspx', $post)['line'];
-        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-        // 入库操作 1 ----- 木渎
-        $cron = ['line_info' => $post['LineInfo'], 'content' => $content];
-        $rs1 = $this->saveCronData($cron);
-        /**********************   line1  end ************************/
-
-        /**********************   line2  start ************************/
-        $toXingtang = [
-            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
-            'LineGuid' => '921f91ad-757e-49d6-86ae-8e5f205117be',
-            'LineInfo' => '快线1号(星塘公交中心首末站)',
-        ];
-
-        $data = $this->getLine('APTSLine.aspx', $toXingtang)['line'];
-        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-        // 入库操作 2 ----- 星塘
-        $cron = ['line_info' => $toXingtang['LineInfo'], 'content' => $content];
-        $rs2 = $this->saveCronData($cron);
-        /**********************   line2  end ************************/
-
-        if ($rs1 && $rs2) {
-            $rs = 1;
-        } elseif ($rs1 && !$rs2) {
-            $rs = 2;
-        } elseif (!$rs1 && $rs2) {
-            $rs = 3;
-        } else {
-            $rs = 4;
-        }
-        return $rs;
     }
 
     /**
