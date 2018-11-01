@@ -252,6 +252,19 @@ class BusRepository
             $fileName = $path . '/serialize_' . $line . '.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
+            // 车次入库操作
+            foreach ($arrayData as $arrayDatum) {
+                /**
+                 * ‌array (
+                'link' => 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4&LineGuid=21aea961-b944-4b41-919f-e1e31049e254&LineInfo=158(园区综合保税区东区首末站)',
+                'bus' => '158',
+                'FromTo' => '园区综合保税区东区首末站',
+                )*/
+                // 解析 link
+                $arr = parse_url($arrayDatum['link']); // ['path' => 'APTSLine.aspx','query' => 'cid=175ecd8d-c39***']
+                parse_str($arr['query'], $array);
+
+            }
         } else {
             // 2.1 文件存在直接读取
             $serialize = file_get_contents($path . '/serialize_' . $line . '.txt');//线路列表
@@ -396,6 +409,11 @@ class BusRepository
         return $rs;
     }
 
+    /**
+     * cron 表入库操作
+     * @param $cron
+     * @return bool
+     */
     private function saveCronData($cron)
     {
         $model = new Cron($cron);
