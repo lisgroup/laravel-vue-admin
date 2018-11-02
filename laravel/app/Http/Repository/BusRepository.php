@@ -30,6 +30,8 @@ class BusRepository
 
     private static $instance;
 
+    // private $cronModel;
+
     public static function getInstent($conf = [])
     {
         if (!isset(self::$instance)) {
@@ -49,13 +51,13 @@ class BusRepository
         // 2， 开始循环每个目录，查找其中的文件
         for ($month = '07'; $month < 11; $month++) {
             for ($day = '01'; $day <= 32; $day++) {
-                $dirMudu = ROOT_PATH . 'crontab/2018' . $month . $day . '/line_k1_to_mudu/';
-                $dirXing = ROOT_PATH . 'crontab/2018' . $month . $day . '/line_k1_to_xingtang_/';
+                $dirMudu = ROOT_PATH.'crontab/2018'.$month.$day.'/line_k1_to_mudu/';
+                $dirXing = ROOT_PATH.'crontab/2018'.$month.$day.'/line_k1_to_xingtang_/';
 
                 // 3. 最终遍历目录下的文件
                 for ($i = 1; $i <= 300; $i++) {
                     // 3.1 mudu 目录下的文件操作
-                    $file = $dirMudu . $i . '.html';
+                    $file = $dirMudu.$i.'.html';
                     if (file_exists($file)) {
                         /**********************   line1  start ************************/
                         // $file = 'E:\www\vueBus\php\crontab/20181001/line_k1_to_mudu/1.html';
@@ -71,7 +73,7 @@ class BusRepository
                     }
 
                     // 3.1 mudu 目录下的文件操作
-                    $file2 = $dirXing . $i . '.html';
+                    $file2 = $dirXing.$i.'.html';
                     if (file_exists($file2)) {
                         /**********************   line1  start ************************/
                         // $file = 'E:\www\vueBus\php\crontab/20181001/line_k1_to_mudu/1.html';
@@ -210,7 +212,7 @@ class BusRepository
         is_dir($path) || mkdir($path, 0777, true);
 
         // 2.0 判断是否已经有此条线路搜索
-        if ($refresh || !file_exists($path . '/serialize_' . $line . '.txt')) {
+        if ($refresh || !file_exists($path.'/serialize_'.$line.'.txt')) {
             // 1. 获取 Token
             $data = $this->getToken();
 
@@ -250,7 +252,7 @@ class BusRepository
             $arrayData = $queryList->rules($rules)->query()->getData();
             $str = serialize($arrayData->all());
             //缓存 此条线路替换a标签的数据
-            $fileName = $path . '/serialize_' . $line . '.txt';
+            $fileName = $path.'/serialize_'.$line.'.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
             // 车次入库操作
@@ -274,7 +276,7 @@ class BusRepository
             }
         } else {
             // 2.1 文件存在直接读取
-            $serialize = file_get_contents($path . '/serialize_' . $line . '.txt');//线路列表
+            $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
             $arrayData = unserialize($serialize);
         }
 
@@ -313,7 +315,7 @@ class BusRepository
         if (empty($path) || empty($get['cid']) || empty($get['LineGuid']) || empty($get['LineInfo']))
             return false;
         $paramString = http_build_query($get);
-        $url = 'http://www.szjt.gov.cn/BusQuery/' . $path . '?' . $paramString;
+        $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
         //实时公交返回的网页数据
         $queryList = QueryList::get($url);
 
@@ -373,13 +375,22 @@ class BusRepository
 
     /**
      * crons 表入库操作
-     * @param $cron
+     * @param $crons
      * @return bool
      */
-    private function saveCronData($cron)
+    private function saveCronData($crons)
     {
-        $model = new Cron($cron);
+        // 使用单例会出问题，如插入第一条后面都是更新这条数据。。
+        // if (!($this->cronModel instanceof Cron)) {
+        //     $this->cronModel = new Cron();
+        // }
+        // $model = $this->cronModel;
+        // foreach ($crons as $key => $cron) {
+        //     $model->$key = $cron;
+        // }
+        $model = new Cron($crons);
         return $model->save();
+
     }
 
     /**
