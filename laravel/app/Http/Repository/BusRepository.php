@@ -388,9 +388,9 @@ class BusRepository
         // foreach ($crons as $key => $cron) {
         //     $model->$key = $cron;
         // }
-        $model = new Cron($crons);
-        return $model->save();
-
+        // $model = new Cron($crons);
+        // return $model->save();
+        return Cron::insert($crons);
     }
 
     /**
