@@ -390,6 +390,8 @@ class BusRepository
         // }
         // $model = new Cron($crons);
         // return $model->save();
+        $day = date('Y-m-d H:i:s');
+        $crons += ['created_at' => $day, 'updated_at' => $day];
         return Cron::insert($crons);
     }
 
