@@ -14,7 +14,7 @@ use QL\QueryList;
 class TaskRepository
 {
     /**
-     * @var mixed|QueryList
+     * @var mixed|QueryList 采集类
      */
     protected $ql;
     /**
