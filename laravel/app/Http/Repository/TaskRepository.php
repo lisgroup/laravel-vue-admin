@@ -34,6 +34,17 @@ class TaskRepository
         return self::$instance;
     }
 
+
+    /**
+     * 抓取任务地址: http://bus.suzhou.bendibao.com/linelist/2.htm
+     * 目标是获取页面中所有的线路信息
+     */
+
+
+    /**
+     * TaskRepository constructor.
+     * @param $config
+     */
     private function __construct($config)
     {
         if (!empty($config)) {
