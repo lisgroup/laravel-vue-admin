@@ -23,11 +23,11 @@ class CreateLinesTable extends Migration
             $table->string('total_time', 32)->default('')->comment('全程时间');
             $table->string('via_road', 255)->default('')->comment('途经道路');
             // 站点考虑使用 elasticsearch 全文索引
-            $table->text('station')->default('')->comment('途经站点(去程)');
-            $table->text('station_back')->default('')->comment('途经站点(返程)');
+            $table->text('station')->comment('途经站点(去程)');
+            $table->text('station_back')->comment('途经站点(返程)');
             $table->string('reason', 255)->default('')->comment('编辑理由');
             $table->string('username', 64)->default('')->comment('网名');
-            $table->tinyInteger('is_show')->default('')->comment('是否审核');
+            $table->tinyInteger('is_show')->default('0')->comment('是否审核');
             $table->timestamps();
         });
     }
