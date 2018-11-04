@@ -43,7 +43,17 @@ class TaskRepository
     {
         $file = __DIR__.'/line.html';
         $html = file_get_contents($file);
-        echo $html;
+        // 手动转码
+        // $html = iconv('GBK', 'UTF-8', $html);
+        // print_r($html);
+        $ql = $this->ql->html($html);
+        // 1. 元数据采集规则
+        $rules = [
+            'line' => ['#listall li>a', 'text'],
+            'line_href' => ['#listall li>a', 'href']
+        ];
+        $result = $ql->rules($rules)->encoding('UTF-8','GB2312')->removeHead()->queryData();
+        var_dump($result);
     }
 
 
