@@ -50,10 +50,26 @@ class TaskRepository
         // 1. 元数据采集规则
         $rules = [
             'line' => ['#listall li>a', 'text'],
-            'line_href' => ['#listall li>a', 'href']
+            'href' => ['#listall li>a', 'href']
         ];
         $result = $ql->rules($rules)->encoding('UTF-8','GB2312')->removeHead()->queryData();
-        var_dump($result);
+        var_dump($result[0]);
+
+        // 2. 采集详细车次线路信息
+        $url = 'http://bus.suzhou.bendibao.com';
+        $listInfo = $this->ql->get($url.$result[0]['href']);
+        $rules = [
+            'name' => ['#rpt_Line_List_ctl00_lk_Line', 'text'],
+            'open_time' => ['#rpt_Line_List_ctl00_lb_YYSJ>span', 'text'], // 营运时间
+            'depart_time' => ['#rpt_Line_List_ctl00_lb_FCJG>span', 'text'], // 发车间隔
+            'price' => ['#rpt_Line_List_ctl00_lb_Price>span', 'text'],
+            'company' => ['#rpt_Line_List_ctl00_lb_ComName>span', 'text'], // 公交公司
+            'station' => ['#rpt_Line_List_ctl00_lb_StationAll1', 'text'], // 去程
+            'station_back' => ['#rpt_Line_List_ctl00_lb_StationAll2', 'text'], // 返程
+            'last_update' => ['#rpt_Line_List_ctl00_lb_UpdateTime', 'text'], // 最后更新日期
+        ];
+        $rs = $listInfo->rules($rules)->encoding('UTF-8', 'GB2312')->removeHead()->queryData();
+        var_dump($rs);
     }
 
 
