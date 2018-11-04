@@ -70,6 +70,7 @@ class TaskRepository
         ];
         $rs = $listInfo->rules($rules)->encoding('UTF-8', 'GB2312')->removeHead()->queryData();
         var_dump($rs);
+
     }
 
 
