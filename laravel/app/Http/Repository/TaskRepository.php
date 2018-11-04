@@ -39,6 +39,12 @@ class TaskRepository
      * 抓取任务地址: http://bus.suzhou.bendibao.com/linelist/2.htm
      * 目标是获取页面中所有的线路信息
      */
+    public function lineList()
+    {
+        $file = __DIR__.'/line.html';
+        $html = file_get_contents($file);
+        echo $html;
+    }
 
 
     /**
