@@ -43,8 +43,9 @@ class TaskRepository
      */
     public function lineList()
     {
-        return ['code' => 0, 'msg' => 'success'];
-
+        if (PHP_SAPI != 'cli') {
+            return ['code' => 1, 'msg' => 'error'];
+        }
         $file = __DIR__.'/line.html';
         $html = file_get_contents($file);
         // 手动转码
