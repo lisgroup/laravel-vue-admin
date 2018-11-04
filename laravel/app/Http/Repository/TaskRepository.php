@@ -9,6 +9,8 @@
 namespace App\Http\Repository;
 
 
+use App\Models\Line;
+use Illuminate\Support\Facades\Log;
 use QL\QueryList;
 
 class TaskRepository
@@ -41,6 +43,8 @@ class TaskRepository
      */
     public function lineList()
     {
+        return ['code' => 0, 'msg' => 'success'];
+
         $file = __DIR__.'/line.html';
         $html = file_get_contents($file);
         // 手动转码
@@ -52,25 +56,56 @@ class TaskRepository
             'line' => ['#listall li>a', 'text'],
             'href' => ['#listall li>a', 'href']
         ];
-        $result = $ql->rules($rules)->encoding('UTF-8','GB2312')->removeHead()->queryData();
-        var_dump($result[0]);
+        $result = $ql->rules($rules)->encoding('UTF-8', 'GB2312')->removeHead()->queryData();
+        // var_dump($result[0]);exit();
 
         // 2. 采集详细车次线路信息
         $url = 'http://bus.suzhou.bendibao.com';
-        $listInfo = $this->ql->get($url.$result[0]['href']);
-        $rules = [
-            'name' => ['#rpt_Line_List_ctl00_lk_Line', 'text'],
-            'open_time' => ['#rpt_Line_List_ctl00_lb_YYSJ>span', 'text'], // 营运时间
-            'depart_time' => ['#rpt_Line_List_ctl00_lb_FCJG>span', 'text'], // 发车间隔
-            'price' => ['#rpt_Line_List_ctl00_lb_Price>span', 'text'],
-            'company' => ['#rpt_Line_List_ctl00_lb_ComName>span', 'text'], // 公交公司
-            'station' => ['#rpt_Line_List_ctl00_lb_StationAll1', 'text'], // 去程
-            'station_back' => ['#rpt_Line_List_ctl00_lb_StationAll2', 'text'], // 返程
-            'last_update' => ['#rpt_Line_List_ctl00_lb_UpdateTime', 'text'], // 最后更新日期
-        ];
-        $rs = $listInfo->rules($rules)->encoding('UTF-8', 'GB2312')->removeHead()->queryData();
-        var_dump($rs);
+        foreach ($result as $value) {
+            $listInfo = $this->ql->get($url.$value['href']);
+            $try = 1;
+            // 如果获取数据失败，再尝试2次
+            while (empty($listInfo)) {
+                if ($try >= 3) {
+                    break;
+                }
+                $listInfo = $this->ql->get($url.$value['href']);
 
+                $try++;
+            }
+
+            $rules = [
+                'name' => ['#rpt_Line_List_ctl00_lk_Line', 'text'],
+                'open_time' => ['#rpt_Line_List_ctl00_lb_YYSJ>span', 'text'], // 营运时间
+                'depart_time' => ['#rpt_Line_List_ctl00_lb_FCJG>span', 'text'], // 发车间隔
+                'price' => ['#rpt_Line_List_ctl00_lb_Price>span', 'text'],
+                'company' => ['#rpt_Line_List_ctl00_lb_ComName>span', 'text'], // 公交公司
+                'station' => ['#rpt_Line_List_ctl00_lb_StationAll1', 'text'], // 去程
+                'station_back' => ['#rpt_Line_List_ctl00_lb_StationAll2', 'text'], // 返程
+                'last_update' => ['#rpt_Line_List_ctl00_lb_UpdateTime', 'text'], // 最后更新日期
+            ];
+            $rs = $listInfo->rules($rules)->encoding('UTF-8', 'GB2312')->removeHead()->queryData();
+            if (!empty($rs)) {
+                $line = $rs[0];
+                $line['station'] = str_replace([" ", "　", "\n", "\r", "\t"], ['', '', '', '', ''], $line['station']);
+                $line['station_back'] = str_replace([" ", "　", "\n", "\r", "\t"], ['', '', '', '', ''], $line['station_back']);
+                // 抓取的数据入库操作
+                // $model = new Line($line);
+                // $model->save();
+                $day = date('Y-m-d H:i:s');
+                $line += ['created_at' => $day, 'updated_at' => $day];
+
+                if (Line::insert($line)) {
+                    Log::info('Lines 入库执行 success: 线路名称 '.$line['name']);
+                } else {
+                    Log::error('Lines 入库执行失败 error: 线路名称 '.$line['name'], $line);
+                }
+            }
+            // sleep 200ms
+            usleep(200000);
+
+        }
+        return ['code' => 0, 'msg' => 'success'];
     }
 
 

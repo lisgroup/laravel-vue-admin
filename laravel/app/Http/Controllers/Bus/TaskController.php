@@ -19,7 +19,7 @@ class TaskController extends CommonController
      */
     public function index()
     {
-        TaskRepository::getInstent()->lineList();
+        return TaskRepository::getInstent()->lineList();
     }
 
 }
