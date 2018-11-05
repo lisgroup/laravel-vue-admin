@@ -56,7 +56,7 @@ class LineTask extends Command
 
         }
         if ($result['msg']) {
-            echo $result['msg'];
+            echo $result['msg'].PHP_EOL;
         }
         return true;
     }

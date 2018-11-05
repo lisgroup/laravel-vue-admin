@@ -46,12 +46,15 @@ class TaskRepository
         if (PHP_SAPI != 'cli') {
             return ['code' => 1, 'msg' => 'error'];
         }
+
         $file = __DIR__.'/line.html';
         $html = file_get_contents($file);
         // 手动转码
         // $html = iconv('GBK', 'UTF-8', $html);
         // print_r($html);
         $ql = $this->ql->html($html);
+        $url = 'http://bus.suzhou.bendibao.com/linelist/2.htm';
+        $ql = $this->ql->get($url);
         // 1. 元数据采集规则
         $rules = [
             'line' => ['#listall li>a', 'text'],
