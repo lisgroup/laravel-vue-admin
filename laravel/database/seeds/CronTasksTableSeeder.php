@@ -11,6 +11,7 @@ class CronTasksTableSeeder extends Seeder
      */
     public function run()
     {
+        $dateTime = date('Y-m-d H:i:s');
         DB::table('cron_tasks')->insert([
             [
                 'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
@@ -18,6 +19,8 @@ class CronTasksTableSeeder extends Seeder
                 'LineInfo' => '快线1号(星塘公交中心)',
                 'start_at' => '05:00:00',
                 'end_at' => '23:10:00',
+                'created_at' => $dateTime,
+                'updated_at' => $dateTime,
             ],
             [
                 'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
@@ -25,6 +28,8 @@ class CronTasksTableSeeder extends Seeder
                 'LineInfo' => '快线1号(木渎公交换乘枢纽站)',
                 'start_at' => '05:00:00',
                 'end_at' => '23:10:00',
+                'created_at' => $dateTime,
+                'updated_at' => $dateTime,
             ]
         ]);
     }
