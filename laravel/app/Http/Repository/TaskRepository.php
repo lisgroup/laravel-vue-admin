@@ -96,10 +96,22 @@ class TaskRepository
                 // $model = new Line($line);
                 // $model->save();
                 $day = date('Y-m-d H:i:s');
-                $line += ['created_at' => $day, 'updated_at' => $day];
+                // 2. 插入前判断是否已经存在该线路
+                $getLine = Line::where('name', $line['name'])->get();
+                if ($getLine) {
+                    // 2.1 update 操作
+                    $line += ['updated_at' => $day];
+                    if (Line::where('id', $getLine['id'])->update($line)) {
+                        Log::info('Lines 更新执行成功 success: 线路名称 '.$line['name']);
+                    } else {
+                        Log::error('Lines 更新执行失败 error: 线路名称 '.$line['name'], $line);
+                    }
+                }
 
+                // 2.2 插入操作
+                $line += ['created_at' => $day, 'updated_at' => $day];
                 if (Line::insert($line)) {
-                    Log::info('Lines 入库执行 success: 线路名称 '.$line['name']);
+                    Log::info('Lines 入库执行成功 success: 线路名称 '.$line['name']);
                 } else {
                     Log::error('Lines 入库执行失败 error: 线路名称 '.$line['name'], $line);
                 }

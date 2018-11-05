@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @method bool save()
  * @method Line insert($data)
+ * @method Line $this where($args, $where)
  * @method Line get($data, $args = null,$otherArgs = [])
  * @method Line find($data, $args = null,$otherArgs = [])
  * @method Line use($plugins,...$opt)
