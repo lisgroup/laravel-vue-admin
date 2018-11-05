@@ -19,6 +19,8 @@ Route::get('/', function () {
 Route::get('search', function () {
     // 为查看方便都转成数组
     dump(Cron::all()->toArray());
+    $list = \App\Models\Line::search('钱万里桥北')->get()->toArray();
+    dump($list);
 });
 
 Route::any('/api/_token', function() {

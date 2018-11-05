@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 /**
  * Class Line
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Line extends Model
 {
+    use Searchable;
+
     /**
      * 与模型关联的数据表
      *
@@ -24,4 +27,14 @@ class Line extends Model
      */
     // protected $table = 'lines';
     protected $fillable = ['name', 'open_time', 'depart_time', 'price', 'company', 'station', 'station_back', 'last_update'];
+
+    /**
+     * 索引的字段
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return $this->only('id', 'name', 'station');
+    }
 }
