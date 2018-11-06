@@ -1,7 +1,7 @@
 ## 安装方法：
 为了方便自己使用，已经讲打包好的代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
-1. 安装 php 环境 (必须)
+### 1. 安装 php 环境 (必须)
 ```php
 git clone https://gitee.com/lisgroup/vueBus.git
 cd vueBus/laravel
@@ -9,7 +9,7 @@ composer install
 cp .env.example .env
 ```
 
-2. 配置项修改 .env 文件数据库
+### 2. 配置项修改 .env 文件数据库
 ```php
 # 修改数据库配置
 DB_CONNECTION=mysql
@@ -26,14 +26,32 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
 
-3. 运行数据迁移和填充
+### 3. 运行数据迁移和填充
 ```php
 php artisan migrate
 php artisan make:seed CronTasksTableSeeder
 php artisan db:seed --class=CronTasksTableSeeder
 ```
+### ~~4. # 支持中文全文索引~~
 
-4. 启动 laravels 服务监听 5200 端口
+**两种模式** 
+
+#### 4.1.1 开启 elasticsearch 模式
+
+安装请参考： [Ubuntu 安装 elasticsearch 和 analysis-ik 插件](https://note.youdao.com/share/?id=a8fc19ff5dbdf5fcb706957166dba376&type=note#/)
+
+#### 4.1.2 启动 elasticsearch 服务后
+
+#### 4.1.3 在 `.env` 文件中增加配置项；
+```bash
+SCOUT_DRIVER=elasticsearch
+```
+#### 4.1.4 生成索引；
+```php
+php artisan elasticsearch:import "App\Models\Line"
+```
+
+### 5. 启动 laravels 服务监听 5200 端口
 ```php
 php artisan laravels start -d
 ```
