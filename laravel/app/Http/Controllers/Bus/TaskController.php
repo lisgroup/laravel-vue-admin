@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Bus;
 
 
 use App\Http\Repository\TaskRepository;
+use Illuminate\Http\Request;
 
 class TaskController extends CommonController
 {
@@ -20,6 +21,13 @@ class TaskController extends CommonController
     public function index()
     {
         return TaskRepository::getInstent()->lineList();
+    }
+
+    public function api(Request $request)
+    {
+        $post = $request->getContent();
+        $data = json_decode($post, true);
+        return $data;
     }
 
 }

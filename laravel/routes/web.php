@@ -42,4 +42,5 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
 /******** 测试任务的接口地址 *********/
 Route::group(['namespace' => 'Bus', 'prefix' => 'task'], function () {
     Route::get('index', 'TaskController@index');
+    Route::any('api', 'TaskController@api');
 });
