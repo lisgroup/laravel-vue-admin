@@ -186,7 +186,7 @@ php artisan db:seed --class=CronTasksTableSeeder
 ```
 
 3. 添加路由
-```
+
 /routes/web.php
 ```
 <?php
@@ -202,3 +202,17 @@ Route::get('search', function () {
 ## 待完成工作
 1. 查询的公交线路存入数据库保存。（目前保存在文件中）
 
+
+## Laravel使用 iseed 扩展导出表数据
+iseed地址： [https://github.com/orangehill/iseed](https://github.com/orangehill/iseed)
+
+### iseed 安装
+```
+composer require orangehill/iseed
+```
+
+### 使用方法
+如生成 lines 表的 seeder 文件:
+```
+php artisan iseed lines
+```
