@@ -173,10 +173,10 @@ class BusRepository
             try {
                 $queryList = QueryList::get($this->url, [], [
                     //设置超时时间，单位：秒
-                    'timeout' => 2,
+                    'timeout' => 5,
                 ]);
             } catch (\Exception $e) {
-                Log::error('Token 获取失败： 网络超时, ', ['message' => $e->getMessage()]);
+                Log::error('Token 获取失败 error 网络超时: '.$this->url, ['message' => $e->getMessage()]);
                 return [];
             }
 
@@ -327,10 +327,15 @@ class BusRepository
         $paramString = http_build_query($get);
         $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
         //实时公交返回的网页数据
-        $queryList = QueryList::get($url, [], [
-            //设置超时时间，单位：秒
-            'timeout' => 5,
-        ]);
+        try {
+            $queryList = QueryList::get($url, [], [
+                //设置超时时间，单位：秒
+                'timeout' => 5,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('busLine 获取失败; error: 网络超时 URL: '.$url, ['message' => $e->getMessage()]);
+            return [];
+        }
 
         /*$rules = [
             'to' => ['#MainContent_LineInfo', 'text'],  //方向

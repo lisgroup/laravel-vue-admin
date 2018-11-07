@@ -37,7 +37,8 @@ class TaskController extends CommonController
 
     public function line()
     {
-        TaskRepository::getInstent()->lineTask();
+        $result = TaskRepository::getInstent()->lineTask();
+        return $result;
     }
 
 }
