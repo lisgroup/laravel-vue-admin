@@ -14,6 +14,7 @@ use App\Models\Cron;
 use App\Models\CronTask;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use QL\QueryList;
 
@@ -41,7 +42,7 @@ class BusRepository
     }
 
     /**
-     * 处理以前存储的数据 Task
+     * 历史遗留：处理以前存储的 HTML 文件数据 Task
      * @return int
      */
     public function busTask()
@@ -67,7 +68,7 @@ class BusRepository
 
                         // 入库操作1 ----- 木渎  '快线1号(星塘公交中心首末站)';
                         $date = date('Y-m-d H:i:s', filemtime($file));
-                        $rs1 = db('cronlist')->insert(['line_info' => '快线1号(木渎公交换乘枢纽站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        $rs1 = DB::table('cronlist')->insert(['line_info' => '快线1号(木渎公交换乘枢纽站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
                         usleep(10000);
                         /**********************   line1  end ************************/
                     }
@@ -83,7 +84,7 @@ class BusRepository
 
                         // 入库操作1 ----- 木渎  '快线1号(星塘公交中心首末站)';
                         $date = date('Y-m-d H:i:s', filemtime($file2));
-                        $rs2 = db('cronlist')->insert(['line_info' => '快线1号(星塘公交中心首末站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        $rs2 = DB::table('cronlist')->insert(['line_info' => '快线1号(星塘公交中心首末站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
                         usleep(10000);
                         /**********************   line1  end ************************/
                     }
