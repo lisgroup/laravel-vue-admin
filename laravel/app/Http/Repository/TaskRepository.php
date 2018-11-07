@@ -137,8 +137,8 @@ class TaskRepository
         $name = '1001路（景城邻里中心首末站 - 景城邻里中心首末站）';
         $name = str_replace(['路'], [''], mb_substr($name, 0, mb_strpos($name, '（')));
         $result = BusRepository::getInstent()->getList($name);
-        dump($result);
-
+        // dump($result);
+        return $result;
         // 1. 读取数据
         // Line::chunk(100, function($lines) {
         //     foreach ($lines as $key => $line) {

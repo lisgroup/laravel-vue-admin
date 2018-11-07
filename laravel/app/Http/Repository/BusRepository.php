@@ -170,7 +170,16 @@ class BusRepository
              * $html = httpGet($this->url);
              * $arrayData = $this->ql->html($html)->rules($rules)->query()->getData();
              */
-            $queryList = QueryList::get($this->url);
+            try {
+                $queryList = QueryList::get($this->url, [], [
+                    //设置超时时间，单位：秒
+                    'timeout' => 2,
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Token 获取失败： 网络超时, ', ['message' => $e->getMessage()]);
+                return [];
+            }
+
 
             // 1.2 自定义采集规则
             $rules = [
@@ -318,7 +327,10 @@ class BusRepository
         $paramString = http_build_query($get);
         $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
         //实时公交返回的网页数据
-        $queryList = QueryList::get($url);
+        $queryList = QueryList::get($url, [], [
+            //设置超时时间，单位：秒
+            'timeout' => 5,
+        ]);
 
         /*$rules = [
             'to' => ['#MainContent_LineInfo', 'text'],  //方向
