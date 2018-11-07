@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Models\Cron;
 
 Route::get('/', function () {
     return view('welcome');
