@@ -198,6 +198,19 @@ Route::get('search', function () {
 });
 ```
 
+4. 定时任务和创建命令相关
+启动定时任务
+```shell
+# 使用 crontab 的定时任务调用 php artisan 调度任务：
+crontab -e
+
+# 追加如下内容： 
+
+* * * * * php /home/ubuntu/vueBus/laravel/artisan schedule:run >> /dev/null 2>&1
+
+# 最后 ctrl + o 保存退出即可。
+```
+
 
 ## 待完成工作
 1. 查询的公交线路存入数据库保存。（目前保存在文件中）
