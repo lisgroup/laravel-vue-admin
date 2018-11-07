@@ -42,4 +42,5 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
 Route::group(['namespace' => 'Bus', 'prefix' => 'task'], function () {
     Route::get('index', 'TaskController@index');
     Route::any('api', 'TaskController@api');
+    Route::any('line', 'TaskController@line');
 });

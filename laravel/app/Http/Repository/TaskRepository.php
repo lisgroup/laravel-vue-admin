@@ -132,6 +132,25 @@ class TaskRepository
     }
 
 
+    public function lineTask()
+    {
+        $name = '1001路（景城邻里中心首末站 - 景城邻里中心首末站）';
+        $name = str_replace(['路'], [''], mb_substr($name, 0, mb_strpos($name, '（')));
+        $result = BusRepository::getInstent()->getList($name);
+        dump($result);
+
+        // 1. 读取数据
+        // Line::chunk(100, function($lines) {
+        //     foreach ($lines as $key => $line) {
+        //         // 1001路（景城邻里中心首末站 - 景城邻里中心首末站）
+        //         $name = str_replace(['路'], [''], mb_substr($line->name, 0, mb_strpos($line['name'], '（')));
+        //         echo $name.'<br>';
+        //         // dump($key, $line->name);
+        //     }
+        // });
+    }
+
+
     /**
      * TaskRepository constructor.
      * @param $config

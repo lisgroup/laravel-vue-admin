@@ -23,11 +23,21 @@ class TaskController extends CommonController
         return TaskRepository::getInstent()->lineList();
     }
 
+    /**
+     * 测试发送 json 格式数据参数接收
+     * @param Request $request
+     * @return mixed
+     */
     public function api(Request $request)
     {
         $post = $request->getContent();
         $data = json_decode($post, true);
         return $data;
+    }
+
+    public function line()
+    {
+        TaskRepository::getInstent()->lineTask();
     }
 
 }
