@@ -277,6 +277,14 @@ class BusRepository
             // 2.1 文件存在直接读取
             $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
             $arrayData = unserialize($serialize);
+            // 车次入库操作
+            foreach ($arrayData as $arrayDatum) {
+                /**
+                 * $arrayDatum 示例如下：
+                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
+                 */
+                $this->handleLinkToBusLines($arrayDatum);
+            }
         }
 
         return $arrayData;
