@@ -137,22 +137,23 @@ class TaskRepository
      * 作用： 为以后直接查询实时公交提供方便
      * @return array
      */
-    public function line()
+    public static function line()
     {
-        $name = '1002路（景城邻里中心首末站 - 景城邻里中心首末站）';
-        $name = str_replace(['路'], [''], mb_substr($name, 0, mb_strpos($name, '（')));
-        $result = BusRepository::getInstent()->getList($name);
-        // dump($result);
-        return $result;
+        if (PHP_SAPI != 'cli') {
+            return ['code' => 1, 'msg' => 'error'];
+        }
+
         // 1. 读取数据
-        // Line::chunk(100, function($lines) {
-        //     foreach ($lines as $key => $line) {
-        //         // 1001路（景城邻里中心首末站 - 景城邻里中心首末站）
-        //         $name = str_replace(['路'], [''], mb_substr($line->name, 0, mb_strpos($line['name'], '（')));
-        //         echo $name.'<br>';
-        //         // dump($key, $line->name);
-        //     }
-        // });
+        Line::chunk(100, function($lines) {
+            foreach ($lines as $key => $line) {
+                // 1001路（景城邻里中心首末站 - 景城邻里中心首末站）
+                $name = str_replace(['路'], [''], mb_substr($line->name, 0, mb_strpos($line['name'], '（')));
+                echo $name.PHP_EOL;
+                BusRepository::getInstent()->getList($name);
+                usleep(100000);
+            }
+        });
+        return ['code' => 0, 'msg' => 'success'];
     }
 
 

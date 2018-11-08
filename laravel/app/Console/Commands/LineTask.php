@@ -49,7 +49,7 @@ class LineTask extends Command
                 break;
             default:
                 if (is_callable([$repository, $param])) {
-                    $result = $repository->$param;
+                    $result = $repository->$param();
                 } else {
                     return false;
                 }

@@ -37,8 +37,26 @@ class TaskController extends CommonController
 
     public function line()
     {
-        $result = TaskRepository::getInstent()->line();
+        // 入口方法
+        $param = 'line';
+        $repository = TaskRepository::getInstent();
+        switch ($param) {
+            // case '':
+            case 'index':
+                $result = $repository->lineList();
+                break;
+            default:
+                if (is_callable([$repository, $param])) {
+                    $result = $repository->$param();
+                } else {
+                    return 'error: required param';
+                }
+
+        }
         return $result;
+
+        // $result = TaskRepository::getInstent()->lineTask();
+        // return $result;
     }
 
 }
