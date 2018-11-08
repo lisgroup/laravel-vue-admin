@@ -19,7 +19,7 @@ class LineTask extends Command
      *
      * @var string
      */
-    protected $description = 'To perform the specified line task, use the following parameters: --param={$taskName}; Default:index';
+    protected $description = 'To perform the specified line task, use the following parameters: php artisan line:task {$taskName}';
 
     /**
      * Create a new command instance.
@@ -43,7 +43,7 @@ class LineTask extends Command
         // $param2 = $this->option('param2'); // 用--开头指定参数名
         $repository = TaskRepository::getInstent();
         switch ($param) {
-            case '':
+            // case '':
             case 'index':
                 $result = $repository->lineList();
                 break;
