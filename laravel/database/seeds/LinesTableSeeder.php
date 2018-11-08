@@ -35,7 +35,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:19',
-                'updated_at' => '2018-11-04 19:43:19',
+                'updated_at' => '2018-11-07 10:10:10',
             ),
             1 => 
             array (
@@ -55,7 +55,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:30',
-                'updated_at' => '2018-11-04 19:43:30',
+                'updated_at' => '2018-11-07 10:10:10',
             ),
             2 => 
             array (
@@ -75,7 +75,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:42',
-                'updated_at' => '2018-11-04 19:43:42',
+                'updated_at' => '2018-11-07 10:10:11',
             ),
             3 => 
             array (
@@ -95,7 +95,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:42',
-                'updated_at' => '2018-11-04 19:43:42',
+                'updated_at' => '2018-11-07 10:10:11',
             ),
             4 => 
             array (
@@ -115,7 +115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:43',
-                'updated_at' => '2018-11-04 19:43:43',
+                'updated_at' => '2018-11-07 10:10:12',
             ),
             5 => 
             array (
@@ -135,7 +135,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:43',
-                'updated_at' => '2018-11-04 19:43:43',
+                'updated_at' => '2018-11-07 10:10:12',
             ),
             6 => 
             array (
@@ -155,7 +155,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:43',
-                'updated_at' => '2018-11-04 19:43:43',
+                'updated_at' => '2018-11-07 10:10:12',
             ),
             7 => 
             array (
@@ -175,7 +175,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:43',
-                'updated_at' => '2018-11-04 19:43:43',
+                'updated_at' => '2018-11-07 10:10:13',
             ),
             8 => 
             array (
@@ -195,7 +195,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:43',
-                'updated_at' => '2018-11-04 19:43:43',
+                'updated_at' => '2018-11-07 10:10:13',
             ),
             9 => 
             array (
@@ -215,7 +215,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:44',
-                'updated_at' => '2018-11-04 19:43:44',
+                'updated_at' => '2018-11-07 10:10:13',
             ),
             10 => 
             array (
@@ -235,7 +235,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:48',
-                'updated_at' => '2018-11-04 19:43:48',
+                'updated_at' => '2018-11-07 10:10:14',
             ),
             11 => 
             array (
@@ -255,7 +255,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:48',
-                'updated_at' => '2018-11-04 19:43:48',
+                'updated_at' => '2018-11-07 10:10:14',
             ),
             12 => 
             array (
@@ -275,7 +275,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:48',
-                'updated_at' => '2018-11-04 19:43:48',
+                'updated_at' => '2018-11-07 10:10:14',
             ),
             13 => 
             array (
@@ -295,7 +295,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:49',
-                'updated_at' => '2018-11-04 19:43:49',
+                'updated_at' => '2018-11-07 10:10:15',
             ),
             14 => 
             array (
@@ -315,7 +315,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:49',
-                'updated_at' => '2018-11-04 19:43:49',
+                'updated_at' => '2018-11-07 10:10:15',
             ),
             15 => 
             array (
@@ -335,7 +335,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:50',
-                'updated_at' => '2018-11-04 19:43:50',
+                'updated_at' => '2018-11-07 10:10:15',
             ),
             16 => 
             array (
@@ -355,7 +355,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:50',
-                'updated_at' => '2018-11-04 19:43:50',
+                'updated_at' => '2018-11-07 10:10:16',
             ),
             17 => 
             array (
@@ -375,7 +375,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:50',
-                'updated_at' => '2018-11-04 19:43:50',
+                'updated_at' => '2018-11-07 10:10:16',
             ),
             18 => 
             array (
@@ -395,7 +395,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:51',
-                'updated_at' => '2018-11-04 19:43:51',
+                'updated_at' => '2018-11-07 10:10:16',
             ),
             19 => 
             array (
@@ -415,7 +415,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:51',
-                'updated_at' => '2018-11-04 19:43:51',
+                'updated_at' => '2018-11-07 10:10:17',
             ),
             20 => 
             array (
@@ -435,7 +435,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:51',
-                'updated_at' => '2018-11-04 19:43:51',
+                'updated_at' => '2018-11-07 10:10:17',
             ),
             21 => 
             array (
@@ -455,7 +455,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:51',
-                'updated_at' => '2018-11-04 19:43:51',
+                'updated_at' => '2018-11-07 10:10:18',
             ),
             22 => 
             array (
@@ -475,7 +475,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:52',
-                'updated_at' => '2018-11-04 19:43:52',
+                'updated_at' => '2018-11-07 10:10:18',
             ),
             23 => 
             array (
@@ -495,7 +495,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:52',
-                'updated_at' => '2018-11-04 19:43:52',
+                'updated_at' => '2018-11-07 10:10:18',
             ),
             24 => 
             array (
@@ -515,7 +515,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:52',
-                'updated_at' => '2018-11-04 19:43:52',
+                'updated_at' => '2018-11-07 10:10:19',
             ),
             25 => 
             array (
@@ -535,7 +535,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:52',
-                'updated_at' => '2018-11-04 19:43:52',
+                'updated_at' => '2018-11-07 10:10:19',
             ),
             26 => 
             array (
@@ -555,7 +555,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:52',
-                'updated_at' => '2018-11-04 19:43:52',
+                'updated_at' => '2018-11-07 10:10:19',
             ),
             27 => 
             array (
@@ -575,7 +575,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:53',
-                'updated_at' => '2018-11-04 19:43:53',
+                'updated_at' => '2018-11-07 10:10:20',
             ),
             28 => 
             array (
@@ -595,7 +595,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:53',
-                'updated_at' => '2018-11-04 19:43:53',
+                'updated_at' => '2018-11-07 10:10:20',
             ),
             29 => 
             array (
@@ -615,7 +615,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:53',
-                'updated_at' => '2018-11-04 19:43:53',
+                'updated_at' => '2018-11-07 10:10:20',
             ),
             30 => 
             array (
@@ -635,7 +635,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:53',
-                'updated_at' => '2018-11-04 19:43:53',
+                'updated_at' => '2018-11-07 10:10:21',
             ),
             31 => 
             array (
@@ -655,7 +655,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:55',
-                'updated_at' => '2018-11-04 19:43:55',
+                'updated_at' => '2018-11-07 10:10:21',
             ),
             32 => 
             array (
@@ -675,7 +675,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:56',
-                'updated_at' => '2018-11-04 19:43:56',
+                'updated_at' => '2018-11-07 10:10:22',
             ),
             33 => 
             array (
@@ -695,7 +695,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:56',
-                'updated_at' => '2018-11-04 19:43:56',
+                'updated_at' => '2018-11-07 10:10:22',
             ),
             34 => 
             array (
@@ -715,7 +715,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:56',
-                'updated_at' => '2018-11-04 19:43:56',
+                'updated_at' => '2018-11-07 10:10:22',
             ),
             35 => 
             array (
@@ -735,7 +735,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:56',
-                'updated_at' => '2018-11-04 19:43:56',
+                'updated_at' => '2018-11-07 10:10:23',
             ),
             36 => 
             array (
@@ -755,7 +755,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:57',
-                'updated_at' => '2018-11-04 19:43:57',
+                'updated_at' => '2018-11-07 10:10:23',
             ),
             37 => 
             array (
@@ -803,19 +803,19 @@ class LinesTableSeeder extends Seeder
                 'name' => '138路（湖畔花园首末站 - 国泰三村南门）',
                 'price' => '2元',
                 'car_type' => '大巴',
-                'depart_time' => '高峰12分、平峰25分',
-                'open_time' => '国泰三村南门首末站 06：00-21：00|阳澄湖大码头首末站 06：00-21：00',
+                'depart_time' => '13~20分钟',
+                'open_time' => '湖畔花园首末站 06:00:00~21:00:00；国泰三村南门 06:00:00~21:00:00',
                 'total_time' => '',
                 'via_road' => '',
-                'company' => '',
-                'station' => '湖畔花园首末站-湖畔花园首末站-新城邻里中心东-新城邻里中心东-星海街现代大道-星海街现代大道-都市花园-都市花园南-都市花园南-国际大厦-苏州中心北-国际大厦-香樟园-中茵皇冠-湖滨大道-湖滨大道-星港街荠桥-星港街荠桥-李公堤-李公堤-御湖熙岸-御湖熙岸-城邦花园东-城邦花园东-城邦花园南-城邦花园南-高和路南-高和路南-东振路东-星港街东振路南-塘北社区-塘北社区-塘北居委会-塘北居委会-鑫苑湖岸名家-鑫苑湖岸名家-南浜桥-南浜桥-塘南新村北-塘南新村北-通达路-通达路-塘南村-塘南村-独墅村-独墅村-醒湖路东方大道南-醒湖路东方大道南-醒湖路尹山湖东路西-醒湖路尹山湖东路西-醒湖路郭巷北路东-醒湖路郭巷北路东-国泰三村-国泰三村-国泰三村南门-国泰三村南门',
-                'station_back' => '国泰三村南门-国泰三村南门-国泰三村-醒湖路郭巷北路东-醒湖路尹山湖东路西-醒湖路郭巷北路东-醒湖路尹山湖东路西-醒湖路东方大道南-醒湖路东方大道南-独墅村-独墅村-塘南村-塘南村-通达路-塘南新村北-通达路-塘南新村北-南浜桥-南浜桥-鑫苑湖岸名家-鑫苑湖岸名家-塘北居委会-塘北居委会-塘北社区-塘北社区-东振路东-东振路东-高和路南-高和路南-城邦花园南-城邦花园东-城邦花园南-城邦花园东-御湖熙岸-御湖熙岸-李公堤-李公堤-星港街荠桥-星港街荠桥-湖滨大道-湖滨大道-香樟园-中茵皇冠-苏州中心北-国际大厦-国际大厦-都市花园-都市花园南-都市花园-新城邻里中心东-星海街现代大道-湖畔花园首末站-新城邻里中心东-湖畔花园首末站',
+                'company' => '苏州工业园区公共交通有限公司',
+                'station' => '湖畔花园首末站-新城邻里中心东-星海街现代大道-都市花园南-国际大厦-苏州中心北-香樟园-湖滨大道-星港街荠桥-李公堤-御湖熙岸-城邦花园东-城邦花园南-高和路南-星港街东振路南-塘北社区-塘北居委会-鑫苑湖岸名家-南浜桥-塘南新村北-通达路-塘南村-独墅村-醒湖路东方大道南-醒湖路尹山湖东路西-醒湖路郭巷北路东-国泰三村-国泰三村南门',
+                'station_back' => '国泰三村南门-醒湖路郭巷北路东-醒湖路尹山湖东路西-醒湖路东方大道南-独墅村-塘南村-通达路-塘南新村北-南浜桥-鑫苑湖岸名家-塘北居委会-塘北社区-东振路东-高和路南-城邦花园南-城邦花园东-御湖熙岸-李公堤-星港街荠桥-湖滨大道-香樟园-苏州中心北-国际大厦-都市花园-新城邻里中心东-湖畔花园首末站',
                 'reason' => '',
                 'username' => '',
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:43:57',
-                'updated_at' => '2018-11-04 19:43:57',
+                'updated_at' => '2018-11-07 10:10:24',
             ),
             40 => 
             array (
@@ -835,7 +835,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:44:29',
-                'updated_at' => '2018-11-04 19:44:29',
+                'updated_at' => '2018-11-07 10:10:25',
             ),
             41 => 
             array (
@@ -855,7 +855,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:44:29',
-                'updated_at' => '2018-11-04 19:44:29',
+                'updated_at' => '2018-11-07 10:10:25',
             ),
             42 => 
             array (
@@ -875,7 +875,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:44:29',
-                'updated_at' => '2018-11-04 19:44:29',
+                'updated_at' => '2018-11-07 10:10:25',
             ),
             43 => 
             array (
@@ -895,7 +895,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:00',
-                'updated_at' => '2018-11-04 19:45:00',
+                'updated_at' => '2018-11-07 10:10:26',
             ),
             44 => 
             array (
@@ -915,7 +915,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:01',
-                'updated_at' => '2018-11-04 19:45:01',
+                'updated_at' => '2018-11-07 10:10:26',
             ),
             45 => 
             array (
@@ -935,7 +935,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:01',
-                'updated_at' => '2018-11-04 19:45:01',
+                'updated_at' => '2018-11-07 10:10:27',
             ),
             46 => 
             array (
@@ -955,7 +955,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:01',
-                'updated_at' => '2018-11-04 19:45:01',
+                'updated_at' => '2018-11-07 10:10:27',
             ),
             47 => 
             array (
@@ -975,7 +975,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:01',
-                'updated_at' => '2018-11-04 19:45:01',
+                'updated_at' => '2018-11-07 10:10:27',
             ),
             48 => 
             array (
@@ -995,7 +995,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:02',
-                'updated_at' => '2018-11-04 19:45:02',
+                'updated_at' => '2018-11-07 10:10:28',
             ),
             49 => 
             array (
@@ -1015,7 +1015,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:03',
-                'updated_at' => '2018-11-04 19:45:03',
+                'updated_at' => '2018-11-07 10:10:28',
             ),
             50 => 
             array (
@@ -1035,7 +1035,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:03',
-                'updated_at' => '2018-11-04 19:45:03',
+                'updated_at' => '2018-11-07 10:10:28',
             ),
             51 => 
             array (
@@ -1055,7 +1055,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:03',
-                'updated_at' => '2018-11-04 19:45:03',
+                'updated_at' => '2018-11-07 10:10:29',
             ),
             52 => 
             array (
@@ -1075,7 +1075,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:03',
-                'updated_at' => '2018-11-04 19:45:03',
+                'updated_at' => '2018-11-07 10:10:29',
             ),
             53 => 
             array (
@@ -1095,7 +1095,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:04',
-                'updated_at' => '2018-11-04 19:45:04',
+                'updated_at' => '2018-11-07 10:10:29',
             ),
             54 => 
             array (
@@ -1115,7 +1115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:45:04',
-                'updated_at' => '2018-11-04 19:45:04',
+                'updated_at' => '2018-11-07 10:10:30',
             ),
             55 => 
             array (
@@ -1135,7 +1135,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:04',
-                    'updated_at' => '2018-11-04 19:45:04',
+                    'updated_at' => '2018-11-07 10:10:31',
                 ),
                 56 => 
                 array (
@@ -1155,7 +1155,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:04',
-                    'updated_at' => '2018-11-04 19:45:04',
+                    'updated_at' => '2018-11-07 10:10:31',
                 ),
                 57 => 
                 array (
@@ -1175,7 +1175,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:05',
-                    'updated_at' => '2018-11-04 19:45:05',
+                    'updated_at' => '2018-11-07 10:10:31',
                 ),
                 58 => 
                 array (
@@ -1195,7 +1195,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:05',
-                    'updated_at' => '2018-11-04 19:45:05',
+                    'updated_at' => '2018-11-07 10:10:32',
                 ),
                 59 => 
                 array (
@@ -1215,7 +1215,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:05',
-                    'updated_at' => '2018-11-04 19:45:05',
+                    'updated_at' => '2018-11-07 10:10:32',
                 ),
                 60 => 
                 array (
@@ -1235,7 +1235,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:05',
-                    'updated_at' => '2018-11-04 19:45:05',
+                    'updated_at' => '2018-11-07 10:10:33',
                 ),
                 61 => 
                 array (
@@ -1255,7 +1255,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:05',
-                    'updated_at' => '2018-11-04 19:45:05',
+                    'updated_at' => '2018-11-07 10:10:33',
                 ),
                 62 => 
                 array (
@@ -1275,7 +1275,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:06',
-                    'updated_at' => '2018-11-04 19:45:06',
+                    'updated_at' => '2018-11-07 10:10:33',
                 ),
                 63 => 
                 array (
@@ -1295,7 +1295,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:06',
-                    'updated_at' => '2018-11-04 19:45:06',
+                    'updated_at' => '2018-11-07 10:10:34',
                 ),
                 64 => 
                 array (
@@ -1315,7 +1315,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:06',
-                    'updated_at' => '2018-11-04 19:45:06',
+                    'updated_at' => '2018-11-07 10:10:34',
                 ),
                 65 => 
                 array (
@@ -1335,7 +1335,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:07',
-                    'updated_at' => '2018-11-04 19:45:07',
+                    'updated_at' => '2018-11-07 10:10:34',
                 ),
                 66 => 
                 array (
@@ -1355,7 +1355,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:07',
-                    'updated_at' => '2018-11-04 19:45:07',
+                    'updated_at' => '2018-11-07 10:10:35',
                 ),
                 67 => 
                 array (
@@ -1375,7 +1375,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:08',
-                    'updated_at' => '2018-11-04 19:45:08',
+                    'updated_at' => '2018-11-07 10:10:35',
                 ),
                 68 => 
                 array (
@@ -1395,7 +1395,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:08',
-                    'updated_at' => '2018-11-04 19:45:08',
+                    'updated_at' => '2018-11-07 10:10:36',
                 ),
                 69 => 
                 array (
@@ -1415,7 +1415,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:39',
-                    'updated_at' => '2018-11-04 19:45:39',
+                    'updated_at' => '2018-11-07 10:10:36',
                 ),
                 70 => 
                 array (
@@ -1435,7 +1435,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:55',
-                    'updated_at' => '2018-11-04 19:45:55',
+                    'updated_at' => '2018-11-07 10:10:37',
                 ),
                 71 => 
                 array (
@@ -1455,7 +1455,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:55',
-                    'updated_at' => '2018-11-04 19:45:55',
+                    'updated_at' => '2018-11-07 10:10:37',
                 ),
                 72 => 
                 array (
@@ -1475,7 +1475,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:45:55',
-                    'updated_at' => '2018-11-04 19:45:55',
+                    'updated_at' => '2018-11-07 10:10:37',
                 ),
                 73 => 
                 array (
@@ -1495,7 +1495,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:46:26',
-                    'updated_at' => '2018-11-04 19:46:26',
+                    'updated_at' => '2018-11-07 10:10:38',
                 ),
                 74 => 
                 array (
@@ -1515,7 +1515,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:46:27',
-                    'updated_at' => '2018-11-04 19:46:27',
+                    'updated_at' => '2018-11-07 10:10:38',
                 ),
                 75 => 
                 array (
@@ -1535,7 +1535,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:46:27',
-                    'updated_at' => '2018-11-04 19:46:27',
+                    'updated_at' => '2018-11-07 10:10:38',
                 ),
                 76 => 
                 array (
@@ -1555,7 +1555,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:46:27',
-                    'updated_at' => '2018-11-04 19:46:27',
+                    'updated_at' => '2018-11-07 10:10:39',
                 ),
                 77 => 
                 array (
@@ -1575,7 +1575,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:46:58',
-                    'updated_at' => '2018-11-04 19:46:58',
+                    'updated_at' => '2018-11-07 10:10:39',
                 ),
                 78 => 
                 array (
@@ -1595,7 +1595,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:46:59',
-                    'updated_at' => '2018-11-04 19:46:59',
+                    'updated_at' => '2018-11-07 10:10:39',
                 ),
                 79 => 
                 array (
@@ -1615,7 +1615,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:06',
-                    'updated_at' => '2018-11-04 19:47:06',
+                    'updated_at' => '2018-11-07 10:10:40',
                 ),
                 80 => 
                 array (
@@ -1635,7 +1635,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:06',
-                    'updated_at' => '2018-11-04 19:47:06',
+                    'updated_at' => '2018-11-07 10:10:40',
                 ),
                 81 => 
                 array (
@@ -1655,7 +1655,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:07',
-                    'updated_at' => '2018-11-04 19:47:07',
+                    'updated_at' => '2018-11-07 10:10:40',
                 ),
                 82 => 
                 array (
@@ -1675,7 +1675,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:07',
-                    'updated_at' => '2018-11-04 19:47:07',
+                    'updated_at' => '2018-11-07 10:10:41',
                 ),
                 83 => 
                 array (
@@ -1695,7 +1695,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:07',
-                    'updated_at' => '2018-11-04 19:47:07',
+                    'updated_at' => '2018-11-07 10:10:41',
                 ),
                 84 => 
                 array (
@@ -1715,7 +1715,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:07',
-                    'updated_at' => '2018-11-04 19:47:07',
+                    'updated_at' => '2018-11-07 10:10:42',
                 ),
                 85 => 
                 array (
@@ -1735,7 +1735,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:08',
-                    'updated_at' => '2018-11-04 19:47:08',
+                    'updated_at' => '2018-11-07 10:10:42',
                 ),
                 86 => 
                 array (
@@ -1755,7 +1755,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:08',
-                    'updated_at' => '2018-11-04 19:47:08',
+                    'updated_at' => '2018-11-07 10:10:42',
                 ),
                 87 => 
                 array (
@@ -1775,7 +1775,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:09',
-                    'updated_at' => '2018-11-04 19:47:09',
+                    'updated_at' => '2018-11-07 10:10:43',
                 ),
                 88 => 
                 array (
@@ -1795,7 +1795,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:10',
-                    'updated_at' => '2018-11-04 19:47:10',
+                    'updated_at' => '2018-11-07 10:10:43',
                 ),
                 89 => 
                 array (
@@ -1815,7 +1815,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:10',
-                    'updated_at' => '2018-11-04 19:47:10',
+                    'updated_at' => '2018-11-07 10:10:43',
                 ),
                 90 => 
                 array (
@@ -1835,7 +1835,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:10',
-                    'updated_at' => '2018-11-04 19:47:10',
+                    'updated_at' => '2018-11-07 10:10:44',
                 ),
                 91 => 
                 array (
@@ -1855,7 +1855,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:10',
-                    'updated_at' => '2018-11-04 19:47:10',
+                    'updated_at' => '2018-11-07 10:10:44',
                 ),
                 92 => 
                 array (
@@ -1875,7 +1875,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:10',
-                    'updated_at' => '2018-11-04 19:47:10',
+                    'updated_at' => '2018-11-07 10:10:44',
                 ),
                 93 => 
                 array (
@@ -1895,7 +1895,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:11',
-                    'updated_at' => '2018-11-04 19:47:11',
+                    'updated_at' => '2018-11-07 10:10:45',
                 ),
                 94 => 
                 array (
@@ -1915,7 +1915,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:11',
-                    'updated_at' => '2018-11-04 19:47:11',
+                    'updated_at' => '2018-11-07 10:10:45',
                 ),
                 95 => 
                 array (
@@ -1935,7 +1935,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:11',
-                    'updated_at' => '2018-11-04 19:47:11',
+                    'updated_at' => '2018-11-07 10:10:45',
                 ),
                 96 => 
                 array (
@@ -1955,7 +1955,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:11',
-                    'updated_at' => '2018-11-04 19:47:11',
+                    'updated_at' => '2018-11-07 10:10:46',
                 ),
                 97 => 
                 array (
@@ -1975,7 +1975,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:12',
-                    'updated_at' => '2018-11-04 19:47:12',
+                    'updated_at' => '2018-11-07 10:10:46',
                 ),
                 98 => 
                 array (
@@ -1995,7 +1995,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:12',
-                    'updated_at' => '2018-11-04 19:47:12',
+                    'updated_at' => '2018-11-07 10:10:47',
                 ),
                 99 => 
                 array (
@@ -2015,7 +2015,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:47:12',
-                    'updated_at' => '2018-11-04 19:47:12',
+                    'updated_at' => '2018-11-07 10:10:47',
                 ),
                 100 => 
                 array (
@@ -2035,7 +2035,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:12',
-                'updated_at' => '2018-11-04 19:47:12',
+                'updated_at' => '2018-11-07 10:10:47',
             ),
             101 => 
             array (
@@ -2055,7 +2055,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:13',
-                'updated_at' => '2018-11-04 19:47:13',
+                'updated_at' => '2018-11-07 10:10:48',
             ),
             102 => 
             array (
@@ -2075,7 +2075,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:13',
-                'updated_at' => '2018-11-04 19:47:13',
+                'updated_at' => '2018-11-07 10:10:48',
             ),
             103 => 
             array (
@@ -2095,7 +2095,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:13',
-                'updated_at' => '2018-11-04 19:47:13',
+                'updated_at' => '2018-11-07 10:10:48',
             ),
             104 => 
             array (
@@ -2115,7 +2115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:13',
-                'updated_at' => '2018-11-04 19:47:13',
+                'updated_at' => '2018-11-07 10:10:49',
             ),
             105 => 
             array (
@@ -2135,7 +2135,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:13',
-                'updated_at' => '2018-11-04 19:47:13',
+                'updated_at' => '2018-11-07 10:10:49',
             ),
             106 => 
             array (
@@ -2155,7 +2155,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:14',
-                'updated_at' => '2018-11-04 19:47:14',
+                'updated_at' => '2018-11-07 10:10:49',
             ),
             107 => 
             array (
@@ -2175,7 +2175,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:14',
-                'updated_at' => '2018-11-04 19:47:14',
+                'updated_at' => '2018-11-07 10:10:50',
             ),
             108 => 
             array (
@@ -2195,7 +2195,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:14',
-                'updated_at' => '2018-11-04 19:47:14',
+                'updated_at' => '2018-11-07 10:10:50',
             ),
             109 => 
             array (
@@ -2215,7 +2215,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:14',
-                'updated_at' => '2018-11-04 19:47:14',
+                'updated_at' => '2018-11-07 10:10:50',
             ),
             110 => 
             array (
@@ -2235,7 +2235,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:15',
-                'updated_at' => '2018-11-04 19:47:15',
+                'updated_at' => '2018-11-07 10:10:51',
             ),
             111 => 
             array (
@@ -2255,7 +2255,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:15',
-                'updated_at' => '2018-11-04 19:47:15',
+                'updated_at' => '2018-11-07 10:10:51',
             ),
             112 => 
             array (
@@ -2275,7 +2275,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:18',
-                'updated_at' => '2018-11-04 19:47:18',
+                'updated_at' => '2018-11-07 10:10:52',
             ),
             113 => 
             array (
@@ -2295,7 +2295,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:18',
-                'updated_at' => '2018-11-04 19:47:18',
+                'updated_at' => '2018-11-07 10:10:53',
             ),
             114 => 
             array (
@@ -2315,7 +2315,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:19',
-                'updated_at' => '2018-11-04 19:47:19',
+                'updated_at' => '2018-11-07 10:10:53',
             ),
             115 => 
             array (
@@ -2335,7 +2335,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:19',
-                'updated_at' => '2018-11-04 19:47:19',
+                'updated_at' => '2018-11-07 10:10:53',
             ),
             116 => 
             array (
@@ -2355,7 +2355,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:50',
-                'updated_at' => '2018-11-04 19:47:50',
+                'updated_at' => '2018-11-07 10:10:54',
             ),
             117 => 
             array (
@@ -2375,7 +2375,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:51',
-                'updated_at' => '2018-11-04 19:47:51',
+                'updated_at' => '2018-11-07 10:10:54',
             ),
             118 => 
             array (
@@ -2395,7 +2395,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:51',
-                'updated_at' => '2018-11-04 19:47:51',
+                'updated_at' => '2018-11-07 10:10:54',
             ),
             119 => 
             array (
@@ -2415,7 +2415,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:51',
-                'updated_at' => '2018-11-04 19:47:51',
+                'updated_at' => '2018-11-07 10:10:55',
             ),
             120 => 
             array (
@@ -2435,7 +2435,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:51',
-                'updated_at' => '2018-11-04 19:47:51',
+                'updated_at' => '2018-11-07 10:10:55',
             ),
             121 => 
             array (
@@ -2455,7 +2455,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:52',
-                'updated_at' => '2018-11-04 19:47:52',
+                'updated_at' => '2018-11-07 10:10:56',
             ),
             122 => 
             array (
@@ -2475,7 +2475,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:52',
-                'updated_at' => '2018-11-04 19:47:52',
+                'updated_at' => '2018-11-07 10:10:56',
             ),
             123 => 
             array (
@@ -2495,7 +2495,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:52',
-                'updated_at' => '2018-11-04 19:47:52',
+                'updated_at' => '2018-11-07 10:10:56',
             ),
             124 => 
             array (
@@ -2515,7 +2515,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:52',
-                'updated_at' => '2018-11-04 19:47:52',
+                'updated_at' => '2018-11-07 10:10:57',
             ),
             125 => 
             array (
@@ -2535,7 +2535,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:53',
-                'updated_at' => '2018-11-04 19:47:53',
+                'updated_at' => '2018-11-07 10:10:58',
             ),
             126 => 
             array (
@@ -2555,7 +2555,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:53',
-                'updated_at' => '2018-11-04 19:47:53',
+                'updated_at' => '2018-11-07 10:10:58',
             ),
             127 => 
             array (
@@ -2575,7 +2575,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:53',
-                'updated_at' => '2018-11-04 19:47:53',
+                'updated_at' => '2018-11-07 10:10:58',
             ),
             128 => 
             array (
@@ -2595,7 +2595,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:53',
-                'updated_at' => '2018-11-04 19:47:53',
+                'updated_at' => '2018-11-07 10:10:59',
             ),
             129 => 
             array (
@@ -2615,7 +2615,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:54',
-                'updated_at' => '2018-11-04 19:47:54',
+                'updated_at' => '2018-11-07 10:10:59',
             ),
             130 => 
             array (
@@ -2635,7 +2635,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:54',
-                'updated_at' => '2018-11-04 19:47:54',
+                'updated_at' => '2018-11-07 10:10:59',
             ),
             131 => 
             array (
@@ -2655,7 +2655,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:54',
-                'updated_at' => '2018-11-04 19:47:54',
+                'updated_at' => '2018-11-07 10:11:00',
             ),
             132 => 
             array (
@@ -2675,7 +2675,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:54',
-                'updated_at' => '2018-11-04 19:47:54',
+                'updated_at' => '2018-11-07 10:11:00',
             ),
             133 => 
             array (
@@ -2695,7 +2695,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:55',
-                'updated_at' => '2018-11-04 19:47:55',
+                'updated_at' => '2018-11-07 10:11:00',
             ),
             134 => 
             array (
@@ -2715,7 +2715,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:55',
-                'updated_at' => '2018-11-04 19:47:55',
+                'updated_at' => '2018-11-07 10:11:01',
             ),
             135 => 
             array (
@@ -2735,7 +2735,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:55',
-                'updated_at' => '2018-11-04 19:47:55',
+                'updated_at' => '2018-11-07 10:11:02',
             ),
             136 => 
             array (
@@ -2755,7 +2755,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:55',
-                'updated_at' => '2018-11-04 19:47:55',
+                'updated_at' => '2018-11-07 10:11:02',
             ),
             137 => 
             array (
@@ -2775,7 +2775,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:56',
-                'updated_at' => '2018-11-04 19:47:56',
+                'updated_at' => '2018-11-07 10:11:03',
             ),
             138 => 
             array (
@@ -2795,7 +2795,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:56',
-                'updated_at' => '2018-11-04 19:47:56',
+                'updated_at' => '2018-11-07 10:11:03',
             ),
             139 => 
             array (
@@ -2815,7 +2815,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:57',
-                'updated_at' => '2018-11-04 19:47:57',
+                'updated_at' => '2018-11-07 10:11:03',
             ),
             140 => 
             array (
@@ -2835,7 +2835,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:57',
-                'updated_at' => '2018-11-04 19:47:57',
+                'updated_at' => '2018-11-07 10:11:04',
             ),
             141 => 
             array (
@@ -2855,7 +2855,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:57',
-                'updated_at' => '2018-11-04 19:47:57',
+                'updated_at' => '2018-11-07 10:11:04',
             ),
             142 => 
             array (
@@ -2875,7 +2875,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:57',
-                'updated_at' => '2018-11-04 19:47:57',
+                'updated_at' => '2018-11-07 10:11:05',
             ),
             143 => 
             array (
@@ -2895,7 +2895,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:57',
-                'updated_at' => '2018-11-04 19:47:57',
+                'updated_at' => '2018-11-07 10:11:05',
             ),
             144 => 
             array (
@@ -2915,7 +2915,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:47:58',
-                'updated_at' => '2018-11-04 19:47:58',
+                'updated_at' => '2018-11-07 10:11:05',
             ),
             145 => 
             array (
@@ -2935,7 +2935,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:01',
-                'updated_at' => '2018-11-04 19:48:01',
+                'updated_at' => '2018-11-07 10:11:06',
             ),
             146 => 
             array (
@@ -2955,7 +2955,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:01',
-                'updated_at' => '2018-11-04 19:48:01',
+                'updated_at' => '2018-11-07 10:11:06',
             ),
             147 => 
             array (
@@ -2975,7 +2975,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:02',
-                'updated_at' => '2018-11-04 19:48:02',
+                'updated_at' => '2018-11-07 10:11:06',
             ),
             148 => 
             array (
@@ -2995,7 +2995,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:06',
-                'updated_at' => '2018-11-04 19:48:06',
+                'updated_at' => '2018-11-07 10:11:07',
             ),
             149 => 
             array (
@@ -3015,7 +3015,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:06',
-                'updated_at' => '2018-11-04 19:48:06',
+                'updated_at' => '2018-11-07 10:11:07',
             ),
             150 => 
             array (
@@ -3035,7 +3035,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:07',
-                'updated_at' => '2018-11-04 19:48:07',
+                'updated_at' => '2018-11-07 10:11:08',
             ),
             151 => 
             array (
@@ -3055,7 +3055,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:07',
-                'updated_at' => '2018-11-04 19:48:07',
+                'updated_at' => '2018-11-07 10:11:09',
             ),
             152 => 
             array (
@@ -3075,7 +3075,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:07',
-                'updated_at' => '2018-11-04 19:48:07',
+                'updated_at' => '2018-11-07 10:11:09',
             ),
             153 => 
             array (
@@ -3095,7 +3095,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:07',
-                'updated_at' => '2018-11-04 19:48:07',
+                'updated_at' => '2018-11-07 10:11:10',
             ),
             154 => 
             array (
@@ -3115,7 +3115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:07',
-                'updated_at' => '2018-11-04 19:48:07',
+                'updated_at' => '2018-11-07 10:11:10',
             ),
             155 => 
             array (
@@ -3135,7 +3135,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:08',
-                'updated_at' => '2018-11-04 19:48:08',
+                'updated_at' => '2018-11-07 10:11:11',
             ),
             156 => 
             array (
@@ -3155,7 +3155,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:08',
-                'updated_at' => '2018-11-04 19:48:08',
+                'updated_at' => '2018-11-07 10:11:11',
             ),
             157 => 
             array (
@@ -3175,7 +3175,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:08',
-                'updated_at' => '2018-11-04 19:48:08',
+                'updated_at' => '2018-11-07 10:11:11',
             ),
             158 => 
             array (
@@ -3195,7 +3195,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:08',
-                'updated_at' => '2018-11-04 19:48:08',
+                'updated_at' => '2018-11-07 10:11:12',
             ),
             159 => 
             array (
@@ -3215,7 +3215,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:09',
-                'updated_at' => '2018-11-04 19:48:09',
+                'updated_at' => '2018-11-07 10:11:12',
             ),
             160 => 
             array (
@@ -3235,7 +3235,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:10',
-                'updated_at' => '2018-11-04 19:48:10',
+                'updated_at' => '2018-11-07 10:11:13',
             ),
             161 => 
             array (
@@ -3255,7 +3255,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:48:24',
-                'updated_at' => '2018-11-04 19:48:24',
+                'updated_at' => '2018-11-07 10:11:13',
             ),
             162 => 
             array (
@@ -3275,7 +3275,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:48:36',
-                    'updated_at' => '2018-11-04 19:48:36',
+                    'updated_at' => '2018-11-07 10:11:13',
                 ),
                 163 => 
                 array (
@@ -3295,7 +3295,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:48:37',
-                    'updated_at' => '2018-11-04 19:48:37',
+                    'updated_at' => '2018-11-07 10:11:14',
                 ),
                 164 => 
                 array (
@@ -3315,7 +3315,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:48:37',
-                    'updated_at' => '2018-11-04 19:48:37',
+                    'updated_at' => '2018-11-07 10:11:14',
                 ),
                 165 => 
                 array (
@@ -3335,7 +3335,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:16',
-                    'updated_at' => '2018-11-04 19:49:16',
+                    'updated_at' => '2018-11-07 10:11:14',
                 ),
                 166 => 
                 array (
@@ -3355,7 +3355,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:17',
-                    'updated_at' => '2018-11-04 19:49:17',
+                    'updated_at' => '2018-11-07 10:11:15',
                 ),
                 167 => 
                 array (
@@ -3375,7 +3375,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:17',
-                    'updated_at' => '2018-11-04 19:49:17',
+                    'updated_at' => '2018-11-07 10:11:15',
                 ),
                 168 => 
                 array (
@@ -3395,7 +3395,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:17',
-                    'updated_at' => '2018-11-04 19:49:17',
+                    'updated_at' => '2018-11-07 10:11:15',
                 ),
                 169 => 
                 array (
@@ -3415,7 +3415,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:17',
-                    'updated_at' => '2018-11-04 19:49:17',
+                    'updated_at' => '2018-11-07 10:11:16',
                 ),
                 170 => 
                 array (
@@ -3435,7 +3435,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:18',
-                    'updated_at' => '2018-11-04 19:49:18',
+                    'updated_at' => '2018-11-07 10:11:16',
                 ),
                 171 => 
                 array (
@@ -3455,7 +3455,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:18',
-                    'updated_at' => '2018-11-04 19:49:18',
+                    'updated_at' => '2018-11-07 10:11:17',
                 ),
                 172 => 
                 array (
@@ -3475,7 +3475,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:19',
-                    'updated_at' => '2018-11-04 19:49:19',
+                    'updated_at' => '2018-11-07 10:11:17',
                 ),
                 173 => 
                 array (
@@ -3495,7 +3495,7 @@ class LinesTableSeeder extends Seeder
                     'is_show' => 0,
                     'last_update' => '2018-11-01',
                     'created_at' => '2018-11-04 19:49:19',
-                    'updated_at' => '2018-11-04 19:49:19',
+                    'updated_at' => '2018-11-07 10:11:18',
                 ),
                 174 => 
                 array (
@@ -3515,7 +3515,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:29',
-                'updated_at' => '2018-11-04 19:49:29',
+                'updated_at' => '2018-11-07 10:11:18',
             ),
             175 => 
             array (
@@ -3535,7 +3535,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:32',
-                'updated_at' => '2018-11-04 19:49:32',
+                'updated_at' => '2018-11-07 10:11:19',
             ),
             176 => 
             array (
@@ -3555,7 +3555,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:36',
-                'updated_at' => '2018-11-04 19:49:36',
+                'updated_at' => '2018-11-07 10:11:19',
             ),
             177 => 
             array (
@@ -3575,7 +3575,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:37',
-                'updated_at' => '2018-11-04 19:49:37',
+                'updated_at' => '2018-11-07 10:11:19',
             ),
             178 => 
             array (
@@ -3595,7 +3595,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:45',
-                'updated_at' => '2018-11-04 19:49:45',
+                'updated_at' => '2018-11-07 10:11:20',
             ),
             179 => 
             array (
@@ -3615,7 +3615,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:46',
-                'updated_at' => '2018-11-04 19:49:46',
+                'updated_at' => '2018-11-07 10:11:20',
             ),
             180 => 
             array (
@@ -3635,7 +3635,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:52',
-                'updated_at' => '2018-11-04 19:49:52',
+                'updated_at' => '2018-11-07 10:11:21',
             ),
             181 => 
             array (
@@ -3655,7 +3655,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:52',
-                'updated_at' => '2018-11-04 19:49:52',
+                'updated_at' => '2018-11-07 10:11:21',
             ),
             182 => 
             array (
@@ -3675,7 +3675,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:52',
-                'updated_at' => '2018-11-04 19:49:52',
+                'updated_at' => '2018-11-07 10:11:23',
             ),
             183 => 
             array (
@@ -3695,7 +3695,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:53',
-                'updated_at' => '2018-11-04 19:49:53',
+                'updated_at' => '2018-11-07 10:11:23',
             ),
             184 => 
             array (
@@ -3715,7 +3715,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:53',
-                'updated_at' => '2018-11-04 19:49:53',
+                'updated_at' => '2018-11-07 10:11:24',
             ),
             185 => 
             array (
@@ -3735,7 +3735,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:53',
-                'updated_at' => '2018-11-04 19:49:53',
+                'updated_at' => '2018-11-07 10:11:24',
             ),
             186 => 
             array (
@@ -3755,7 +3755,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:53',
-                'updated_at' => '2018-11-04 19:49:53',
+                'updated_at' => '2018-11-07 10:11:25',
             ),
             187 => 
             array (
@@ -3775,7 +3775,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:54',
-                'updated_at' => '2018-11-04 19:49:54',
+                'updated_at' => '2018-11-07 10:11:25',
             ),
             188 => 
             array (
@@ -3795,7 +3795,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:54',
-                'updated_at' => '2018-11-04 19:49:54',
+                'updated_at' => '2018-11-07 10:11:26',
             ),
             189 => 
             array (
@@ -3815,7 +3815,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:54',
-                'updated_at' => '2018-11-04 19:49:54',
+                'updated_at' => '2018-11-07 10:11:26',
             ),
             190 => 
             array (
@@ -3835,7 +3835,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:49:55',
-                'updated_at' => '2018-11-04 19:49:55',
+                'updated_at' => '2018-11-07 10:11:26',
             ),
             191 => 
             array (
@@ -3855,7 +3855,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:43',
-                'updated_at' => '2018-11-04 19:50:43',
+                'updated_at' => '2018-11-07 10:11:27',
             ),
             192 => 
             array (
@@ -3875,7 +3875,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:50',
-                'updated_at' => '2018-11-04 19:50:50',
+                'updated_at' => '2018-11-07 10:11:27',
             ),
             193 => 
             array (
@@ -3895,7 +3895,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:50',
-                'updated_at' => '2018-11-04 19:50:50',
+                'updated_at' => '2018-11-07 10:11:28',
             ),
             194 => 
             array (
@@ -3915,7 +3915,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:52',
-                'updated_at' => '2018-11-04 19:50:52',
+                'updated_at' => '2018-11-07 10:11:28',
             ),
             195 => 
             array (
@@ -3935,7 +3935,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:53',
-                'updated_at' => '2018-11-04 19:50:53',
+                'updated_at' => '2018-11-07 10:11:28',
             ),
             196 => 
             array (
@@ -3955,7 +3955,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:53',
-                'updated_at' => '2018-11-04 19:50:53',
+                'updated_at' => '2018-11-07 10:11:29',
             ),
             197 => 
             array (
@@ -3975,7 +3975,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:53',
-                'updated_at' => '2018-11-04 19:50:53',
+                'updated_at' => '2018-11-07 10:11:29',
             ),
             198 => 
             array (
@@ -3995,7 +3995,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:53',
-                'updated_at' => '2018-11-04 19:50:53',
+                'updated_at' => '2018-11-07 10:11:29',
             ),
             199 => 
             array (
@@ -4015,7 +4015,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:54',
-                'updated_at' => '2018-11-04 19:50:54',
+                'updated_at' => '2018-11-07 10:11:30',
             ),
             200 => 
             array (
@@ -4035,7 +4035,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:54',
-                'updated_at' => '2018-11-04 19:50:54',
+                'updated_at' => '2018-11-07 10:11:30',
             ),
             201 => 
             array (
@@ -4055,7 +4055,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:54',
-                'updated_at' => '2018-11-04 19:50:54',
+                'updated_at' => '2018-11-07 10:11:31',
             ),
             202 => 
             array (
@@ -4075,7 +4075,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:50:54',
-                'updated_at' => '2018-11-04 19:50:54',
+                'updated_at' => '2018-11-07 10:11:31',
             ),
             203 => 
             array (
@@ -4095,7 +4095,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:51:58',
-                'updated_at' => '2018-11-04 19:51:58',
+                'updated_at' => '2018-11-07 10:11:31',
             ),
             204 => 
             array (
@@ -4115,7 +4115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:51:58',
-                'updated_at' => '2018-11-04 19:51:58',
+                'updated_at' => '2018-11-07 10:11:32',
             ),
             205 => 
             array (
@@ -4135,7 +4135,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:05',
-                'updated_at' => '2018-11-04 19:52:05',
+                'updated_at' => '2018-11-07 10:11:32',
             ),
             206 => 
             array (
@@ -4155,7 +4155,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:06',
-                'updated_at' => '2018-11-04 19:52:06',
+                'updated_at' => '2018-11-07 10:11:32',
             ),
             207 => 
             array (
@@ -4175,7 +4175,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:06',
-                'updated_at' => '2018-11-04 19:52:06',
+                'updated_at' => '2018-11-07 10:11:33',
             ),
             208 => 
             array (
@@ -4195,7 +4195,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:06',
-                'updated_at' => '2018-11-04 19:52:06',
+                'updated_at' => '2018-11-07 10:11:33',
             ),
             209 => 
             array (
@@ -4215,7 +4215,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:06',
-                'updated_at' => '2018-11-04 19:52:06',
+                'updated_at' => '2018-11-07 10:11:33',
             ),
             210 => 
             array (
@@ -4235,7 +4235,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:07',
-                'updated_at' => '2018-11-04 19:52:07',
+                'updated_at' => '2018-11-07 10:11:34',
             ),
             211 => 
             array (
@@ -4255,7 +4255,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:07',
-                'updated_at' => '2018-11-04 19:52:07',
+                'updated_at' => '2018-11-07 10:11:34',
             ),
             212 => 
             array (
@@ -4275,7 +4275,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:07',
-                'updated_at' => '2018-11-04 19:52:07',
+                'updated_at' => '2018-11-07 10:11:34',
             ),
             213 => 
             array (
@@ -4295,7 +4295,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:07',
-                'updated_at' => '2018-11-04 19:52:07',
+                'updated_at' => '2018-11-07 10:11:35',
             ),
             214 => 
             array (
@@ -4315,7 +4315,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:08',
-                'updated_at' => '2018-11-04 19:52:08',
+                'updated_at' => '2018-11-07 10:11:35',
             ),
             215 => 
             array (
@@ -4335,7 +4335,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:08',
-                'updated_at' => '2018-11-04 19:52:08',
+                'updated_at' => '2018-11-07 10:11:35',
             ),
             216 => 
             array (
@@ -4355,7 +4355,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:08',
-                'updated_at' => '2018-11-04 19:52:08',
+                'updated_at' => '2018-11-07 10:11:36',
             ),
             217 => 
             array (
@@ -4375,7 +4375,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:08',
-                'updated_at' => '2018-11-04 19:52:08',
+                'updated_at' => '2018-11-07 10:11:36',
             ),
             218 => 
             array (
@@ -4395,7 +4395,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:08',
-                'updated_at' => '2018-11-04 19:52:08',
+                'updated_at' => '2018-11-07 10:11:36',
             ),
             219 => 
             array (
@@ -4415,7 +4415,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:09',
-                'updated_at' => '2018-11-04 19:52:09',
+                'updated_at' => '2018-11-07 10:11:37',
             ),
             220 => 
             array (
@@ -4435,7 +4435,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:09',
-                'updated_at' => '2018-11-04 19:52:09',
+                'updated_at' => '2018-11-07 10:11:37',
             ),
             221 => 
             array (
@@ -4455,7 +4455,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:09',
-                'updated_at' => '2018-11-04 19:52:09',
+                'updated_at' => '2018-11-07 10:11:38',
             ),
             222 => 
             array (
@@ -4475,7 +4475,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:44',
-                'updated_at' => '2018-11-04 19:52:44',
+                'updated_at' => '2018-11-07 10:11:38',
             ),
             223 => 
             array (
@@ -4495,7 +4495,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:45',
-                'updated_at' => '2018-11-04 19:52:45',
+                'updated_at' => '2018-11-07 10:11:39',
             ),
             224 => 
             array (
@@ -4515,7 +4515,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:52:45',
-                'updated_at' => '2018-11-04 19:52:45',
+                'updated_at' => '2018-11-07 10:11:39',
             ),
             225 => 
             array (
@@ -4535,7 +4535,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:03',
-                'updated_at' => '2018-11-04 19:53:03',
+                'updated_at' => '2018-11-07 10:11:40',
             ),
             226 => 
             array (
@@ -4555,7 +4555,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:03',
-                'updated_at' => '2018-11-04 19:53:03',
+                'updated_at' => '2018-11-07 10:11:40',
             ),
             227 => 
             array (
@@ -4575,7 +4575,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:13',
-                'updated_at' => '2018-11-04 19:53:13',
+                'updated_at' => '2018-11-07 10:11:40',
             ),
             228 => 
             array (
@@ -4595,7 +4595,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:16',
-                'updated_at' => '2018-11-04 19:53:16',
+                'updated_at' => '2018-11-07 10:11:41',
             ),
             229 => 
             array (
@@ -4615,7 +4615,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:17',
-                'updated_at' => '2018-11-04 19:53:17',
+                'updated_at' => '2018-11-07 10:11:41',
             ),
             230 => 
             array (
@@ -4635,7 +4635,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:17',
-                'updated_at' => '2018-11-04 19:53:17',
+                'updated_at' => '2018-11-07 10:11:42',
             ),
             231 => 
             array (
@@ -4655,7 +4655,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:17',
-                'updated_at' => '2018-11-04 19:53:17',
+                'updated_at' => '2018-11-07 10:11:42',
             ),
             232 => 
             array (
@@ -4675,7 +4675,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:17',
-                'updated_at' => '2018-11-04 19:53:17',
+                'updated_at' => '2018-11-07 10:11:43',
             ),
             233 => 
             array (
@@ -4695,7 +4695,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:17',
-                'updated_at' => '2018-11-04 19:53:17',
+                'updated_at' => '2018-11-07 10:11:43',
             ),
             234 => 
             array (
@@ -4783,19 +4783,19 @@ class LinesTableSeeder extends Seeder
                 'name' => '668路（石庄首末站 - 南浜）',
                 'price' => '',
                 'car_type' => '大巴',
-                'depart_time' => '',
-                'open_time' => '木渎换乘枢纽站 06：00-18：00|石庄首末站 06：00-18：00 票价1元（空调车加价1元，每年3、4、10、11月免收空调费） ic卡六折优惠',
+                'depart_time' => '20~30分钟',
+                'open_time' => '石庄首末站 06:00:00~18:00:00；木渎公交换乘枢纽站 06:00:00~18:00:00',
                 'total_time' => '',
                 'via_road' => '',
                 'company' => '苏州市吴中区公共汽车有限公司',
-            'station' => '木渎换乘枢纽站-石庄首末站-石庄-竹园路金山路西-竹园路灵天路东-长安路浦庄大道西-浦庄工业园-天邻风景-灵岩山东-长安路浦金路西-查家-方家桥-过路泾-许家桥-施家湾-茅蓬路孙武路西-南浜桥北-胥口中心幼儿园-胥口实验小学-越湖路东山大道西-钱河头-采香二村-马舍村委会-胥口镇中心卫生院-晓窗里-马舍村委会北-胥市街孙武路北-沿桥村-胥口农贸市场-皇家低碳展示区-胥口农业银行-胥口寺前村-羊角桥北-胥王园-胥香园首末站-新麓水闸-新麓村-绕城太湖服务区-横河头(清明公墓)-张巷桥-张巷桥-横河头(清明公墓)-绕城太湖服务区-新麓村-胥香园首末站-新麓水闸-胥王园-羊角桥北-胥口寺前村-胥市街新胥路北-胥口集贸市场-皇家低碳展示区-晓窗里-沿桥村-胥口镇中心卫生院-马舍村委会北-马舍村委会-采香二村-钱河头-胥口实验小学-胥口实验附属幼儿园-越湖路东山大道西-南浜桥北-繁丰路燕河路东-施家湾-文胥广场-乐汇街-过路泾-灵岩山东-陆家泾-长安路浦金路西-徐山嘴-天邻风景-长安路浦庄大道西-石庄-竹园路灵天路东-竹园路金山路西-石庄首末站-南浜',
-            'station_back' => '木渎公交换乘枢纽站-石庄首末站-石庄-南浜-长安路浦庄大道西-竹园路金山路西-竹园路灵天路东-长安路浦金路西-陆家泾-天邻风景-过路泾-徐山嘴-灵岩山东-施家湾-乐汇街-南浜桥北-文胥广场-越湖路东山大道西-钱河头-繁丰路燕河路东-马舍村委会-胥口实验附属幼儿园-胥口实验小学-马舍村委会北-采香二村-沿桥村-皇家低碳展示区-胥口镇中心卫生院-胥口寺前村-晓窗里-胥口集贸市场-羊角桥北-新麓水闸-胥市街新胥路北-胥王园-新麓村-胥香园首末站-张巷桥-绕城太湖服务区-横河头(清明公墓)-横河头(清明公墓)-绕城太湖服务区-胥香园首末站-张巷桥-胥王园-新麓村-新麓水闸-胥口农业银行-胥口农贸市场-羊角桥北-胥口寺前村-胥市街孙武路北-晓窗里-皇家低碳展示区-胥口镇中心卫生院-沿桥村-采香二村-马舍村委会北-马舍村委会-胥口实验小学-胥口中心幼儿园-钱河头-茅蓬路孙武路西-越湖路东山大道西-东欣路北-南浜桥北-施家湾-许家桥-方家桥-过路泾-查家-灵岩山东-长安路浦金路西-天邻风景-浦庄工业园-竹园路灵天路东-竹园路金山路西-长安路浦庄大道西-木渎换乘枢纽站-石庄-石庄首末站-',
+            'station' => '石庄首末站-石庄-长安路浦庄大道西-浦庄工业园-长安路浦金路西-查家-过路泾-施家湾-南浜桥北-越湖路东山大道西-钱河头-马舍村委会-马舍村委会北-沿桥村-皇家低碳展示区-胥口寺前村-羊角桥北-新麓水闸-新麓村-张巷桥-横河头(清明公墓)-绕城太湖服务区-胥香园首末站-胥王园-胥市街新胥路北-胥口集贸市场-晓窗里-胥口镇中心卫生院-采香二村-胥口实验小学-胥口实验附属幼儿园-繁丰路燕河路东-文胥广场-乐汇街-灵岩山东-徐山嘴-天邻风景-竹园路灵天路东-竹园路金山路西-南浜',
+            'station_back' => '木渎公交换乘枢纽站-南浜-竹园路金山路西-竹园路灵天路东-天邻风景-徐山嘴-灵岩山东-乐汇街-文胥广场-繁丰路燕河路东-胥口实验附属幼儿园-胥口实验小学-采香二村-胥口镇中心卫生院-晓窗里-胥口集贸市场-胥市街新胥路北-胥王园-胥香园首末站-绕城太湖服务区-横河头(清明公墓)-张巷桥-新麓村-新麓水闸-羊角桥北-胥口寺前村-皇家低碳展示区-沿桥村-马舍村委会北-马舍村委会-钱河头-越湖路东山大道西-南浜桥北-施家湾-过路泾-查家-长安路浦金路西-浦庄工业园-长安路浦庄大道西-石庄-石庄首末站-',
                 'reason' => '',
                 'username' => '',
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:19',
-                'updated_at' => '2018-11-04 19:53:19',
+                'updated_at' => '2018-11-07 10:11:45',
             ),
             239 => 
             array (
@@ -4815,7 +4815,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-04 19:53:19',
-                'updated_at' => '2018-11-04 19:53:19',
+                'updated_at' => '2018-11-07 10:11:45',
             ),
             240 => 
             array (
@@ -4835,7 +4835,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:10',
-                'updated_at' => '2018-11-05 17:05:10',
+                'updated_at' => '2018-11-07 10:11:46',
             ),
             241 => 
             array (
@@ -4855,7 +4855,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:10',
-                'updated_at' => '2018-11-05 17:05:10',
+                'updated_at' => '2018-11-07 10:11:46',
             ),
             242 => 
             array (
@@ -4875,7 +4875,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:11',
-                'updated_at' => '2018-11-05 17:05:11',
+                'updated_at' => '2018-11-07 10:11:46',
             ),
             243 => 
             array (
@@ -4895,7 +4895,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:11',
-                'updated_at' => '2018-11-05 17:05:11',
+                'updated_at' => '2018-11-07 10:11:47',
             ),
             244 => 
             array (
@@ -4915,7 +4915,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:11',
-                'updated_at' => '2018-11-05 17:05:11',
+                'updated_at' => '2018-11-07 10:11:47',
             ),
             245 => 
             array (
@@ -4935,7 +4935,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:12',
-                'updated_at' => '2018-11-05 17:05:12',
+                'updated_at' => '2018-11-07 10:11:47',
             ),
             246 => 
             array (
@@ -4955,7 +4955,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:12',
-                'updated_at' => '2018-11-05 17:05:12',
+                'updated_at' => '2018-11-07 10:11:48',
             ),
             247 => 
             array (
@@ -4975,7 +4975,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:12',
-                'updated_at' => '2018-11-05 17:05:12',
+                'updated_at' => '2018-11-07 10:11:48',
             ),
             248 => 
             array (
@@ -4995,7 +4995,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:13',
-                'updated_at' => '2018-11-05 17:05:13',
+                'updated_at' => '2018-11-07 10:11:48',
             ),
             249 => 
             array (
@@ -5015,7 +5015,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:13',
-                'updated_at' => '2018-11-05 17:05:13',
+                'updated_at' => '2018-11-07 10:11:49',
             ),
             250 => 
             array (
@@ -5035,7 +5035,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:13',
-                'updated_at' => '2018-11-05 17:05:13',
+                'updated_at' => '2018-11-07 10:11:49',
             ),
             251 => 
             array (
@@ -5055,7 +5055,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:13',
-                'updated_at' => '2018-11-05 17:05:13',
+                'updated_at' => '2018-11-07 10:11:50',
             ),
             252 => 
             array (
@@ -5075,7 +5075,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:14',
-                'updated_at' => '2018-11-05 17:05:14',
+                'updated_at' => '2018-11-07 10:11:51',
             ),
             253 => 
             array (
@@ -5095,7 +5095,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:14',
-                'updated_at' => '2018-11-05 17:05:14',
+                'updated_at' => '2018-11-07 10:11:51',
             ),
             254 => 
             array (
@@ -5115,7 +5115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:14',
-                'updated_at' => '2018-11-05 17:05:14',
+                'updated_at' => '2018-11-07 10:11:51',
             ),
             255 => 
             array (
@@ -5135,7 +5135,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:15',
-                'updated_at' => '2018-11-05 17:05:15',
+                'updated_at' => '2018-11-07 10:11:52',
             ),
             256 => 
             array (
@@ -5155,7 +5155,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:15',
-                'updated_at' => '2018-11-05 17:05:15',
+                'updated_at' => '2018-11-07 10:11:52',
             ),
             257 => 
             array (
@@ -5175,7 +5175,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:15',
-                'updated_at' => '2018-11-05 17:05:15',
+                'updated_at' => '2018-11-07 10:11:52',
             ),
             258 => 
             array (
@@ -5195,7 +5195,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:16',
-                'updated_at' => '2018-11-05 17:05:16',
+                'updated_at' => '2018-11-07 10:11:53',
             ),
             259 => 
             array (
@@ -5215,7 +5215,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:16',
-                'updated_at' => '2018-11-05 17:05:16',
+                'updated_at' => '2018-11-07 10:11:53',
             ),
             260 => 
             array (
@@ -5235,7 +5235,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:16',
-                'updated_at' => '2018-11-05 17:05:16',
+                'updated_at' => '2018-11-07 10:11:53',
             ),
             261 => 
             array (
@@ -5255,7 +5255,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:17',
-                'updated_at' => '2018-11-05 17:05:17',
+                'updated_at' => '2018-11-07 10:11:54',
             ),
             262 => 
             array (
@@ -5275,7 +5275,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:17',
-                'updated_at' => '2018-11-05 17:05:17',
+                'updated_at' => '2018-11-07 10:11:54',
             ),
             263 => 
             array (
@@ -5295,7 +5295,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:17',
-                'updated_at' => '2018-11-05 17:05:17',
+                'updated_at' => '2018-11-07 10:11:55',
             ),
             264 => 
             array (
@@ -5315,7 +5315,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:18',
-                'updated_at' => '2018-11-05 17:05:18',
+                'updated_at' => '2018-11-07 10:11:56',
             ),
             265 => 
             array (
@@ -5335,7 +5335,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:18',
-                'updated_at' => '2018-11-05 17:05:18',
+                'updated_at' => '2018-11-07 10:11:56',
             ),
             266 => 
             array (
@@ -5355,7 +5355,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:18',
-                'updated_at' => '2018-11-05 17:05:18',
+                'updated_at' => '2018-11-07 10:11:57',
             ),
             267 => 
             array (
@@ -5375,7 +5375,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:18',
-                'updated_at' => '2018-11-05 17:05:18',
+                'updated_at' => '2018-11-07 10:11:57',
             ),
             268 => 
             array (
@@ -5395,7 +5395,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:19',
-                'updated_at' => '2018-11-05 17:05:19',
+                'updated_at' => '2018-11-07 10:11:58',
             ),
             269 => 
             array (
@@ -5415,7 +5415,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:19',
-                'updated_at' => '2018-11-05 17:05:19',
+                'updated_at' => '2018-11-07 10:11:58',
             ),
             270 => 
             array (
@@ -5435,7 +5435,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:19',
-                'updated_at' => '2018-11-05 17:05:19',
+                'updated_at' => '2018-11-07 10:11:59',
             ),
             271 => 
             array (
@@ -5455,7 +5455,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:20',
-                'updated_at' => '2018-11-05 17:05:20',
+                'updated_at' => '2018-11-07 10:12:00',
             ),
             272 => 
             array (
@@ -5475,7 +5475,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:20',
-                'updated_at' => '2018-11-05 17:05:20',
+                'updated_at' => '2018-11-07 10:12:01',
             ),
             273 => 
             array (
@@ -5495,7 +5495,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:20',
-                'updated_at' => '2018-11-05 17:05:20',
+                'updated_at' => '2018-11-07 10:12:01',
             ),
             274 => 
             array (
@@ -5515,7 +5515,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:21',
-                'updated_at' => '2018-11-05 17:05:21',
+                'updated_at' => '2018-11-07 10:12:02',
             ),
             275 => 
             array (
@@ -5535,7 +5535,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:21',
-                'updated_at' => '2018-11-05 17:05:21',
+                'updated_at' => '2018-11-07 10:12:03',
             ),
             276 => 
             array (
@@ -5555,7 +5555,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:21',
-                'updated_at' => '2018-11-05 17:05:21',
+                'updated_at' => '2018-11-07 10:12:03',
             ),
             277 => 
             array (
@@ -5575,7 +5575,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:21',
-                'updated_at' => '2018-11-05 17:05:21',
+                'updated_at' => '2018-11-07 10:12:04',
             ),
             278 => 
             array (
@@ -5595,7 +5595,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:22',
-                'updated_at' => '2018-11-05 17:05:22',
+                'updated_at' => '2018-11-07 10:12:04',
             ),
             279 => 
             array (
@@ -5615,7 +5615,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:22',
-                'updated_at' => '2018-11-05 17:05:22',
+                'updated_at' => '2018-11-07 10:12:06',
             ),
             280 => 
             array (
@@ -5635,7 +5635,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:22',
-                'updated_at' => '2018-11-05 17:05:22',
+                'updated_at' => '2018-11-07 10:12:07',
             ),
             281 => 
             array (
@@ -5655,7 +5655,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:23',
-                'updated_at' => '2018-11-05 17:05:23',
+                'updated_at' => '2018-11-07 10:12:08',
             ),
             282 => 
             array (
@@ -5675,7 +5675,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:23',
-                'updated_at' => '2018-11-05 17:05:23',
+                'updated_at' => '2018-11-07 10:12:08',
             ),
             283 => 
             array (
@@ -5695,7 +5695,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:23',
-                'updated_at' => '2018-11-05 17:05:23',
+                'updated_at' => '2018-11-07 10:12:11',
             ),
             284 => 
             array (
@@ -5715,7 +5715,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:24',
-                'updated_at' => '2018-11-05 17:05:24',
+                'updated_at' => '2018-11-07 10:12:11',
             ),
             285 => 
             array (
@@ -5735,7 +5735,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:24',
-                'updated_at' => '2018-11-05 17:05:24',
+                'updated_at' => '2018-11-07 10:12:11',
             ),
             286 => 
             array (
@@ -5755,7 +5755,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:24',
-                'updated_at' => '2018-11-05 17:05:24',
+                'updated_at' => '2018-11-07 10:12:12',
             ),
             287 => 
             array (
@@ -5775,7 +5775,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:24',
-                'updated_at' => '2018-11-05 17:05:24',
+                'updated_at' => '2018-11-07 10:12:12',
             ),
             288 => 
             array (
@@ -5795,7 +5795,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:25',
-                'updated_at' => '2018-11-05 17:05:25',
+                'updated_at' => '2018-11-07 10:12:13',
             ),
             289 => 
             array (
@@ -5815,7 +5815,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:25',
-                'updated_at' => '2018-11-05 17:05:25',
+                'updated_at' => '2018-11-07 10:12:14',
             ),
             290 => 
             array (
@@ -5835,7 +5835,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:25',
-                'updated_at' => '2018-11-05 17:05:25',
+                'updated_at' => '2018-11-07 10:12:14',
             ),
             291 => 
             array (
@@ -5855,7 +5855,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:26',
-                'updated_at' => '2018-11-05 17:05:26',
+                'updated_at' => '2018-11-07 10:12:14',
             ),
             292 => 
             array (
@@ -5875,7 +5875,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:26',
-                'updated_at' => '2018-11-05 17:05:26',
+                'updated_at' => '2018-11-07 10:12:15',
             ),
             293 => 
             array (
@@ -5895,7 +5895,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:26',
-                'updated_at' => '2018-11-05 17:05:26',
+                'updated_at' => '2018-11-07 10:12:15',
             ),
             294 => 
             array (
@@ -5915,7 +5915,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:27',
-                'updated_at' => '2018-11-05 17:05:27',
+                'updated_at' => '2018-11-07 10:12:16',
             ),
             295 => 
             array (
@@ -5935,7 +5935,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:27',
-                'updated_at' => '2018-11-05 17:05:27',
+                'updated_at' => '2018-11-07 10:12:16',
             ),
             296 => 
             array (
@@ -5955,7 +5955,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:27',
-                'updated_at' => '2018-11-05 17:05:27',
+                'updated_at' => '2018-11-07 10:12:17',
             ),
             297 => 
             array (
@@ -5975,7 +5975,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:27',
-                'updated_at' => '2018-11-05 17:05:27',
+                'updated_at' => '2018-11-07 10:12:17',
             ),
             298 => 
             array (
@@ -5995,7 +5995,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:28',
-                'updated_at' => '2018-11-05 17:05:28',
+                'updated_at' => '2018-11-07 10:12:18',
             ),
             299 => 
             array (
@@ -6015,7 +6015,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:28',
-                'updated_at' => '2018-11-05 17:05:28',
+                'updated_at' => '2018-11-07 10:12:19',
             ),
             300 => 
             array (
@@ -6035,7 +6035,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:29',
-                'updated_at' => '2018-11-05 17:05:29',
+                'updated_at' => '2018-11-07 10:12:19',
             ),
             301 => 
             array (
@@ -6055,7 +6055,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:29',
-                'updated_at' => '2018-11-05 17:05:29',
+                'updated_at' => '2018-11-07 10:12:20',
             ),
             302 => 
             array (
@@ -6075,7 +6075,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:29',
-                'updated_at' => '2018-11-05 17:05:29',
+                'updated_at' => '2018-11-07 10:12:20',
             ),
             303 => 
             array (
@@ -6095,7 +6095,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:29',
-                'updated_at' => '2018-11-05 17:05:29',
+                'updated_at' => '2018-11-07 10:12:21',
             ),
             304 => 
             array (
@@ -6115,7 +6115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:30',
-                'updated_at' => '2018-11-05 17:05:30',
+                'updated_at' => '2018-11-07 10:12:21',
             ),
             305 => 
             array (
@@ -6135,7 +6135,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:30',
-                'updated_at' => '2018-11-05 17:05:30',
+                'updated_at' => '2018-11-07 10:12:21',
             ),
             306 => 
             array (
@@ -6155,7 +6155,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:30',
-                'updated_at' => '2018-11-05 17:05:30',
+                'updated_at' => '2018-11-07 10:12:22',
             ),
             307 => 
             array (
@@ -6175,7 +6175,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:31',
-                'updated_at' => '2018-11-05 17:05:31',
+                'updated_at' => '2018-11-07 10:12:22',
             ),
             308 => 
             array (
@@ -6195,7 +6195,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:31',
-                'updated_at' => '2018-11-05 17:05:31',
+                'updated_at' => '2018-11-07 10:12:23',
             ),
             309 => 
             array (
@@ -6215,7 +6215,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:31',
-                'updated_at' => '2018-11-05 17:05:31',
+                'updated_at' => '2018-11-07 10:12:23',
             ),
             310 => 
             array (
@@ -6235,7 +6235,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:32',
-                'updated_at' => '2018-11-05 17:05:32',
+                'updated_at' => '2018-11-07 10:12:23',
             ),
             311 => 
             array (
@@ -6255,7 +6255,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:32',
-                'updated_at' => '2018-11-05 17:05:32',
+                'updated_at' => '2018-11-07 10:12:24',
             ),
             312 => 
             array (
@@ -6275,7 +6275,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:32',
-                'updated_at' => '2018-11-05 17:05:32',
+                'updated_at' => '2018-11-07 10:12:24',
             ),
             313 => 
             array (
@@ -6295,7 +6295,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:33',
-                'updated_at' => '2018-11-05 17:05:33',
+                'updated_at' => '2018-11-07 10:12:24',
             ),
             314 => 
             array (
@@ -6315,7 +6315,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:33',
-                'updated_at' => '2018-11-05 17:05:33',
+                'updated_at' => '2018-11-07 10:12:25',
             ),
             315 => 
             array (
@@ -6335,7 +6335,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:33',
-                'updated_at' => '2018-11-05 17:05:33',
+                'updated_at' => '2018-11-07 10:12:25',
             ),
             316 => 
             array (
@@ -6355,7 +6355,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:34',
-                'updated_at' => '2018-11-05 17:05:34',
+                'updated_at' => '2018-11-07 10:12:25',
             ),
             317 => 
             array (
@@ -6375,7 +6375,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:34',
-                'updated_at' => '2018-11-05 17:05:34',
+                'updated_at' => '2018-11-07 10:12:26',
             ),
             318 => 
             array (
@@ -6395,7 +6395,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:34',
-                'updated_at' => '2018-11-05 17:05:34',
+                'updated_at' => '2018-11-07 10:12:26',
             ),
             319 => 
             array (
@@ -6415,7 +6415,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:34',
-                'updated_at' => '2018-11-05 17:05:34',
+                'updated_at' => '2018-11-07 10:12:26',
             ),
             320 => 
             array (
@@ -6435,7 +6435,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:35',
-                'updated_at' => '2018-11-05 17:05:35',
+                'updated_at' => '2018-11-07 10:12:27',
             ),
             321 => 
             array (
@@ -6455,7 +6455,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:35',
-                'updated_at' => '2018-11-05 17:05:35',
+                'updated_at' => '2018-11-07 10:12:27',
             ),
             322 => 
             array (
@@ -6475,7 +6475,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:35',
-                'updated_at' => '2018-11-05 17:05:35',
+                'updated_at' => '2018-11-07 10:12:27',
             ),
             323 => 
             array (
@@ -6495,7 +6495,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:36',
-                'updated_at' => '2018-11-05 17:05:36',
+                'updated_at' => '2018-11-07 10:12:28',
             ),
             324 => 
             array (
@@ -6515,7 +6515,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:36',
-                'updated_at' => '2018-11-05 17:05:36',
+                'updated_at' => '2018-11-07 10:12:28',
             ),
             325 => 
             array (
@@ -6535,7 +6535,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:36',
-                'updated_at' => '2018-11-05 17:05:36',
+                'updated_at' => '2018-11-07 10:12:28',
             ),
             326 => 
             array (
@@ -6555,7 +6555,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:37',
-                'updated_at' => '2018-11-05 17:05:37',
+                'updated_at' => '2018-11-07 10:12:29',
             ),
             327 => 
             array (
@@ -6575,7 +6575,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:37',
-                'updated_at' => '2018-11-05 17:05:37',
+                'updated_at' => '2018-11-07 10:12:30',
             ),
             328 => 
             array (
@@ -6595,7 +6595,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:37',
-                'updated_at' => '2018-11-05 17:05:37',
+                'updated_at' => '2018-11-07 10:12:30',
             ),
             329 => 
             array (
@@ -6615,7 +6615,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:37',
-                'updated_at' => '2018-11-05 17:05:37',
+                'updated_at' => '2018-11-07 10:12:30',
             ),
             330 => 
             array (
@@ -6635,7 +6635,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:38',
-                'updated_at' => '2018-11-05 17:05:38',
+                'updated_at' => '2018-11-07 10:12:31',
             ),
             331 => 
             array (
@@ -6655,7 +6655,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:38',
-                'updated_at' => '2018-11-05 17:05:38',
+                'updated_at' => '2018-11-07 10:12:31',
             ),
             332 => 
             array (
@@ -6675,7 +6675,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:38',
-                'updated_at' => '2018-11-05 17:05:38',
+                'updated_at' => '2018-11-07 10:12:32',
             ),
             333 => 
             array (
@@ -6695,7 +6695,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:39',
-                'updated_at' => '2018-11-05 17:05:39',
+                'updated_at' => '2018-11-07 10:12:32',
             ),
             334 => 
             array (
@@ -6715,7 +6715,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:39',
-                'updated_at' => '2018-11-05 17:05:39',
+                'updated_at' => '2018-11-07 10:12:33',
             ),
             335 => 
             array (
@@ -6735,7 +6735,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:39',
-                'updated_at' => '2018-11-05 17:05:39',
+                'updated_at' => '2018-11-07 10:12:34',
             ),
             336 => 
             array (
@@ -6755,7 +6755,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:40',
-                'updated_at' => '2018-11-05 17:05:40',
+                'updated_at' => '2018-11-07 10:12:34',
             ),
             337 => 
             array (
@@ -6775,7 +6775,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:40',
-                'updated_at' => '2018-11-05 17:05:40',
+                'updated_at' => '2018-11-07 10:12:34',
             ),
             338 => 
             array (
@@ -6795,7 +6795,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:40',
-                'updated_at' => '2018-11-05 17:05:40',
+                'updated_at' => '2018-11-07 10:12:35',
             ),
             339 => 
             array (
@@ -6815,7 +6815,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:41',
-                'updated_at' => '2018-11-05 17:05:41',
+                'updated_at' => '2018-11-07 10:12:36',
             ),
             340 => 
             array (
@@ -6835,7 +6835,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:41',
-                'updated_at' => '2018-11-05 17:05:41',
+                'updated_at' => '2018-11-07 10:12:36',
             ),
             341 => 
             array (
@@ -6855,7 +6855,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:41',
-                'updated_at' => '2018-11-05 17:05:41',
+                'updated_at' => '2018-11-07 10:12:37',
             ),
             342 => 
             array (
@@ -6875,7 +6875,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:42',
-                'updated_at' => '2018-11-05 17:05:42',
+                'updated_at' => '2018-11-07 10:12:37',
             ),
             343 => 
             array (
@@ -6895,7 +6895,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:42',
-                'updated_at' => '2018-11-05 17:05:42',
+                'updated_at' => '2018-11-07 10:12:37',
             ),
             344 => 
             array (
@@ -6915,7 +6915,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:42',
-                'updated_at' => '2018-11-05 17:05:42',
+                'updated_at' => '2018-11-07 10:12:38',
             ),
             345 => 
             array (
@@ -6935,7 +6935,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:42',
-                'updated_at' => '2018-11-05 17:05:42',
+                'updated_at' => '2018-11-07 10:12:39',
             ),
             346 => 
             array (
@@ -6955,7 +6955,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:43',
-                'updated_at' => '2018-11-05 17:05:43',
+                'updated_at' => '2018-11-07 10:12:39',
             ),
             347 => 
             array (
@@ -6975,7 +6975,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:43',
-                'updated_at' => '2018-11-05 17:05:43',
+                'updated_at' => '2018-11-07 10:12:40',
             ),
             348 => 
             array (
@@ -6995,7 +6995,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:43',
-                'updated_at' => '2018-11-05 17:05:43',
+                'updated_at' => '2018-11-07 10:12:40',
             ),
             349 => 
             array (
@@ -7015,7 +7015,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:44',
-                'updated_at' => '2018-11-05 17:05:44',
+                'updated_at' => '2018-11-07 10:12:41',
             ),
             350 => 
             array (
@@ -7035,7 +7035,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:44',
-                'updated_at' => '2018-11-05 17:05:44',
+                'updated_at' => '2018-11-07 10:12:41',
             ),
             351 => 
             array (
@@ -7055,7 +7055,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:44',
-                'updated_at' => '2018-11-05 17:05:44',
+                'updated_at' => '2018-11-07 10:12:42',
             ),
             352 => 
             array (
@@ -7075,7 +7075,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:45',
-                'updated_at' => '2018-11-05 17:05:45',
+                'updated_at' => '2018-11-07 10:12:42',
             ),
             353 => 
             array (
@@ -7095,7 +7095,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:45',
-                'updated_at' => '2018-11-05 17:05:45',
+                'updated_at' => '2018-11-07 10:12:42',
             ),
             354 => 
             array (
@@ -7115,7 +7115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:45',
-                'updated_at' => '2018-11-05 17:05:45',
+                'updated_at' => '2018-11-07 10:12:43',
             ),
             355 => 
             array (
@@ -7135,7 +7135,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:46',
-                'updated_at' => '2018-11-05 17:05:46',
+                'updated_at' => '2018-11-07 10:12:43',
             ),
             356 => 
             array (
@@ -7155,7 +7155,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:46',
-                'updated_at' => '2018-11-05 17:05:46',
+                'updated_at' => '2018-11-07 10:12:44',
             ),
             357 => 
             array (
@@ -7175,7 +7175,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2014-08-20',
                 'created_at' => '2018-11-05 17:05:46',
-                'updated_at' => '2018-11-05 17:05:46',
+                'updated_at' => '2018-11-07 10:12:44',
             ),
             358 => 
             array (
@@ -7195,7 +7195,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2017-01-20',
                 'created_at' => '2018-11-05 17:05:46',
-                'updated_at' => '2018-11-05 17:05:46',
+                'updated_at' => '2018-11-07 10:12:45',
             ),
             359 => 
             array (
@@ -7215,7 +7215,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2017-04-18',
                 'created_at' => '2018-11-05 17:05:47',
-                'updated_at' => '2018-11-05 17:05:47',
+                'updated_at' => '2018-11-07 10:12:45',
             ),
             360 => 
             array (
@@ -7235,7 +7235,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2017-04-18',
                 'created_at' => '2018-11-05 17:05:47',
-                'updated_at' => '2018-11-05 17:05:47',
+                'updated_at' => '2018-11-07 10:12:46',
             ),
             361 => 
             array (
@@ -7255,7 +7255,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:47',
-                'updated_at' => '2018-11-05 17:05:47',
+                'updated_at' => '2018-11-07 10:12:46',
             ),
             362 => 
             array (
@@ -7275,7 +7275,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:48',
-                'updated_at' => '2018-11-05 17:05:48',
+                'updated_at' => '2018-11-07 10:12:46',
             ),
             363 => 
             array (
@@ -7295,7 +7295,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:48',
-                'updated_at' => '2018-11-05 17:05:48',
+                'updated_at' => '2018-11-07 10:12:47',
             ),
             364 => 
             array (
@@ -7315,7 +7315,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:48',
-                'updated_at' => '2018-11-05 17:05:48',
+                'updated_at' => '2018-11-07 10:12:47',
             ),
             365 => 
             array (
@@ -7335,7 +7335,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:49',
-                'updated_at' => '2018-11-05 17:05:49',
+                'updated_at' => '2018-11-07 10:12:48',
             ),
             366 => 
             array (
@@ -7355,7 +7355,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:49',
-                'updated_at' => '2018-11-05 17:05:49',
+                'updated_at' => '2018-11-07 10:12:48',
             ),
             367 => 
             array (
@@ -7375,7 +7375,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:49',
-                'updated_at' => '2018-11-05 17:05:49',
+                'updated_at' => '2018-11-07 10:12:48',
             ),
             368 => 
             array (
@@ -7395,7 +7395,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:50',
-                'updated_at' => '2018-11-05 17:05:50',
+                'updated_at' => '2018-11-07 10:12:49',
             ),
             369 => 
             array (
@@ -7415,7 +7415,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:50',
-                'updated_at' => '2018-11-05 17:05:50',
+                'updated_at' => '2018-11-07 10:12:49',
             ),
             370 => 
             array (
@@ -7435,7 +7435,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:50',
-                'updated_at' => '2018-11-05 17:05:50',
+                'updated_at' => '2018-11-07 10:12:49',
             ),
             371 => 
             array (
@@ -7455,7 +7455,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:51',
-                'updated_at' => '2018-11-05 17:05:51',
+                'updated_at' => '2018-11-07 10:12:50',
             ),
             372 => 
             array (
@@ -7475,7 +7475,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:51',
-                'updated_at' => '2018-11-05 17:05:51',
+                'updated_at' => '2018-11-07 10:12:51',
             ),
             373 => 
             array (
@@ -7495,7 +7495,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:51',
-                'updated_at' => '2018-11-05 17:05:51',
+                'updated_at' => '2018-11-07 10:12:51',
             ),
             374 => 
             array (
@@ -7515,7 +7515,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:52',
-                'updated_at' => '2018-11-05 17:05:52',
+                'updated_at' => '2018-11-07 10:12:51',
             ),
             375 => 
             array (
@@ -7535,7 +7535,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:52',
-                'updated_at' => '2018-11-05 17:05:52',
+                'updated_at' => '2018-11-07 10:12:52',
             ),
             376 => 
             array (
@@ -7555,7 +7555,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:52',
-                'updated_at' => '2018-11-05 17:05:52',
+                'updated_at' => '2018-11-07 10:12:52',
             ),
             377 => 
             array (
@@ -7575,7 +7575,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:52',
-                'updated_at' => '2018-11-05 17:05:52',
+                'updated_at' => '2018-11-07 10:12:53',
             ),
             378 => 
             array (
@@ -7595,7 +7595,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:53',
-                'updated_at' => '2018-11-05 17:05:53',
+                'updated_at' => '2018-11-07 10:12:53',
             ),
             379 => 
             array (
@@ -7615,7 +7615,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:53',
-                'updated_at' => '2018-11-05 17:05:53',
+                'updated_at' => '2018-11-07 10:12:53',
             ),
             380 => 
             array (
@@ -7635,7 +7635,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:54',
-                'updated_at' => '2018-11-05 17:05:54',
+                'updated_at' => '2018-11-07 10:12:54',
             ),
             381 => 
             array (
@@ -7655,7 +7655,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:54',
-                'updated_at' => '2018-11-05 17:05:54',
+                'updated_at' => '2018-11-07 10:12:54',
             ),
             382 => 
             array (
@@ -7675,7 +7675,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:54',
-                'updated_at' => '2018-11-05 17:05:54',
+                'updated_at' => '2018-11-07 10:12:54',
             ),
             383 => 
             array (
@@ -7695,7 +7695,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:54',
-                'updated_at' => '2018-11-05 17:05:54',
+                'updated_at' => '2018-11-07 10:12:55',
             ),
             384 => 
             array (
@@ -7715,7 +7715,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:55',
-                'updated_at' => '2018-11-05 17:05:55',
+                'updated_at' => '2018-11-07 10:12:55',
             ),
             385 => 
             array (
@@ -7735,7 +7735,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:55',
-                'updated_at' => '2018-11-05 17:05:55',
+                'updated_at' => '2018-11-07 10:12:56',
             ),
             386 => 
             array (
@@ -7755,7 +7755,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:55',
-                'updated_at' => '2018-11-05 17:05:55',
+                'updated_at' => '2018-11-07 10:12:56',
             ),
             387 => 
             array (
@@ -7775,7 +7775,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:56',
-                'updated_at' => '2018-11-05 17:05:56',
+                'updated_at' => '2018-11-07 10:12:56',
             ),
             388 => 
             array (
@@ -7795,7 +7795,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:56',
-                'updated_at' => '2018-11-05 17:05:56',
+                'updated_at' => '2018-11-07 10:12:57',
             ),
             389 => 
             array (
@@ -7815,7 +7815,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:56',
-                'updated_at' => '2018-11-05 17:05:56',
+                'updated_at' => '2018-11-07 10:12:57',
             ),
             390 => 
             array (
@@ -7835,7 +7835,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:57',
-                'updated_at' => '2018-11-05 17:05:57',
+                'updated_at' => '2018-11-07 10:12:57',
             ),
             391 => 
             array (
@@ -7855,7 +7855,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:57',
-                'updated_at' => '2018-11-05 17:05:57',
+                'updated_at' => '2018-11-07 10:12:58',
             ),
             392 => 
             array (
@@ -7875,7 +7875,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:57',
-                'updated_at' => '2018-11-05 17:05:57',
+                'updated_at' => '2018-11-07 10:12:58',
             ),
             393 => 
             array (
@@ -7895,7 +7895,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:57',
-                'updated_at' => '2018-11-05 17:05:57',
+                'updated_at' => '2018-11-07 10:12:58',
             ),
             394 => 
             array (
@@ -7915,7 +7915,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:58',
-                'updated_at' => '2018-11-05 17:05:58',
+                'updated_at' => '2018-11-07 10:12:59',
             ),
             395 => 
             array (
@@ -7935,7 +7935,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:58',
-                'updated_at' => '2018-11-05 17:05:58',
+                'updated_at' => '2018-11-07 10:12:59',
             ),
             396 => 
             array (
@@ -7955,7 +7955,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:59',
-                'updated_at' => '2018-11-05 17:05:59',
+                'updated_at' => '2018-11-07 10:12:59',
             ),
             397 => 
             array (
@@ -7975,7 +7975,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:59',
-                'updated_at' => '2018-11-05 17:05:59',
+                'updated_at' => '2018-11-07 10:13:00',
             ),
             398 => 
             array (
@@ -7995,7 +7995,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:59',
-                'updated_at' => '2018-11-05 17:05:59',
+                'updated_at' => '2018-11-07 10:13:00',
             ),
             399 => 
             array (
@@ -8015,7 +8015,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:05:59',
-                'updated_at' => '2018-11-05 17:05:59',
+                'updated_at' => '2018-11-07 10:13:00',
             ),
             400 => 
             array (
@@ -8035,7 +8035,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:00',
-                'updated_at' => '2018-11-05 17:06:00',
+                'updated_at' => '2018-11-07 10:13:01',
             ),
             401 => 
             array (
@@ -8055,7 +8055,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:00',
-                'updated_at' => '2018-11-05 17:06:00',
+                'updated_at' => '2018-11-07 10:13:01',
             ),
             402 => 
             array (
@@ -8075,7 +8075,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:00',
-                'updated_at' => '2018-11-05 17:06:00',
+                'updated_at' => '2018-11-07 10:13:01',
             ),
             403 => 
             array (
@@ -8095,7 +8095,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:01',
-                'updated_at' => '2018-11-05 17:06:01',
+                'updated_at' => '2018-11-07 10:13:02',
             ),
             404 => 
             array (
@@ -8115,7 +8115,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:01',
-                'updated_at' => '2018-11-05 17:06:01',
+                'updated_at' => '2018-11-07 10:13:02',
             ),
             405 => 
             array (
@@ -8135,7 +8135,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:01',
-                'updated_at' => '2018-11-05 17:06:01',
+                'updated_at' => '2018-11-07 10:13:02',
             ),
             406 => 
             array (
@@ -8155,7 +8155,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:02',
-                'updated_at' => '2018-11-05 17:06:02',
+                'updated_at' => '2018-11-07 10:13:03',
             ),
             407 => 
             array (
@@ -8175,7 +8175,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:02',
-                'updated_at' => '2018-11-05 17:06:02',
+                'updated_at' => '2018-11-07 10:13:03',
             ),
             408 => 
             array (
@@ -8195,7 +8195,7 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:02',
-                'updated_at' => '2018-11-05 17:06:02',
+                'updated_at' => '2018-11-07 10:13:03',
             ),
             409 => 
             array (
@@ -8215,7 +8215,147 @@ class LinesTableSeeder extends Seeder
                 'is_show' => 0,
                 'last_update' => '2018-11-01',
                 'created_at' => '2018-11-05 17:06:03',
-                'updated_at' => '2018-11-05 17:06:03',
+                'updated_at' => '2018-11-07 10:13:04',
+            ),
+            410 => 
+            array (
+                'id' => 411,
+                'name' => '130路（邻瑞广场首末站 - 邻瑞广场首末站）',
+                'price' => '',
+                'car_type' => '大巴',
+                'depart_time' => '13~18分钟',
+                'open_time' => '邻瑞广场首末站 06:30:00~21:30:00；邻瑞广场首末站 06:30:00~21:30:00',
+                'total_time' => '',
+                'via_road' => '',
+                'company' => '苏州工业园区公共交通有限公司',
+                'station' => '邻瑞广场首末站-金鸡湖学校-塘浦路东-莲花新村七区-莲花新村六区-莲花新村三区-莲花新村一区-莲花停保场东-海德公园-文荟广场西-学生公寓B区南-金谷路-金堰路创苑路-金堰路新庆路-江韵路金堰路-菁汇公寓-金尚路创苑路-金尚路新昌路-威刚科技-金堰路新发路-东景公司-东景工业坊东-金田路-安固工业园-东旺路金堰路东-东宏路金堰路西-北极星花园北-敦煌路首末站东-莲香新村-联丰广场-荷韵新村-大地乐章东-邻瑞广场首末站',
+                'station_back' => '邻瑞广场首末站-塘浦路星湖街西-莲花新村七区-莲花新村六区-莲花新村三区-莲花新村一区-莲花停保场东-星塘街文景路-海德公园-文荟广场西-学生公寓B区南-金谷路-金堰路新庆路-菁汇公寓南-菁汇公寓-金尚路创苑路-金尚路新昌路-威刚科技--新发路金堰路-东景公司-东景工业坊东-金田路-安固工业园-东旺路金堰路东-东宏路金堰路西-北极星花园北-煌路首末站东-莲香新村-联丰广场-荷韵新村-大地乐章东-邻瑞广场首末站',
+                'reason' => '',
+                'username' => '',
+                'is_show' => 0,
+                'last_update' => '2018-11-01',
+                'created_at' => '2018-11-07 10:10:23',
+                'updated_at' => '2018-11-07 10:10:23',
+            ),
+            411 => 
+            array (
+                'id' => 412,
+                'name' => '136路（苏州中心 - 凤凰城首末站南）',
+                'price' => '',
+                'car_type' => '大巴',
+                'depart_time' => '12~18分钟',
+                'open_time' => '苏州中心 06:30:00~21:30:00；凤凰城首末站南 06:00:00~21:00:00',
+                'total_time' => '',
+                'via_road' => '',
+                'company' => '苏州工业园区公共交通有限公司',
+                'station' => '苏州中心-湖滨大道-香樟园-沁苑小区-凤鸣街南-艺术中心-新光天地-商旅大厦-旺墩路-湖东邻里中心西-湖东邻里中心-东湖大郡二期-园区二实小-西交大苏州附中-东湖林语-奥休中心-方洲小学南-园区外国语学校-儿童医院南-锦溪苑西-澜溪苑-苏州中学园区校-凤凰城首末站南',
+                'station_back' => '凤凰城首末站南-苏州中学园区校-澜溪苑-锦溪街港田路-锦溪苑西-儿童医院南-园区外国语学校-方洲小学南-奥体中心-东湖林语-西交大苏州附中-园区二实小-东湖大郡二期-湖东邻里中心-湖东邻里中心西-旺墩路-商旅大厦-新光天地-艺术中心-凤鸣街南-沁苑小区-沁苑邻里中心-香樟园-苏州中心',
+                'reason' => '',
+                'username' => '',
+                'is_show' => 0,
+                'last_update' => '2018-11-01',
+                'created_at' => '2018-11-07 10:10:24',
+                'updated_at' => '2018-11-07 10:10:24',
+            ),
+            412 => 
+            array (
+                'id' => 413,
+                'name' => '137路（苏州中心 - 森林公园首末站）',
+                'price' => '1元',
+                'car_type' => '大巴',
+                'depart_time' => '15~18分钟',
+                'open_time' => '苏州中心 06:00:00~21:00:00；森林公园首末站 06:00:00~21:00:00',
+                'total_time' => '',
+                'via_road' => '',
+                'company' => '苏州工业园区公共交通有限公司',
+                'station' => '苏州中心-湖滨大道-香樟园-苏州中心北-国际大厦-都市花园-新城邻里中心东-临芳苑二区-张泾新村二区-张泾新村一区-沪宁城铁园区站广场-青青家园-珠泾路葑亭大道南-上娄路-唯亭虹桥-青剑湖景区-星湖街唯青路北-星湖街唯澄路南-景悦星湖花园-森林公园首末站',
+                'station_back' => '森林公园首末站-景悦星湖花园-星湖街唯澄路南-星湖街唯青路北-青剑湖景区-唯亭虹桥-上娄路-珠泾路葑亭大道南-青青家园-沪宁城铁园区站广场-张泾新村一区-张泾新村二区-临芳苑二区-沁苑邻里中心-香樟园-苏州中心',
+                'reason' => '',
+                'username' => '',
+                'is_show' => 0,
+                'last_update' => '2018-11-01',
+                'created_at' => '2018-11-07 10:10:24',
+                'updated_at' => '2018-11-07 10:10:24',
+            ),
+            413 => 
+            array (
+                'id' => 414,
+                'name' => '663路（木渎公交换乘枢纽站 - 藏书官桥首末站）',
+                'price' => '',
+                'car_type' => '大巴',
+                'depart_time' => '15~20分钟',
+                'open_time' => '木渎公交换乘枢纽站 06:00:00~19:00:00；藏书官桥首末站 06:00:00~19:00:00',
+                'total_time' => '',
+                'via_road' => '',
+                'company' => '苏州市吴中区公共汽车有限公司',
+            'station' => '木渎公交换乘枢纽站-南浜-中华园大酒店-天平大酒店-木渎天虹-木渎-木渎人民医院-木渎严家花园(灵岩山)-灵岩山-箭河路-韩世忠墓-穹灵路兵营-穹灵路前峰村-穹灵路石码头-狮子口-五峰山庄-大马头-韩家湾-五峰山-博士坞-藏书花木市场-穹灵路林场-马巷上-东方-藏书人民桥-藏书实验小学东-藏书实验小学-藏书实验小学西-藏书派出所-藏书中学-蒋家场-羊家场-钱家场-白象湾-旺山桥（天池山）-曹家里-篁村-真山-天池村委会-藏书官桥首末站',
+            'station_back' => '官桥-天池村委会-真山-篁村-曹家里-旺山桥（天池山）-白象湾-钱家场-羊家场-蒋家场-藏书中学-藏书派出所-藏书实验小学西-藏书实验小学-藏书实验小学东-藏书人民桥-东方-马巷上-穹灵路林场-藏书花木市场-博士坞-五峰山-韩家湾-大马头-五峰山庄-狮子口-穹灵路石码头-穹灵路前峰村-穹灵路兵营-韩世忠墓-箭河路-灵岩山-木渎严家花园(灵岩山)-木渎人民医院-木渎-木渎天虹-天平大酒店-中华园大酒店-南浜',
+                'reason' => '',
+                'username' => '',
+                'is_show' => 0,
+                'last_update' => '2018-11-01',
+                'created_at' => '2018-11-07 10:11:43',
+                'updated_at' => '2018-11-07 10:11:43',
+            ),
+            414 => 
+            array (
+                'id' => 415,
+                'name' => '665路（灵岩山首末站② - 凤凰村）',
+                'price' => '',
+                'car_type' => '大巴',
+                'depart_time' => '15~20分钟',
+                'open_time' => '灵岩山首末站 05:40:00~18:10:00；凤凰村首末站 06:00:00~18:50:00',
+                'total_time' => '',
+                'via_road' => '',
+                'company' => '苏州市吴中区公共汽车有限公司',
+                'station' => '灵岩山首末站②-木渎严家花园（灵岩山）-木渎人民医院②-木渎-木渎天虹-天平大酒店-木渎范仲淹实验小学-中华园大酒店-新华路-金枫路竹园路南-金枫路山庄路-金枫路金长路南-金枫路花苑路-金枫立交枢纽-金枫南路香溪东路-同春桥南-金枫南路姑苏路南-金枫南路宝带西路-金枫路木胥路南-凤凰路（孙庄东路）-凤凰村',
+                'station_back' => '凤凰村-凤凰路（孙庄东路）-金枫路木胥路南-金枫南路宝带西路-金枫南路姑苏路南-同春桥南-金枫南路香溪东路-金枫立交枢纽-金枫路花苑路-金枫路金长路-金枫路山庄路-竹园路金枫路西-新华路-中华园大酒店-木渎范仲淹实验小学-天平大酒店-木渎天虹-木渎-木渎人民医院-木渎严家花园（灵岩山）',
+                'reason' => '',
+                'username' => '',
+                'is_show' => 0,
+                'last_update' => '2018-11-01',
+                'created_at' => '2018-11-07 10:11:44',
+                'updated_at' => '2018-11-07 10:11:44',
+            ),
+            415 => 
+            array (
+                'id' => 416,
+                'name' => '666路（木渎公交换乘枢纽站 - 凤凰村）',
+                'price' => '',
+                'car_type' => '大巴',
+                'depart_time' => '15~20分钟',
+                'open_time' => '木渎公交换乘枢纽站 05:35:00~17:50:00；凤凰村停车场 06:00:00~18:30:00',
+                'total_time' => '',
+                'via_road' => '',
+                'company' => '苏州市吴中区公共汽车有限公司',
+                'station' => '木渎公交换乘枢纽站-南浜-中华园大酒店-天平大酒店-木渎天虹-木渎-翠坊桥（木渎古镇）-木渎实验中学-南亭桥-新姜窑花园-金桥花园北-谢村小区-走马塘路宝带西路南-木渎新市民服务中心-木渎第二小学-孙庄村-凤凰路（孙庄东路）-凤凰村',
+                'station_back' => '凤凰村-凤凰路（孙庄东路）-孙庄村-木渎第二小学-木渎新市民服务中心-走马塘路宝带西路南-谢村小区-金桥花园北-新姜窑花园-南亭桥-木渎实验中学-翠坊桥（木渎古镇）-木渎-木渎天虹-天平大酒店-中华园大酒店-南浜',
+                'reason' => '',
+                'username' => '',
+                'is_show' => 0,
+                'last_update' => '2018-11-01',
+                'created_at' => '2018-11-07 10:11:44',
+                'updated_at' => '2018-11-07 10:11:44',
+            ),
+            416 => 
+            array (
+                'id' => 417,
+                'name' => '667路（太湖游客中心 - 藏书中学）',
+                'price' => '',
+                'car_type' => '大巴',
+                'depart_time' => '定时班车',
+                'open_time' => '太湖游客中心 06:15:00~18:15:00；藏书中学停车场 06:00:00~18:15:00',
+                'total_time' => '',
+                'via_road' => '',
+                'company' => '苏州市吴中区公共汽车有限公司',
+                'station' => '太湖游客中心-梅舍-炙渔桥南-太湖游客中心西-太湖游客中心东-新-还带寺-香榭-新-津桥-新-子胥社区-石中路一箭河路南-石中路曹丰路北-建丰小区-茅蓬路藏中路东-茅蓬路藏胥路东-寿山-上堰头-石臼亩-仰家上-穹窿社区-小王山景区-万鸟园-孙武文化园-接驾社区-三毗村-上泾村-穹窿山景区-吴家堂-藏书实验小学西-藏书派出所-藏书中学',
+                'station_back' => '藏书中学-藏书派出所-藏书实验小学西-吴家堂-穹窿山景区-上泾村-三毗村-接驾社区-孙武文化园-万鸟园-小王山景区-穹窿社区-仰家上-石臼亩-上堰头-寿山-茅蓬路藏胥路东-茅蓬路藏中路东-建丰小区-石中路曹丰路北-石中路一箭河路南-子胥社区-津桥-新-香榭-新-还带寺-太湖游客中心',
+                'reason' => '',
+                'username' => '',
+                'is_show' => 0,
+                'last_update' => '2018-11-01',
+                'created_at' => '2018-11-07 10:11:45',
+                'updated_at' => '2018-11-07 10:11:45',
             ),
         ));
         
