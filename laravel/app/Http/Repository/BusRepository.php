@@ -269,20 +269,9 @@ class BusRepository
             foreach ($arrayData as $arrayDatum) {
                 /**
                  * $arrayDatum 示例如下：
-                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21aea96***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
+                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
                  */
-                // 解析 link 转数组操作
-                $arr = parse_url($arrayDatum['link']); // ['path' => 'APTSLine.aspx','query' => 'cid=175ecd8d-c39***']
-                parse_str($arr['query'], $lines); // ['cid' => '175ec','LineGuid' => '21aea96','LineInfo' => '15**',]
-                $lines['expiration'] = time() + 180 * 24 * 3600;
-                $lines['name'] = $arrayDatum['bus'];
-                $lines['FromTo'] = $arrayDatum['FromTo'];
-                if (!$this->saveBusLines($lines)) {
-                    // 线路入库失败的记录日志中供查询
-                    Log::error('BubLines 入库执行失败 error: 线路名称 '.$lines['LineInfo'], $lines);
-                } else {
-                    Log::info('BubLines 入库执行 success: 线路名称 '.$lines['LineInfo']);
-                }
+                $this->handleLinkToBusLines($arrayDatum);
             }
         } else {
             // 2.1 文件存在直接读取
@@ -434,6 +423,30 @@ class BusRepository
             return $rs;
         }
         return false;
+    }
+
+    /**
+     * @param array $arrayDatum 示例如下:
+     * $arrayDatum =['link' => 'APTSLine.aspx?cid=17e***&LineGuid=21ae6***&LineInfo=158***','bus' => '158','FromTo' => '园区*',]
+     *
+     * @return bool
+     */
+    private function handleLinkToBusLines($arrayDatum)
+    {
+        // 解析 link 转数组操作
+        $arr = parse_url($arrayDatum['link']); // ['path' => 'APTSLine.aspx','query' => 'cid=175ecd8d-c39***']
+        parse_str($arr['query'], $lines); // ['cid' => '175ec','LineGuid' => '21aea96','LineInfo' => '15**',]
+        $lines['expiration'] = time() + 180 * 24 * 3600;
+        $lines['name'] = $arrayDatum['bus'];
+        $lines['FromTo'] = $arrayDatum['FromTo'];
+        $rs = $this->saveBusLines($lines);
+        if (!$rs) {
+            // 线路入库失败的记录日志中供查询
+            Log::error('BubLines 入库执行失败 error: 线路名称 '.$lines['LineInfo'], $lines);
+        } else {
+            Log::info('BubLines 入库执行 success: 线路名称 '.$lines['LineInfo']);
+        }
+        return $rs;
     }
 
     private function __construct($config)
