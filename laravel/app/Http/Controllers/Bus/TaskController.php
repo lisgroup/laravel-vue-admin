@@ -37,6 +37,22 @@ class TaskController extends CommonController
 
     public function line()
     {
+        $bus = \Illuminate\Support\Facades\DB::table('bus_lines')->get();
+
+        $file = __DIR__.'/bus_lines.php';
+        $array = $bus->toArray();
+        $str = var_export($array,true);
+        $str = str_replace(['stdClass::__set_state(', '))'], ['', ')'], $str);
+
+        // 缓存
+        $text='<?php $rows='.$str.';';
+        if(false !== fopen($file,'w+')){
+            file_put_contents($file,$text);
+        }else{
+            echo '创建失败';
+        }
+
+
         // 入口方法
         $param = 'line';
         $repository = TaskRepository::getInstent();
