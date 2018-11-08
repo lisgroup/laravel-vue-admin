@@ -132,9 +132,14 @@ class TaskRepository
     }
 
 
-    public function lineTask()
+    /**
+     * 任务： 从原库 line 数据，抓取实时公交写入 bus_lines
+     * 作用： 为以后直接查询实时公交提供方便
+     * @return array
+     */
+    public function line()
     {
-        $name = '1001路（景城邻里中心首末站 - 景城邻里中心首末站）';
+        $name = '1002路（景城邻里中心首末站 - 景城邻里中心首末站）';
         $name = str_replace(['路'], [''], mb_substr($name, 0, mb_strpos($name, '（')));
         $result = BusRepository::getInstent()->getList($name);
         // dump($result);
