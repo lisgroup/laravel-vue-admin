@@ -44,3 +44,7 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'task'], function () {
     Route::any('api', 'TaskController@api');
     Route::any('line', 'TaskController@line');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

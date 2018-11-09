@@ -229,3 +229,14 @@ composer require orangehill/iseed
 ```
 php artisan iseed lines
 ```
+
+## 开箱即用注册登录功能
+```shell
+# 快速生成认证所需要的路由和视图
+php artisan make:auth
+
+# 数据库迁移填充
+# 回滚再重新迁移 migrate:refresh 命令来填充数据库。彻底重构数据库
+php artisan migrate:refresh --seed
+
+```
