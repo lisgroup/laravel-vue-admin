@@ -49,20 +49,33 @@ php artisan db:seed
 
 **两种模式** 
 
-#### 4.1.1 开启 elasticsearch 模式
+#### 模式一： 开启 elasticsearch 全文搜索
+1. elasticsearch 安装方法：
 
-安装请参考： [Ubuntu 安装 elasticsearch 和 analysis-ik 插件](https://note.youdao.com/share/?id=a8fc19ff5dbdf5fcb706957166dba376&type=note#/)
+   - 安装请参考： [Ubuntu 安装 elasticsearch 和 analysis-ik 插件](https://note.youdao.com/share/?id=a8fc19ff5dbdf5fcb706957166dba376&type=note#/)
 
-#### 4.1.2 启动 elasticsearch 服务后
+2. 启动 elasticsearch 服务后
 
-#### 4.1.3 在 `.env` 文件中增加配置项；
+3. 在 `.env` 文件中增加配置项；
 ```bash
 SCOUT_DRIVER=elasticsearch
 ```
-#### 4.1.4 生成索引；
+4. 生成全文索引；
 ```php
 php artisan elasticsearch:import "App\Models\Line"
 ```
+
+---
+#### 模式二： TNTSearch+jieba-php 实现中文全文搜索
+
+> 注：全文索引存储在 SQLite 中，需 php 开启了以下扩展；
+```
+  pdo_sqlite
+  sqlite3
+  mbstring
+```
+
+安装方法参见：[TNTSearch+jieba-php 实现中文全文搜索](./laravel/TNTSearch.md)
 
 ### 5. 启动 laravels 服务监听 5200 端口(可选：需安装 swoole 扩展)
 ```php
