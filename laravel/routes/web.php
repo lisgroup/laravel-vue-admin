@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Models\Cron;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,7 +17,9 @@ Route::get('/', function () {
 
 Route::get('search', function () {
     // 为查看方便都转成数组
-    dump(Cron::all()->toArray());
+    dump('搜索关键词：汽车南站');
+    $list = \App\Models\Line::search('汽车南站')->get()->toArray();
+    dump($list);
 });
 
 Route::any('/api/_token', function() {
@@ -36,3 +37,14 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
     Route::get('getList', 'IndexController@getList');
     Route::any('busLine', 'IndexController@busLine');
 });
+
+/******** 测试任务的接口地址 *********/
+Route::group(['namespace' => 'Bus', 'prefix' => 'task'], function () {
+    Route::get('index', 'TaskController@index');
+    Route::any('api', 'TaskController@api');
+    Route::any('line', 'TaskController@line');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

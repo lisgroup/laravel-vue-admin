@@ -10,16 +10,16 @@ H5 自适应苏州实时公交查询系统
 4. CURL PHP Extension
 
 ## 安装方法：
-为了方便自己使用，已经讲打包好的代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
+为了方便自己使用，已经将打包好的前端代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
-1. 安装 php 环境 (必须)
+### 1. 安装 php 环境 (必须)
 ```php
 git clone https://gitee.com/lisgroup/vueBus.git
 cd vueBus/laravel
 composer install
 cp .env.example .env
 ```
-2. 配置项修改 .env 文件数据库
+### 2. 配置项修改 .env 文件数据库
 ```php
 # 修改数据库配置
 DB_CONNECTION=mysql
@@ -36,20 +36,54 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
 
-3. 运行数据迁移和填充(可选)
+### 3. 运行数据迁移和填充(可选)
 ```php
 php artisan migrate
 php artisan make:seed CronTasksTableSeeder
-php artisan db:seed --class=CronTasksTableSeeder
+php artisan db:seed
+# 如需刷新数据库结构并执行数据填充，请执行下面代码
+# php artisan migrate:refresh --seed
 ```
 
-4. 启动 laravels 服务监听 5200 端口(可选：需安装 swoole 扩展)
+### 4. 支持中文全文索引
+
+**两种模式** 
+
+#### 模式一： 开启 elasticsearch 全文搜索
+1. elasticsearch 安装方法：
+
+   - 安装请参考： [Ubuntu 安装 elasticsearch 和 analysis-ik 插件](https://note.youdao.com/share/?id=a8fc19ff5dbdf5fcb706957166dba376&type=note#/)
+
+2. 启动 elasticsearch 服务后
+
+3. 在 `.env` 文件中增加配置项；
+```bash
+SCOUT_DRIVER=elasticsearch
+```
+4. 生成全文索引；
+```php
+php artisan elasticsearch:import "App\Models\Line"
+```
+
+---
+#### 模式二： TNTSearch+jieba-php 实现中文全文搜索
+
+> 注：全文索引存储在 SQLite 中，需 php 开启了以下扩展；
+```
+  pdo_sqlite
+  sqlite3
+  mbstring
+```
+
+安装方法参见：[TNTSearch+jieba-php 实现中文全文搜索](./laravel/TNTSearch.md)
+
+### 5. 启动 laravels 服务监听 5200 端口(可选：需安装 swoole 扩展)
 ```php
 php artisan laravels start -d
 ```
 更多细节参考：[https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md](https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md)
 
-5. 启动定时任务(可选)
+### 6. 启动定时任务(可选)
 ```shell
 # 使用 crontab 的定时任务调用 php artisan 调度任务：
 crontab -e
@@ -61,7 +95,7 @@ crontab -e
 # 最后 ctrl + o 保存退出即可。
 ```
 
-~~6. 可选，安装 npm 扩展~~
+~~7. 可选，安装 npm 扩展~~
 ```node
 # 切换到上级 app 目录下
 cd ../app
@@ -80,7 +114,7 @@ npm run buildpro
 ## 域名绑定
 域名需要绑定到根目录，即项目的 php/public 目录下。
 
-1. 未启动 laravels 的 Nginx 示例配置：
+### 1. 未启动 laravels 的 Nginx 示例配置：
 ```shell
 server {
     listen 443;
@@ -131,7 +165,7 @@ server {
     error_log /home/wwwlogs/laravel_error.log;
 }
 ```
-2. 启动 laravels 的 Nginx 示例配置：
+### 2. 启动 laravels 的 Nginx 示例配置：
 ```php
 #gzip on;
 #gzip_min_length 1024;

@@ -173,6 +173,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Elasticsearch全文搜索
+         */
+        Laravel\Scout\ScoutServiceProvider::class,
+        Baijunyao\LaravelScoutElasticsearch\ElasticsearchServiceProvider::class,
+
     ],
 
     /*

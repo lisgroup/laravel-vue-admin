@@ -19,6 +19,7 @@ class IndexController extends CommonController
      */
     public function index()
     {
+        // BusRepository::getInstent()->cronTaskTable();
         if (PHP_SAPI == 'cli') {
             // $result = BusRepository::getInstent()->busTask();
             return ['code' => 0, 'msg' => 'success', 'result' => ['data' => 'task '.date('Y-m-d H:i:s')]];
@@ -64,13 +65,4 @@ class IndexController extends CommonController
         return $this->exportData($data);
     }
 
-    /**
-     * 定时任务执行实时公交入库操作
-     * @return array
-     */
-    public function cron()
-    {
-        $data = BusRepository::getInstent()->getCronSave();
-        return $this->exportData($data);
-    }
 }

@@ -1,7 +1,7 @@
 ## 安装方法：
 为了方便自己使用，已经讲打包好的代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
-1. 安装 php 环境 (必须)
+### 1. 安装 php 环境 (必须)
 ```php
 git clone https://gitee.com/lisgroup/vueBus.git
 cd vueBus/laravel
@@ -9,7 +9,7 @@ composer install
 cp .env.example .env
 ```
 
-2. 配置项修改 .env 文件数据库
+### 2. 配置项修改 .env 文件数据库
 ```php
 # 修改数据库配置
 DB_CONNECTION=mysql
@@ -26,14 +26,32 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
 
-3. 运行数据迁移和填充
+### 3. 运行数据迁移和填充
 ```php
 php artisan migrate
 php artisan make:seed CronTasksTableSeeder
 php artisan db:seed --class=CronTasksTableSeeder
 ```
+### ~~4. # 支持中文全文索引~~
 
-4. 启动 laravels 服务监听 5200 端口
+**两种模式** 
+
+#### 4.1.1 开启 elasticsearch 模式
+
+安装请参考： [Ubuntu 安装 elasticsearch 和 analysis-ik 插件](https://note.youdao.com/share/?id=a8fc19ff5dbdf5fcb706957166dba376&type=note#/)
+
+#### 4.1.2 启动 elasticsearch 服务后
+
+#### 4.1.3 在 `.env` 文件中增加配置项；
+```bash
+SCOUT_DRIVER=elasticsearch
+```
+#### 4.1.4 生成索引；
+```php
+php artisan elasticsearch:import "App\Models\Line"
+```
+
+### 5. 启动 laravels 服务监听 5200 端口
 ```php
 php artisan laravels start -d
 ```
@@ -168,7 +186,7 @@ php artisan db:seed --class=CronTasksTableSeeder
 ```
 
 3. 添加路由
-```
+
 /routes/web.php
 ```
 <?php
@@ -180,7 +198,45 @@ Route::get('search', function () {
 });
 ```
 
+4. 定时任务和创建命令相关
+启动定时任务
+```shell
+# 使用 crontab 的定时任务调用 php artisan 调度任务：
+crontab -e
+
+# 追加如下内容： 
+
+* * * * * php /home/ubuntu/vueBus/laravel/artisan schedule:run >> /dev/null 2>&1
+
+# 最后 ctrl + o 保存退出即可。
+```
+
 
 ## 待完成工作
 1. 查询的公交线路存入数据库保存。（目前保存在文件中）
 
+
+## Laravel使用 iseed 扩展导出表数据
+iseed地址： [https://github.com/orangehill/iseed](https://github.com/orangehill/iseed)
+
+### iseed 安装
+```
+composer require orangehill/iseed
+```
+
+### 使用方法
+如生成 lines 表的 seeder 文件:
+```
+php artisan iseed lines
+```
+
+## 开箱即用注册登录功能
+```shell
+# 快速生成认证所需要的路由和视图
+php artisan make:auth
+
+# 数据库迁移填充
+# 回滚再重新迁移 migrate:refresh 命令来填充数据库。彻底重构数据库
+php artisan migrate:refresh --seed
+
+```

@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        // 命令列表
+        'App\Console\Commands\LineTask',
     ];
 
     /**
@@ -31,15 +32,15 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->call(function()
         {
-            // 定时任务
-            Log::info('定时任务：'.date('Y-m-d H:i:s'));
-            // 测试定时 HTTP 请求
-            $url = "http://118.25.87.12/token/php/index.php/hello/123";
-            $query = QueryList::get($url);
-            $path = storage_path('framework/cache/');
-            is_dir($path) || mkdir($path, 777, true);
-            file_put_contents($path.'/cache.txt', $query->getHtml().PHP_EOL, FILE_APPEND);
-            // 每隔五分钟入库操作
+            // // 定时任务
+            // Log::info('定时任务：'.date('Y-m-d H:i:s'));
+            // // 测试定时 HTTP 请求
+            // $url = "http://118.25.87.12/token/php/index.php/hello/123";
+            // $query = QueryList::get($url);
+            // $path = storage_path('framework/cache/');
+            // is_dir($path) || mkdir($path, 777, true);
+            // file_put_contents($path.'/cache.txt', $query->getHtml().PHP_EOL, FILE_APPEND);
+            // // 每隔五分钟入库操作
             BusRepository::getInstent()->cronTaskTable();
         })->everyFiveMinutes()->between('5:00', '23:00');
     }

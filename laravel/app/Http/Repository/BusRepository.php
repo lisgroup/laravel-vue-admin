@@ -9,10 +9,12 @@
 namespace App\Http\Repository;
 
 
+use App\Models\BusLine;
 use App\Models\Cron;
 use App\Models\CronTask;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use QL\QueryList;
 
@@ -29,6 +31,8 @@ class BusRepository
 
     private static $instance;
 
+    // private $cronModel;
+
     public static function getInstent($conf = [])
     {
         if (!isset(self::$instance)) {
@@ -38,7 +42,7 @@ class BusRepository
     }
 
     /**
-     * 处理以前存储的数据 Task
+     * 历史遗留：处理以前存储的 HTML 文件数据 Task
      * @return int
      */
     public function busTask()
@@ -48,13 +52,13 @@ class BusRepository
         // 2， 开始循环每个目录，查找其中的文件
         for ($month = '07'; $month < 11; $month++) {
             for ($day = '01'; $day <= 32; $day++) {
-                $dirMudu = ROOT_PATH . 'crontab/2018' . $month . $day . '/line_k1_to_mudu/';
-                $dirXing = ROOT_PATH . 'crontab/2018' . $month . $day . '/line_k1_to_xingtang_/';
+                $dirMudu = ROOT_PATH.'crontab/2018'.$month.$day.'/line_k1_to_mudu/';
+                $dirXing = ROOT_PATH.'crontab/2018'.$month.$day.'/line_k1_to_xingtang_/';
 
                 // 3. 最终遍历目录下的文件
                 for ($i = 1; $i <= 300; $i++) {
                     // 3.1 mudu 目录下的文件操作
-                    $file = $dirMudu . $i . '.html';
+                    $file = $dirMudu.$i.'.html';
                     if (file_exists($file)) {
                         /**********************   line1  start ************************/
                         // $file = 'E:\www\vueBus\php\crontab/20181001/line_k1_to_mudu/1.html';
@@ -64,13 +68,13 @@ class BusRepository
 
                         // 入库操作1 ----- 木渎  '快线1号(星塘公交中心首末站)';
                         $date = date('Y-m-d H:i:s', filemtime($file));
-                        $rs1 = db('cronlist')->insert(['line_info' => '快线1号(木渎公交换乘枢纽站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        $rs1 = DB::table('cronlist')->insert(['line_info' => '快线1号(木渎公交换乘枢纽站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
                         usleep(10000);
                         /**********************   line1  end ************************/
                     }
 
                     // 3.1 mudu 目录下的文件操作
-                    $file2 = $dirXing . $i . '.html';
+                    $file2 = $dirXing.$i.'.html';
                     if (file_exists($file2)) {
                         /**********************   line1  start ************************/
                         // $file = 'E:\www\vueBus\php\crontab/20181001/line_k1_to_mudu/1.html';
@@ -80,7 +84,7 @@ class BusRepository
 
                         // 入库操作1 ----- 木渎  '快线1号(星塘公交中心首末站)';
                         $date = date('Y-m-d H:i:s', filemtime($file2));
-                        $rs2 = db('cronlist')->insert(['line_info' => '快线1号(星塘公交中心首末站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
+                        $rs2 = DB::table('cronlist')->insert(['line_info' => '快线1号(星塘公交中心首末站)', 'content' => $content, 'create_time' => $date, 'update_time' => $date]);
                         usleep(10000);
                         /**********************   line1  end ************************/
                     }
@@ -166,7 +170,16 @@ class BusRepository
              * $html = httpGet($this->url);
              * $arrayData = $this->ql->html($html)->rules($rules)->query()->getData();
              */
-            $queryList = QueryList::get($this->url);
+            try {
+                $queryList = QueryList::get($this->url, [], [
+                    //设置超时时间，单位：秒
+                    'timeout' => 5,
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Token 获取失败 error 网络超时: '.$this->url, ['message' => $e->getMessage()]);
+                return [];
+            }
+
 
             // 1.2 自定义采集规则
             $rules = [
@@ -209,7 +222,7 @@ class BusRepository
         is_dir($path) || mkdir($path, 0777, true);
 
         // 2.0 判断是否已经有此条线路搜索
-        if ($refresh || !file_exists($path . '/serialize_' . $line . '.txt')) {
+        if ($refresh || !file_exists($path.'/serialize_'.$line.'.txt')) {
             // 1. 获取 Token
             $data = $this->getToken();
 
@@ -249,13 +262,29 @@ class BusRepository
             $arrayData = $queryList->rules($rules)->query()->getData();
             $str = serialize($arrayData->all());
             //缓存 此条线路替换a标签的数据
-            $fileName = $path . '/serialize_' . $line . '.txt';
+            $fileName = $path.'/serialize_'.$line.'.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
+            // 车次入库操作
+            foreach ($arrayData as $arrayDatum) {
+                /**
+                 * $arrayDatum 示例如下：
+                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
+                 */
+                $this->handleLinkToBusLines($arrayDatum);
+            }
         } else {
             // 2.1 文件存在直接读取
-            $serialize = file_get_contents($path . '/serialize_' . $line . '.txt');//线路列表
+            $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
             $arrayData = unserialize($serialize);
+            // 车次入库操作
+            foreach ($arrayData as $arrayDatum) {
+                /**
+                 * $arrayDatum 示例如下：
+                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
+                 */
+                $this->handleLinkToBusLines($arrayDatum);
+            }
         }
 
         return $arrayData;
@@ -293,9 +322,17 @@ class BusRepository
         if (empty($path) || empty($get['cid']) || empty($get['LineGuid']) || empty($get['LineInfo']))
             return false;
         $paramString = http_build_query($get);
-        $url = 'http://www.szjt.gov.cn/BusQuery/' . $path . '?' . $paramString;
+        $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
         //实时公交返回的网页数据
-        $queryList = QueryList::get($url);
+        try {
+            $queryList = QueryList::get($url, [], [
+                //设置超时时间，单位：秒
+                'timeout' => 5,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('busLine 获取失败; error: 网络超时 URL: '.$url, ['message' => $e->getMessage()]);
+            return [];
+        }
 
         /*$rules = [
             'to' => ['#MainContent_LineInfo', 'text'],  //方向
@@ -319,6 +356,9 @@ class BusRepository
         return ['to' => $to, 'line' => $arrayData];
     }
 
+    /**
+     * 定时任务：artisan 执行入库操作
+     */
     public function cronTaskTable()
     {
         $tasks = CronTask::where('is_task', 1)->get();
@@ -348,58 +388,73 @@ class BusRepository
         }
     }
 
-
     /**
-     * laravel 下的定时任务
-     * @return int|string
+     * crons 表入库操作
+     * @param $crons
+     * @return bool
      */
-    public function getCronSave()
+    private function saveCronData($crons)
     {
-        /**********************   line1  start ************************/
-        $post = [
-            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
-            'LineGuid' => 'af9b209b-f99d-4184-af7d-e6ac105d8e7f',
-            'LineInfo' => '快线1号(木渎公交换乘枢纽站)',
-        ];
-        $data = $this->getLine('APTSLine.aspx', $post)['line'];
-        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-        // 入库操作 1 ----- 木渎
-        $cron = ['line_info' => $post['LineInfo'], 'content' => $content];
-        $rs1 = $this->saveCronData($cron);
-        /**********************   line1  end ************************/
-
-        /**********************   line2  start ************************/
-        $toXingtang = [
-            'cid' => '175ecd8d-c39d-4116-83ff-109b946d7cb4',
-            'LineGuid' => '921f91ad-757e-49d6-86ae-8e5f205117be',
-            'LineInfo' => '快线1号(星塘公交中心首末站)',
-        ];
-
-        $data = $this->getLine('APTSLine.aspx', $toXingtang)['line'];
-        $content = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-        // 入库操作 2 ----- 星塘
-        $cron = ['line_info' => $toXingtang['LineInfo'], 'content' => $content];
-        $rs2 = $this->saveCronData($cron);
-        /**********************   line2  end ************************/
-
-        if ($rs1 && $rs2) {
-            $rs = 1;
-        } elseif ($rs1 && !$rs2) {
-            $rs = 2;
-        } elseif (!$rs1 && $rs2) {
-            $rs = 3;
-        } else {
-            $rs = 4;
-        }
-        return $rs;
+        // 使用单例会出问题，如插入第一条后面都是更新这条数据。。
+        // if (!($this->cronModel instanceof Cron)) {
+        //     $this->cronModel = new Cron();
+        // }
+        // $model = $this->cronModel;
+        // foreach ($crons as $key => $cron) {
+        //     $model->$key = $cron;
+        // }
+        // $model = new Cron($crons);
+        // return $model->save();
+        $day = date('Y-m-d H:i:s');
+        $crons += ['created_at' => $day, 'updated_at' => $day];
+        return Cron::insert($crons);
     }
 
-    private function saveCronData($cron)
+    /**
+     * bus_lines 表入库操作
+     * @param array $lines
+     * @return bool
+     */
+    private function saveBusLines($lines)
     {
-        $model = new Cron($cron);
-        return $model->save();
+        /**
+         * 入库前需要先判断是否已经存在
+         */
+        if (!empty($lines)) {
+            $line = BusLine::where('name', $lines['name'])->where('FromTo', $lines['FromTo'])->first();
+            if (!empty($line)) {
+                $rs = BusLine::where('id', $line['id'])->update($lines);
+            } else {
+                $model = new BusLine($lines);
+                $rs = $model->save();
+            }
+            return $rs;
+        }
+        return false;
+    }
+
+    /**
+     * @param array $arrayDatum 示例如下:
+     * $arrayDatum =['link' => 'APTSLine.aspx?cid=17e***&LineGuid=21ae6***&LineInfo=158***','bus' => '158','FromTo' => '园区*',]
+     *
+     * @return bool
+     */
+    private function handleLinkToBusLines($arrayDatum)
+    {
+        // 解析 link 转数组操作
+        $arr = parse_url($arrayDatum['link']); // ['path' => 'APTSLine.aspx','query' => 'cid=175ecd8d-c39***']
+        parse_str($arr['query'], $lines); // ['cid' => '175ec','LineGuid' => '21aea96','LineInfo' => '15**',]
+        $lines['expiration'] = time() + 180 * 24 * 3600;
+        $lines['name'] = $arrayDatum['bus'];
+        $lines['FromTo'] = $arrayDatum['FromTo'];
+        $rs = $this->saveBusLines($lines);
+        if (!$rs) {
+            // 线路入库失败的记录日志中供查询
+            Log::error('BubLines 入库执行失败 error: 线路名称 '.$lines['LineInfo'], $lines);
+        } else {
+            Log::info('BubLines 入库执行 success: 线路名称 '.$lines['LineInfo']);
+        }
+        return $rs;
     }
 
     private function __construct($config)
