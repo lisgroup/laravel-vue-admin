@@ -10,7 +10,7 @@ H5 自适应苏州实时公交查询系统
 4. CURL PHP Extension
 
 ## 安装方法：
-为了方便自己使用，已经讲打包好的代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
+为了方便自己使用，已经将打包好的前端代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
 ### 1. 安装 php 环境 (必须)
 ```php
@@ -40,7 +40,9 @@ REDIS_PORT=6379
 ```php
 php artisan migrate
 php artisan make:seed CronTasksTableSeeder
-php artisan db:seed 
+php artisan db:seed
+# 如需刷新数据库结构并执行数据填充，请执行下面代码
+# php artisan migrate:refresh --seed
 ```
 
 ### 4. 支持中文全文索引
