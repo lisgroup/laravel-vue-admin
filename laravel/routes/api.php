@@ -17,8 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'auth'], function($router) {
-    Route::any('login', 'AuthController@adminLogin')->middleware('admin.login');
+Route::group(['prefix' => 'user'], function($router) {
+    Route::any('login', 'AuthController@login'); // ->middleware('admin.login');
     Route::any('logout', 'AuthController@logout');
     Route::any('refresh', 'AuthController@refresh');
     Route::any('me', 'AuthController@me');
