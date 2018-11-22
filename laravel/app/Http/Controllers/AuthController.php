@@ -27,14 +27,17 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|array
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
+        $credentials = request(['username', 'password']);
 
-        // $credentials['name'] = $credentials['username'];
-        // unset($credentials['username']);
+        if (empty($credentials['username'])) {
+            return ['error' => 'null', 'code' => 201];
+        }
+        $credentials['name'] = $credentials['username'];
+        unset($credentials['username']);
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
