@@ -31,10 +31,10 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['username', 'password']);
+        $credentials = request(['email', 'password']);
 
-        $credentials['name'] = $credentials['username'];
-        unset($credentials['username']);
+        // $credentials['name'] = $credentials['username'];
+        // unset($credentials['username']);
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
