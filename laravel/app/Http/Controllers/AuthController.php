@@ -44,12 +44,12 @@ class AuthController extends Controller
         }
         // return $this->respondWithToken($token);
 
-        $result = [
+        $data = [
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ];
-        return $this->out(200, $result);
+        return $this->out(200, $data);
     }
 
     /**
@@ -57,9 +57,17 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function info()
     {
-        return response()->json(auth('api')->user());
+        // return response()->json(auth('api')->user());
+        // 输出管理员 roles
+        $userInfo = auth('api')->user();
+        $data = [
+            'roles' => 'admin',
+            'name' => $userInfo['name'],
+            'avatar' => 'https://note.youdao.com/favicon.ico',
+        ];
+        return $this->out(200, $data);
     }
 
     /**

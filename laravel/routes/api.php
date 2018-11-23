@@ -21,5 +21,5 @@ Route::group(['prefix' => 'user'], function($router) {
     Route::any('login', 'AuthController@login'); // ->middleware('admin.login');
     Route::any('logout', 'AuthController@logout');
     Route::any('refresh', 'AuthController@refresh');
-    Route::any('me', 'AuthController@me');
+    Route::any('info', 'AuthController@info');
 });
