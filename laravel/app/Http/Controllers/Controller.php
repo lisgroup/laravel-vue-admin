@@ -10,4 +10,20 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * 处理输出
+     * @param int $code
+     * @param array $result
+     * @param string $reason
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function out($code = 200, $result = [], $reason = 'success')
+    {
+        if ($reason !== 'success') {
+            $reason = config('errorCode.'.$code.'.reason');
+        }
+
+        return response()->json(compact('code', 'reason', 'result'));
+    }
 }
