@@ -12,7 +12,7 @@ return [
     */
     
     '200' => [
-        'reason' => '处理成功'
+        'reason' => 'success'
     ],
     
     /*

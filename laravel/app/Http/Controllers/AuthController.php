@@ -42,8 +42,14 @@ class AuthController extends Controller
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        // return $this->respondWithToken($token);
 
-        return $this->respondWithToken($token);
+        $result = [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ];
+        return $this->out(200, $result);
     }
 
     /**

@@ -20,7 +20,7 @@ class Controller extends BaseController
      */
     public function out($code = 200, $result = [], $reason = 'success')
     {
-        if ($reason !== 'success') {
+        if ($reason === 'success') {
             $reason = config('errorCode.'.$code.'.reason');
         }
 
