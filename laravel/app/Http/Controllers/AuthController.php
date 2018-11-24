@@ -65,7 +65,8 @@ class AuthController extends Controller
         $data = [
             'roles' => 'admin',
             'name' => $userInfo['name'],
-            'avatar' => 'https://note.youdao.com/favicon.ico',
+            // 'avatar' => 'https://note.youdao.com/favicon.ico',
+            'avatar' => 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
         ];
         return $this->out(200, $data);
     }
