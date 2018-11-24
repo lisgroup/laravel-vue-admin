@@ -31,7 +31,7 @@ class CronTaskController extends Controller
      */
     public function index()
     {
-        //
+        return $this->out(200, ['msg' => 'ok']);
     }
 
     /**
@@ -63,7 +63,7 @@ class CronTaskController extends Controller
      */
     public function show($id)
     {
-        //
+        return ['id' => $id];
     }
 
     /**

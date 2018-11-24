@@ -23,3 +23,5 @@ Route::group(['prefix' => 'user'], function($router) {
     Route::any('refresh', 'AuthController@refresh');
     Route::any('info', 'AuthController@info');
 });
+
+Route::resource('crontask', 'Api\CronTaskController');
