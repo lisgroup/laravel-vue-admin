@@ -102,4 +102,9 @@ class CronTaskController extends Controller
     {
         //
     }
+
+    public function list()
+    {
+        return $this->out(200, CronTask::all());
+    }
 }
