@@ -30,9 +30,8 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="启动状态" width="110" align="center">
         <template slot-scope="scope">
-          <!--<el-tag :type="scope.row.is_task | statusFilter" v-if="scope.row.is_task">启动</el-tag>-->
-          <el-tag type="success" v-if="scope.row.is_task">启动</el-tag>
-          <el-tag type="warning" v-else="scope.row.is_task">关闭</el-tag>
+          <el-tag v-if="scope.row.is_task" type="success">启动</el-tag>
+          <el-tag v-else type="warning">关闭</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="200">
