@@ -47,3 +47,7 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'task'], function () {
 
 // Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Route::any('login', function() {
+   return ['code' => 200, 'data' => 'no user', 'reason' => 'error'];
+});
