@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\CronTask;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -31,7 +32,8 @@ class CronTaskController extends Controller
      */
     public function index()
     {
-        return $this->out(200, ['msg' => 'ok']);
+        $list = CronTask::paginate(20);
+        return $this->out(200, $list);
     }
 
     /**
@@ -63,7 +65,8 @@ class CronTaskController extends Controller
      */
     public function show($id)
     {
-        return ['id' => $id];
+        $data = CronTask::find($id);
+        return $this->out(200, $data);
     }
 
     /**

@@ -16,7 +16,7 @@ class Controller extends BaseController
      * @param int $code
      * @param array $data
      * @param string $reason
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function out($code = 200, $data = [], $reason = 'success')
     {
