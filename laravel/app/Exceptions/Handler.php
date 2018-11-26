@@ -35,7 +35,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -46,8 +46,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
@@ -64,7 +64,9 @@ class Handler extends ExceptionHandler
         // return parent::render($request, $exception);
 
         if ($exception instanceof AuthenticationException) {
-            return response()->json(['error' => 'no user'], 301);
+            $code = '1200';
+            $reason = config('errorCode.'.$code.'.reason');
+            return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''], 301);
         }
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([

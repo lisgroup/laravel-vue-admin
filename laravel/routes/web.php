@@ -50,4 +50,6 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'task'], function () {
 
 Route::any('login', function() {
    return ['code' => 200, 'data' => 'no user', 'reason' => 'error'];
-});
+})->name('login');
+
+// Route::get('/login', 'UserController@login')->name('login');
