@@ -27,7 +27,7 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
-     * @return \Illuminate\Http\JsonResponse|array
+     * @return \Illuminate\Http\Response|array
      */
     public function login()
     {
@@ -55,7 +55,7 @@ class AuthController extends Controller
     /**
      * Get the authenticated User.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function info()
     {
@@ -74,13 +74,14 @@ class AuthController extends Controller
     /**
      * Log the user out (Invalidate the token).
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function logout()
     {
         auth('api')->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        // return response()->json(['message' => 'Successfully logged out']);
+        return $this->out(200, 'success');
     }
 
     /**
