@@ -1,5 +1,9 @@
 <template>
   <div class="app-container">
+    <el-row>
+      <el-button type="primary" size="medium" @click="newBus()">新增车次</el-button>
+      <router-link to="/example/newBus">About</router-link>
+    </el-row>
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -74,7 +78,16 @@ export default {
         this.list = response.data.data
         this.listLoading = false
       })
+    },
+    newBus() {
+      console.log('bus')
     }
   }
 }
 </script>
+
+<style scoped>
+  .el-row {
+    margin-bottom: 20px;
+  }
+</style>
