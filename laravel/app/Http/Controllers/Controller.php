@@ -24,6 +24,6 @@ class Controller extends BaseController
             $reason = config('errorCode.'.$code.'.reason');
         }
 
-        return response()->json(compact('code', 'reason', 'data'));
+        return response()->json(compact('code', 'reason', 'data'))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }

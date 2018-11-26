@@ -66,7 +66,8 @@ class Handler extends ExceptionHandler
         if ($exception instanceof AuthenticationException) {
             $code = '1200';
             $reason = config('errorCode.'.$code.'.reason');
-            return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''], 301);
+            return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''], 301)
+                ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
         }
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
