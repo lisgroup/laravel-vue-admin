@@ -44,17 +44,12 @@ export const constantRouterMap = [
     name: 'Example',
     meta: { title: 'Example', icon: 'example' },
     children: [
+      { path: '/task/newBus', name: 'NewBus', component: () => import('@/views/table/newBus'), hidden: true },
       {
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
         meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'newBus',
-        name: 'NewBus',
-        component: () => import('@/views/table/newBus'),
-        meta: { title: 'newBus', icon: 'table' }
       },
       {
         path: 'tree',

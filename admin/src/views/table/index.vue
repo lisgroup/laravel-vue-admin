@@ -1,8 +1,9 @@
 <template>
   <div class="app-container">
     <el-row>
-      <el-button type="primary" size="medium" @click="newBus()">新增车次</el-button>
-      <router-link to="/example/newBus">About</router-link>
+      <el-button type="primary" size="medium">
+        <router-link to="/task/newBus">新增车次</router-link>
+      </el-button>
     </el-row>
     <el-table
       v-loading="listLoading"
@@ -44,6 +45,18 @@
           <span>{{ scope.row.created_at }}</span>
         </template>
       </el-table-column>
+
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -79,8 +92,11 @@ export default {
         this.listLoading = false
       })
     },
-    newBus() {
-      console.log('bus')
+    handleEdit(index, row) {
+      console.log(index, row)
+    },
+    handleDelete(index, row) {
+      console.log(index, row)
     }
   }
 }
