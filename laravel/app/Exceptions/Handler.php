@@ -52,9 +52,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // 参数验证错误的异常，我们需要返回 400 的 http code 和一句错误信息
+        // 参数验证错误的异常，我们需要返回 400 的 http code 和一句错误信息 1104
         if ($exception instanceof ValidationException) {
-            return response(['error' => array_first(array_collapse($exception->errors()))], 400);
+            $code = '1104';
+            $reason = config('errorCode.'.$code.'.reason');
+            return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''], 301)
+                ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+            // return response(['error' => array_first(array_collapse($exception->errors()))], 400);
         }
         // 用户认证的异常，我们需要返回 401 的 http code 和错误信息
         if ($exception instanceof UnauthorizedHttpException) {
