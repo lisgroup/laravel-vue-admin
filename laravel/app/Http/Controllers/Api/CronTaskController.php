@@ -55,8 +55,15 @@ class CronTaskController extends Controller
      */
     public function store(StoreCronTask $request)
     {
-        dump($request->all());
-        return $this->out(200, []);
+        // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
+        // $rs = CronTask::insert($request->all());
+        $model = new CronTask($request->all());
+        if ($model->save()) {
+            return $this->out(200, ['data' => ['id' => $model->id]]);
+        } else {
+            return $this->out(400, ['data' => 'insert error']);
+        }
+
     }
 
     /**

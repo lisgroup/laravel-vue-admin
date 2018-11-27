@@ -17,7 +17,7 @@ class StoreCronTask extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * 获取适用于请求的验证规则
      *
      * @return array
      */
@@ -28,6 +28,8 @@ class StoreCronTask extends FormRequest
             'cid' => 'required|max:255',
             'LineGuid' => 'required|max:255',
             'is_task' => 'required',
+            'start_at' => 'required',
+            'end_at' => 'required',
             'account' => [
                 'sometimes',
                 'regex:/^1[3-9][0-9]\d{4,8}|(\w)+(\.\w+)*@(\w)+((\.\w+)+)|[0-9a-zA-Z_]+$/' // 验证账号可以为 手机号，邮箱或字符串
@@ -35,6 +37,10 @@ class StoreCronTask extends FormRequest
         ];
     }
 
+    /**
+     * 中文错误提示
+     * @return array
+     */
     public function messages()
     {
         return [
@@ -45,6 +51,10 @@ class StoreCronTask extends FormRequest
             'cid.max' => 'cid 输入有误',
             'LineGuid.required' => 'LineGuid 不能为空',
             'LineGuid.max' => 'LineGuid 输入有误',
+            'is_task.required' => '是否启动必须选择',
+            'start_at.required' => '启动时间不能为空',
+            'end_at.required' => '结束时间不能为空',
+            'account.regex' => 'account 输入有误',
         ];
     }
 }
