@@ -50,14 +50,16 @@ class CronTaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreCronTask  $request
+     * @param  StoreCronTask $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCronTask $request)
     {
         // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
         // $rs = CronTask::insert($request->all());
-        $model = new CronTask($request->all());
+        $input = $request->all();
+        $input['is_task'] = $input['is_task'] ? 1 : 0;
+        $model = new CronTask($input);
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
         } else {
@@ -69,7 +71,7 @@ class CronTaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -81,7 +83,7 @@ class CronTaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -92,8 +94,8 @@ class CronTaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -104,7 +106,7 @@ class CronTaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
