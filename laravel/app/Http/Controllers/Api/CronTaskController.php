@@ -111,7 +111,7 @@ class CronTaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dump($id);
     }
 
     public function list()

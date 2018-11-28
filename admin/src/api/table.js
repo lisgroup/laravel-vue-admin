@@ -15,3 +15,11 @@ export function postNewBus(params) {
     params
   })
 }
+
+export function deleteTask(params) {
+  return request({
+    url: '/api/crontask',
+    method: 'post',
+    params
+  })
+}
