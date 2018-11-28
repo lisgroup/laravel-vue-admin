@@ -7,3 +7,11 @@ export function getList(params) {
     params
   })
 }
+
+export function postNewBus(params) {
+  return request({
+    url: '/api/crontask',
+    method: 'post',
+    params
+  })
+}
