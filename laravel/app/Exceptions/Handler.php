@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -56,7 +57,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ValidationException) {
             $code = '1104';
             // $reason = config('errorCode.'.$code.'.reason');
-            return response()->json(['code' => $code, 'reason' => array_collapse($exception->errors()), 'data' => ''], 301)
+            return response()->json(['code' => $code, 'reason' => array_collapse($exception->errors()), 'data' => ''])
                 ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
             // return response(['error' => array_first(array_collapse($exception->errors()))], 400);
         }
@@ -70,13 +71,17 @@ class Handler extends ExceptionHandler
         if ($exception instanceof AuthenticationException) {
             $code = '1200';
             $reason = config('errorCode.'.$code.'.reason');
-            return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''], 301)
+            return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''])
                 ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
         }
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
                 'error' => 'Resource not found.'
             ], 404);
+        }
+
+        if ($exception instanceof QueryException) {
+            // return response()->json(['code' => '500', 'reason' => 'Internal Server Error', 'data' => ''], 500);
         }
 
         return parent::render($request, $exception);
