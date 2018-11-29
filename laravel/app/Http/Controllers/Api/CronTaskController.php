@@ -49,6 +49,7 @@ class CronTaskController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 新增入库操作
      *
      * @param  StoreCronTask $request
      * @return \Illuminate\Http\Response
@@ -70,6 +71,7 @@ class CronTaskController extends Controller
 
     /**
      * Display the specified resource.
+     * 展示某个详情数据
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
@@ -82,25 +84,36 @@ class CronTaskController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * 编辑展示数据
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $data = CronTask::find($id);
+        return $this->out(200, $data);
     }
 
     /**
      * Update the specified resource in storage.
+     * 更新数据
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  StoreCronTask $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCronTask $request, $id)
     {
-        //
+        $input = $request->only('cid', 'LineGuid', 'LineInfo', 'is_task', 'start_at', 'end_at');
+        // var_dump($input);exit();
+        $input['is_task'] = $input['is_task'] ? 1 : 0;
+        // $model = new CronTask();$model->save($input, ['id' => $id]);
+        if (CronTask::where('id', $id)->update($input)) {
+            return $this->out(200, ['data' => ['id' => $id]]);
+        } else {
+            return $this->out(400, ['data' => 'insert error']);
+        }
     }
 
     /**
@@ -111,11 +124,21 @@ class CronTaskController extends Controller
      */
     public function destroy($id)
     {
-        dump($id);
+        try {
+            if ($rs = CronTask::where('id', $id)->delete()) {
+                $data = ['msg' => '删除成功', 'errno' => 0];
+            } else {
+                $data = ['msg' => '删除失败', 'errno' => 2];
+            }
+            return $this->out(200, $data);
+        } catch (\Exception $e) {
+            return $this->out(500, []);
+        }
     }
 
     public function list()
     {
         return $this->out(200, CronTask::all());
     }
+
 }
