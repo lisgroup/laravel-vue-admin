@@ -16,10 +16,9 @@ export function postNewBus(params) {
   })
 }
 
-export function deleteTask(params) {
+export function deleteTask(id) {
   return request({
-    url: '/api/crontask',
-    method: 'post',
-    params
+    url: '/api/crontask/' + id,
+    method: 'delete'
   })
 }

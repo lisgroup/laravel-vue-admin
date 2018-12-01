@@ -74,7 +74,7 @@ export default {
         if (valid) {
           this.loading = true
           postNewBus(this.form).then(response => {
-            console.log(response)
+            // console.log(response)
             this.loading = false
             if (response.code === 200) {
               this.$message({
@@ -88,7 +88,7 @@ export default {
           })
         } else {
           this.$message('error submit!')
-          console.log('error submit!!')
+          // console.log('error submit!!')
           return false
         }
       })
