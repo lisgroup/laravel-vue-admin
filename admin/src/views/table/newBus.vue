@@ -44,7 +44,8 @@ export default {
         LineGuid: '',
         start_at: '05:00:00',
         end_at: '23:00:00',
-        is_task: false
+        is_task: false,
+        loading: false
       },
       rules: {
         LineInfo: [
@@ -62,7 +63,8 @@ export default {
         end_at: [
           { required: true, message: '请输入结束时间', trigger: 'change' }
         ]
-      }
+      },
+      redirect: '/example/table'
     }
   },
   methods: {
@@ -70,9 +72,19 @@ export default {
       // console.log(this.form)
       this.$refs[form].validate((valid) => {
         if (valid) {
-          // alert('submit!')
+          this.loading = true
           postNewBus(this.form).then(response => {
             console.log(response)
+            this.loading = false
+            if (response.code === 200) {
+              this.$message({
+                message: '操作成功',
+                type: 'success'
+              })
+              this.$router.push({ path: this.redirect || '/' })
+            } else {
+              this.$message.error(response.reason)
+            }
           })
         } else {
           this.$message('error submit!')
