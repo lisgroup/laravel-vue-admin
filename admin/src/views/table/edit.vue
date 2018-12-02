@@ -76,7 +76,7 @@ export default {
     getTaskData(id) {
       // this.id = this.$route.params.id
       editBus(id).then(response => {
-        console.log(response)
+        // console.log(response)
         this.loading = false
         if (response.code === 200) {
           this.form = response.data
@@ -85,7 +85,6 @@ export default {
           this.$message.error(response.reason)
         }
       })
-      console.log(id)
     },
     onSubmit(form) {
       // console.log(this.form)
