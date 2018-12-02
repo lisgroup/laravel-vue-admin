@@ -93,10 +93,11 @@ export default {
       })
     },
     handleEdit(index, row) {
-      console.log(index, row)
+      this.$router.push({ path: '/task/edit/' + row.id })
+      // this.$router.push({ name: 'taskEdit', params: { id: row.id }})
+      // console.log(index, row)
     },
     handleDelete(index, row) {
-      // console.log(index, row)
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
