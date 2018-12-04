@@ -104,7 +104,7 @@ class LinesController extends Controller
      */
     public function update(StoreLineRequest $request, $id)
     {
-        $input = $request->only('cid', 'LineGuid', 'LineInfo', 'is_task', 'start_at', 'end_at');
+        $input = $request->only('name', 'price', 'car_type', 'depart_time', 'open_time', 'total_time', 'via_road', 'company', 'station', 'station_back', 'reason', 'username', 'is_show', 'last_update');
         // var_dump($input);exit();
         $input['is_task'] = $input['is_task'] ? 1 : 0;
         // $model = new Line();$model->save($input, ['id' => $id]);
