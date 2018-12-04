@@ -38,25 +38,34 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/example',
+    path: '/list',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    redirect: '/list/table',
+    name: '列表',
+    meta: { title: '列表展示', icon: 'example' },
     children: [
       { path: '/task/newBus', name: 'NewBus', component: () => import('@/views/table/newBus'), hidden: true },
       { path: '/task/edit/:id', name: 'taskEdit', component: () => import('@/views/table/edit'), hidden: true },
       {
-        path: 'table',
-        name: 'Table',
+        path: '/task',
+        name: '定时任务',
         component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '定时任务', icon: 'table' }
+      },
+      { path: 'lines/add', name: 'linesAdd', component: () => import('@/views/lines/add'), hidden: true },
+      { path: '/task/edit/:id', name: 'linesEdit', component: () => import('@/views/lines/edit'), hidden: true },
+      {
+        path: 'lines',
+        name: '公交列表',
+        component: () => import('@/views/lines/index'),
+        meta: { title: '公交列表', icon: 'table' }
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: 'Tree', icon: 'tree' },
+        hidden: true
       }
     ]
   },
@@ -71,7 +80,7 @@ export const constantRouterMap = [
         component: () => import('@/views/form/index'),
         meta: { title: 'Form', icon: 'form' }
       }
-    ]
+    ], hidden: true
   },
 
   {
@@ -140,7 +149,8 @@ export const constantRouterMap = [
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
         meta: { title: 'External Link', icon: 'link' }
       }
-    ]
+    ],
+    hidden: true
   },
 
   { path: '*', redirect: '/404', hidden: true }
