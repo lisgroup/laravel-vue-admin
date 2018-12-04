@@ -65,7 +65,7 @@ export default {
           { required: true, message: '请输入结束时间', trigger: 'change' }
         ]
       },
-      redirect: '/example/table'
+      redirect: '/list/lines'
     }
   },
   created() {

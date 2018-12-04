@@ -53,7 +53,7 @@ export const constantRouterMap = [
         meta: { title: '定时任务', icon: 'table' }
       },
       { path: 'lines/add', name: 'linesAdd', component: () => import('@/views/lines/add'), hidden: true },
-      { path: '/task/edit/:id', name: 'linesEdit', component: () => import('@/views/lines/edit'), hidden: true },
+      { path: 'lines/edit/:id', name: 'linesEdit', component: () => import('@/views/lines/edit'), hidden: true },
       {
         path: 'lines',
         name: '公交列表',

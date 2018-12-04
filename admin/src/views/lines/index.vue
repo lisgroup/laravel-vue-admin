@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getList, deleteTask } from '@/api/table'
+import { getList, deleteAct } from '@/api/lines'
 
 export default {
   filters: {
@@ -93,7 +93,7 @@ export default {
       })
     },
     handleEdit(index, row) {
-      this.$router.push({ path: '/task/edit/' + row.id })
+      this.$router.push({ path: 'lines/edit/' + row.id })
       // this.$router.push({ name: 'taskEdit', params: { id: row.id }})
       // console.log(index, row)
     },
@@ -104,7 +104,7 @@ export default {
         type: 'warning'
       }).then(() => {
         // 删除操作
-        deleteTask(row.id).then(response => {
+        deleteAct(row.id).then(response => {
           // console.log(response)
           this.loading = false
           if (response.code === 200) {
