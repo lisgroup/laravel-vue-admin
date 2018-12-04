@@ -32,7 +32,7 @@ class LinesController extends Controller
      */
     public function index()
     {
-        $list = Line::paginate(20);
+        $list = Line::paginate(11);
         return $this->out(200, $list);
     }
 
