@@ -25,5 +25,5 @@ Route::group(['prefix' => 'user'], function($router) {
 });
 
 Route::resource('crontask', 'Api\CronTaskController');
-
+Route::resource('lines', 'Api\LinesController');
 // Route::any('table/list', 'Api\CronTaskController@list');
