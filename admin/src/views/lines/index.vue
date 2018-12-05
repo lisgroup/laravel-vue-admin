@@ -34,7 +34,8 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="审核通过" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.is_show" type="success">通过</el-tag>
+          <el-tag v-if="scope.row.is_show === 0">未审核</el-tag>
+          <el-tag v-else-if="scope.row.is_show === 1" type="success">通过</el-tag>
           <el-tag v-else type="warning">不通过</el-tag>
         </template>
       </el-table-column>
