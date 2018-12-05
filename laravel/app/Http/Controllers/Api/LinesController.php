@@ -77,7 +77,7 @@ class LinesController extends Controller
      */
     public function show($id)
     {
-        $data = Line::find($id);
+        $data = Line::findOrFail($id);
         return $this->out(200, $data);
     }
 
@@ -90,7 +90,7 @@ class LinesController extends Controller
      */
     public function edit($id)
     {
-        $data = Line::find($id);
+        $data = Line::findOrFail($id);
         return $this->out(200, $data);
     }
 
@@ -106,12 +106,15 @@ class LinesController extends Controller
     {
         $input = $request->only('name', 'price', 'car_type', 'depart_time', 'open_time', 'total_time', 'via_road', 'company', 'station', 'station_back', 'reason', 'username', 'is_show', 'last_update');
         // var_dump($input);exit();
-        $input['is_task'] = $input['is_task'] ? 1 : 0;
+        $input['is_show'] = $input['is_show'] ? 1 : 0;
         // $model = new Line();$model->save($input, ['id' => $id]);
-        if (Line::where('id', $id)->update($input)) {
+        // 老版本更新操作如下，新版本先查询再更新
+        // Line::where('id', $id)->update($input)
+        $line = Line::findOrFail($id);
+        if ($line->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
-            return $this->out(400, ['data' => 'insert error']);
+            return $this->out(400, ['data' => 'update error']);
         }
     }
 
@@ -124,7 +127,8 @@ class LinesController extends Controller
     public function destroy($id)
     {
         try {
-            if ($rs = Line::where('id', $id)->delete()) {
+            // $rs = Line::where('id', $id)->delete()
+            if (Line::findOrFail($id)->delete()) {
                 $data = ['msg' => '删除成功', 'errno' => 0];
             } else {
                 $data = ['msg' => '删除失败', 'errno' => 2];

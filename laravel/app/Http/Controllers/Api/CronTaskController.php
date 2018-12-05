@@ -78,7 +78,7 @@ class CronTaskController extends Controller
      */
     public function show($id)
     {
-        $data = CronTask::find($id);
+        $data = CronTask::findOrFail($id);
         return $this->out(200, $data);
     }
 
@@ -91,7 +91,7 @@ class CronTaskController extends Controller
      */
     public function edit($id)
     {
-        $data = CronTask::find($id);
+        $data = CronTask::findOrFail($id);
         return $this->out(200, $data);
     }
 
@@ -109,7 +109,10 @@ class CronTaskController extends Controller
         // var_dump($input);exit();
         $input['is_task'] = $input['is_task'] ? 1 : 0;
         // $model = new CronTask();$model->save($input, ['id' => $id]);
-        if (CronTask::where('id', $id)->update($input)) {
+        // 老版本更新操作如下，新版本先查询再更新
+        // CronTask::where('id', $id)->update($input)
+        $task = CronTask::findOrFail($id);
+        if ($task->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
             return $this->out(400, ['data' => 'insert error']);
@@ -125,7 +128,8 @@ class CronTaskController extends Controller
     public function destroy($id)
     {
         try {
-            if ($rs = CronTask::where('id', $id)->delete()) {
+            // $rs = CronTask::where('id', $id)->delete()
+            if (CronTask::findOrFail($id)->delete()) {
                 $data = ['msg' => '删除成功', 'errno' => 0];
             } else {
                 $data = ['msg' => '删除失败', 'errno' => 2];
