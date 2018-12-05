@@ -40,7 +40,7 @@ class AuthController extends Controller
         unset($credentials['username']);
 
         if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['reason' => 'Unauthorized', 'code' => 401]);
         }
         // return $this->respondWithToken($token);
 
@@ -122,7 +122,7 @@ class AuthController extends Controller
 
         $where = array_merge($credentials, ['is_admin' => 1]);
         if (!$token = auth('admin')->attempt($where)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['reason' => 'Unauthorized', 'code' => 401]);
         }
 
         return $this->respondWithToken($token);

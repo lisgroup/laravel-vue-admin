@@ -63,7 +63,8 @@ class Handler extends ExceptionHandler
         }
         // 用户认证的异常，我们需要返回 401 的 http code 和错误信息
         if ($exception instanceof UnauthorizedHttpException) {
-            return response($exception->getMessage(), 401);
+            // return response($exception->getMessage(), 401);
+            return response()->json(['reason' => $exception->getMessage(), 'code' => 401]);
         }
 
         // return parent::render($request, $exception);
@@ -76,8 +77,9 @@ class Handler extends ExceptionHandler
         }
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
-                'error' => 'Resource not found.'
-            ], 404);
+                'reason' => 'Resource not found.',
+                'code' => 404
+            ]);
         }
 
         if ($exception instanceof QueryException) {
