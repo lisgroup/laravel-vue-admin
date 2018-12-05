@@ -59,7 +59,7 @@
       </el-table-column>
     </el-table>
     <div class="pagination">
-      <el-pagination :total="1000" background layout="prev, pager, next" />
+      <el-pagination :total="total" background layout="prev, pager, next" @current-change="handleCurrentChange"/>
     </div>
   </div>
 </template>
@@ -81,18 +81,22 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+      total: 1,
+      listQuery: { page: 1 }
     }
   },
   created() {
     this.fetchData()
   },
   methods: {
-    fetchData() {
+    fetchData(params) {
+      params = params === null ? params : this.listQuery
       this.listLoading = true
-      getList(this.listQuery).then(response => {
+      getList(params).then(response => {
         this.list = response.data.data
         this.listLoading = false
+        this.total = response.data.total
       })
     },
     handleEdit(index, row) {
@@ -131,6 +135,9 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    handleCurrentChange(val) {
+      this.fetchData({ page: val })
     }
   }
 }
