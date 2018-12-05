@@ -123,20 +123,17 @@ class LinesController extends Controller
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        try {
-            // $rs = Line::where('id', $id)->delete()
-            if (Line::findOrFail($id)->delete()) {
-                $data = ['msg' => '删除成功', 'errno' => 0];
-            } else {
-                $data = ['msg' => '删除失败', 'errno' => 2];
-            }
-            return $this->out(200, $data);
-        } catch (\Exception $e) {
-            return $this->out(500, []);
+        // $rs = Line::where('id', $id)->delete()
+        if (Line::findOrFail($id)->delete()) {
+            $data = ['msg' => '删除成功', 'errno' => 0];
+        } else {
+            $data = ['msg' => '删除失败', 'errno' => 2];
         }
+        return $this->out(200, $data);
     }
 
     public function list()
