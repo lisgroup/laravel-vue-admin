@@ -12,31 +12,30 @@
       border
       fit
       highlight-current-row>
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column align="center" label="ID" width="70">
         <template slot-scope="scope">
-          <!--{{ scope.$index + 1 }}-->
           {{ scope.row.id }}
         </template>
       </el-table-column>
       <el-table-column label="车次信息">
         <template slot-scope="scope">
-          {{ scope.row.LineInfo }}
+          {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="cid" width="110" align="center">
+      <el-table-column label="price" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.cid }}</span>
+          <span>{{ scope.row.price }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="LineGuid" width="110" align="center">
+      <el-table-column label="类型" width="110" align="center">
         <template slot-scope="scope">
-          {{ scope.row.LineGuid }}
+          {{ scope.row.car_type }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="启动状态" width="110" align="center">
+      <el-table-column class-name="status-col" label="审核通过" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.is_task" type="success">启动</el-tag>
-          <el-tag v-else type="warning">关闭</el-tag>
+          <el-tag v-if="scope.row.is_show" type="success">通过</el-tag>
+          <el-tag v-else type="warning">不通过</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="200">
