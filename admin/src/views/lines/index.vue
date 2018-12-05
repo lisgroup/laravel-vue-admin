@@ -59,7 +59,7 @@
       </el-table-column>
     </el-table>
     <div class="pagination">
-      <el-pagination :total="total" background layout="prev, pager, next" @current-change="handleCurrentChange"/>
+      <el-pagination :page-size="perpage" :total="total" :current-page.sync="currentpage" background layout="prev, pager, next" @current-change="handleCurrentChange"/>
     </div>
   </div>
 </template>
@@ -82,16 +82,19 @@ export default {
     return {
       list: null,
       listLoading: true,
-      total: 1,
+      perpage: 11,
+      total: 100,
+      currentpage: 1,
       listQuery: { page: 1 }
     }
   },
   created() {
-    this.fetchData()
+    this.listQuery = this.$route.query
+    this.currentpage = parseInt(this.listQuery.page)
+    this.fetchData(this.listQuery)
   },
   methods: {
     fetchData(params) {
-      params = params === null ? params : this.listQuery
       this.listLoading = true
       getList(params).then(response => {
         this.list = response.data.data
@@ -137,6 +140,7 @@ export default {
       })
     },
     handleCurrentChange(val) {
+      this.$router.push({ path: '', query: { page: val }})
       this.fetchData({ page: val })
     }
   }
