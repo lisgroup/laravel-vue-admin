@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
     {
         // 参数验证错误的异常，我们需要返回 400 的 http code 和一句错误信息 1104
         if ($exception instanceof ValidationException) {
-            $code = '1104';
+            $code = 1104;
             // $reason = config('errorCode.'.$code.'.reason');
             return response()->json(['code' => $code, 'reason' => array_collapse($exception->errors()), 'data' => ''])
                 ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
@@ -70,7 +70,7 @@ class Handler extends ExceptionHandler
         // return parent::render($request, $exception);
 
         if ($exception instanceof AuthenticationException) {
-            $code = '1200';
+            $code = 1200;
             $reason = config('errorCode.'.$code.'.reason');
             return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''])
                 ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
