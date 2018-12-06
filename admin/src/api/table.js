@@ -9,11 +9,7 @@ export function getList(params) {
 }
 
 export function postNewBus(params) {
-  return request({
-    url: '/api/crontask',
-    method: 'post',
-    params
-  })
+  return request.post('/api/crontask', params)
 }
 
 export function editBus(id) {
@@ -24,16 +20,9 @@ export function editBus(id) {
 }
 
 export function postEditBus(id, params) {
-  return request({
-    url: '/api/crontask/' + id,
-    method: 'patch',
-    params
-  })
+  return request.patch('/api/crontask' + id, params)
 }
 
 export function deleteTask(id) {
-  return request({
-    url: '/api/crontask/' + id,
-    method: 'delete'
-  })
+  return request.delete('/api/crontask' + id)
 }
