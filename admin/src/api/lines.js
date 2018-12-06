@@ -1,39 +1,21 @@
 import request from '@/utils/request'
 
 export function getList(params) {
-  return request({
-    url: '/api/lines',
-    method: 'get',
-    params
-  })
+  return request.get('/api/lines', params)
 }
 
 export function postAdd(params) {
-  return request({
-    url: '/api/lines',
-    method: 'post',
-    params
-  })
+  return request.post('/api/lines', params)
 }
 
 export function edit(id) {
-  return request({
-    url: '/api/lines/' + id,
-    method: 'get'
-  })
+  return request.get('/api/lines/' + id)
 }
 
 export function postEdit(id, params) {
-  return request({
-    url: '/api/lines/' + id,
-    method: 'patch',
-    params
-  })
+  return request.patch('/api/lines/' + id, params)
 }
 
 export function deleteAct(id) {
-  return request({
-    url: '/api/lines/' + id,
-    method: 'delete'
-  })
+  return request.delete('/api/lines/' + id)
 }

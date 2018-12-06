@@ -39,10 +39,9 @@
         <el-input v-model="form.reason" />
       </el-form-item>
       <el-form-item label="最后更新时间" prop="last_update">
-        <el-input v-model="form.last_update" />
+        <el-date-picker v-model="form.last_update" value-format="yyyy:MM:dd" type="date" placeholder="选择日期" />
       </el-form-item>
       <el-form-item label="是否已审核">
-        <!--<el-switch v-model="form.is_show"/>-->
         <el-radio-group v-model="form.is_show">
           <el-radio :label="0">未审核</el-radio>
           <el-radio :label="1">通过</el-radio>
@@ -58,7 +57,7 @@
 </template>
 
 <script>
-import { postNewBus } from '@/api/table'
+import { postAdd } from '@/api/lines'
 
 export default {
   data() {
@@ -92,11 +91,29 @@ export default {
         station: [
           { required: true, message: '请输入途经站点', trigger: 'blur' }
         ],
-        start_at: [
-          { required: true, message: '请输入起始时间', trigger: 'change' }
+        station_back: [
+          { required: true, message: '请输入', trigger: 'blur' }
         ],
-        end_at: [
-          { required: true, message: '请输入结束时间', trigger: 'change' }
+        depart_time: [
+          { required: true, message: '请输入', trigger: 'blur' }
+        ],
+        via_road: [
+          { required: true, message: '请输入', trigger: 'blur' }
+        ],
+        total_time: [
+          { required: true, message: '请输入', trigger: 'blur' }
+        ],
+        company: [
+          { required: true, message: '请输入', trigger: 'blur' }
+        ],
+        open_time: [
+          { required: true, message: '请输入', trigger: 'blur' }
+        ],
+        reason: [
+          { required: true, message: '请输入', trigger: 'blur' }
+        ],
+        last_update: [
+          { required: true, message: '请输入', trigger: 'change' }
         ]
       },
       redirect: '/list/lines'
@@ -104,11 +121,11 @@ export default {
   },
   methods: {
     onSubmit(form) {
-      // console.log(this.form)
+      console.log(this.form)
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.loading = true
-          postNewBus(this.form).then(response => {
+          postAdd(this.form).then(response => {
             // console.log(response)
             this.loading = false
             if (response.code === 200) {
@@ -122,7 +139,7 @@ export default {
             }
           })
         } else {
-          this.$message('error submit!')
+          // this.$message('error submit!')
           // console.log('error submit!!')
           return false
         }

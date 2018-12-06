@@ -29,6 +29,8 @@ class StoreLineRequest extends FormRequest
             'car_type' => 'required',
             'depart_time' => 'required',
             'open_time' => 'required',
+            'total_time' => 'required',
+            'via_road' => 'required',
             'company' => 'required',
             'station' => 'required',
             'station_back' => 'required',
