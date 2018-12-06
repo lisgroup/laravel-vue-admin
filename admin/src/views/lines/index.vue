@@ -83,7 +83,7 @@ export default {
       list: null,
       listLoading: true,
       perpage: 11,
-      total: 100,
+      total: 1000,
       currentpage: 1,
       listQuery: { page: 1 }
     }
@@ -140,6 +140,7 @@ export default {
       })
     },
     handleCurrentChange(val) {
+      console.log(val)
       this.$router.push({ path: '', query: { page: val }})
       this.fetchData({ page: val })
     }

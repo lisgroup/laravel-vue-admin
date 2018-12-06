@@ -59,6 +59,7 @@ class LinesController extends Controller
         // $rs = Line::insert($request->all());
         $input = $request->all();
         $input['is_show'] = $input['is_show'] ? 1 : 0;
+        $input['username'] = $input['username'] ?? '';
         $model = new Line($input);
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
