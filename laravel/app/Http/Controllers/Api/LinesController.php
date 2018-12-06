@@ -108,6 +108,7 @@ class LinesController extends Controller
         $input = $request->only('name', 'price', 'car_type', 'depart_time', 'open_time', 'total_time', 'via_road', 'company', 'station', 'station_back', 'reason', 'username', 'is_show', 'last_update');
         // var_dump($input);exit();
         $input['is_show'] = $input['is_show'] ? 1 : 0;
+        $input['username'] = $input['username'] ?? '';
         // $model = new Line();$model->save($input, ['id' => $id]);
         // 老版本更新操作如下，新版本先查询再更新
         // Line::where('id', $id)->update($input)
