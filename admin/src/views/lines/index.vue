@@ -140,7 +140,7 @@ export default {
       })
     },
     handleCurrentChange(val) {
-      console.log(val)
+      // console.log(val)
       this.$router.push({ path: '', query: { page: val }})
       this.fetchData({ page: val })
     }

@@ -138,9 +138,4 @@ class LinesController extends Controller
         return $this->out(200, $data);
     }
 
-    public function list()
-    {
-        return $this->out(200, Line::all());
-    }
-
 }
