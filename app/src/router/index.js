@@ -1,4 +1,5 @@
 import Vue from 'vue'
+//VueRouter:引入路由对象
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)

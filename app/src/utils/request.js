@@ -3,9 +3,13 @@ import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
 
+// 判断是否开发模式设置 URL
+const debug = process.env.NODE_ENV !== 'production'
+// 本地生产开发配置
+const my_host = debug ? 'http://localhost:8000/api/' : 'https://www.guke1.com/api/';
 // 创建axios实例
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api 的 base_url
+  baseURL: my_host, // api 的 base_url
   timeout: 5000 // 请求超时时间
 })
 
