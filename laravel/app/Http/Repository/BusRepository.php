@@ -277,6 +277,7 @@ class BusRepository
             // 2.1 文件存在直接读取
             $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
             $arrayData = unserialize($serialize);
+            // 车次较多时候数据库操作太频繁，先放入队列中批量处理。。。
             // 车次入库操作
             foreach ($arrayData as $arrayDatum) {
                 /**
