@@ -35,6 +35,7 @@ import App from './App.vue'
 import Home from './components/home/home.vue'
 import Index from './components/home/index.vue'
 import Line from './components/home/line.vue'
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -51,5 +52,6 @@ let router = new VueRouter({
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
