@@ -32,23 +32,11 @@ Vue.component('NavBar', NavBar) // 使用最好以 nav-bar
 
 // 引入自己的vue文件 开始
 import App from './App.vue'
-import Home from './components/home/home.vue'
-import Index from './components/home/index.vue'
-import Line from './components/home/line.vue'
+import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false
 
-// VueRouter:创建对象并配置路由规则！！！导航
-let router = new VueRouter({
-  // VueRouter：配置路由规则
-  routes: [
-    { path: '/', redirect: { name: 'index' } },
-    { path: '/home', name: 'home', component: Home },
-    { path: '/index', name: 'index', component: Index },
-    { path: '/line', name: 'line', component: Line }
-  ]
-})
 
 new Vue({
   router,
