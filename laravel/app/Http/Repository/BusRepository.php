@@ -265,6 +265,7 @@ class BusRepository
             $fileName = $path.'/serialize_'.$line.'.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
+            // 车次较多时候数据库操作太频繁，先放入队列中批量处理。。。
             // 车次入库操作
             foreach ($arrayData as $arrayDatum) {
                 /**
@@ -277,15 +278,6 @@ class BusRepository
             // 2.1 文件存在直接读取
             $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
             $arrayData = unserialize($serialize);
-            // 车次较多时候数据库操作太频繁，先放入队列中批量处理。。。
-            // 车次入库操作
-            foreach ($arrayData as $arrayDatum) {
-                /**
-                 * $arrayDatum 示例如下：
-                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
-                 */
-                $this->handleLinkToBusLines($arrayDatum);
-            }
         }
 
         return $arrayData;
