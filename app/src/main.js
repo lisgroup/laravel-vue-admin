@@ -4,13 +4,8 @@ import Vue from 'vue'
 import Axios from 'axios'
 // Axios:挂载原型
 Vue.prototype.$ajax = Axios
-
-// 判断是否开发模式设置 URL
-const debug = process.env.NODE_ENV !== 'production'
-// 本地生产开发配置
-const my_host = debug ? 'http://localhost:8000/api/' : 'https://www.guke1.com/api/';
-// 默认 URL 配置
-Axios.defaults.baseURL = my_host;
+// 默认 URL 在 .env|(.development) 中配置
+Axios.defaults.baseURL = process.env.VUE_APP_BASE_API + 'api/'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementUI from 'element-ui'

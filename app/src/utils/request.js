@@ -9,7 +9,7 @@ const debug = process.env.NODE_ENV !== 'production'
 const my_host = debug ? 'http://localhost:8000/api/' : 'https://www.guke1.com/api/';
 // 创建axios实例
 const service = axios.create({
-  baseURL: my_host, // api 的 base_url
+  baseURL: process.env.VUE_APP_BASE_API + 'api/', // api 的 base_url, 在 .env|(.development) 中配置
   timeout: 5000 // 请求超时时间
 })
 
