@@ -9,9 +9,11 @@
 namespace App\Http\Repository;
 
 
+use App\Jobs\SaveBusLine;
 use App\Models\BusLine;
 use App\Models\Cron;
 use App\Models\CronTask;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -265,15 +267,21 @@ class BusRepository
             $fileName = $path.'/serialize_'.$line.'.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
-            // 车次较多时候数据库操作太频繁，先放入队列中批量处理。。。
+            // 车次较多时候数据库操作太频繁，先放入 队列 中批量处理。。。
+            /***************** 队列操作 start *******************/
+            // $job = (new SaveBusLine($data->toArray()))->delay(Carbon::now()->addMinute(1));
+            // dispatch($job);
+            SaveBusLine::dispatch($arrayData)->delay(Carbon::now()->addMinute(1));
+            /***************** 队列操作 end   *******************/
+            // 注释下面代码，使用队列异步处理
             // 车次入库操作
-            foreach ($arrayData as $arrayDatum) {
-                /**
-                 * $arrayDatum 示例如下：
-                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
-                 */
-                $this->handleLinkToBusLines($arrayDatum);
-            }
+            // foreach (                     $arrayData as $arrayDatum) {
+            //     /**
+            //      * $arrayDatum 示例如下：
+            //      * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
+            //      */
+            //     $this->handleLinkToBusLines($arrayDatum);
+            // }
         } else {
             // 2.1 文件存在直接读取
             $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
@@ -379,6 +387,24 @@ class BusRepository
             }
             /**********************   line1  end ************************/
         }
+    }
+
+    /**
+     * 存储或更新数据
+     * @param $datas
+     * @return bool
+     */
+    public function updateBusLine($datas)
+    {
+        $rs = 1;
+        foreach ($datas as $data) {
+            if (isset($data['link'])) {
+                $rs = $this->handleLinkToBusLines($data);
+            } else {
+                $rs = 0;
+            }
+        }
+        return $rs;
     }
 
     /**
