@@ -19,15 +19,20 @@ class SaveBusLine implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 5;
+    public $tries = 3;
 
     /**
      * 任务运行的超时时间。
      *
      * @var int
      */
-    public $timeout = 120;
+    public $timeout = 60;
 
+    /**
+     * 存储的数据
+     *
+     * @var array|object
+     */
     private $datum;
 
     /**
