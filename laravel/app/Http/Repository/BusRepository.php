@@ -322,23 +322,23 @@ class BusRepository
     {
         if (empty($path) || empty($get['cid']) || empty($get['LineGuid']) || empty($get['LineInfo']))
             return false;
-        $paramString = http_build_query($get);
-        $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
-
+        // $paramString = http_build_query($get);
+        // $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
         // 使用自己封装的 Http 请求类，提高代码可控性
-        $httpResult = (new \Curl\Http())->get($url, [], 5);
-        $html = $httpResult['content'] ?? '';
-        $queryList = QueryList::html($html);
+        // $httpResult = (new \Curl\Http())->get($url, [], 5);
+        // $html = $httpResult['content'] ?? '';
+        // $queryList = QueryList::html($html);
         // 实时公交返回的网页数据
-        // try {
-        //     $queryList = QueryList::get($url, [], [
-        //         //设置超时时间，单位：秒
-        //         'timeout' => 5,
-        //     ]);
-        // } catch (\Exception $e) {
-        //     Log::error('busLine 获取失败; error: 网络超时 URL: '.$url, ['message' => $e->getMessage()]);
-        //     return [];
-        // }
+        try {
+            $url = 'http://www.szjt.gov.cn/BusQuery/'.$path;
+            $queryList = QueryList::get($url, $get, [
+                //设置超时时间，单位：秒
+                'timeout' => 5,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('busLine 获取失败; error: 网络超时 URL: '.$url, ['message' => $e->getMessage()]);
+            return [];
+        }
 
         /*$rules = [
             'to' => ['#MainContent_LineInfo', 'text'],  //方向
@@ -361,102 +361,6 @@ class BusRepository
         // unset($arrayData[0]['to']);
 
         return ['to' => $to, 'line' => $arrayData];
-    }
-
-    public function request($url, $params = array(), $method = "GET", $timemout = 8, $headers = array(), $cookie = '')
-    {
-        $method = strtoupper($method);
-        // 新增请求方式
-        $methodArray = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'];
-
-        if (!in_array($method, $methodArray)) {
-            $method = "GET";
-        }
-
-        if ($params) {
-            if (is_array($params)) {
-                $paramsString = http_build_query($params);
-            } else {
-                $paramsString = $params;
-            }
-        } else {
-            $paramsString = "";
-        }
-
-        //$tempUrl = $url;
-        if ($method == "GET" && !empty($paramsString)) {
-            $url = $url."?".$paramsString;
-        }
-
-        // 初始化
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timemout);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        if (strtolower(substr($url, 0, 8)) == 'https://') {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算法是否存在
-        }
-
-        // 请求头
-        if (!empty($headers)) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        }
-
-        if (!empty($cookie)) {
-            curl_setopt($ch, CURLOPT_COOKIE, $cookie);
-        }
-
-        // 指定请求方式
-        switch ($method) {
-            case 'GET':
-                break;
-            case 'POST':
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $paramsString); //设置请求体，提交数据包
-                break;
-            case 'PUT':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $paramsString); //设置请求体，提交数据包
-                break;
-            case 'DELETE':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                break;
-        }
-        /*if ($method == "post") {
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $paramsString);
-        }*/
-        curl_setopt($ch, CURLOPT_URL, $url);
-
-        // 请求网络
-        $timeStampBegin = microtime(true);
-        //$timeBegin = date("Y-m-d H:i:s");
-        $httpContent = curl_exec($ch);
-        $timeStampEnd = microtime(true);
-        //$timeEnd = date("Y-m-d H:i:s");
-
-        $httpInfo = array();
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $httpInfo = array_merge($httpInfo, curl_getinfo($ch));
-        $curlErrNo = curl_errno($ch);
-        $httpError = curl_error($ch);
-        $httpCost = round($timeStampEnd - $timeStampBegin, 3);
-
-        // 关闭
-        curl_close($ch);
-
-
-        return array(
-            'httpCode' => $httpCode, // http状态码
-            'error' => $httpError, // 错误信息
-            'curlErrno' => $curlErrNo, //curl状态码,
-            'cost' => $httpCost, // 网络执行时间
-            'content' => $httpContent, // 网络返回内容
-            'httpInfo' => $httpInfo
-        );
     }
 
     /**
