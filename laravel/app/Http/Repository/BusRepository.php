@@ -356,8 +356,9 @@ class BusRepository
 
         //$arrayData = QueryList::Query($line, $rules)->data;
         $arrayData = $queryList->rules($rules)->query()->getData()->all();
-        $to = $arrayData[0]['to'];
-        unset($arrayData[0]['to']);
+        $to = array_shift($arrayData[0]);
+        // $to = $arrayData[0]['to'];
+        // unset($arrayData[0]['to']);
 
         return ['to' => $to, 'line' => $arrayData];
     }
