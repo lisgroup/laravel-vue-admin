@@ -8,11 +8,29 @@ const Home = () => import('../components/home/home.vue')
 const Index = () => import('../components/home/index.vue')
 const Line = () => import('../components/home/line.vue')
 
+
+/* 后台相关 Layout */
+const Layout = () => import('../components/common/navBar.vue')
+
 const routes = [
   { path: '/', redirect: { name: 'index' } },
   { path: '/home', name: 'home', component: Home },
   { path: '/index', name: 'index', component: Index },
-  { path: '/line', name: 'line', component: Line }
+  { path: '/line', name: 'line', component: Line },
+  // 后台路由
+  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  { path: '/404', component: () => import('@/views/404'), hidden: true },
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/dashboard',
+    name: 'Dashboard',
+    hidden: true,
+    children: [{
+      path: 'dashboard',
+      component: () => import('@/views/dashboard/index')
+    }]
+  },
 ]
 
 // export default routes

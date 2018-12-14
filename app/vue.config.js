@@ -9,10 +9,14 @@ const debug = process.env.NODE_ENV !== 'production'
 // const VueConf = require('./src/assets/js/libs/vue_config_class')
 // const vueConf = new VueConf(process.argv)
 
-console.log(process.env.NODE_ENV)
-console.log('本地启动或构建的文件信息 | 开始--------------------------------------------------------------')
+// console.log(process.env.NODE_ENV)
+// console.log('本地启动或构建的文件信息 | 开始--------------------------------------------------------------')
 // console.log(vueConf.pages)
-console.log('本地启动或构建的文件信息 | 结束--------------------------------------------------------------')
+// console.log('本地启动或构建的文件信息 | 结束--------------------------------------------------------------')
+
+function resolve(dir) {
+  return path.join(__dirname, '.', dir)
+}
 
 module.exports = {
   // baseUrl: vueConf.baseUrl, // 根域上下文目录
@@ -32,6 +36,7 @@ module.exports = {
     }
     Object.assign(config, { // 开发生产共同配置
       resolve: {
+        extensions: ['.js', '.vue', '.json'],
         alias: {
           '@': path.resolve(__dirname, './src'),
           '@c': path.resolve(__dirname, './src/components'),
@@ -41,9 +46,32 @@ module.exports = {
     })
   },
   chainWebpack: config => { // webpack链接API，用于生成和修改webapck配置，https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
+    // config.module.rules.delete('svg') // 重点:删除默认配置中处理svg,
+    //const svgRule = config.module.rule('svg')
+    //svgRule.uses.clear()
+    config.module
+    .rule('svg-sprite-loader')
+    .test(/\.svg$/)
+    .include
+    .add(resolve('src/icons')) // 处理svg目录
+    .end()
+    .use('svg-sprite-loader')
+    .loader('svg-sprite-loader')
+    .options({
+      symbolId: 'icon-[name]'
+    })
+    
+    // const svgRule = config.module.rule('svg')
+    // // svgRule.uses.clear()
+    // svgRule
+    // .use('svg-sprite-loader')
+    // .loader('svg-sprite-loader')
+    // .options({
+    //   symbolId: 'icon-[name]'
+    // })
   },
   // css: { // 配置高于chainWebpack中关于css loader的配置
-  //   modules: true, // 是否开启支持‘foo.module.css’样式
+  //   modules: true, // 是否开启支持'foo.module.css’样式
   //   extract: true, // 是否使用css分离插件 ExtractTextPlugin，采用独立样式文件载入，不采用<style>方式内联至html文件中
   //   sourceMap: false, // 是否在构建样式地图，false将提高构建速度
   //   loaderOptions: { // css预设器配置项
