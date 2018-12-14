@@ -326,7 +326,7 @@ class BusRepository
         $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
 
         // 使用自己封装的 Http 请求类，提高代码可控性
-        $httpResult = (new \Curl\Http())->request($url, '', 5);
+        $httpResult = (new \Curl\Http())->get($url, [], 5);
         $html = $httpResult['content'] ?? '';
         $queryList = QueryList::html($html);
         // 实时公交返回的网页数据
