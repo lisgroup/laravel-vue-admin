@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2df6449c0cefcac25387b179aa169477",
+    "content-hash": "8923385401d5abd79bf05f2f9fcf44dc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1727,6 +1727,54 @@
                 "storage"
             ],
             "time": "2018-10-15T13:53:10+00:00"
+        },
+        {
+            "name": "lisgroup/curl-http",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lisgroup/curl-http.git",
+                "reference": "27168b2a92cd98d3a57fc01b7c094c9dd0181110"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lisgroup/curl-http/zipball/27168b2a92cd98d3a57fc01b7c094c9dd0181110",
+                "reference": "27168b2a92cd98d3a57fc01b7c094c9dd0181110",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": "^5.3|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "lisgroup",
+                    "email": "407505297@qq.com"
+                }
+            ],
+            "description": "The lisgroup curl-http",
+            "homepage": "https://www.guke1.com",
+            "keywords": [
+                "curl",
+                "http request",
+                "lisgroup"
+            ],
+            "time": "2018-10-07T07:42:01+00:00"
         },
         {
             "name": "monolog/monolog",
