@@ -1730,16 +1730,16 @@
         },
         {
             "name": "lisgroup/curl-http",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lisgroup/curl-http.git",
-                "reference": "27168b2a92cd98d3a57fc01b7c094c9dd0181110"
+                "reference": "fc8abb5386b9f5e6ffa7c54102c85589ec355a9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lisgroup/curl-http/zipball/27168b2a92cd98d3a57fc01b7c094c9dd0181110",
-                "reference": "27168b2a92cd98d3a57fc01b7c094c9dd0181110",
+                "url": "https://api.github.com/repos/lisgroup/curl-http/zipball/fc8abb5386b9f5e6ffa7c54102c85589ec355a9f",
+                "reference": "fc8abb5386b9f5e6ffa7c54102c85589ec355a9f",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1774,7 +1774,7 @@
                 "http request",
                 "lisgroup"
             ],
-            "time": "2018-10-07T07:42:01+00:00"
+            "time": "2018-12-14T03:38:26+00:00"
         },
         {
             "name": "monolog/monolog",
