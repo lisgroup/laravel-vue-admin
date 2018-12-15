@@ -18,8 +18,8 @@ const routes = [
   { path: '/index', name: 'index', component: Index },
   { path: '/line', name: 'line', component: Line },
   // 后台路由
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
+  // { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  // { path: '/404', component: () => import('@/views/404'), hidden: true },
   {
     path: '/admin',
     component: Layout,
@@ -28,7 +28,8 @@ const routes = [
     hidden: true,
     children: [{
       path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
+      // component: () => import('@/views/dashboard/index')
+      component: () => import('../components/home/index.vue')
     }]
   },
 ]

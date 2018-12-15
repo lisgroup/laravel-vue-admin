@@ -4,9 +4,9 @@ import store from '../store'
 import { getToken } from '@/utils/auth'
 
 // 判断是否开发模式设置 URL
-const debug = process.env.NODE_ENV !== 'production'
+// const debug = process.env.NODE_ENV !== 'production'
 // 本地生产开发配置
-const my_host = debug ? 'http://localhost:8000/api/' : 'https://www.guke1.com/api/';
+// const my_host = debug ? 'http://localhost:8000/api/' : 'https://www.guke1.com/api/';
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API + 'api/', // api 的 base_url, 在 .env|(.development) 中配置
