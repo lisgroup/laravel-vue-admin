@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import request from '@/utils/request'
+
 export default {
   name: 'Index',
   data() {
@@ -47,8 +49,8 @@ export default {
         return false
       }
       this.isShow = true
-      const url = '/getList?linename=' + line
-      this.$ajax.get(url).then(res => {
+      const url = '/api/getList?linename=' + line
+      request.get(url).then(res => {
         const data = res.data
         if (data.error_code === 0) {
           // console.log(res.data);
