@@ -9,9 +9,11 @@
 namespace App\Http\Repository;
 
 
+use App\Jobs\SaveBusLine;
 use App\Models\BusLine;
 use App\Models\Cron;
 use App\Models\CronTask;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -265,26 +267,25 @@ class BusRepository
             $fileName = $path.'/serialize_'.$line.'.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
+            // 车次较多时候数据库操作太频繁，先放入 队列 中批量处理。。。
+            /***************** 队列操作 start *******************/
+            // $job = (new SaveBusLine($data->toArray()))->delay(Carbon::now()->addMinute(1));
+            // dispatch($job);
+            SaveBusLine::dispatch($arrayData)->delay(Carbon::now()->addMinute(1));
+            /***************** 队列操作 end   *******************/
+            // 注释下面代码，使用队列异步处理
             // 车次入库操作
-            foreach ($arrayData as $arrayDatum) {
-                /**
-                 * $arrayDatum 示例如下：
-                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
-                 */
-                $this->handleLinkToBusLines($arrayDatum);
-            }
+            // foreach (                     $arrayData as $arrayDatum) {
+            //     /**
+            //      * $arrayDatum 示例如下：
+            //      * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
+            //      */
+            //     $this->handleLinkToBusLines($arrayDatum);
+            // }
         } else {
             // 2.1 文件存在直接读取
             $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
             $arrayData = unserialize($serialize);
-            // 车次入库操作
-            foreach ($arrayData as $arrayDatum) {
-                /**
-                 * $arrayDatum 示例如下：
-                 * ['link' => 'APTSLine.aspx?cid=175ec***&LineGuid=21a***&LineInfo=158***','bus' => '158','FromTo' => '园区**',]
-                 */
-                $this->handleLinkToBusLines($arrayDatum);
-            }
         }
 
         return $arrayData;
@@ -321,11 +322,16 @@ class BusRepository
     {
         if (empty($path) || empty($get['cid']) || empty($get['LineGuid']) || empty($get['LineInfo']))
             return false;
-        $paramString = http_build_query($get);
-        $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
-        //实时公交返回的网页数据
+        // $paramString = http_build_query($get);
+        // $url = 'http://www.szjt.gov.cn/BusQuery/'.$path.'?'.$paramString;
+        // 使用自己封装的 Http 请求类，提高代码可控性
+        // $httpResult = (new \Curl\Http())->get($url, [], 5);
+        // $html = $httpResult['content'] ?? '';
+        // $queryList = QueryList::html($html);
+        // 实时公交返回的网页数据
         try {
-            $queryList = QueryList::get($url, [], [
+            $url = 'http://www.szjt.gov.cn/BusQuery/'.$path;
+            $queryList = QueryList::get($url, $get, [
                 //设置超时时间，单位：秒
                 'timeout' => 5,
             ]);
@@ -350,8 +356,9 @@ class BusRepository
 
         //$arrayData = QueryList::Query($line, $rules)->data;
         $arrayData = $queryList->rules($rules)->query()->getData()->all();
-        $to = $arrayData[0]['to'];
-        unset($arrayData[0]['to']);
+        $to = array_shift($arrayData[0]);
+        // $to = $arrayData[0]['to'];
+        // unset($arrayData[0]['to']);
 
         return ['to' => $to, 'line' => $arrayData];
     }
@@ -386,6 +393,24 @@ class BusRepository
             }
             /**********************   line1  end ************************/
         }
+    }
+
+    /**
+     * 存储或更新数据
+     * @param $datas
+     * @return bool
+     */
+    public function updateBusLine($datas)
+    {
+        $rs = 1;
+        foreach ($datas as $data) {
+            if (isset($data['link'])) {
+                $rs = $this->handleLinkToBusLines($data);
+            } else {
+                $rs = 0;
+            }
+        }
+        return $rs;
     }
 
     /**

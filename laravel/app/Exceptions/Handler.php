@@ -3,7 +3,12 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -29,8 +34,10 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
-     * @return void
+     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+     *
+     * @param  \Exception $exception
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -40,12 +47,45 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
+        // 参数验证错误的异常，我们需要返回 400 的 http code 和一句错误信息 1104
+        if ($exception instanceof ValidationException) {
+            $code = 1104;
+            // $reason = config('errorCode.'.$code.'.reason');
+            return response()->json(['code' => $code, 'reason' => array_collapse($exception->errors()), 'data' => ''])
+                ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+            // return response(['error' => array_first(array_collapse($exception->errors()))], 400);
+        }
+        // 用户认证的异常，我们需要返回 401 的 http code 和错误信息
+        if ($exception instanceof UnauthorizedHttpException) {
+            // return response($exception->getMessage(), 401);
+            return response()->json(['reason' => $exception->getMessage(), 'code' => 401]);
+        }
+
+        // return parent::render($request, $exception);
+
+        if ($exception instanceof AuthenticationException) {
+            $code = 1200;
+            $reason = config('errorCode.'.$code.'.reason');
+            return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''])
+                ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        }
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json([
+                'reason' => 'Resource not found.',
+                'code' => 404
+            ]);
+        }
+
+        if ($exception instanceof QueryException) {
+            // return response()->json(['code' => '500', 'reason' => 'Internal Server Error', 'data' => ''], 500);
+        }
+
         return parent::render($request, $exception);
     }
 }

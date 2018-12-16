@@ -39,7 +39,6 @@ REDIS_PORT=6379
 ### 3. 运行数据迁移和填充(可选)
 ```php
 php artisan migrate
-php artisan make:seed CronTasksTableSeeder
 php artisan db:seed
 # 如需刷新数据库结构并执行数据填充，请执行下面代码
 # php artisan migrate:refresh --seed
@@ -95,10 +94,15 @@ crontab -e
 # 最后 ctrl + o 保存退出即可。
 ```
 
-~~7. 可选，安装 npm 扩展~~
+### 7. 启动队列(可选)
+```shell
+php artisan queue:work
+```
+
+### 8. 可选，安装 npm 扩展
 ```node
 # 切换到上级 app 目录下
-cd ../app
+cd ../admin
 npm i
 # 本地测试
 npm run dev
@@ -106,13 +110,12 @@ npm run dev
 # 打包(可选)
 npm run build
 # 将 dist 目录下的文件 copy 到 php/public 目录。
-
-# 直接打包到 php/public 目录(注意备份 public/index.php 文件)
-npm run buildpro
 ```
+~~# 直接打包到 laravel/public 目录(注意备份 /laravel/public/index.php 文件)~~
+~~npm run build:pro~~
 
 ## 域名绑定
-域名需要绑定到根目录，即项目的 php/public 目录下。
+域名需要绑定到根目录，即项目的 laravel/public 目录下。
 
 ### 1. 未启动 laravels 的 Nginx 示例配置：
 ```shell

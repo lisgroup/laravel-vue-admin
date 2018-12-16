@@ -16,3 +16,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'user'], function($router) {
+    Route::any('login', 'AuthController@login')->name('login'); // ->middleware('admin.login');
+    Route::any('logout', 'AuthController@logout');
+    Route::any('refresh', 'AuthController@refresh');
+    Route::any('info', 'AuthController@info');
+});
+
+Route::resource('crontask', 'Api\CronTaskController');
+Route::resource('lines', 'Api\LinesController');
+// Route::any('table/list', 'Api\CronTaskController@list');
