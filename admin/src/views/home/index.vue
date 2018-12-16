@@ -51,11 +51,8 @@ export default {
       this.isShow = true
       const url = '/api/getList?linename=' + line
       request.get(url).then(res => {
-        const data = res.data
-        if (data.error_code === 0) {
-          // console.log(res.data);
-          this.tableData = res.data.result
-        }
+        // const data = res.data
+        this.tableData = res.data
       }).catch(err => {
         return err
         // console.log(err);

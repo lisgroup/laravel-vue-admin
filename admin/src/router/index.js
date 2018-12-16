@@ -23,8 +23,8 @@ const Layout = () => import('../views/layout/Layout')
  **/
 export const constantRouterMap = [
   { path: '/', redirect: '/index', hidden: true },
-  { path: '/index', component: () => import('@/views/home/index'), hidden: true },
-  { path: '/line', component: () => import('@/views/home/line'), hidden: true },
+  { path: '/index', name: 'index', component: () => import('@/views/home/index'), hidden: true },
+  { path: '/line', name: 'line', component: () => import('@/views/home/line'), hidden: true },
   { path: '/home', component: () => import('@/views/home/home'), hidden: true },
   { path: '/index', component: () => import('@/views/home/index'), hidden: true },
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },

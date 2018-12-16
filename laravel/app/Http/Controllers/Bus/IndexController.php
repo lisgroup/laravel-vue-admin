@@ -15,6 +15,7 @@ class IndexController extends CommonController
 {
     /**
      * 首页展示页面
+     *
      * @return mixed
      */
     public function index()
@@ -30,7 +31,10 @@ class IndexController extends CommonController
 
     /**
      * 采集 bus 网址是表单数据
-     * @return array
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
      */
     public function getList(Request $request)
     {
@@ -38,13 +42,17 @@ class IndexController extends CommonController
         $line = preg_replace('/快\b(\d)/', '快线$1号', $line);
         $list = BusRepository::getInstent()->getList($line);
 
-        return $this->exportData($list);
+        // return $this->exportData($list);
+        return $this->out(200, $list);
     }
 
     /**
      * 获取实时公交数据table列表 --- 根据data-href 地址，请求 szjt.gov.cn 查询实时公交数据，不能缓存
      * 获取实时公交数据table列表，数据来自 szjt.gov.cn，需要限制访问频率，1秒一次请求
-     * @return array
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
      */
     public function busLine(Request $request)
     {
@@ -64,7 +72,7 @@ class IndexController extends CommonController
             $data = BusRepository::getInstent()->getLine($parseUrl['path'], $post);
         }
 
-        return $this->exportData($data);
+        return $this->out(200, $data);
     }
 
 }

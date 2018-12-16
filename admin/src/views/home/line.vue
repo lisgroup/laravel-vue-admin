@@ -49,7 +49,7 @@
 import request from '@/utils/request'
 
 export default {
-  name: 'Line',
+  name: 'Lines',
   data() {
     return {
       loading: false,
@@ -66,21 +66,21 @@ export default {
   methods: {
     handleReload(href) {
       this.loading = true
-      const url = '/busLine'
+      const url = '/api/busLine'
       if (!href) {
-        // console.log(href);
+        // console.log(href)
         href = this.$route.query.href
       }
-      // console.log(href);
+      // console.log(href)
       const param = 'href=' + href
       request.post(url, param).then(res => {
-        // this.loading = false;
-        // console.log(res.data);
-        this.to = res.data.result.to
-        this.tableLine = res.data.result.line
+        // this.loading = false
+        console.log(res.data)
+        this.to = res.data.to
+        this.tableLine = res.data.line
       }).catch(err => {
         return err
-        // console.log(err);
+        // console.log(err)
       })
       setTimeout(() => {
         this.loading = false
@@ -101,22 +101,22 @@ export default {
       request.get(url).then(res => {
         const data = res.data
         if (data.error_code === 0) {
-          // console.log(res.data);
+          // console.log(res.data)
           this.tableData = res.data.result
         }
       }).catch(err => {
         return err
-        // console.log(err);
+        // console.log(err)
       })
     },
     handleCheck(index, link) {
-      // console.log(this.tableData.length);
+      // console.log(this.tableData.length)
       if (this.tableData.length > 5) {
         this.isShow = false
       }
-      // this.$router.push({ name: 'line', query: { href: link } });
+      // this.$router.push({ name: 'line', query: { href: link } })
       this.handleReload(link)
-      // console.log(link);
+      // console.log(link)
     }
   }
 }
