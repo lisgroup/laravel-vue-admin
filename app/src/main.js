@@ -1,22 +1,13 @@
 import Vue from 'vue'
-//VueRouter:引入路由对象
-import VueRouter from 'vue-router'
-
-Vue.use(VueRouter)
 
 // Axios:引入axios
 import Axios from 'axios'
 // Axios:挂载原型
 Vue.prototype.$ajax = Axios
+// 默认 URL 在 .env|(.development) 中配置
+Axios.defaults.baseURL = process.env.VUE_APP_BASE_API + 'api/'
 
-// 判断是否开发模式设置 URL
-const debug = process.env.NODE_ENV !== 'production'
-// 本地生产开发配置
-const my_host = debug ? 'http://localhost/bus/laravel/public/index.php/api/' : 'https://www.guke1.com/api/';
-// 默认 URL 配置
-Axios.defaults.baseURL = my_host;
-
-
+import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -32,24 +23,14 @@ Vue.component('NavBar', NavBar) // 使用最好以 nav-bar
 
 // 引入自己的vue文件 开始
 import App from './App.vue'
-import Home from './components/home/home.vue'
-import Index from './components/home/index.vue'
-import Line from './components/home/line.vue'
+import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 
-// VueRouter:创建对象并配置路由规则！！！导航
-let router = new VueRouter({
-  // VueRouter：配置路由规则
-  routes: [
-    { path: '/', redirect: { name: 'index' } },
-    { path: '/home', name: 'home', component: Home },
-    { path: '/index', name: 'index', component: Index },
-    { path: '/line', name: 'line', component: Line }
-  ]
-})
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

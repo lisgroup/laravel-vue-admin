@@ -26,7 +26,7 @@ class Line extends Model
      * @var string
      */
     // protected $table = 'lines';
-    protected $fillable = ['name', 'open_time', 'depart_time', 'price', 'company', 'station', 'station_back', 'last_update'];
+    protected $fillable = ['name', 'price', 'car_type', 'depart_time', 'open_time', 'total_time', 'via_road', 'company', 'station', 'station_back', 'reason', 'username', 'is_show', 'last_update'];
 
     /**
      * 索引的字段

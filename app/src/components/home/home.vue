@@ -1,5 +1,6 @@
 <template>
     <div>
+        <nav-bar></nav-bar>
         <div id="content">
             <form class="layui-form layui-form-pane" action="" id="form">
                 <div class="layui-form-item">

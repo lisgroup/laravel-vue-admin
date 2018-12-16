@@ -15,6 +15,7 @@ class IndexController extends CommonController
 {
     /**
      * 首页展示页面
+     *
      * @return mixed
      */
     public function index()
@@ -30,7 +31,10 @@ class IndexController extends CommonController
 
     /**
      * 采集 bus 网址是表单数据
-     * @return array
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
      */
     public function getList(Request $request)
     {
@@ -38,13 +42,17 @@ class IndexController extends CommonController
         $line = preg_replace('/快\b(\d)/', '快线$1号', $line);
         $list = BusRepository::getInstent()->getList($line);
 
-        return $this->exportData($list);
+        // return $this->exportData($list);
+        return $this->out(200, $list);
     }
 
     /**
      * 获取实时公交数据table列表 --- 根据data-href 地址，请求 szjt.gov.cn 查询实时公交数据，不能缓存
      * 获取实时公交数据table列表，数据来自 szjt.gov.cn，需要限制访问频率，1秒一次请求
-     * @return array
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
      */
     public function busLine(Request $request)
     {
@@ -53,6 +61,8 @@ class IndexController extends CommonController
         // $request->input('href', '');
         // $post = input('post.', '', 'htmlspecialchars');
         $post = $request->all();
+        // $postJson = '{"href":"APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4","LineGuid":"af9b209b-f99d-4184-af7d-e6ac105d8e7f","LineInfo":"\u5feb\u7ebf1\u53f7(\u6728\u6e0e\u516c\u4ea4\u6362\u4e58\u67a2\u7ebd\u7ad9)"}';
+        // $post = json_decode($postJson, true);
         // 'href' => string 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4' (length=54)  'LineGuid' => string '9d090af5-c5c6-4db8-b34e-2e8af4f63216' (length=36)  'LineInfo' => string '1(公交一路新村)' (length=21)
         if (!empty($post) && !empty($post['href']) && !empty($post['LineGuid']) && !empty($post['LineInfo'])) {
             $parseUrl = parse_url($post['href']);
@@ -62,7 +72,7 @@ class IndexController extends CommonController
             $data = BusRepository::getInstent()->getLine($parseUrl['path'], $post);
         }
 
-        return $this->exportData($data);
+        return $this->out(200, $data);
     }
 
 }
