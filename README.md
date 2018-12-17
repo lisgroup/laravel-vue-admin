@@ -1,7 +1,7 @@
 H5 自适应苏州实时公交查询系统
 ===============
 ## 前后端分离设计
-前端代码在 app 目录，后端代码在 php 目录下、
+前端代码在 admin 目录，细分为前后台页面；后端代码在 laravel 目录下、
 
 > PHP 的运行环境要求 PHP7.0 以上。
 1. PHP >= 7.0
@@ -74,7 +74,7 @@ php artisan elasticsearch:import "App\Models\Line"
   mbstring
 ```
 
-安装方法参见：[TNTSearch+jieba-php 实现中文全文搜索](./laravel/TNTSearch.md)
+安装方法参见：[TNTSearch+jieba-php 实现中文全文搜索](laravel/readme/5. 2018-12-17-TNTSearch 使用.md)
 
 ### 5. 启动 laravels 服务监听 5200 端口(可选：需安装 swoole 扩展)
 ```php
@@ -117,7 +117,7 @@ npm run build
 ## 域名绑定
 域名需要绑定到根目录，即项目的 laravel/public 目录下。
 
-### 1. 未启动 laravels 的 Nginx 示例配置：
+### 1. Nginx 配置示例： (未启动 laravel-s 的扩展)
 ```shell
 server {
     listen 443;
@@ -150,7 +150,7 @@ server {
 
     location ~ .*\.(css|img|js|gif|jpg|jpeg|png|bmp|swf)$
     {
-        root $root_path; 
+        # root $root_path; 
         expires     30d;
     }
 
@@ -165,7 +165,7 @@ server {
     }
 
     access_log /home/wwwlogs/laravel.log
-    error_log /home/wwwlogs/laravel_error.log;
+    # error_log /home/wwwlogs/laravel_error.log;
 }
 ```
 ### 2. 启动 laravels 的 Nginx 示例配置：

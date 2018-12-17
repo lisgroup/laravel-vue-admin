@@ -23,7 +23,7 @@ use QL\QueryList;
 class BusRepository
 {
     /**
-     * @var mixed|QueryList
+     * @var mixed|QueryList 实例
      */
     protected $ql;
     /**
@@ -31,10 +31,18 @@ class BusRepository
      */
     protected $url = 'http://www.szjt.gov.cn/BusQuery/APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4';
 
+    /**
+     * @var self 单例
+     */
     private static $instance;
 
     // private $cronModel;
 
+    /**
+     * @param array $conf
+     *
+     * @return BusRepository
+     */
     public static function getInstent($conf = [])
     {
         if (!isset(self::$instance)) {
@@ -45,6 +53,8 @@ class BusRepository
 
     /**
      * 历史遗留：处理以前存储的 HTML 文件数据 Task
+     *
+     *
      * @return int
      */
     public function busTask()
@@ -107,7 +117,9 @@ class BusRepository
 
     /**
      * 根据文件路径，读取内容并处理数据返回 array 格式
+     *
      * @param $file
+     *
      * @return array
      */
     private function getDataByQueryList($file)
@@ -134,6 +146,7 @@ class BusRepository
 
     /**
      * 1. ~~设置查询线路的 cookie 前后端分离时废弃~~
+     *
      * @param $line
      */
     public function setLineCookie($line)
@@ -159,7 +172,10 @@ class BusRepository
 
     /**
      * 2. 获取 Token 的方法，使用 Laravel 的 Cache 缓存，配置在 .env 下 CACHE_DRIVER=file|database|redis
+     *
+     *
      * @param bool $refresh
+     *
      * @return array|bool
      */
     public function getToken($refresh = false)
@@ -213,8 +229,11 @@ class BusRepository
 
     /**
      * 3. 发送 POST 请求获取查询的线路列表
+     *
+     *
      * @param $line
      * @param bool $refresh
+     *
      * @return array
      */
     private function getPostBusList($line, $refresh = false)
@@ -293,8 +312,11 @@ class BusRepository
 
     /**
      * 查询公交如：快线1号 展示列表
+     *
+     *
      * @param string $line
      * @param bool $refresh 是否强制更新结果
+     *
      * @return array
      */
     public function getList($line, $refresh = false)
@@ -314,8 +336,11 @@ class BusRepository
 
     /**
      * 获取实时公交站台数据 table 列表
+     *
+     *
      * @param $path
      * @param $get
+     *
      * @return array|bool
      */
     public function getLine($path, $get)
@@ -397,7 +422,10 @@ class BusRepository
 
     /**
      * 存储或更新数据
+     *
+     *
      * @param $datas
+     *
      * @return bool
      */
     public function updateBusLine($datas)
@@ -415,7 +443,10 @@ class BusRepository
 
     /**
      * crons 表入库操作
+     *
+     *
      * @param $crons
+     *
      * @return bool
      */
     private function saveCronData($crons)
@@ -437,7 +468,10 @@ class BusRepository
 
     /**
      * bus_lines 表入库操作
+     *
+     *
      * @param array $lines
+     *
      * @return bool
      */
     private function saveBusLines($lines)
@@ -459,6 +493,9 @@ class BusRepository
     }
 
     /**
+     * 处理线路入库操作
+     *
+     *
      * @param array $arrayDatum 示例如下:
      * $arrayDatum =['link' => 'APTSLine.aspx?cid=17e***&LineGuid=21ae6***&LineInfo=158***','bus' => '158','FromTo' => '园区*',]
      *
@@ -482,16 +519,28 @@ class BusRepository
         return $rs;
     }
 
+    /**
+     * BusRepository constructor.
+     *
+     *
+     * @param $config
+     */
     private function __construct($config)
     {
         //$this->ql || $this->ql = QueryList::getInstance();
     }
 
+    /**
+     * 不允许 clone
+     */
     private function __clone()
     {
 
     }
 
+    /**
+     * @return float
+     */
     public function randomTime()
     {
         return (float)sprintf('%.0f', microtime(true) * 1000);
