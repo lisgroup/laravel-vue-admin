@@ -16,6 +16,8 @@ class TaskController extends CommonController
 {
     /**
      * 采集 bus 网址是表单数据
+     *
+     *
      * @return mixed
      */
     public function index()
@@ -25,7 +27,10 @@ class TaskController extends CommonController
 
     /**
      * 测试发送 json 格式数据参数接收
+     *
+     *
      * @param Request $request
+     *
      * @return mixed
      */
     public function api(Request $request)
