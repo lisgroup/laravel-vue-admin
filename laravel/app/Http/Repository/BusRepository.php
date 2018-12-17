@@ -358,7 +358,7 @@ class BusRepository
             $url = 'http://www.szjt.gov.cn/BusQuery/'.$path;
             $queryList = QueryList::get($url, $get, [
                 //设置超时时间，单位：秒
-                'timeout' => 5,
+                'timeout' => 4,
             ]);
         } catch (\Exception $e) {
             Log::error('busLine 获取失败; error: 网络超时 URL: '.$url, ['message' => $e->getMessage()]);
