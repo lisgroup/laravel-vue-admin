@@ -22,18 +22,18 @@ const Layout = () => import('../views/layout/Layout')
   }
  **/
 export const constantRouterMap = [
-  { path: '/', redirect: '/index', hidden: true },
-  { path: '/index', name: 'index', component: () => import('@/views/home/index'), hidden: true },
+  // { path: '/', redirect: '/index', hidden: true },
+  { path: '/', name: 'index', component: () => import('@/views/home/index'), hidden: true },
   { path: '/line', name: 'line', component: () => import('@/views/home/line'), hidden: true },
   { path: '/home', component: () => import('@/views/home/home'), hidden: true },
-  { path: '/index', component: () => import('@/views/home/index'), hidden: true },
+  // { path: '/index', component: () => import('@/views/home/index'), hidden: true },
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {
     path: '/admin',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/admin/dashboard',
     name: 'Dashboard',
     hidden: true,
     children: [{
@@ -145,19 +145,6 @@ export const constantRouterMap = [
       }
     ]
   },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ],
-    hidden: true
-  },
-
   { path: '*', redirect: '/404', hidden: true }
 ]
 
