@@ -75,4 +75,21 @@ class IndexController extends CommonController
         return $this->out(200, $data);
     }
 
+    /**
+     * 查询公交线路--全文索引
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $params = $request->all(['wd']);
+        if (empty($params['wd'])) {
+            return $this->out(200, [], 'param error');
+        }
+        $list = \App\Models\Line::search('汽车南站')->get()->toArray();
+        return $this->out(200, $list);
+    }
+
 }

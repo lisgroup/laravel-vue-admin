@@ -11,7 +11,7 @@
         "fideloper/proxy": "^4.0",
         "hhxsv5/laravel-s": "~3.0",
         "jaeger/querylist": "^4.0",
-        "laravel/framework": "5.5.*",
+        "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "lisgroup/curl-http": "^1.2",
         "orangehill/iseed": "^2.6",
