@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreLineRequest;
 use App\Models\Line;
 use App\Http\Controllers\Controller;
+use Vinkla\Hashids\Facades\Hashids;
 
 class LinesController extends Controller
 {
@@ -78,6 +79,9 @@ class LinesController extends Controller
      */
     public function show($id)
     {
+        if (!is_numeric($id)) {
+            $id = current(Hashids::decode($id));
+        }
         $data = Line::findOrFail($id);
         return $this->out(200, $data);
     }
