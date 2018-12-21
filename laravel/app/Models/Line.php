@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HashIdHelper;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * Class Line
@@ -19,6 +21,7 @@ use Laravel\Scout\Searchable;
 class Line extends Model
 {
     use Searchable;
+    use HashIdHelper;
 
     /**
      * 与模型关联的数据表
