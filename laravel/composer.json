@@ -8,7 +8,6 @@
         "php": "^7.0",
         "baijunyao/laravel-scout-elasticsearch": "^2.1",
         "barryvdh/laravel-cors": "^0.11.2",
-        "elfsundae/laravel-hashid": "^1.2",
         "fideloper/proxy": "^3.0",
         "hhxsv5/laravel-s": "~3.0",
         "jaeger/querylist": "^4.0",
@@ -17,7 +16,8 @@
         "lisgroup/curl-http": "^1.2",
         "orangehill/iseed": "^2.6",
         "predis/predis": "^1.1",
-        "tymon/jwt-auth": "1.*@rc"
+        "tymon/jwt-auth": "1.*@rc",
+        "vinkla/hashids": "3.3.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
