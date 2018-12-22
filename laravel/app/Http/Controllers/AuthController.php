@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 // use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\Controller;
 
+use App\Http\Repository\UserRepository;
+
 class AuthController extends Controller
 {
     /**
@@ -19,7 +21,8 @@ class AuthController extends Controller
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
         // 如果把 refresh 也放进去，token 即使过期但仍在刷新期以内也可刷新
         // 不过刷新一次作废
-        $this->middleware('auth:api', ['except' => ['login', 'adminLogin']]);
+        $except = ['login', 'refresh', 'startCaptcha', 'verifyCaptcha'];
+        $this->middleware('auth:api', ['except' => $except]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
     }
@@ -126,6 +129,28 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+
+    /**
+     * 1. 极验开始获取验证码操作
+     */
+    public function startCaptcha()
+    {
+        $input = request(['uuid', '_t']);
+        $data = (UserRepository::getInstent())->startCaptcha($input);
+        return $this->out(200, $data);
+    }
+
+    /**
+     * 2. 极验校验验证码操作
+     */
+    public function verifyCaptcha()
+    {
+        $input = request();
+        $result = (UserRepository::getInstent())->verifyCaptcha($input);
+        $data['status'] = $result ? 'success' : 'fail';
+
+        return $this->out(200, $data);
     }
 
 }

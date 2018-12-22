@@ -61,24 +61,24 @@ class UserRepository
 
         Cache::add('Gee_gtserver_'.$input['uuid'], $status, 1644);
         // Cache::add('Gee_user_id_'.$input['uuid'], 1, 1644);
-
         // $_SESSION['gtserver'] = $status;
         // $_SESSION['user_id'] = $data['user_id'];
-        return $gtLib->get_response_str();
+        return $gtLib->get_response();
     }
 
     /**
      * 极验校验验证码操作
+     *
      * @param $input
+     *
      * @return bool
-     * @throws \Exception
      */
     public function verifyCaptcha($input)
     {
         $id = env('GEE_CAPTCHA_ID');
         $privateKey = env('GEE_PRIVATE_KEY');
         $GtSdk = new GeetestLib($id, $privateKey);
-        if (empty($input['uuid']) || empty($input['geetest_challenge']) || empty($input['geetest_validate']) || empty($input['geetest_seccode']) || !cache('Gee_user_id_'.$input['uuid'])) {
+        if (empty($input['uuid']) || empty($input['geetest_challenge']) || empty($input['geetest_validate']) || empty($input['geetest_seccode'])) {
             // return '{"status":"fail"}';
             return false;
         }
