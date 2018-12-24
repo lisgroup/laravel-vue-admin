@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 
 class Handler extends ExceptionHandler
 {
@@ -84,6 +85,14 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof QueryException) {
             // return response()->json(['code' => '500', 'reason' => 'Internal Server Error', 'data' => ''], 500);
+        }
+
+        // JWT exception
+        if ($exception instanceof TokenBlacklistedException) {
+            $code = 1210;
+            $reason = config('errorCode.'.$code.'.reason');
+            $result = ['code' => $code, 'reason' => $reason, 'data' => ''];
+            return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
         }
 
         return parent::render($request, $exception);
