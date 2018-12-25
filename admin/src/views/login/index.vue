@@ -78,7 +78,8 @@ export default {
       loading: false,
       pwdType: 'password',
       redirect: undefined,
-      gtCapValid: ''
+      gtCapValid: '',
+      uuidData: ''
     }
   },
   watch: {
@@ -111,9 +112,8 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          let params = Object.assign(this.loginForm, { uuid: this.uuid })
+          let params = this.mergeJsonObject(this.loginForm, { uuid: this.uuidData })
           params = this.mergeJsonObject(params, this.gtCapValid)
-          console.log(params)
 
           this.$store.dispatch('Login', params).then(() => {
             this.loading = false

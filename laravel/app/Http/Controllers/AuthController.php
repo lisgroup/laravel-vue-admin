@@ -34,16 +34,17 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['username', 'password']);
-
-        if (empty($credentials['username'])) {
-            return ['error' => 'null', 'code' => 201];
+        $input = request()->all();
+        // 1. 验证 geetest
+        $result = (UserRepository::getInstent())->verifyCaptcha($input);
+        if (!$result || empty($input['username']) || empty($input['password'])) {
+            return ['reason' => 'Parameter error, please refresh the page', 'code' => 201];
         }
-        $credentials['name'] = $credentials['username'];
-        unset($credentials['username']);
 
+        // 2. 验证用户名密码
+        $credentials = ['name' => $input['username'], 'password' => $input['password']];
         if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['reason' => 'Unauthorized', 'code' => 401]);
+            return response()->json(['reason' => 'Unauthorized, username or password error', 'code' => 401]);
         }
         // return $this->respondWithToken($token);
 
