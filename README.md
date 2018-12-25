@@ -36,12 +36,9 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
 
-### 3. 运行数据迁移和填充(可选)
+### 3. 运行安装命令，会自动执行数据迁移和填充，并生成 key
 ```php
-php artisan migrate
-php artisan db:seed
-# 如需刷新数据库结构并执行数据填充，请执行下面代码
-# php artisan migrate:refresh --seed
+php artisan bus:install
 ```
 
 ### 4. 支持中文全文索引

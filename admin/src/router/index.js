@@ -45,7 +45,7 @@ export const constantRouterMap = [
   {
     path: '/list',
     component: Layout,
-    redirect: '/list/table',
+    redirect: '/task',
     name: '列表',
     meta: { title: '列表展示', icon: 'example' },
     children: [

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreLineRequest;
 use App\Models\Line;
 use App\Http\Controllers\Controller;
+use Vinkla\Hashids\Facades\Hashids;
 
 class LinesController extends Controller
 {
@@ -20,7 +21,7 @@ class LinesController extends Controller
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
         // 如果把 refresh 也放进去，token 即使过期但仍在刷新期以内也可刷新
         // 不过刷新一次作废
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'show']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
     }
@@ -73,13 +74,13 @@ class LinesController extends Controller
      * Display the specified resource.
      * 展示某个详情数据
      *
-     * @param  int $id
+     * @param Line $line
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Line $line)
     {
-        $data = Line::findOrFail($id);
-        return $this->out(200, $data);
+        return $this->out(200, $line);
     }
 
     /**
@@ -87,6 +88,7 @@ class LinesController extends Controller
      * 编辑展示数据
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
