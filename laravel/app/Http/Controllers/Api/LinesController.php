@@ -74,16 +74,13 @@ class LinesController extends Controller
      * Display the specified resource.
      * 展示某个详情数据
      *
-     * @param  int $id
+     * @param Line $line
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Line $line)
     {
-        if (!is_numeric($id)) {
-            $id = current(Hashids::decode($id));
-        }
-        $data = Line::findOrFail($id);
-        return $this->out(200, $data);
+        return $this->out(200, $line);
     }
 
     /**
@@ -91,6 +88,7 @@ class LinesController extends Controller
      * 编辑展示数据
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)

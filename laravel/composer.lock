@@ -1256,16 +1256,16 @@
         },
         {
             "name": "hhxsv5/laravel-s",
-            "version": "v3.3.6",
+            "version": "v3.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhxsv5/laravel-s.git",
-                "reference": "97c469dd570b4bf5d03f9db50582ac42abf94bfe"
+                "reference": "b4a4ae0d0bfb7bb447e864678e63c9489abcff5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhxsv5/laravel-s/zipball/97c469dd570b4bf5d03f9db50582ac42abf94bfe",
-                "reference": "97c469dd570b4bf5d03f9db50582ac42abf94bfe",
+                "url": "https://api.github.com/repos/hhxsv5/laravel-s/zipball/b4a4ae0d0bfb7bb447e864678e63c9489abcff5f",
+                "reference": "b4a4ae0d0bfb7bb447e864678e63c9489abcff5f",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1329,7 +1329,7 @@
                 "udp",
                 "websocket"
             ],
-            "time": "2018-12-19T10:56:59+00:00"
+            "time": "2018-12-21T08:34:57+00:00"
         },
         {
             "name": "jaeger/g-http",

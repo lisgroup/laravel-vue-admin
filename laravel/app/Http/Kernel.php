@@ -76,9 +76,6 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
 
-            // 处理路由绑定
-            // 见：https://d.laravel-china.org/docs/5.5/routing#route-model-binding
-            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 

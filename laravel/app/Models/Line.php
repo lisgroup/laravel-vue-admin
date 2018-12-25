@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Traits\HashIdHelper;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
-use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * Class Line
