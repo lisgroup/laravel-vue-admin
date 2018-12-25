@@ -155,7 +155,7 @@ export default {
       this.gtCapValid = ''
       request.get('/api/user/startCaptcha?uuid=' + this.uuidData).then(res => {
         const data = res.data
-        if (data.success === 0) {
+        if (data.challenge && data.gt) {
           // 调用 initGeetest 进行初始化
           // 参数1：配置参数
           // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
