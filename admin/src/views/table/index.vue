@@ -2,6 +2,9 @@
   <div class="app-container">
     <el-row>
       <el-button type="primary" size="medium">
+        <router-link to="/task/search">根据车次查询</router-link>
+      </el-button>
+      <el-button type="primary" size="medium">
         <router-link to="/task/newBus">新增车次</router-link>
       </el-button>
     </el-row>

@@ -23,3 +23,11 @@ export function postEditBus(id, params) {
 export function deleteTask(id) {
   return request.delete('/api/crontask/' + id)
 }
+
+export function getLine(params) {
+  return request({
+    url: '/api/search',
+    method: 'get',
+    params
+  })
+}

@@ -49,6 +49,7 @@ export const constantRouterMap = [
     name: '列表',
     meta: { title: '列表展示', icon: 'example' },
     children: [
+      { path: '/task/search', name: 'search', component: () => import('@/views/table/search'), hidden: true },
       { path: '/task/newBus', name: 'NewBus', component: () => import('@/views/table/newBus'), hidden: true },
       { path: '/task/edit/:id', name: 'taskEdit', component: () => import('@/views/table/edit'), hidden: true },
       {
