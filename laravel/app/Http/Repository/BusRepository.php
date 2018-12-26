@@ -357,12 +357,12 @@ class BusRepository
         try {
             $url = 'http://www.szjt.gov.cn/BusQuery/'.$path;
             $queryList = QueryList::get($url, $get, [
-                //设置超时时间，单位：秒
+                // 设置超时时间，单位：秒
                 'timeout' => 4,
             ]);
         } catch (\Exception $e) {
             Log::error('busLine 获取失败; error: 网络超时 URL: '.$url, ['message' => $e->getMessage()]);
-            return [];
+            return ['to' => '', 'line' => ''];
         }
 
         /*$rules = [
@@ -372,14 +372,14 @@ class BusRepository
 
         $rules = [
             'to' => ['#MainContent_LineInfo', 'text'],  //方向
-            //采集 tr 下的 td 标签的 text 文本
+            // 采集 tr 下的 td 标签的 text 文本
             'stationName' => ['#MainContent_DATA tr td:nth-child(1)', 'text'], // 站台
             'stationCode' => ['#MainContent_DATA tr td:nth-child(2)', 'text'], // 编号
             'carCode' => ['#MainContent_DATA tr td:nth-child(3)', 'text'],  // 车牌
             'ArrivalTime' => ['#MainContent_DATA tr td:nth-child(4)', 'text'], // 进站时间
         ];
 
-        //$arrayData = QueryList::Query($line, $rules)->data;
+        // $arrayData = QueryList::Query($line, $rules)->data;
         $arrayData = $queryList->rules($rules)->query()->getData()->all();
         $to = array_shift($arrayData[0]);
         // $to = $arrayData[0]['to'];
@@ -417,6 +417,7 @@ class BusRepository
                 Log::error('CronTasks 获取 bus 数据失败: 线路名称 '.$post['LineInfo'], $post);
             }
             /**********************   line1  end ************************/
+            sleep(2);
         }
     }
 
