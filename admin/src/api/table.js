@@ -26,7 +26,7 @@ export function deleteTask(id) {
 
 export function getLine(params) {
   return request({
-    url: '/api/search',
+    url: '/api/bus_line_search',
     method: 'get',
     params
   })

@@ -11,12 +11,17 @@
 
     <el-table
       v-loading="listLoading"
-      v-show="form.isShow"
+      ref="multipleTable"
       :data="list"
       element-loading-text="Loading"
       border
       fit
-      highlight-current-row>
+      highlight-current-row
+      tooltip-effect="dark"
+      style="width: 100%"
+      class="currentInfo-table"
+      @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55"/>
       <el-table-column align="center" label="ID" width="70">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -27,47 +32,27 @@
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="price" width="110" align="center">
+      <el-table-column label="车次信息">
         <template slot-scope="scope">
-          <span>{{ scope.row.price }}</span>
+          {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="类型" width="110" align="center">
+      <el-table-column label="班次">
         <template slot-scope="scope">
-          {{ scope.row.car_type }}
+          {{ scope.row.LineInfo }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="审核通过" width="110" align="center">
+      <el-table-column label="线路方向">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.is_show === 0">未审核</el-tag>
-          <el-tag v-else-if="scope.row.is_show === 1" type="success">通过</el-tag>
-          <el-tag v-else type="warning">不通过</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="创建时间" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"/>
-          <span>{{ scope.row.created_at }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          {{ scope.row.FromTo }}
         </template>
       </el-table-column>
     </el-table>
-
-    <el-table v-show="form.isShow">
+    <div style="margin-top: 20px">
+      <!--<el-button @click="toggleSelection()">取消选择</el-button>-->
       <el-button type="primary" @click="onSubmit('form')">提交</el-button>
       <el-button @click="resetForm('form')">重置</el-button>
-    </el-table>
+    </div>
   </div>
 </template>
 
@@ -89,6 +74,29 @@ export default {
         ]
       },
       redirect: '/task'
+    }
+  },
+  watch: {
+    list: function(val) {
+      const para = document.createElement('p')
+      const node = document.createTextNode('暂无数据')
+      const element = document.getElementsByClassName('currentInfo-table')[0].getElementsByClassName('el-table__body-wrapper')[0]
+      para.appendChild(node)
+      para.style.height = '100%'
+      para.className = 'noData'
+      para.style.textAlign = 'center'
+      // para.style.paddingTop = document.getElementById('toolboxcard').clientHeight / 2 - 250 + 'px'
+
+      if (val && val.length <= 1) {
+        if (!document.getElementsByClassName('currentInfo-table')[0].getElementsByClassName('noData')[0]) {
+          element.appendChild(para)
+        }
+      } else {
+        if (document.getElementsByClassName('currentInfo-table')[0].getElementsByClassName('noData')[0]) {
+          const pare = document.getElementsByClassName('currentInfo-table')[0].getElementsByClassName('noData')[0]
+          element.removeChild(pare)
+        }
+      }
     }
   },
   methods: {
@@ -154,6 +162,18 @@ export default {
           return false
         }
       })
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row)
+        })
+      } else {
+        this.$refs.multipleTable.clearSelection()
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val
     }
   }
 }

@@ -140,4 +140,21 @@ class LinesController extends Controller
         return $this->out(200, $data);
     }
 
+    /**
+     * 查询 bus_line 线路--全文索引
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(\Illuminate\Http\Request $request)
+    {
+        $params = $request->all(['wd']);
+        if (empty($params['wd'])) {
+            return $this->out(200, [], 'param error');
+        }
+        $list = \App\Models\BusLine::search($params['wd'])->get()->toArray();
+        return $this->out(200, $list);
+    }
+
 }
