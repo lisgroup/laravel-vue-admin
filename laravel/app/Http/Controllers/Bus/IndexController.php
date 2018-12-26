@@ -88,7 +88,7 @@ class IndexController extends CommonController
         if (empty($params['wd'])) {
             return $this->out(200, [], 'param error');
         }
-        $list = \App\Models\Line::search('汽车南站')->get()->toArray();
+        $list = \App\Models\Line::search($params['wd'])->get()->toArray();
         return $this->out(200, $list);
     }
 
