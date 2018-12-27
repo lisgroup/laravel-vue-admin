@@ -85,9 +85,9 @@ class Handler extends ExceptionHandler
         }
 
         // 2018-12-27 Missing404Exception 未生成全文索引的错误
-        if ($exception instanceof Missing404Exception) {
-            return $this->getResultByCode(5002);
-        }
+        // if ($exception instanceof Missing404Exception) {
+        //     return $this->getResultByCode(5002);
+        // }
 
         return parent::render($request, $exception);
     }

@@ -153,7 +153,13 @@ class LinesController extends Controller
         if (empty($params['wd'])) {
             return $this->out(200, [], 'param error');
         }
-        $list = \App\Models\BusLine::search($params['wd'])->get()->toArray();
+        try {
+            $list = \App\Models\BusLine::search($params['wd'])->get()->toArray();
+        } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException $exception) {
+            $list = \App\Models\BusLine::where('name', 'LIKE', "%$params[wd]%")->get()->toArray();
+        } catch (\Exception $exception) {
+            $list = \App\Models\BusLine::where('name', 'LIKE', "%$params[wd]%")->get()->toArray();
+        }
         return $this->out(200, $list);
     }
 
