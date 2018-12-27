@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -56,31 +57,22 @@ class Handler extends ExceptionHandler
     {
         // 参数验证错误的异常，我们需要返回 400 的 http code 和一句错误信息 1104
         if ($exception instanceof ValidationException) {
-            $code = 1104;
-            // $reason = config('errorCode.'.$code.'.reason');
-            return response()->json(['code' => $code, 'reason' => array_collapse($exception->errors()), 'data' => ''])
-                ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+            // $code = 1104;
             // return response(['error' => array_first(array_collapse($exception->errors()))], 400);
+            return $this->getResultByCode(1104, array_first(array_collapse($exception->errors())), 400);
         }
         // 用户认证的异常，我们需要返回 401 的 http code 和错误信息
         if ($exception instanceof UnauthorizedHttpException) {
             // return response($exception->getMessage(), 401);
-            return response()->json(['reason' => $exception->getMessage(), 'code' => 401]);
+            $this->getResultByCode(401, $exception->getMessage());
         }
-
-        // return parent::render($request, $exception);
 
         if ($exception instanceof AuthenticationException) {
-            $code = 1200;
-            $reason = config('errorCode.'.$code.'.reason');
-            return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''])
-                ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+            return $this->getResultByCode(1200);
         }
+
         if ($exception instanceof ModelNotFoundException) {
-            return response()->json([
-                'reason' => 'Resource not found.',
-                'code' => 404
-            ]);
+            return $this->getResultByCode(404);
         }
 
         if ($exception instanceof QueryException) {
@@ -89,12 +81,32 @@ class Handler extends ExceptionHandler
 
         // JWT exception
         if ($exception instanceof TokenBlacklistedException) {
-            $code = 1210;
-            $reason = config('errorCode.'.$code.'.reason');
-            $result = ['code' => $code, 'reason' => $reason, 'data' => ''];
-            return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+            return $this->getResultByCode(5001);
+        }
+
+        // 2018-12-27 Missing404Exception 未生成全文索引的错误
+        if ($exception instanceof Missing404Exception) {
+            return $this->getResultByCode(5002);
         }
 
         return parent::render($request, $exception);
+    }
+
+    /**
+     * 根据 code 码获取返回 json 数据
+     *
+     * @param int $code
+     * @param string $reason
+     * @param int $httpStatusCode
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getResultByCode($code = 200, $reason = 'success', $httpStatusCode = 200)
+    {
+        if ($reason === 'success') {
+            $reason = config('errorCode.'.$code.'.reason') ?? 'error';
+        }
+
+        return response()->json(['code' => $code, 'reason' => $reason, 'data' => ''], $httpStatusCode)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }
