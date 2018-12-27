@@ -29,4 +29,5 @@ Route::group(['prefix' => 'user'], function($router) {
 Route::resource('crontask', 'Api\CronTaskController');
 Route::resource('lines', 'Api\LinesController');
 Route::any('bus_line_search', 'Api\LinesController@search');
+Route::post('postCrontask', 'Api\CronTaskController@postCrontask');
 // Route::any('table/list', 'Api\CronTaskController@list');
