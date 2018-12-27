@@ -54,7 +54,8 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject('error')
+      const err = res.reason ? res.reason : 'error'
+      return Promise.reject(err)
     } else {
       return response.data
     }

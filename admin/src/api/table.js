@@ -31,3 +31,8 @@ export function getLine(params) {
     params
   })
 }
+
+export function postCrontask(params) {
+  return request.post('/api/postCrontask', params)
+}
+

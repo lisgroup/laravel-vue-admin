@@ -48,22 +48,23 @@
         </template>
       </el-table-column>
     </el-table>
-    <div style="margin-top: 20px">
+    <div style="margin: 20px auto">
       <!--<el-button @click="toggleSelection()">取消选择</el-button>-->
-      <el-button type="primary" @click="onSubmit('form')">提交</el-button>
-      <el-button @click="resetForm('form')">重置</el-button>
+      <el-button type="primary" @click="onSubmit()">提交选中项</el-button>
+      <!--<el-button @click="resetForm('form')">重置</el-button>-->
     </div>
   </div>
 </template>
 
 <script>
-import { getLine, postNewBus } from '@/api/table'
+import { getLine, postCrontask } from '@/api/table'
 
 export default {
   data() {
     return {
       list: null,
       listLoading: false,
+      multipleSelection: '',
       form: {
         isShow: false,
         input: ''
@@ -79,7 +80,7 @@ export default {
   watch: {
     list: function(val) {
       const para = document.createElement('p')
-      const node = document.createTextNode('暂无数据')
+      const node = document.createTextNode('')
       const element = document.getElementsByClassName('currentInfo-table')[0].getElementsByClassName('el-table__body-wrapper')[0]
       para.appendChild(node)
       para.style.height = '100%'
@@ -100,29 +101,30 @@ export default {
     }
   },
   methods: {
-    onSubmit(form) {
-      // console.log(this.form)
-      this.$refs[form].validate((valid) => {
-        if (valid) {
-          this.listLoading = true
-          postNewBus(this.form).then(response => {
-            // console.log(response)
-            this.listLoading = false
-            if (response.code === 200) {
-              this.$message({
-                message: '操作成功',
-                type: 'success'
-              })
-              this.$router.push({ path: this.redirect || '/' })
-            } else {
-              this.$message.error(response.reason)
-            }
+    onSubmit() {
+      this.listLoading = true
+      if (this.multipleSelection.length < 1) {
+        return this.$message({
+          message: '请选中项目后再次提交',
+          type: 'error'
+        })
+      }
+      postCrontask(this.multipleSelection).then(response => {
+        this.listLoading = false
+        if (response.code === 200) {
+          console.log(response.data)
+          this.$message({
+            message: '操作成功',
+            type: 'success'
           })
+          this.$router.push({ path: this.redirect || '/' })
         } else {
-          this.$message('error submit!')
-          // console.log('error submit!!')
-          return false
+          this.listLoading = false
+          this.$message.error(response.reason)
         }
+      }).catch((err) => {
+        this.listLoading = false
+        this.$message.error(err || 'error')
       })
     },
     onCancel() {
@@ -144,14 +146,9 @@ export default {
             this.listLoading = false
             if (response.code === 200) {
               this.form.isShow = true
-              console.log(response.data)
+              // console.log(response.data)
               this.list = response.data
               this.listLoading = false
-              this.$message({
-                message: '操作成功',
-                type: 'success'
-              })
-              // this.$router.push({ path: this.redirect || '/' })
             } else {
               this.$message.error(response.reason)
             }
@@ -163,17 +160,9 @@ export default {
         }
       })
     },
-    toggleSelection(rows) {
-      if (rows) {
-        rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row)
-        })
-      } else {
-        this.$refs.multipleTable.clearSelection()
-      }
-    },
     handleSelectionChange(val) {
       this.multipleSelection = val
+      // console.log(this.multipleSelection)
     }
   }
 }
