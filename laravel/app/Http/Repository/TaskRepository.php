@@ -9,6 +9,7 @@
 namespace App\Http\Repository;
 
 
+use App\Models\CronTask;
 use App\Models\Line;
 use Illuminate\Support\Facades\Log;
 use QL\QueryList;
@@ -135,6 +136,7 @@ class TaskRepository
     /**
      * 任务： 从原库 line 数据，抓取实时公交写入 bus_lines
      * 作用： 为以后直接查询实时公交提供方便
+     *
      * @return array
      */
     public static function line()
@@ -154,6 +156,35 @@ class TaskRepository
             }
         });
         return ['code' => 0, 'msg' => 'success'];
+    }
+
+    /**
+     * 写入任务表 cron_task 的操作
+     *
+     * @param $input
+     *
+     * @return array
+     */
+    public function saveSearchCronTask($input)
+    {
+        $result = ['code' => 1104, 'reason' => '参数错误', 'data' => ''];
+        if (empty($input)) {
+            return $result;
+        }
+        $data = [];
+        foreach ($input as $item) {
+            $item['start_at'] = '05:00:00';
+            $item['end_at'] = '23:00:00';
+            $model = new CronTask($item);
+            if ($model->save()) {
+                $data['ids'][] = $model->id;
+            } else {
+                $result['code'] = 5000;
+                $result['reason'] = 'insert error';
+                return $result;
+            }
+        }
+        return ['code' => 200, 'data' => $data];
     }
 
 

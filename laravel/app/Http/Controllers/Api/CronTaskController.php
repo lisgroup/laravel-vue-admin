@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Repository\TaskRepository;
 use App\Http\Requests\StoreCronTask;
 use App\Models\CronTask;
 use Illuminate\Http\Request;
@@ -137,9 +138,29 @@ class CronTaskController extends Controller
         return $this->out(200, $data);
     }
 
+    /**
+     * 展示所有任务 不分页
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function list()
     {
         return $this->out(200, CronTask::all());
+    }
+
+    /**
+     * 全文索引查询 bus_lines 表是数据，写入任务表 cron_task 的操作
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postCrontask(Request $request)
+    {
+        $input = $request->all();
+        $result = TaskRepository::getInstent()->saveSearchCronTask($input);
+
+        return $this->out($result['code'], $result['data']);
     }
 
 }
