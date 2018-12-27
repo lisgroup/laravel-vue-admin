@@ -11,14 +11,14 @@ class BusInstall extends Command
      *
      * @var string
      */
-    protected $signature = 'bus:install';
+    protected $signature = 'bus:install {param?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install the vueBus';
+    protected $description = 'Install the vueBus. If support elasticSearch, You Need Run: php artisan bus:install search';
 
     /**
      * Create a new command instance.
@@ -41,6 +41,12 @@ class BusInstall extends Command
         $this->executeShellCommands('php artisan migrate --seed');
         $this->executeShellCommands('php artisan jwt:secret');
         $this->executeShellCommands('php artisan storage:link');
+
+        $param = $this->argument('param'); // 不指定参数名的情况下用 argument
+        if ($param == 'search') {
+            $this->executeShellCommands('php artisan elasticsearch:import "App\Models\Line"');
+            $this->executeShellCommands('php artisan elasticsearch:import "App\Models\BusLine"');
+        }
     }
 
     /**
