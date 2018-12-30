@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel
             // file_put_contents($path.'/cache.txt', $query->getHtml().PHP_EOL, FILE_APPEND);
             // // 每隔五分钟入库操作
             BusRepository::getInstent()->cronTaskTable();
-        })->everyMinute()->between('5:00', '23:00');
+        })->everyFiveMinutes()->between('5:00', '23:00');
     }
 
     /**
