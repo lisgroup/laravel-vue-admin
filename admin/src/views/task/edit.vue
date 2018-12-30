@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { editBus, postEditBus } from '@/api/table'
+import { editBus, postEditBus } from '@/api/task'
 
 export default {
   data() {

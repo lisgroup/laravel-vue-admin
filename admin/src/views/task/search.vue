@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { getLine, postCrontask } from '@/api/table'
+import { getLine, postCrontask } from '@/api/task'
 
 export default {
   data() {

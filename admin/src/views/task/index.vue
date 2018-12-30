@@ -5,7 +5,7 @@
         <router-link to="/task/search">根据车次查询</router-link>
       </el-button>
       <el-button type="primary" size="medium">
-        <router-link to="/task/newBus">新增车次</router-link>
+        <router-link to="/task/newBus">新增任务</router-link>
       </el-button>
     </el-row>
     <el-table
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { getList, deleteTask } from '@/api/table'
+import { getList, deleteTask } from '@/api/task'
 
 export default {
   filters: {

@@ -49,13 +49,13 @@ export const constantRouterMap = [
     name: '列表',
     meta: { title: '列表展示', icon: 'example' },
     children: [
-      { path: '/task/search', name: 'search', component: () => import('@/views/table/search'), hidden: true },
-      { path: '/task/newBus', name: 'NewBus', component: () => import('@/views/table/newBus'), hidden: true },
-      { path: '/task/edit/:id', name: 'taskEdit', component: () => import('@/views/table/edit'), hidden: true },
+      { path: '/task/search', name: 'search', component: () => import('@/views/task/search'), hidden: true },
+      { path: '/task/newBus', name: 'NewBus', component: () => import('@/views/task/newBus'), hidden: true },
+      { path: '/task/edit/:id', name: 'taskEdit', component: () => import('@/views/task/edit'), hidden: true },
       {
         path: '/task',
         name: '定时任务',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/task/index'),
         meta: { title: '定时任务', icon: 'table' }
       },
       { path: 'lines/add', name: 'linesAdd', component: () => import('@/views/lines/add'), hidden: true },
