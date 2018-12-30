@@ -8,13 +8,16 @@
         <i class="el-icon-caret-bottom"/>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
-        <router-link class="inlineBlock" to="/">
+        <router-link class="inlineBlock" to="/admin">
           <el-dropdown-item>
-            Home
+            首页
           </el-dropdown-item>
         </router-link>
         <el-dropdown-item divided>
-          <span style="display:block;" @click="logout">LogOut</span>
+          <span style="display:block;" @click="password">修改密码</span>
+        </el-dropdown-item>
+        <el-dropdown-item divided>
+          <span style="display:block;" @click="logout">退出</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -40,6 +43,9 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('ToggleSideBar')
+    },
+    password() {
+      this.$router.push({ name: 'userPassword', path: '/user/index' })
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {

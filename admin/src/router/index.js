@@ -77,6 +77,17 @@ export const constantRouterMap = [
   },
 
   {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/index',
+    hidden: true,
+    children: [
+      { path: 'index', name: 'userIndex', component: () => import('@/views/user/index'), hidden: true },
+      { path: 'password', name: 'userPassword', component: () => import('@/views/user/password'), hidden: true }
+    ]
+  },
+
+  {
     path: '/form',
     component: Layout,
     children: [
