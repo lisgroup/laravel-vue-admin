@@ -115,7 +115,7 @@ class UserRepository
         // 2. 验证用户名密码
         $credentials = ['name' => $user['name'], 'password' => $input['old_pwd']];
         if (!$token = auth('api')->attempt($credentials)) {
-            return ['code' => 402, 'reason' => '旧密码输入有误'];
+            return ['code' => 405, 'reason' => '旧密码输入有误'];
         }
         // 3. 修改密码
         // $info = User::findOrFail(['name' => $user['name']]);
