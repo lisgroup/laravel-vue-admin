@@ -24,6 +24,10 @@ export function deleteTask(id) {
   return request.delete('/api/crontask/' + id)
 }
 
+/**
+ * 搜索 bus_line
+ * @param params
+ */
 export function getLine(params) {
   return request({
     url: '/api/bus_line_search',
@@ -32,7 +36,19 @@ export function getLine(params) {
   })
 }
 
+/**
+ * 提交数据
+ * @param params
+ * @returns {*}
+ */
 export function postCrontask(params) {
   return request.post('/api/postCrontask', params)
 }
 
+export function getBusLineList(params) {
+  return request({
+    url: '/api/bus_line_list',
+    methods: 'get',
+    params
+  })
+}

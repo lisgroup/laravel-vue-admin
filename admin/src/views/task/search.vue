@@ -32,11 +32,6 @@
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="车次信息">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
       <el-table-column label="班次">
         <template slot-scope="scope">
           {{ scope.row.LineInfo }}
@@ -48,6 +43,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="pagination">
+      <el-pagination :page-size="perpage" :total="total" :current-page.sync="currentpage" background layout="prev, pager, next" @current-change="handleCurrentChange"/>
+    </div>
     <div style="margin: 20px auto">
       <!--<el-button @click="toggleSelection()">取消选择</el-button>-->
       <el-button type="primary" @click="onSubmit()">提交选中项</el-button>
@@ -57,7 +55,7 @@
 </template>
 
 <script>
-import { getLine, postCrontask } from '@/api/task'
+import { getLine, postCrontask, getBusLineList } from '@/api/task'
 
 export default {
   data() {
@@ -65,6 +63,10 @@ export default {
       list: null,
       listLoading: false,
       multipleSelection: '',
+      perpage: 11,
+      total: 1000,
+      currentpage: 1,
+      listQuery: { page: 1 },
       form: {
         isShow: false,
         input: ''
@@ -100,7 +102,20 @@ export default {
       }
     }
   },
+  created() {
+    this.listQuery = this.$route.query
+    this.currentpage = parseInt(this.listQuery.page)
+    this.fetchData(this.listQuery)
+  },
   methods: {
+    fetchData(params) {
+      this.listLoading = true
+      getBusLineList(params).then(response => {
+        this.list = response.data.data
+        this.listLoading = false
+        this.total = response.data.total
+      })
+    },
     onSubmit() {
       this.listLoading = true
       if (this.multipleSelection.length < 1) {
@@ -163,6 +178,11 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val
       // console.log(this.multipleSelection)
+    },
+    handleCurrentChange(val) {
+      // console.log(val)
+      this.$router.push({ path: '', query: { page: val }})
+      this.fetchData({ page: val })
     }
   }
 }

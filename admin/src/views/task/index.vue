@@ -21,19 +21,29 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="车次信息">
+      <el-table-column label="车次信息" width="300">
         <template slot-scope="scope">
           {{ scope.row.LineInfo }}
         </template>
       </el-table-column>
-      <el-table-column label="cid" width="110" align="center">
+      <el-table-column label="cid" width="200" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.cid }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="LineGuid" width="110" align="center">
+      <el-table-column label="LineGuid" width="200" align="center">
         <template slot-scope="scope">
           {{ scope.row.LineGuid }}
+        </template>
+      </el-table-column>
+      <el-table-column label="开启时间" width="200" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.start_at }}
+        </template>
+      </el-table-column>
+      <el-table-column label="结束时间" width="200" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.end_at }}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="启动状态" width="110" align="center">
