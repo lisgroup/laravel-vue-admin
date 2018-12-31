@@ -10,6 +10,7 @@ namespace App\Http\Repository;
 
 
 use App\Http\Service\GeetestLib;
+use App\User;
 use Illuminate\Support\Facades\Cache;
 
 // use App\User;
@@ -100,7 +101,29 @@ class UserRepository
 
     public function changePassword($input)
     {
+        if (empty($input['old_pwd']) || empty($input['password']) || empty($input['repassword'])) {
+            return [];
+        }
+        // 0. 校验新密码和重复密码是否一致
+        if ($input['password'] != $input['repassword']) {
+            return ['reason' => '重复密码和新密码不一致'];
+        }
 
+        // 1. 先获取个人信息
+        $user = $userInfo = auth('api')->user();
+        // 2. 验证用户名密码
+        $credentials = ['name' => $user['name'], 'password' => $input['old_pwd']];
+        if (!$token = auth('api')->attempt($credentials)) {
+            return ['reason' => '旧密码输入有误', 'code' => 401];
+        }
+        // 3. 修改密码
+        // $info = User::findOrFail(['name' => $user['name']]);
+        $encrypt = crypt($input['password']);
+        $result = User::where('name', $user['name'])->update(['password' => $encrypt]);
+        if ($result) {
+            return ['code' => 200, 'data' => [], 'reason' => 'success'];
+        }
+        return ['code' => 401, 'data' => [], 'reason' => 'success'];
     }
 
     private function __construct($config)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Repository\UserRepository;
 use App\Http\Requests\StoreUserRequest;
 use App\User;
 use Illuminate\Http\Request;
@@ -140,6 +141,8 @@ class UserController extends Controller
     public function password(Request $request)
     {
         $input = $request->only('old_pwd', 'password', 'repassword');
+        $result = UserRepository::getInstent()->changePassword($input);
 
+        return $this->out($result);
     }
 }
