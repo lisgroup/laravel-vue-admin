@@ -24,3 +24,15 @@ export function postEdit(id, params) {
 export function deleteAct(id) {
   return request.delete('/api/lines/' + id)
 }
+
+/**
+ * 搜索 lines
+ * @param params
+ */
+export function getLines(params) {
+  return request({
+    url: '/api/line_search',
+    method: 'get',
+    params
+  })
+}

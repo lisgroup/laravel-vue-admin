@@ -5,6 +5,15 @@
         <router-link to="lines/add">新增</router-link>
       </el-button>
     </el-row>
+
+    <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+      <el-form-item label="输入车次名称" prop="input">
+        <el-input v-model="form.input" placeholder="线路名称，例：快线1, 55" @keyup.enter.native="goSearch('form')">
+          <template slot="prepend">线路</template>
+          <el-button slot="append" icon="el-icon-search" @click="goSearch('form')">搜索</el-button>
+        </el-input>
+      </el-form-item>
+    </el-form>
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -65,7 +74,7 @@
 </template>
 
 <script>
-import { getList, deleteAct } from '@/api/lines'
+import { getList, deleteAct, getLines } from '@/api/lines'
 
 export default {
   filters: {
@@ -85,7 +94,15 @@ export default {
       perpage: 11,
       total: 1000,
       currentpage: 1,
-      listQuery: { page: 1 }
+      listQuery: { page: 1 },
+      form: {
+        input: ''
+      },
+      rules: {
+        input: [
+          { required: true, message: '请输入线路名称', trigger: 'blur' }
+        ]
+      }
     }
   },
   created() {
@@ -143,6 +160,30 @@ export default {
       // console.log(val)
       this.$router.push({ path: '', query: { page: val }})
       this.fetchData({ page: val })
+    },
+    goSearch(form) {
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          this.listLoading = true
+          const param = { 'wd': this.form.input }
+          getLines(param).then(response => {
+            // console.log(response)
+            this.listLoading = false
+            if (response.code === 200) {
+              this.form.isShow = true
+              // console.log(response.data)
+              this.list = response.data
+              this.listLoading = false
+            } else {
+              this.$message.error(response.reason)
+            }
+          })
+        } else {
+          // this.$message('error search!')
+          // console.log('error submit!!')
+          return false
+        }
+      })
     }
   }
 }

@@ -21,7 +21,7 @@ class LinesController extends Controller
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
         // 如果把 refresh 也放进去，token 即使过期但仍在刷新期以内也可刷新
         // 不过刷新一次作废
-        $this->middleware('auth:api', ['except' => ['login', 'show', 'busLineList']]);
+        $this->middleware('auth:api', ['except' => ['login', 'show', 'search']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
     }
@@ -147,19 +147,13 @@ class LinesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search(\Illuminate\Http\Request $request)
+    public function busLineSearch(\Illuminate\Http\Request $request)
     {
         $params = $request->all(['wd']);
         if (empty($params['wd'])) {
             return $this->out(200, [], 'param error');
         }
-        try {
-            $list = \App\Models\BusLine::search($params['wd'])->get()->toArray();
-        } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException $exception) {
-            $list = \App\Models\BusLine::where('name', 'LIKE', "%$params[wd]%")->get()->toArray();
-        } catch (\Exception $exception) {
-            $list = \App\Models\BusLine::where('name', 'LIKE', "%$params[wd]%")->get()->toArray();
-        }
+        $list = $this->commonSearch('\\App\\Models\\BusLine', $params['wd']);
         return $this->out(200, $list);
     }
 
@@ -174,4 +168,39 @@ class LinesController extends Controller
         return $this->out(200, $list);
     }
 
+    /**
+     * 查询 lines 线路--全文索引
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(\Illuminate\Http\Request $request)
+    {
+        $params = $request->all(['wd']);
+        if (empty($params['wd'])) {
+            return $this->out(200, [], 'param error');
+        }
+        $list = $this->commonSearch('\\App\\Models\\Line', $params['wd']);
+        return $this->out(200, $list);
+    }
+
+    /**
+     * @param $model
+     * @param $word
+     * @param $like
+     *
+     * @return array|bool
+     */
+    private function commonSearch($model, $word, $like = 'name')
+    {
+        try {
+            $list = $model::search($word)->get()->toArray();
+        } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException $exception) {
+            $list = $model::where($like, 'LIKE', "%$word%")->get()->toArray();
+        } catch (\Exception $exception) {
+            $list = $model::where($like, 'LIKE', "%$word%")->get()->toArray();
+        }
+        return $list;
+    }
 }
