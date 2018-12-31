@@ -115,13 +115,14 @@ class UserRepository
         // 2. 验证用户名密码
         $credentials = ['name' => $user['name'], 'password' => $input['old_pwd']];
         if (!$token = auth('api')->attempt($credentials)) {
-            return ['reason' => '旧密码输入有误', 'code' => 402];
+            return ['code' => 402, 'reason' => '旧密码输入有误'];
         }
         // 3. 修改密码
         // $info = User::findOrFail(['name' => $user['name']]);
         $encrypt = bcrypt($input['password']);
         $result = User::where('name', $user['name'])->update(['password' => $encrypt]);
         if ($result) {
+            auth()->logout();
             return ['code' => 200, 'data' => [], 'reason' => 'success'];
         }
         return ['code' => 401, 'data' => []];
