@@ -10,6 +10,7 @@
     "serve": "npm run dev",
     "build": "node build/build.js && npm run move",
     "move": "rm -rf ../laravel/public/static && cp -r dist/* ../laravel/public",
+    "git": "git add ../laravel/public/* && git commit -m \"fix(view): 构建前端\"",
     "build:report": "npm_config_report=true npm run build",
     "lint": "eslint --ext .js,.vue src",
     "test": "npm run lint",
