@@ -393,6 +393,7 @@ class BusRepository
      */
     public function cronTaskTable()
     {
+        // 无法实现根据数据库设置时间的任务
         $tasks = CronTask::where('is_task', 1)->get();
         foreach ($tasks as $task) {
             /**********************   line1  start ************************/
