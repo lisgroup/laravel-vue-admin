@@ -98,6 +98,11 @@ class UserRepository
         return $result;
     }
 
+    public function changePassword($input)
+    {
+
+    }
+
     private function __construct($config)
     {
         !empty($config) && ($this->config || $this->config = $config);

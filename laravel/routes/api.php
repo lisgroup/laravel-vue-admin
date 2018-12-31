@@ -28,6 +28,7 @@ Route::group(['prefix' => 'user'], function($router) {
 
 Route::resource('crontask', 'Api\CronTaskController');
 Route::resource('lines', 'Api\LinesController');
+Route::resource('user', 'Api\UserController');
 
 /************************* 车次任务相关操作 start ************************/
 Route::any('bus_line_search', 'Api\LinesController@busLineSearch');
@@ -37,3 +38,4 @@ Route::any('bus_line_list', 'Api\LinesController@busLineList');
 // Route::any('table/list', 'Api\CronTaskController@list');
 
 Route::any('line_search', 'Api\LinesController@search');
+Route::any('user_password', 'Api\UserController@password');
