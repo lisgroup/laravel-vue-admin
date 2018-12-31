@@ -192,5 +192,8 @@ export default {
   .line {
     text-align: center;
   }
+  .pagination {
+    margin: 20px auto;
+  }
 </style>
 
