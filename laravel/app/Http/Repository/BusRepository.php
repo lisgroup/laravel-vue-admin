@@ -409,7 +409,7 @@ class BusRepository
             ];
             $data = $this->getLine('APTSLine.aspx', $post)['line'];
             $content = json_encode($data, JSON_UNESCAPED_UNICODE);
-            if (!empty($content)) {
+            if (!empty($content) && strlen($content) > 20) {
                 // 入库操作 1 ----- 木渎
                 $cron = ['line_info' => $post['LineInfo'], 'content' => $content];
                 $rs = $this->saveCronData($cron);
