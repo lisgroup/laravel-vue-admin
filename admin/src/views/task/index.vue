@@ -112,16 +112,18 @@ export default {
   created() {
     this.listQuery = this.$route.query
     this.currentpage = parseInt(this.listQuery.page)
+    this.perpage = parseInt(this.listQuery.perPage)
     this.fetchData()
   },
   methods: {
     handleSizeChange(val) {
       this.perpage = val
+      this.$router.push({ path: '', query: { page: this.listQuery.page, perPage: val }})
       this.fetchData()
     },
     handleCurrentChange(val) {
-      this.$router.push({ path: '', query: { page: val }})
       this.listQuery = { page: val }
+      this.$router.push({ path: '', query: { page: val, perPage: this.perpage }})
       this.fetchData()
     },
     fetchData() {
