@@ -37,6 +37,6 @@ class Line extends Model
      */
     public function toSearchableArray()
     {
-        return $this->only('id', 'name', 'station');
+        return $this->only('name', 'open_time','station', 'station_back');
     }
 }

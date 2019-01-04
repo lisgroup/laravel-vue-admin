@@ -10,6 +10,11 @@ use Vinkla\Hashids\Facades\Hashids;
 class LinesController extends Controller
 {
     /**
+     * @var int 默认分页条数
+     */
+    public $perPage = 11;
+
+    /**
      * Create a new AuthController instance.
      * 要求附带email和password（数据来源users表）
      *
@@ -33,7 +38,7 @@ class LinesController extends Controller
      */
     public function index()
     {
-        $list = Line::paginate(11);
+        $list = Line::paginate($this->perPage);
         return $this->out(200, $list);
     }
 
@@ -164,7 +169,7 @@ class LinesController extends Controller
      */
     public function busLineList()
     {
-        $list = \App\Models\BusLine::paginate(11);
+        $list = \App\Models\BusLine::paginate($this->perPage);
         return $this->out(200, $list);
     }
 
@@ -195,11 +200,9 @@ class LinesController extends Controller
     private function commonSearch($model, $word, $like = 'name')
     {
         try {
-            $list = $model::search($word)->get()->toArray();
-        } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException $exception) {
-            $list = $model::where($like, 'LIKE', "%$word%")->get()->toArray();
-        } catch (\Exception $exception) {
-            $list = $model::where($like, 'LIKE', "%$word%")->get()->toArray();
+            $list = $model::search($word)->paginate($this->perPage)->toArray();
+        } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException|\Exception $exception) {
+            $list = $model::where($like, 'LIKE', "%$word%")->paginate($this->perPage)->toArray();
         }
         return $list;
     }

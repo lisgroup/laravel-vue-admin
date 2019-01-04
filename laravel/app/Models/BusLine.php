@@ -23,6 +23,6 @@ class BusLine extends Model
      */
     public function toSearchableArray()
     {
-        return $this->only('id', 'name', 'LineInfo', 'FromTo');
+        return $this->only('name', 'LineInfo', 'FromTo');
     }
 }
