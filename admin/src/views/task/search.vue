@@ -117,13 +117,13 @@ export default {
       })
     },
     onSubmit() {
-      this.listLoading = true
       if (this.multipleSelection.length < 1) {
         return this.$message({
           message: '请选中项目后再次提交',
           type: 'error'
         })
       }
+      this.listLoading = true
       postCrontask(this.multipleSelection).then(response => {
         this.listLoading = false
         if (response.code === 200) {
@@ -162,8 +162,8 @@ export default {
             if (response.code === 200) {
               this.form.isShow = true
               // console.log(response.data)
-              this.list = response.data
-              this.listLoading = false
+              this.list = response.data.data
+              this.total = response.data.total
             } else {
               this.$message.error(response.reason)
             }

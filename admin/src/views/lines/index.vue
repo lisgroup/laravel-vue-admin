@@ -172,8 +172,8 @@ export default {
             if (response.code === 200) {
               this.form.isShow = true
               // console.log(response.data)
-              this.list = response.data
-              this.listLoading = false
+              this.list = response.data.data
+              this.total = response.data.total
             } else {
               this.$message.error(response.reason)
             }

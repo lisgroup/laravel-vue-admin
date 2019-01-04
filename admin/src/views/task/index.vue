@@ -71,6 +71,17 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <div class="pagination">
+      <el-pagination
+        :total="total"
+        :current-page="currentpage"
+        :page-sizes="[10, 20, 30, 50, 100]"
+        :page-size="perpage"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"/>
+    </div>
   </div>
 </template>
 
@@ -91,17 +102,34 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+      perpage: 10,
+      total: 100,
+      currentpage: 1,
+      listQuery: { page: 1 }
     }
   },
   created() {
+    this.listQuery = this.$route.query
+    this.currentpage = parseInt(this.listQuery.page)
     this.fetchData()
   },
   methods: {
+    handleSizeChange(val) {
+      this.perpage = val
+      this.fetchData()
+    },
+    handleCurrentChange(val) {
+      this.$router.push({ path: '', query: { page: val }})
+      this.listQuery = { page: val }
+      this.fetchData()
+    },
     fetchData() {
       this.listLoading = true
-      getList(this.listQuery).then(response => {
+      const param = Object.assign({ 'page': this.listQuery.page }, { 'perPage': this.perpage })
+      getList(param).then(response => {
         this.list = response.data.data
+        this.total = response.data.total ? response.data.total : 0
         this.listLoading = false
       })
     },
