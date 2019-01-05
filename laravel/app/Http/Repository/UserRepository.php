@@ -122,7 +122,7 @@ class UserRepository
         $encrypt = bcrypt($input['password']);
         $result = User::where('name', $user['name'])->update(['password' => $encrypt]);
         if ($result) {
-            auth()->logout();
+            auth('api')->logout();
             return ['code' => 200, 'data' => [], 'reason' => 'success'];
         }
         return ['code' => 401, 'data' => []];
