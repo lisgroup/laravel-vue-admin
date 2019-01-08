@@ -39,3 +39,4 @@ Route::any('bus_line_list', 'Api\LinesController@busLineList');
 
 Route::any('line_search', 'Api\LinesController@search');
 Route::any('user_password', 'Api\UserController@password');
+Route::any('clearCache', 'Api\LinesController@clearCache');

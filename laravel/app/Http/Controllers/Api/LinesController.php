@@ -206,4 +206,18 @@ class LinesController extends Controller
         }
         return $list;
     }
+
+
+    public function clearCache(\Illuminate\Http\Request $request)
+    {
+        $lines = $request->input('lines');
+
+        $path = storage_path();
+        switch ($lines) {
+            case 'all':
+
+        }
+
+        return $this->out(200, $lines);
+    }
 }
