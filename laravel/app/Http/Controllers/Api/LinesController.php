@@ -223,14 +223,18 @@ class LinesController extends Controller
         $path = storage_path().'/framework/bus/';
         if (is_dir($path)) {
             $p = scandir($path);
-            foreach ($p as $item) {
-                if (!in_array($item, ['.', '..', '.gitignore']) && !is_dir($path.$item)) {
-                    if ($lines == 'all' || $lines == $item) {
-                        $flag = 1;
+            if ($lines == 'all') {
+                $flag = 1;
+                foreach ($p as $item) {
+                    if (!in_array($item, ['.', '..', '.gitignore']) && !is_dir($path.$item)) {
                         unlink($path.$item);
                     }
                 }
+            } elseif (in_array($lines, $p)) {
+                $flag = 1;
+                unlink($path.$lines);
             }
+
         }
         return $this->out($flag == 1 ? 200 : 4000);
     }
