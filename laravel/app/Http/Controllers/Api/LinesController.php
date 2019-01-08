@@ -70,7 +70,7 @@ class LinesController extends Controller
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
         } else {
-            return $this->out(400, ['data' => 'insert error']);
+            return $this->out(4000);
         }
 
     }
@@ -123,7 +123,7 @@ class LinesController extends Controller
         if ($line->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
-            return $this->out(400, ['data' => 'update error']);
+            return $this->out(4000);
         }
     }
 
@@ -208,16 +208,30 @@ class LinesController extends Controller
     }
 
 
+    /**
+     * 清理线路缓存文件
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function clearCache(\Illuminate\Http\Request $request)
     {
         $lines = $request->input('lines');
 
-        $path = storage_path();
-        switch ($lines) {
-            case 'all':
-
+        $flag = 0;
+        $path = storage_path().'/framework/bus/';
+        if (is_dir($path)) {
+            $p = scandir($path);
+            foreach ($p as $item) {
+                if (!in_array($item, ['.', '..', '.gitignore']) && !is_dir($path.$item)) {
+                    if ($lines == 'all' || $lines == $item) {
+                        $flag = 1;
+                        unlink($path.$item);
+                    }
+                }
+            }
         }
-
-        return $this->out(200, $lines);
+        return $this->out($flag == 1 ? 200 : 4000);
     }
 }
