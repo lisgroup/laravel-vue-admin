@@ -64,7 +64,7 @@ class UserController extends Controller
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
         } else {
-            return $this->out(400, ['data' => 'insert error']);
+            return $this->out(4000);
         }
 
     }
@@ -116,7 +116,7 @@ class UserController extends Controller
         if ($User->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
-            return $this->out(400, ['data' => 'update error']);
+            return $this->out(4000);
         }
     }
 
@@ -138,6 +138,13 @@ class UserController extends Controller
     }
 
 
+    /**
+     * 修改密码操作
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function password(Request $request)
     {
         $input = $request->only('old_pwd', 'password', 'repassword');

@@ -72,7 +72,7 @@ class CronTaskController extends Controller
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
         } else {
-            return $this->out(400, ['data' => 'insert error']);
+            return $this->out(4000);
         }
 
     }
@@ -123,7 +123,7 @@ class CronTaskController extends Controller
         if ($task->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
-            return $this->out(400, ['data' => 'insert error']);
+            return $this->out(4000);
         }
     }
 

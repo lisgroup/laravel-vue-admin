@@ -44,7 +44,7 @@ class AuthController extends Controller
         // 2. 验证用户名密码
         $credentials = ['name' => $input['username'], 'password' => $input['password']];
         if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['reason' => 'Unauthorized, username or password error', 'code' => 401]);
+            return response()->json(['reason' => 'Unauthorized, username or password error', 'code' => 4001]);
         }
         // return $this->respondWithToken($token);
 
@@ -126,7 +126,7 @@ class AuthController extends Controller
 
         $where = array_merge($credentials, ['is_admin' => 1]);
         if (!$token = auth('admin')->attempt($where)) {
-            return response()->json(['reason' => 'Unauthorized', 'code' => 401]);
+            return response()->json(['reason' => 'Unauthorized', 'code' => 4001]);
         }
 
         return $this->respondWithToken($token);
