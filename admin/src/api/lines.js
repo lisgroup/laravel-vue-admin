@@ -36,3 +36,7 @@ export function getLines(params) {
     params
   })
 }
+
+export function clearCache(params) {
+  return request.post('/api/clearCache/', params)
+}

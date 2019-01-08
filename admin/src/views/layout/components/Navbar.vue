@@ -14,6 +14,9 @@
           </el-dropdown-item>
         </router-link>
         <el-dropdown-item divided>
+          <span @click="clearCache">清理缓存</span>
+        </el-dropdown-item>
+        <el-dropdown-item divided>
           <span style="display:block;" @click="password">修改密码</span>
         </el-dropdown-item>
         <el-dropdown-item divided>
@@ -28,6 +31,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { clearCache } from '../../../api/lines'
 
 export default {
   components: {
@@ -43,6 +47,11 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('ToggleSideBar')
+    },
+    clearCache() {
+      // 清理所有缓存
+      clearCache({ 'lines': 'all' })
+      console.log('cacheClear')
     },
     password() {
       this.$router.push({ name: 'userPassword', path: '/user/index' })
