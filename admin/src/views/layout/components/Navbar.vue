@@ -50,8 +50,25 @@ export default {
     },
     clearCache() {
       // 清理所有缓存
-      clearCache({ 'lines': 'all' })
-      console.log('cacheClear')
+      this.$confirm('此操作将清理数据缓存, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        clearCache({ 'lines': 'all' }).then(response => {
+          if (response.code === 200) {
+            this.$message({
+              message: '缓存清理完成',
+              type: 'success'
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
     },
     password() {
       this.$router.push({ name: 'userPassword', path: '/user/index' })
