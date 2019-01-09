@@ -21,7 +21,7 @@ class Controller extends BaseController
     public function out($code = 200, $data = [], $reason = 'success')
     {
         if ($reason === 'success') {
-            $reason = config('errorCode.'.$code.'.reason') ?? 'error';
+            $reason = config('errorCode.'.$code.'.reason') ?? 'success';
         }
 
         return response()->json(compact('code', 'reason', 'data'))->setEncodingOptions(JSON_UNESCAPED_UNICODE);
