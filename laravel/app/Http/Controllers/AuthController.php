@@ -38,13 +38,13 @@ class AuthController extends Controller
         // 1. 验证 geetest
         $result = (UserRepository::getInstent())->verifyCaptcha($input);
         if (!$result || empty($input['username']) || empty($input['password'])) {
-            return ['reason' => 'Parameter error, please refresh the page', 'code' => 201];
+            return $this->out(1207);
         }
 
         // 2. 验证用户名密码
         $credentials = ['name' => $input['username'], 'password' => $input['password']];
         if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['reason' => 'Unauthorized, username or password error', 'code' => 4001]);
+            return $this->out(4001);
         }
         // return $this->respondWithToken($token);
 
