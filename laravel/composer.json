@@ -9,7 +9,7 @@
         "baijunyao/laravel-scout-elasticsearch": "^2.1",
         "barryvdh/laravel-cors": "^0.11.2",
         "fideloper/proxy": "^3.0",
-        "hhxsv5/laravel-s": "~3.0",
+        "hhxsv5/laravel-s": "~3.3",
         "jaeger/querylist": "^4.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "^1.0",

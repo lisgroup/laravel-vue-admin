@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d177fbe95492622646246d22b226230e",
+    "content-hash": "6918c9755f6620f2ae729ed022879de5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1256,16 +1256,16 @@
         },
         {
             "name": "hhxsv5/laravel-s",
-            "version": "v3.3.7",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhxsv5/laravel-s.git",
-                "reference": "b4a4ae0d0bfb7bb447e864678e63c9489abcff5f"
+                "reference": "2a21c452ced4ed255eadf282b43ba14ff1456af2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhxsv5/laravel-s/zipball/b4a4ae0d0bfb7bb447e864678e63c9489abcff5f",
-                "reference": "b4a4ae0d0bfb7bb447e864678e63c9489abcff5f",
+                "url": "https://api.github.com/repos/hhxsv5/laravel-s/zipball/2a21c452ced4ed255eadf282b43ba14ff1456af2",
+                "reference": "2a21c452ced4ed255eadf282b43ba14ff1456af2",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1329,7 +1329,7 @@
                 "udp",
                 "websocket"
             ],
-            "time": "2018-12-21T08:34:57+00:00"
+            "time": "2019-01-02T11:41:08+00:00"
         },
         {
             "name": "jaeger/g-http",
