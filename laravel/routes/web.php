@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return [
+        'code' => 0,
+        'reason' => 'success',
+        'data' => null
+    ];
 });
 
 Route::get('search', function () {
@@ -50,7 +54,7 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'task'], function () {
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Route::any('login', function() {
-   return ['code' => 200, 'data' => 'no user', 'reason' => 'error'];
+   return ['code' => 200, 'data' => null, 'reason' => 'success'];
 })->name('login');
 
 // Route::get('/login', 'UserController@login')->name('login');
