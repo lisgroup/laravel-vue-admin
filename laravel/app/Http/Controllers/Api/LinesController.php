@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreLineRequest;
 use App\Models\Line;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Vinkla\Hashids\Facades\Hashids;
 
 class LinesController extends Controller
@@ -12,7 +13,7 @@ class LinesController extends Controller
     /**
      * @var int 默认分页条数
      */
-    public $perPage = 11;
+    public $perPage = 10;
 
     /**
      * Create a new AuthController instance.
@@ -20,7 +21,7 @@ class LinesController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
         // 这里额外注意了：官方文档样例中只除外了『login』
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
@@ -29,6 +30,9 @@ class LinesController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'show']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
+
+        $perPage = intval($request->input('perPage'));
+        $this->perPage = $perPage ?? 11;
     }
 
     /**
