@@ -112,7 +112,8 @@ export default {
   created() {
     this.listQuery = this.$route.query
     this.currentpage = parseInt(this.listQuery.page)
-    this.perpage = parseInt(this.perpage)
+    const perPage = parseInt(this.$route.query.perPage)
+    this.perpage = isNaN(perPage) ? this.perpage : perPage
     this.fetchData()
   },
   methods: {

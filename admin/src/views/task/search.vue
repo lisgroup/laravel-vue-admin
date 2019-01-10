@@ -44,7 +44,14 @@
       </el-table-column>
     </el-table>
     <div class="pagination">
-      <el-pagination :page-size="perpage" :total="total" :current-page.sync="currentpage" background layout="prev, pager, next" @current-change="handleCurrentChange"/>
+      <el-pagination
+        :total="total"
+        :current-page="currentpage"
+        :page-sizes="[10, 20, 30, 50, 100]"
+        :page-size="perpage"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"/>
     </div>
     <div style="margin: 20px auto">
       <!--<el-button @click="toggleSelection()">取消选择</el-button>-->
@@ -63,7 +70,7 @@ export default {
       list: null,
       listLoading: false,
       multipleSelection: '',
-      perpage: 11,
+      perpage: 10,
       total: 1000,
       currentpage: 1,
       listQuery: { page: 1 },
@@ -105,10 +112,23 @@ export default {
   created() {
     this.listQuery = this.$route.query
     this.currentpage = parseInt(this.listQuery.page)
-    this.fetchData(this.listQuery)
+    const perPage = parseInt(this.$route.query.perPage)
+    this.perpage = isNaN(perPage) ? this.perpage : perPage
+    this.fetchData()
   },
   methods: {
-    fetchData(params) {
+    handleSizeChange(val) {
+      this.perpage = val
+      this.$router.push({ path: '', query: { page: this.listQuery.page, perPage: val }})
+      this.fetchData()
+    },
+    handleCurrentChange(val) {
+      this.listQuery = { page: val }
+      this.$router.push({ path: '', query: { page: val, perPage: this.perpage }})
+      this.fetchData()
+    },
+    fetchData() {
+      const params = Object.assign({ 'page': this.listQuery.page }, { 'perPage': this.perpage })
       this.listLoading = true
       getBusLineList(params).then(response => {
         this.list = response.data.data
@@ -178,11 +198,6 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val
       // console.log(this.multipleSelection)
-    },
-    handleCurrentChange(val) {
-      // console.log(val)
-      this.$router.push({ path: '', query: { page: val }})
-      this.fetchData({ page: val })
     }
   }
 }
