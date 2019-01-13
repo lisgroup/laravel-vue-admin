@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 // use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\Controller;
 
+use App\Events\LoginEvent;
 use App\Http\Repository\UserRepository;
+use Jenssegers\Agent\Agent;
 
 class AuthController extends Controller
 {
@@ -47,6 +49,9 @@ class AuthController extends Controller
             return $this->out(4001);
         }
         // return $this->respondWithToken($token);
+
+        // 登录成功，触发事件
+        event(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
 
         $data = [
             'access_token' => $token,
