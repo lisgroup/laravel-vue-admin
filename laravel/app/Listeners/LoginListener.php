@@ -3,11 +3,19 @@
 namespace App\Listeners;
 
 use App\Events\LoginEvent;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
 use Zhuzhichao\IpLocationZh\Ip;
 
-class LoginListener
+class LoginListener implements ShouldQueue
 {
+    /**
+     * 失败重试次数
+     *
+     * @var int
+     */
+    public $tries = 1;
+
     /**
      * handle 方法中处理事件
      *
