@@ -19,7 +19,7 @@
       </el-table-column>
       <el-table-column label="方向" width="">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleCheck(scope.$index, scope.row.link)">{{ scope.row.FromTo }}</el-button>
+          <el-button type="text" @click="handleCheck(scope.$index, scope.row.link)" v-html="scope.row.FromTo"/>
         </template>
       </el-table-column>
     </el-table>
