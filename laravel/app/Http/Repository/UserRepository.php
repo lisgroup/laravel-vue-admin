@@ -42,7 +42,7 @@ class UserRepository
     /**
      * 极验开始获取验证码操作
      * @param $input
-     * @return string
+     * @return mixed
      */
     public function startCaptcha($input)
     {
@@ -50,7 +50,7 @@ class UserRepository
         $privateKey = env('GEE_PRIVATE_KEY');
 
         if (empty($id) || empty($privateKey) || empty($input['uuid'])) {
-            return '{"success":0,"gt":"","challenge":"","new_captcha":0}';
+            return ['success' => 0, 'gt' => '', 'challenge' => '', 'new_captcha' => 0,];
         }
         $data = array(
             "user_id" => $input['uuid'], // 网站用户id
@@ -106,7 +106,7 @@ class UserRepository
         }
         // 0. 校验新密码和重复密码是否一致
         if ($input['password'] != $input['repassword']) {
-            return ['code' => 1213,'reason' => '重复密码和新密码不一致'];
+            return ['code' => 1213, 'reason' => '重复密码和新密码不一致'];
         }
 
         // 1. 先获取个人信息
