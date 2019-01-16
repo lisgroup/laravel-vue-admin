@@ -14,8 +14,8 @@ H5 自适应苏州实时公交查询系统
 
 ### 1. 安装 php 环境 (必须)
 ```php
-git clone https://gitee.com/lisgroup/vueBus.git
-cd vueBus/laravel
+git clone https://gitee.com/lisgroup/laravel-vue-admin.git
+cd laravel-vue-admin/laravel
 composer install
 cp .env.example .env
 ```
@@ -218,7 +218,4 @@ server {
 ```
 
 ## 使用方法
-浏览器访问： https://www.guke1.com ，可以查看
-
-在输入框输入查询的公交车，（如：快1）点击搜索后，会出现搜索到的车次，再次点击需要查询车次的方向，即可查看实时公交状态。
-
+浏览器访问： https://www.guke1.com ，可以查看。
