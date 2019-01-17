@@ -38,7 +38,7 @@ REDIS_PORT=6379
 
 ### 3. 运行安装命令，会自动执行数据迁移和填充，并生成 key
 ```php
-php artisan bus:install
+php artisan admin:install
 ```
 
 ### 4. 支持中文全文索引
