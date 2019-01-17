@@ -1,4 +1,4 @@
-Laravel Vue admin 管理系统
+H5 自适应苏州实时公交查询系统
 ===============
 ## 前后端分离设计
 前端代码在 admin 目录，细分为前后台页面；后端代码在 laravel 目录下、
@@ -10,12 +10,12 @@ Laravel Vue admin 管理系统
 4. CURL PHP Extension
 
 ## 安装方法：
-为了方便自己使用，已经将打包好的前端代码放到了 laravel/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
+为了方便自己使用，已经将打包好的前端代码放到了 php/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
 ### 1. 安装 php 环境 (必须)
 ```php
-git clone https://gitee.com/lisgroup/laravel-vue-admin.git
-cd laravel-vue-admin/laravel
+git clone https://gitee.com/lisgroup/vueBus.git
+cd vueBus/laravel
 composer install
 cp .env.example .env
 ```
@@ -38,7 +38,7 @@ REDIS_PORT=6379
 
 ### 3. 运行安装命令，会自动执行数据迁移和填充，并生成 key
 ```php
-php artisan admin:install
+php artisan bus:install
 ```
 
 ### 4. 支持中文全文索引
@@ -218,4 +218,7 @@ server {
 ```
 
 ## 使用方法
-浏览器访问： https://www.guke1.com ，可以查看。
+浏览器访问： https://www.guke1.com ，可以查看
+
+在输入框输入查询的公交车，（如：快1）点击搜索后，会出现搜索到的车次，再次点击需要查询车次的方向，即可查看实时公交状态。
+

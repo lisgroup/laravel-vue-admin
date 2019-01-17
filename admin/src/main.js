@@ -11,16 +11,6 @@ import 'layui-src/dist/css/layui.css'
 
 import '@/styles/index.scss' // global css
 
-// 全局注册
-// import with ES6
-import mavonEditor from 'mavon-editor'
-// markdown-it对象：md.s_markdown, md => mavonEditor 实例
-//                 or
-//                 mavonEditor.markdownIt
-import 'mavon-editor/dist/css/index.css'
-// use
-Vue.use(mavonEditor)
-
 import App from './App'
 import router from './router'
 import store from './store'

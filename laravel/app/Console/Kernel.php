@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // 命令列表
-        // 'App\Console\Commands\LineTask',
+        'App\Console\Commands\LineTask',
     ];
 
     /**

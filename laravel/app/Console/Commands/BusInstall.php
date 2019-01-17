@@ -4,21 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class AdminInstall extends Command
+class BusInstall extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'admin:install {param?}';
+    protected $signature = 'bus:install {param?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install the laravel-vue-admin. If you want support elasticSearch, You Need Run: php artisan admin:install search';
+    protected $description = 'Install the vueBus. If support elasticSearch, You Need Run: php artisan bus:install search';
 
     /**
      * Create a new command instance.
