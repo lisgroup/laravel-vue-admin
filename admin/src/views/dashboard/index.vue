@@ -30,7 +30,7 @@
     <fieldset class="clearfix layui-elem-field layui-field-title" style="margin-top: 20px;">
       <legend>管理员信息</legend>
     </fieldset>
-    <el-card v-show="is_php" class="box-card">
+    <el-card class="box-card">
       <div class="dashboard-text">name:{{ name }}</div>
       <div class="dashboard-text">roles:<span v-for="role in roles" :key="role">{{ role }}</span></div>
     </el-card>
