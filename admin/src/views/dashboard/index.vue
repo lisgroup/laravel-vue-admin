@@ -4,26 +4,26 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
       <legend>服务器信息</legend>
     </fieldset>
-    <el-card v-show="is_serve" class="box-card">
-      <div slot="header" class="clearfix">
-        <span>服务器配置</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="closeServe()">关闭</el-button>
-      </div>
-      <el-table :data="serve" style="width: 100%">
-        <el-table-column prop="name" label="名称" width=""/>
-        <el-table-column prop="value" label="数值" width=""/>
-      </el-table>
+    <el-card class="box-card">
+      <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse-item title="服务器配置" name="1">
+          <el-table :data="serve" style="width: 100%">
+            <el-table-column prop="name" label="名称" width=""/>
+            <el-table-column prop="value" label="数值" width=""/>
+          </el-table>
+        </el-collapse-item>
+      </el-collapse>
     </el-card>
 
-    <el-card v-show="is_php" class="box-card">
-      <div slot="header" class="clearfix">
-        <span>PHP 相关参数</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="closePhp()">关闭</el-button>
-      </div>
-      <el-table :data="php" style="width: 100%">
-        <el-table-column prop="name" label="名称" width=""/>
-        <el-table-column prop="value" label="数值" width=""/>
-      </el-table>
+    <el-card class="box-card">
+      <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse-item title="服务器配置" name="2">
+          <el-table :data="php" style="width: 100%">
+            <el-table-column prop="name" label="名称" width=""/>
+            <el-table-column prop="value" label="数值" width=""/>
+          </el-table>
+        </el-collapse-item>
+      </el-collapse>
     </el-card>
 
     <div class="clearfix"/>
@@ -34,6 +34,7 @@
       <div class="dashboard-text">name:{{ name }}</div>
       <div class="dashboard-text">roles:<span v-for="role in roles" :key="role">{{ role }}</span></div>
     </el-card>
+    <div class="clearfix"/>
   </div>
 </template>
 
@@ -49,7 +50,8 @@ export default {
       is_serve: true,
       is_php: true,
       serve: [],
-      php: []
+      php: [],
+      activeNames: ['1', '2']
     }
   },
   computed: {
@@ -75,6 +77,9 @@ export default {
     },
     closePhp() {
       this.is_php = false
+    },
+    handleChange(val) {
+      console.log(val)
     }
   }
 }
