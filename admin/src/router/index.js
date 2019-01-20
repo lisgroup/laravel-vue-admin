@@ -44,6 +44,32 @@ export const constantRouterMap = [
   },
 
   {
+    path: '/category',
+    component: Layout,
+    redirect: '/category/index',
+    name: 'Category-Nav',
+    meta: { title: '栏目菜单', icon: 'category' },
+    children: [
+      { path: '/category/add', name: 'NewCategory', component: () => import('@/views/category/add'), meta: { title: '添加栏目' }, hidden: true },
+      { path: '/category/edit/:id', name: 'EditCategory', component: () => import('@/views/category/edit'), hidden: true },
+      {
+        path: '/category/index',
+        name: 'Category',
+        component: () => import('@/views/category/index'),
+        meta: { title: '栏目管理', icon: 'ico-category' }
+      },
+      { path: '/nav/add', name: 'AddNav', component: () => import('@/views/category/add'), hidden: true },
+      { path: '/nav/edit/:id', name: 'EditNav', component: () => import('@/views/category/edit'), hidden: true },
+      {
+        path: '/nav',
+        name: 'Nav',
+        component: () => import('@/views/category'),
+        meta: { title: '菜单管理', icon: 'nav' }
+      }
+    ]
+  },
+
+  {
     path: '/list',
     component: Layout,
     redirect: '/task',
