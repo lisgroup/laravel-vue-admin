@@ -29,6 +29,12 @@ Route::group(['prefix' => 'user'], function($router) {
     Route::any('info', 'AuthController@info');
 });
 
+Route::group(['namespace' => 'Api'], function () {
+    // 栏目管理
+    Route::resource('category', 'CategoryController');
+});
+
+
 Route::resource('crontask', 'Api\CronTaskController');
 Route::resource('lines', 'Api\LinesController');
 Route::resource('user', 'Api\UserController');

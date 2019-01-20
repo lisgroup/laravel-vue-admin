@@ -11,7 +11,7 @@ class Category extends Model
      *
      * @var string
      */
-    // protected $table = 'category';
+    protected $table = 'category';
 
     protected $fillable = ['name', 'keywords', 'description', 'sort', 'pid'];
 
