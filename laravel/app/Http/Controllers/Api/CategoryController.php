@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Category\Store;
+use App\Http\Requests\Category\Update;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
@@ -41,7 +43,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $list = Category::paginate($this->perPage);
+        $list = Category::orderBy('sort')->paginate($this->perPage);
         return $this->out(200, $list);
     }
 
@@ -59,16 +61,14 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      * 新增入库操作
      *
-     * @param  StoreCategoryRequest $request
+     * @param Store $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(Store $request)
     {
         // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
         // $rs = Category::insert($request->all());
         $input = $request->all();
-        $input['is_show'] = $input['is_show'] ? 1 : 0;
-        $input['username'] = $input['username'] ?? '';
         $model = new Category($input);
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
@@ -109,16 +109,13 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      * 更新数据
      *
-     * @param  StoreCategoryRequest $request
+     * @param  Update $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategoryRequest $request, $id)
+    public function update(Update $request, $id)
     {
-        $input = $request->only('name', 'price', 'car_type', 'depart_time', 'open_time', 'total_time', 'via_road', 'company', 'station', 'station_back', 'reason', 'username', 'is_show', 'last_update');
-        // var_dump($input);exit();
-        $input['is_show'] = $input['is_show'] ? 1 : 0;
-        $input['username'] = $input['username'] ?? '';
+        $input = $request->all();
         // $model = new Category();$model->save($input, ['id' => $id]);
         // 老版本更新操作如下，新版本先查询再更新
         // Category::where('id', $id)->update($input)
