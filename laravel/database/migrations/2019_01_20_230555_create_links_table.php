@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateFriendshipLinksTable extends Migration {
+class CreateLinksTable extends Migration {
 
 	/**
 	 * Run the migrations.
