@@ -1,52 +1,17 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="车次名称" prop="name">
+      <el-form-item label="栏目名称" prop="name">
         <el-input v-model="form.name"/>
       </el-form-item>
-      <el-form-item label="price" prop="price">
-        <el-input v-model="form.price"/>
+      <el-form-item label="关键词" prop="keywords">
+        <el-input v-model="form.keywords"/>
       </el-form-item>
-      <el-form-item label="类型" prop="car_type">
-        <el-select v-model="form.car_type" placeholder="请选择类型">
-          <el-option label="大巴" value="大巴"/>
-          <el-option label="中巴" value="中巴"/>
-          <el-option label="地铁" value="地铁"/>
-        </el-select>
+      <el-form-item label="描述" prop="description">
+        <el-input v-model="form.description"/>
       </el-form-item>
-      <el-form-item label="发车间隔" prop="depart_time">
-        <el-input v-model="form.depart_time"/>
-      </el-form-item>
-      <el-form-item label="营运时间" prop="open_time">
-        <el-input v-model="form.open_time"/>
-      </el-form-item>
-      <el-form-item label="全程时间" prop="total_time">
-        <el-input v-model="form.total_time"/>
-      </el-form-item>
-      <el-form-item label="途经道路" prop="via_road">
-        <el-input v-model="form.via_road" type="textarea"/>
-      </el-form-item>
-      <el-form-item label="公交公司" prop="company">
-        <el-input v-model="form.company"/>
-      </el-form-item>
-      <el-form-item label="途经站点(去程)" prop="station">
-        <el-input :rows="4" v-model="form.station" type="textarea" />
-      </el-form-item>
-      <el-form-item label="途经站点(返程)" prop="station_back">
-        <el-input :rows="4" v-model="form.station_back" type="textarea" />
-      </el-form-item>
-      <el-form-item label="编辑原因" prop="reason">
-        <el-input v-model="form.reason" />
-      </el-form-item>
-      <el-form-item label="最后更新时间" prop="last_update">
-        <el-date-picker v-model="form.last_update" value-format="yyyy:MM:dd" type="date" placeholder="选择日期" />
-      </el-form-item>
-      <el-form-item label="是否已审核">
-        <el-radio-group v-model="form.is_show">
-          <el-radio :label="0">未审核</el-radio>
-          <el-radio :label="1">通过</el-radio>
-          <el-radio :label="2">不通过</el-radio>
-        </el-radio-group>
+      <el-form-item label="排序" prop="sort">
+        <el-input v-model="form.sort"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
@@ -57,74 +22,38 @@
 </template>
 
 <script>
-import { edit, postEdit } from '@/api/lines'
+import { edit, postEdit } from '@/api/category'
 
 export default {
   data() {
     return {
       form: {
         name: '',
-        price: '',
-        car_type: '大巴',
-        depart_time: '',
-        open_time: '',
-        total_time: '',
-        via_road: '',
-        company: '',
-        station: '',
-        station_back: '',
-        reason: '',
-        last_update: '',
-        is_show: 0,
+        keywords: '',
+        description: '',
+        sort: '',
         loading: false
       },
       rules: {
         name: [
           { required: true, message: '请输入线路名称', trigger: 'blur' }
         ],
-        price: [
-          { required: true, message: '请输入 price', trigger: 'blur' }
+        keywords: [
+          { required: true, message: '请输入关键词', trigger: 'blur' }
         ],
-        car_type: [
-          { required: true, message: '请输入 car_type', trigger: 'blur' }
-        ],
-        station: [
-          { required: true, message: '请输入途经站点', trigger: 'blur' }
-        ],
-        station_back: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        depart_time: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        via_road: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        total_time: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        company: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        open_time: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        reason: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        last_update: [
-          { required: true, message: '请输入', trigger: 'change' }
+        description: [
+          { required: true, message: '请输入描述', trigger: 'blur' }
         ]
       },
-      redirect: '/list/lines'
+      redirect: '/category'
     }
   },
   created() {
     this.id = this.$route.params.id
-    this.getTaskData(this.id)
+    this.getData(this.id)
   },
   methods: {
-    getTaskData(id) {
+    getData(id) {
       // this.id = this.$route.params.id
       edit(id).then(response => {
         // console.log(response)

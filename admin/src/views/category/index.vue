@@ -5,15 +5,6 @@
         <router-link to="add">新增栏目</router-link>
       </el-button>
     </el-row>
-
-    <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="输入车次名称" prop="input">
-        <el-input v-model="form.input" placeholder="线路名称，例：快线1, 55" @keyup.enter.native="goSearch('form')">
-          <template slot="prepend">线路</template>
-          <el-button slot="append" icon="el-icon-search" @click="goSearch('form')">搜索</el-button>
-        </el-input>
-      </el-form-item>
-    </el-form>
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -26,29 +17,27 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="车次信息">
+      <el-table-column label="排序" width="70" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.sort }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="栏目名称">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="price" width="110" align="center">
+      <el-table-column label="关键词" width="" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.price }}</span>
+          <span>{{ scope.row.keywords }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="类型" width="110" align="center">
+      <el-table-column label="描述" width="" align="center">
         <template slot-scope="scope">
-          {{ scope.row.car_type }}
+          {{ scope.row.description }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="审核通过" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.is_show === 0">未审核</el-tag>
-          <el-tag v-else-if="scope.row.is_show === 1" type="success">通过</el-tag>
-          <el-tag v-else type="warning">不通过</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="创建时间" width="200">
+      <el-table-column align="center" prop="created_at" label="创建时间" width="">
         <template slot-scope="scope">
           <i class="el-icon-time"/>
           <span>{{ scope.row.created_at }}</span>
@@ -99,17 +88,9 @@ export default {
       list: null,
       listLoading: true,
       perpage: 10,
-      total: 1000,
+      total: 100,
       currentpage: 1,
-      listQuery: { page: 1 },
-      form: {
-        input: ''
-      },
-      rules: {
-        input: [
-          { required: true, message: '请输入线路名称', trigger: 'blur' }
-        ]
-      }
+      listQuery: { page: 1 }
     }
   },
   created() {
@@ -130,7 +111,7 @@ export default {
       })
     },
     handleEdit(index, row) {
-      this.$router.push({ path: 'category/edit/' + row.id })
+      this.$router.push({ path: '/category/edit/' + row.id })
       // this.$router.push({ name: 'taskEdit', params: { id: row.id }})
       // console.log(index, row)
     },
