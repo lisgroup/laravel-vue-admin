@@ -63,8 +63,8 @@ export const constantRouterMap = [
       {
         path: '/nav',
         name: 'Nav',
-        component: () => import('@/views/category'),
-        meta: { title: '菜单管理', icon: 'nav' }
+        component: () => import('@/views/nav'),
+        meta: { title: '导航管理', icon: 'nav' }
       }
     ]
   },
