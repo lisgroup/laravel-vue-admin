@@ -25,8 +25,8 @@ class Store extends FormRequest
     {
         return [
             'name'=>'required|unique:navs',
-            'keywords'=>'required',
-            'description'=>'required',
+            'url'=>'required',
+            'sort'=>'required',
         ];
     }
 
@@ -39,8 +39,8 @@ class Store extends FormRequest
     {
         return [
             'name'=>'导航名',
-            'keywords'=>'关键字',
-            'description'=>'描述',
+            'url'=>'链接地址',
+            'sort'=>'排序',
         ];
     }
 }

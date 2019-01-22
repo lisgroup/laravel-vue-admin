@@ -36,7 +36,7 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入线路名称', trigger: 'blur' }
+          { required: true, message: '请输入名称', trigger: 'blur' }
         ],
         keywords: [
           { required: true, message: '请输入关键词', trigger: 'blur' }

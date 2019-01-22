@@ -13,7 +13,7 @@ class Nav extends Model
      */
     // protected $table = 'navs';
 
-    protected $fillable = ['name', 'keywords', 'description', 'sort', 'pid'];
+    protected $fillable = ['name', 'url', 'sort'];
 
     /**
      * 一对多关联文章

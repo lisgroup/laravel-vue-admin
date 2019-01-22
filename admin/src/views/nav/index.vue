@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-button type="primary" size="medium">
-        <router-link to="add">新增导航</router-link>
+        <router-link to="/nav/add">新增导航</router-link>
       </el-button>
     </el-row>
     <el-table
@@ -27,14 +27,9 @@
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="关键词" width="" align="center">
+      <el-table-column label="链接地址" width="" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.keywords }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="描述" width="" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
+          <span>{{ scope.row.url }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="">

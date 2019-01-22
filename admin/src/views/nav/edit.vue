@@ -31,18 +31,15 @@ export default {
         name: '',
         keywords: '',
         description: '',
-        sort: '',
+        sort: '1',
         loading: false
       },
       rules: {
         name: [
-          { required: true, message: '请输入线路名称', trigger: 'blur' }
+          { required: true, message: '请输入名称', trigger: 'blur' }
         ],
         keywords: [
-          { required: true, message: '请输入关键词', trigger: 'blur' }
-        ],
-        description: [
-          { required: true, message: '请输入描述', trigger: 'blur' }
+          { required: true, message: '请输入链接地址', trigger: 'blur' }
         ]
       },
       redirect: '/nav'

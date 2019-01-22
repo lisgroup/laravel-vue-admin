@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-button type="primary" size="medium">
-        <router-link to="add">新增栏目</router-link>
+        <router-link to="/category/add">新增栏目</router-link>
       </el-button>
     </el-row>
     <el-table

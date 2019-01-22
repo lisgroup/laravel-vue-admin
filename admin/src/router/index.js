@@ -58,8 +58,8 @@ export const constantRouterMap = [
         component: () => import('@/views/category/index'),
         meta: { title: '栏目管理', icon: 'ico-category' }
       },
-      { path: '/nav/add', name: 'AddNav', component: () => import('@/views/category/add'), hidden: true },
-      { path: '/nav/edit/:id', name: 'EditNav', component: () => import('@/views/category/edit'), hidden: true },
+      { path: '/nav/add', name: 'AddNav', component: () => import('@/views/nav/add'), hidden: true },
+      { path: '/nav/edit/:id', name: 'EditNav', component: () => import('@/views/nav/edit'), hidden: true },
       {
         path: '/nav',
         name: 'Nav',
