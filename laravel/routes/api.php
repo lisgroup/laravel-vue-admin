@@ -34,6 +34,8 @@ Route::group(['namespace' => 'Api'], function () {
     Route::resource('category', 'CategoryController');
     // 导航管理
     Route::resource('nav', 'NavController');
+    // 标签
+    Route::resource('tag', 'TagController');
 });
 
 
