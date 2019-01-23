@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Category\Store;
-use App\Http\Requests\Category\Update;
-use App\Models\Category;
+use App\Http\Requests\Nav\Store;
+use App\Http\Requests\Nav\Update;
+use App\Models\Nav;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class NavController extends Controller
 {
     /**
      * @var int 默认分页条数
@@ -42,7 +42,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $list = Category::orderBy('sort')->paginate($this->perPage);
+        $list = Nav::orderBy('sort')->paginate($this->perPage);
         return $this->out(200, $list);
     }
 
@@ -66,9 +66,9 @@ class CategoryController extends Controller
     public function store(Store $request)
     {
         // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
-        // $rs = Category::insert($request->all());
+        // $rs = Nav::insert($request->all());
         $input = $request->all();
-        $model = new Category($input);
+        $model = new Nav($input);
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
         } else {
@@ -81,13 +81,13 @@ class CategoryController extends Controller
      * Display the specified resource.
      * 展示某个详情数据
      *
-     * @param Category $Category
+     * @param Nav $nav
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $Category)
+    public function show(Nav $nav)
     {
-        return $this->out(200, $Category);
+        return $this->out(200, $nav);
     }
 
     /**
@@ -100,7 +100,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $data = Category::findOrFail($id);
+        $data = Nav::findOrFail($id);
         return $this->out(200, $data);
     }
 
@@ -115,11 +115,11 @@ class CategoryController extends Controller
     public function update(Update $request, $id)
     {
         $input = $request->all();
-        // $model = new Category();$model->save($input, ['id' => $id]);
+        // $model = new Nav();$model->save($input, ['id' => $id]);
         // 老版本更新操作如下，新版本先查询再更新
-        // Category::where('id', $id)->update($input)
-        $Category = Category::findOrFail($id);
-        if ($Category->update($input)) {
+        // Nav::where('id', $id)->update($input)
+        $nav = Nav::findOrFail($id);
+        if ($nav->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
             return $this->out(4000);
@@ -135,7 +135,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        if (Category::findOrFail($id)->delete()) {
+        if (Nav::findOrFail($id)->delete()) {
             $data = ['msg' => '删除成功', 'errno' => 0];
         } else {
             $data = ['msg' => '删除失败', 'errno' => 2];

@@ -1,14 +1,11 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="栏目名称" prop="name">
+      <el-form-item label="导航名称" prop="name">
         <el-input v-model="form.name"/>
       </el-form-item>
-      <el-form-item label="关键词" prop="keywords">
-        <el-input v-model="form.keywords"/>
-      </el-form-item>
-      <el-form-item label="描述" prop="description">
-        <el-input v-model="form.description"/>
+      <el-form-item label="地址链接" prop="url">
+        <el-input v-model="form.url"/>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input v-model="form.sort"/>
@@ -22,30 +19,26 @@
 </template>
 
 <script>
-import { postAdd } from '@/api/category'
+import { postAdd } from '@/api/nav'
 
 export default {
   data() {
     return {
       form: {
         name: '',
-        keywords: '',
-        description: '',
-        sort: '',
+        url: '',
+        sort: '1',
         loading: false
       },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
         ],
-        keywords: [
-          { required: true, message: '请输入关键词', trigger: 'blur' }
-        ],
-        description: [
-          { required: true, message: '请输入描述', trigger: 'blur' }
+        url: [
+          { required: true, message: '请输入链接地址', trigger: 'blur' }
         ]
       },
-      redirect: '/category'
+      redirect: '/nav'
     }
   },
   methods: {

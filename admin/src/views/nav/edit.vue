@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="栏目名称" prop="name">
+      <el-form-item label="导航名称" prop="name">
         <el-input v-model="form.name"/>
       </el-form-item>
       <el-form-item label="关键词" prop="keywords">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { postAdd } from '@/api/category'
+import { edit, postEdit } from '@/api/nav'
 
 export default {
   data() {
@@ -31,7 +31,7 @@ export default {
         name: '',
         keywords: '',
         description: '',
-        sort: '',
+        sort: '1',
         loading: false
       },
       rules: {
@@ -39,22 +39,36 @@ export default {
           { required: true, message: '请输入名称', trigger: 'blur' }
         ],
         keywords: [
-          { required: true, message: '请输入关键词', trigger: 'blur' }
-        ],
-        description: [
-          { required: true, message: '请输入描述', trigger: 'blur' }
+          { required: true, message: '请输入链接地址', trigger: 'blur' }
         ]
       },
-      redirect: '/category'
+      redirect: '/nav'
     }
   },
+  created() {
+    this.id = this.$route.params.id
+    this.getData(this.id)
+  },
   methods: {
+    getData(id) {
+      // this.id = this.$route.params.id
+      edit(id).then(response => {
+        // console.log(response)
+        this.loading = false
+        if (response.code === 200) {
+          this.form = response.data
+          this.form.is_task = (response.data.is_task === 1)
+        } else {
+          this.$message.error(response.reason)
+        }
+      })
+    },
     onSubmit(form) {
-      console.log(this.form)
+      // console.log(this.form)
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.loading = true
-          postAdd(this.form).then(response => {
+          postEdit(this.id, this.form).then(response => {
             // console.log(response)
             this.loading = false
             if (response.code === 200) {

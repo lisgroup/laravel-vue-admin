@@ -32,6 +32,8 @@ Route::group(['prefix' => 'user'], function($router) {
 Route::group(['namespace' => 'Api'], function () {
     // 栏目管理
     Route::resource('category', 'CategoryController');
+    // 导航管理
+    Route::resource('nav', 'NavController');
 });
 
 
