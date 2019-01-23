@@ -50,7 +50,7 @@ export const constantRouterMap = [
     name: 'Category-Nav',
     meta: { title: '栏目菜单', icon: 'category' },
     children: [
-      { path: '/category/add', name: 'NewCategory', component: () => import('@/views/category/add'), meta: { title: '添加栏目' }, hidden: true },
+      { path: '/category/add', name: 'AddCategory', component: () => import('@/views/category/add'), meta: { title: '添加栏目' }, hidden: true },
       { path: '/category/edit/:id', name: 'EditCategory', component: () => import('@/views/category/edit'), hidden: true },
       {
         path: '/category/index',
@@ -65,6 +65,14 @@ export const constantRouterMap = [
         name: 'Nav',
         component: () => import('@/views/nav'),
         meta: { title: '导航管理', icon: 'nav' }
+      },
+      { path: '/tag/add', name: 'AddTag', component: () => import('@/views/tag/add'), meta: { title: '添加标签' }, hidden: true },
+      { path: '/tag/edit/:id', name: 'EditTag', component: () => import('@/views/tag/edit'), hidden: true },
+      {
+        path: '/tag/index',
+        name: 'IndexTag',
+        component: () => import('@/views/tag/index'),
+        meta: { title: '标签列表', icon: 'tag' }
       }
     ]
   },
