@@ -17,19 +17,9 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="排序" width="70" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.sort }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="标签名称">
         <template slot-scope="scope">
           {{ scope.row.name }}
-        </template>
-      </el-table-column>
-      <el-table-column label="链接地址" width="" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.url }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="">

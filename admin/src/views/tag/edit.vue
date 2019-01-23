@@ -4,15 +4,6 @@
       <el-form-item label="标签名称" prop="name">
         <el-input v-model="form.name"/>
       </el-form-item>
-      <el-form-item label="关键词" prop="keywords">
-        <el-input v-model="form.keywords"/>
-      </el-form-item>
-      <el-form-item label="描述" prop="description">
-        <el-input v-model="form.description"/>
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input v-model="form.sort"/>
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
@@ -29,17 +20,11 @@ export default {
     return {
       form: {
         name: '',
-        keywords: '',
-        description: '',
-        sort: '1',
         loading: false
       },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
-        ],
-        keywords: [
-          { required: true, message: '请输入链接地址', trigger: 'blur' }
         ]
       },
       redirect: '/tag'

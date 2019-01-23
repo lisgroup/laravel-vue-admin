@@ -69,8 +69,8 @@ export const constantRouterMap = [
       { path: '/tag/add', name: 'AddTag', component: () => import('@/views/tag/add'), meta: { title: '添加标签' }, hidden: true },
       { path: '/tag/edit/:id', name: 'EditTag', component: () => import('@/views/tag/edit'), hidden: true },
       {
-        path: '/tag/index',
-        name: 'IndexTag',
+        path: '/tag',
+        name: 'Tag',
         component: () => import('@/views/tag/index'),
         meta: { title: '标签列表', icon: 'tag' }
       }
