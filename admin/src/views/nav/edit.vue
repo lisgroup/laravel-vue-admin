@@ -4,11 +4,8 @@
       <el-form-item label="导航名称" prop="name">
         <el-input v-model="form.name"/>
       </el-form-item>
-      <el-form-item label="关键词" prop="keywords">
-        <el-input v-model="form.keywords"/>
-      </el-form-item>
-      <el-form-item label="描述" prop="description">
-        <el-input v-model="form.description"/>
+      <el-form-item label="链接地址" prop="url">
+        <el-input v-model="form.url"/>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input v-model="form.sort"/>
@@ -29,8 +26,7 @@ export default {
     return {
       form: {
         name: '',
-        keywords: '',
-        description: '',
+        url: '',
         sort: '1',
         loading: false
       },
