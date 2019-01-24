@@ -14,8 +14,9 @@ H5 自适应苏州实时公交查询系统
 
 ### 1. 安装 php 环境 (必须)
 ```php
-git clone https://gitee.com/lisgroup/vueBus.git
-cd vueBus/laravel
+git clone https://gitee.com/lisgroup/laravel-vue-admin.git
+git checkout bus
+cd laravel-vue-admin/laravel
 composer install
 cp .env.example .env
 ```
@@ -41,7 +42,7 @@ REDIS_PORT=6379
 php artisan bus:install
 ```
 
-### 4. 支持中文全文索引
+### 4. 支持中文全文索引,默认使用 LIKE
 
 **两种模式** 
 
