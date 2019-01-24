@@ -13,10 +13,10 @@ class LinesTableSeeder extends Seeder
     public function run()
     {
 
-        $table = env('DB_PREFIX', '').'lines';
-        \DB::table($table)->delete();
+
+        \DB::table('lines')->delete();
         
-        \DB::table($table)->insert(array (
+        \DB::table('lines')->insert(array (
             0 => 
             array (
                 'id' => 1,

@@ -13,10 +13,10 @@ class CronTasksTableSeeder extends Seeder
     public function run()
     {
 
-        $table = env('DB_PREFIX', '').'cron_tasks';
-        \DB::table($table)->delete();
+
+        \DB::table('cron_tasks')->delete();
         
-        \DB::table($table)->insert(array (
+        \DB::table('cron_tasks')->insert(array (
             0 => 
             array (
                 'id' => 1,
