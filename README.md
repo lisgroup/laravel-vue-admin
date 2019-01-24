@@ -9,6 +9,16 @@ H5 自适应苏州实时公交查询系统
 3. MBstring PHP Extension
 4. CURL PHP Extension
 
+## 案例演示
+
+1. 已经上线的项目案例：https://www.guke1.com
+
+2. 项目演示地址： http://118.25.87.12:8081/#/admin/dashboard
+
+账号： admin
+
+密码： 123456
+
 ## 安装方法：
 为了方便自己使用，已经将打包好的前端代码放到了 laravel/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
@@ -118,12 +128,12 @@ npm run build
 ### 1. Nginx 配置示例： (未启动 laravel-s 的扩展)
 ```shell
 server {
-    listen 443;
+    listen 443 ssl;
     root /www/vueBus/laravel/public;
     server_name www.guke1.com; # 改为绑定证书的域名
     
     # ssl 配置
-    ssl on;
+    # ssl on;
     ssl_certificate /etc/bundle.crt; # 改为自己申请得到的 crt 文件的名称
     ssl_certificate_key /etc/my.key; # 改为自己申请得到的 key 文件的名称
     ssl_session_timeout 5m;
