@@ -13,10 +13,10 @@ class BusLinesTableSeeder extends Seeder
     public function run()
     {
         
-
-        \DB::table('bus_lines')->delete();
+        $table = env('DB_PREFIX', '').'bus_lines';
+        \DB::table($table)->delete();
         
-        \DB::table('bus_lines')->insert(array (
+        \DB::table($table)->insert(array (
             0 => 
             array (
                 'id' => 1,
