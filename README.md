@@ -1,26 +1,33 @@
 H5 自适应苏州实时公交查询系统
 ===============
-## 前后端分离设计
-前端代码在 admin 目录，细分为前后台页面；后端代码在 laravel 目录下、
 
-> PHP 的运行环境要求 PHP7.0 以上。
-1. PHP >= 7.0
-2. PDO PHP Extension
-3. MBstring PHP Extension
-4. CURL PHP Extension
+## 项目简介
+
+> laravel-vue-admin 是一套基于 Vue 全家桶（Vue2.x + Vue-router2.x + Vuex）+ Laravel 的前后端分离框架。 脚手架构建也可以通过 vue 官方的 vue-cli 脚手架工具构建 实现了一般后台所需要的功能模块
+
+前后端分离设计，前端代码在 admin 目录，细分为前后台页面；后端代码在 laravel 目录下、
+
+### 主要技术栈
+
+- 后端框架： Laravel 5.5.x
+- 前端 MVVM 框架： Vue 2.5.x
+- 开发工作流： Webpack 4.x
+- 路由： Vue-Router 3.x
+- 数据交互： Axios
+- 代码风格检测： Eslint
+- UI框架： Element-UI 2.4.11
+- Laravel 的运行环境要求 PHP5.6 以上。
 
 ## 案例演示
 
-1. 已经上线的项目案例：https://www.guke1.com
+- 接口文档地址： [https://apizza.net/pro/#/project/dd264526c452a1f7c65cfe3a32e295f2/browse](https://apizza.net/pro/#/project/dd264526c452a1f7c65cfe3a32e295f2/browse)
+- 已经上线项目：[https://www.guke1.com](https://www.guke1.com)
+- 后台管理演示地址：[http://118.25.87.12:8081/#/admin/dashboard](http://118.25.87.12:8081/#/admin/dashboard)
 
-2. 项目演示地址： http://118.25.87.12:8081/#/admin/dashboard
-
-账号： admin
-
-密码： 123456
+> 账号： admin  密码： 123456
 
 ## 安装方法：
-为了方便自己使用，已经将打包好的前端代码放到了 laravel/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
+为了方便使用，已经将打包好的前端代码放到了 laravel/public 目录下。即正常部署时候，只需要配置后端 php 环境即可。
 
 ### 1. 安装 php 环境 (必须)
 ```php
@@ -52,11 +59,13 @@ REDIS_PORT=6379
 php artisan bus:install
 ```
 
-### 4. 支持中文全文索引,默认使用 LIKE
+> {Tip}: 以下都是可选配置，根据需求开启
 
-**两种模式** 
+### 4. 支持中文全文索引 (可选)
 
-#### 模式一： 开启 elasticsearch 全文搜索
+**两种模式，未配置默认 MySQL LIKE 语句** 
+
+#### 4.1 模式一： 开启 elasticsearch 全文搜索
 1. elasticsearch 安装方法：
 
    - 安装请参考： [Ubuntu 安装 elasticsearch 和 analysis-ik 插件](https://note.youdao.com/share/?id=a8fc19ff5dbdf5fcb706957166dba376&type=note#/)
@@ -73,9 +82,10 @@ php artisan elasticsearch:import "App\Models\Line"
 ```
 
 ---
-#### 模式二： TNTSearch+jieba-php 实现中文全文搜索
+#### 4.2 模式二： TNTSearch+jieba-php 实现中文全文搜索
 
 > 注：全文索引存储在 SQLite 中，需 php 开启了以下扩展；
+
 ```
   pdo_sqlite
   sqlite3
@@ -84,30 +94,35 @@ php artisan elasticsearch:import "App\Models\Line"
 
 安装方法参见：[TNTSearch+jieba-php 实现中文全文搜索](laravel/readme/5. 2018-12-17-TNTSearch 使用.md)
 
-### 5. 启动 laravels 服务监听 5200 端口(可选：需安装 swoole 扩展)
+### 5. 启动 laravels 服务 (可选)
+需安装 swoole 扩展，开启后监听 5200 端口。laravels 升级后命令如下：
+
 ```php
-php artisan laravels start -d
+php bin/laravels start -d
 ```
+
 更多细节参考：[https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md](https://github.com/hhxsv5/laravel-s/blob/master/README-CN.md)
 
-### 6. 启动定时任务(可选)
+### 6. 启动定时任务 (可选)
+
 ```shell
 # 使用 crontab 的定时任务调用 php artisan 调度任务：
 crontab -e
 
 # 追加如下内容： 
 
-* * * * * php /home/ubuntu/vueBus/laravel/artisan schedule:run >> /dev/null 2>&1
+* * * * * php /home/ubuntu/laravel-vue-admin/laravel/artisan schedule:run >> /dev/null 2>&1
 
 # 最后 ctrl + o 保存退出即可。
 ```
 
-### 7. 启动队列(可选)
+### 7. 启动队列 (可选)
 ```shell
 php artisan queue:work
 ```
 
-### 8. 可选，安装 npm 扩展
+### 8. 安装 npm 扩展 (可选)
+
 ```node
 # 切换到上级 app 目录下
 cd ../admin
@@ -119,13 +134,12 @@ npm run dev
 npm run build
 # 将 dist 目录下的文件 copy 到 php/public 目录。
 ```
-~~# 直接打包到 laravel/public 目录(注意备份 /laravel/public/index.php 文件)~~
-~~npm run build:pro~~
 
 ## 域名绑定
 域名需要绑定到根目录，即项目的 laravel/public 目录下。
 
-### 1. Nginx 配置示例： (未启动 laravel-s 的扩展)
+### 1. Nginx 配置示例： (未启动 laravel-s 扩展)
+
 ```shell
 server {
     listen 443 ssl;
@@ -176,7 +190,9 @@ server {
     # error_log /home/wwwlogs/laravel_error.log;
 }
 ```
+
 ### 2. 启动 laravels 的 Nginx 示例配置：
+
 ```php
 #gzip on;
 #gzip_min_length 1024;
