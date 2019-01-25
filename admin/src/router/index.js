@@ -78,6 +78,29 @@ export const constantRouterMap = [
   },
 
   {
+    path: '/article',
+    component: Layout,
+    // redirect: '/article',
+    name: 'Article-List',
+    meta: { title: '文章管理', icon: 'article' },
+    children: [
+      { path: '/article/edit/:id', name: 'EditArticle', component: () => import('@/views/article/edit'), hidden: true },
+      {
+        path: '/article/index',
+        name: 'Article',
+        component: () => import('@/views/article/index'),
+        meta: { title: '文章管理', icon: 'ico-article' }
+      },
+      {
+        path: '/article/add',
+        name: 'AddArticle',
+        component: () => import('@/views/article/add'),
+        meta: { title: '添加文章', icon: 'add' }
+      }
+    ]
+  },
+
+  {
     path: '/list',
     component: Layout,
     redirect: '/task',
