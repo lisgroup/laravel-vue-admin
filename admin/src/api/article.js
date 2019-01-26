@@ -36,3 +36,7 @@ export function search(params) {
     params
   })
 }
+
+export function axios(params) {
+  return request(params)
+}

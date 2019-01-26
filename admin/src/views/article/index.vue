@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-button type="primary" size="medium">
-        <router-link to="article/add">新增</router-link>
+        <router-link to="/article/add">新增</router-link>
       </el-button>
     </el-row>
 
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { getList, deleteAct, getarticle } from '@/api/article'
+import { getList, deleteAct, search } from '@/api/article'
 
 export default {
   filters: {
@@ -178,7 +178,7 @@ export default {
         if (valid) {
           this.listLoading = true
           const param = { 'wd': this.form.input }
-          getarticle(param).then(response => {
+          search(param).then(response => {
             // console.log(response)
             this.listLoading = false
             if (response.code === 200) {

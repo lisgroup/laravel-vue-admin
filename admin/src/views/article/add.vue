@@ -1,51 +1,32 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="车次名称" prop="name">
-        <el-input v-model="form.name"/>
-      </el-form-item>
-      <el-form-item label="price" prop="price">
-        <el-input v-model="form.price"/>
-      </el-form-item>
-      <el-form-item label="类型" prop="car_type">
-        <el-select v-model="form.car_type" placeholder="请选择类型">
-          <el-option label="大巴" value="大巴"/>
-          <el-option label="中巴" value="中巴"/>
-          <el-option label="地铁" value="地铁"/>
+      <el-form-item label="栏目" prop="category_id">
+        <el-select v-model="item" placeholder="请选择栏目" value-key="name">
+          <el-option v-for="(cate, index) in category" :key="index" :label="cate.name" :value="cate.id">
+            <span style="float: left; color: #8492a6; font-size: 13px">{{ cate.name }}</span>
+          </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="发车间隔" prop="depart_time">
-        <el-input v-model="form.depart_time"/>
+      <el-form-item label="文章标题" prop="title">
+        <el-input v-model="form.title"/>
       </el-form-item>
-      <el-form-item label="营运时间" prop="open_time">
-        <el-input v-model="form.open_time"/>
+      <el-form-item label="作者" prop="author">
+        <el-input v-model="form.author"/>
       </el-form-item>
-      <el-form-item label="全程时间" prop="total_time">
-        <el-input v-model="form.total_time"/>
+      <el-form-item label="关键词" prop="keywords">
+        <el-input v-model="form.keywords"/>
       </el-form-item>
-      <el-form-item label="途经道路" prop="via_road">
-        <el-input v-model="form.via_road" type="textarea"/>
+      <el-form-item label="标签" prop="tag_ids">
+        <el-input v-model="form.tag_ids"/>
       </el-form-item>
-      <el-form-item label="公交公司" prop="company">
-        <el-input v-model="form.company"/>
+      <el-form-item label="内容" prop="markdown">
+        <mavon-editor ref="md" v-model="form.markdown" @imgAdd="imgAdd" @imgDel="imgDel" />
       </el-form-item>
-      <el-form-item label="途经站点(去程)" prop="station">
-        <el-input :rows="4" v-model="form.station" type="textarea" />
-      </el-form-item>
-      <el-form-item label="途经站点(返程)" prop="station_back">
-        <el-input :rows="4" v-model="form.station_back" type="textarea" />
-      </el-form-item>
-      <el-form-item label="编辑原因" prop="reason">
-        <el-input v-model="form.reason" />
-      </el-form-item>
-      <el-form-item label="最后更新时间" prop="last_update">
-        <el-date-picker v-model="form.last_update" value-format="yyyy:MM:dd" type="date" placeholder="选择日期" />
-      </el-form-item>
-      <el-form-item label="是否已审核">
-        <el-radio-group v-model="form.is_show">
-          <el-radio :label="0">未审核</el-radio>
-          <el-radio :label="1">通过</el-radio>
-          <el-radio :label="2">不通过</el-radio>
+      <el-form-item label="是否置顶">
+        <el-radio-group v-model="form.is_top">
+          <el-radio :label="1">是</el-radio>
+          <el-radio :label="0">否</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item>
@@ -57,69 +38,65 @@
 </template>
 
 <script>
-import { postAdd } from '@/api/article'
+import { postAdd, axios } from '@/api/article'
+import { getList } from '@/api/category'
 
 export default {
   data() {
     return {
+      item: '',
+      category: [],
       form: {
-        name: '',
-        price: '',
-        car_type: '大巴',
-        depart_time: '',
-        open_time: '',
-        total_time: '',
-        via_road: '',
-        company: '',
-        station: '',
-        station_back: '',
-        reason: '',
-        last_update: '',
-        is_show: 0,
+        title: '',
+        category_id: '',
+        author: 'admin',
+        keywords: '',
+        tag_ids: '',
+        markdown: '',
+        is_top: 0,
         loading: false
       },
       rules: {
-        name: [
-          { required: true, message: '请输入线路名称', trigger: 'blur' }
+        title: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
         ],
-        price: [
-          { required: true, message: '请输入 price', trigger: 'blur' }
+        category_id: [
+          { required: true, message: '请选择栏目', trigger: 'blur' }
         ],
-        car_type: [
-          { required: true, message: '请输入 car_type', trigger: 'blur' }
+        author: [
+          { required: true, message: '请输入作者', trigger: 'blur' }
         ],
-        station: [
-          { required: true, message: '请输入途经站点', trigger: 'blur' }
+        keywords: [
+          { required: true, message: '请输入关键词', trigger: 'blur' }
         ],
-        station_back: [
-          { required: true, message: '请输入', trigger: 'blur' }
+        tag_ids: [
+          { required: true, message: '请选择一个标签', trigger: 'blur' }
         ],
-        depart_time: [
-          { required: true, message: '请输入', trigger: 'blur' }
+        markdown: [
+          { required: true, message: '请输入内容', trigger: 'blur' }
         ],
-        via_road: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        total_time: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        company: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        open_time: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        reason: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        last_update: [
-          { required: true, message: '请输入', trigger: 'change' }
-        ]
       },
       redirect: '/article'
     }
   },
+  watch: {
+    item(value) {
+      this.form.category_id = value
+      this.getItem()
+    }
+  },
+  created() {
+    this.init()
+  },
   methods: {
+    getItem() {
+      this.$emit('getItem', this.form.category)
+    },
+    init() {
+      getList({ perPage: 20 }).then(response => {
+        this.category = response.data.data
+      })
+    },
     onSubmit(form) {
       console.log(this.form)
       this.$refs[form].validate((valid) => {
@@ -153,6 +130,38 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+    },
+    // 绑定@imgAdd event
+    imgAdd(pos, $file) {
+      // 第一步.将图片上传到服务器.
+      var formdata = new FormData()
+      formdata.append('image', $file)
+      axios({
+        url: 'http://localhost/',
+        method: 'post',
+        data: formdata,
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then((url) => {
+        // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
+        /**
+         * $vm 指为 mavonEditor 实例，可以通过如下两种方式获取
+         * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
+         * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
+         */
+        console.log(pos)
+        console.log(url)
+        this.$refs.md.$img2Url(pos, url.data)
+      })
+    },
+    imgDel(pos) {
+      // delete this.img_file[pos]
+      // console.log(pos[0])
+      // console.log(pos[0].name)
+      // console.log(pos[1])
+      // let rs = this.$refs.md.$refs.toolbar_left.$imgDelByFilename(pos[0].name)
+      // console.log(rs)
+      // let rs = this.$refs.md.$refs.toolbar_left.$imgDelByFilename('aa18972bd40735faee21b63393510fb30e240862.jpg')
+      // console.log(rs)
     }
   }
 }
