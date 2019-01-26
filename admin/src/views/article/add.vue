@@ -53,6 +53,7 @@ export default {
         keywords: '',
         tag_ids: '',
         markdown: '',
+        content: '0',
         is_top: 0,
         loading: false
       },
@@ -74,9 +75,9 @@ export default {
         ],
         markdown: [
           { required: true, message: '请输入内容', trigger: 'blur' }
-        ],
+        ]
       },
-      redirect: '/article'
+      redirect: '/article/index'
     }
   },
   watch: {

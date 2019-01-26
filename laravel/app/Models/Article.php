@@ -16,7 +16,7 @@ class Article extends Model
      */
     // protected $table = 'article';
 
-    protected $fillable = ['name', 'keywords', 'description', 'sort', 'pid'];
+    protected $fillable = ['category_id', 'title', 'author', 'description', 'markdown', 'content', 'keywords', 'cover_img', 'is_top', 'click'];
 
     /**
      * Get the indexable data array for the model.
