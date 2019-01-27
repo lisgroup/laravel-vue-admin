@@ -32,7 +32,12 @@ export default {
       chartPie: null
     }
   },
-
+  mounted() {
+    this.drawCharts()
+  },
+  updated() {
+    this.drawCharts()
+  },
   methods: {
     drawColumnChart() {
       this.chartColumn = echarts.init(document.getElementById('chartColumn'))
@@ -189,13 +194,6 @@ export default {
       this.drawLineChart()
       this.drawPieChart()
     }
-  },
-
-  mounted: function () {
-    this.drawCharts()
-  },
-  updated: function () {
-    this.drawCharts()
   }
 }
 </script>

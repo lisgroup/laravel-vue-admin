@@ -34,6 +34,9 @@
       <div class="dashboard-text">name:{{ name }}</div>
       <div class="dashboard-text">roles:<span v-for="role in roles" :key="role">{{ role }}</span></div>
     </el-card>
+    <el-card class="box-card">
+      <div id="chartLine" style="width:100%; height:400px;"/>
+    </el-card>
     <div class="clearfix"/>
   </div>
 </template>
@@ -41,6 +44,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getList } from '../../api/dashboard'
+import echarts from 'echarts'
 
 export default {
   name: 'Dashboard',
@@ -51,7 +55,8 @@ export default {
       is_php: true,
       serve: [],
       php: [],
-      activeNames: ['1', '2']
+      activeNames: ['1', '2'],
+      chartLine: null
     }
   },
   computed: {
@@ -62,6 +67,12 @@ export default {
   },
   created() {
     this.init()
+  },
+  mounted() {
+    this.drawLineChart()
+  },
+  updated() {
+    this.drawLineChart()
   },
   methods: {
     init() {
@@ -80,6 +91,43 @@ export default {
     },
     handleChange(val) {
       console.log(val)
+    },
+    drawLineChart() {
+      this.chartLine = echarts.init(document.getElementById('chartLine'))
+      this.chartLine.setOption({
+        title: {
+          text: '登录日志数据'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['登录成功']
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '登录成功',
+            type: 'line',
+            stack: '总量',
+            data: [220, 182, 191, 234, 290, 330, 310],
+            smooth: true
+          }
+        ]
+      })
     }
   }
 }
