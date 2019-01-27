@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // 服务器信息
 Route::any('admin/system', 'Api\IndexController@index');
+Route::any('admin/report', 'Api\IndexController@report');
 
 Route::group(['prefix' => 'user'], function($router) {
     Route::any('startCaptcha', 'AuthController@startCaptcha'); // 获取-极验验证码

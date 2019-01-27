@@ -19,7 +19,7 @@ class IndexController extends Controller
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
         // 如果把 refresh 也放进去，token 即使过期但仍在刷新期以内也可刷新
         // 不过刷新一次作废
-        $this->middleware('auth:api', ['except' => ['login', 'show']]);
+        // $this->middleware('auth:api', ['except' => ['login', 'show']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
     }
@@ -58,5 +58,15 @@ class IndexController extends Controller
         $memory = (!function_exists('memory_get_usage')) ? '0' : round(memory_get_usage() / 1024 / 1024, 2).'MB';
 
         return $this->out(200, ['usage' => $memory]);
+    }
+
+    public function report()
+    {
+        $data = [
+            'date' => ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            'success_slide' => [220, 182, 191, 234, 290, 330, 310],
+        ];
+
+        return $this->out(200, $data);
     }
 }
