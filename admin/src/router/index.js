@@ -27,6 +27,7 @@ export const constantRouterMap = [
   { path: '/line', name: 'line', component: () => import('@/views/home/line'), hidden: true },
   { path: '/home', component: () => import('@/views/home/home'), hidden: true },
   { path: '/md', name: 'md', component: () => import('@/views/markdown/index'), hidden: true },
+  { path: '/echarts', name: 'echarts', component: () => import('@/views/echarts/index'), hidden: true },
   // { path: '/index', component: () => import('@/views/home/index'), hidden: true },
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
