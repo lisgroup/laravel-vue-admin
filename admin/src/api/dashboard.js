@@ -8,3 +8,11 @@ export function getList(params) {
     params
   })
 }
+
+export function report(params) {
+  return request({
+    url: '/api/admin/report',
+    method: 'get',
+    params
+  })
+}

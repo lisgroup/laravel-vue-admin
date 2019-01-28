@@ -43,7 +43,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getList } from '../../api/dashboard'
+import { getList, report } from '../../api/dashboard'
 import echarts from 'echarts'
 
 export default {
@@ -56,7 +56,9 @@ export default {
       serve: [],
       php: [],
       activeNames: ['1', '2'],
-      chartLine: null
+      chartLine: null,
+      xData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      yData: [1, 2, 2, 3, 4, 3, 3]
     }
   },
   computed: {
@@ -69,10 +71,10 @@ export default {
     this.init()
   },
   mounted() {
-    this.drawLineChart()
+    // this.drawLineChart()
   },
   updated() {
-    this.drawLineChart()
+    // this.drawLineChart()
   },
   methods: {
     init() {
@@ -81,6 +83,14 @@ export default {
         this.loading = false
         this.serve = response.data.serve
         this.php = response.data.php
+      })
+      report({ section: 7 }).then(res => {
+        this.xData = res.data.date
+        this.yData = res.data.success_slide
+        this.drawLineChart()
+      }).catch(err => {
+        console.log(err)
+        this.drawLineChart()
       })
     },
     closeServe() {
@@ -95,11 +105,15 @@ export default {
     drawLineChart() {
       this.chartLine = echarts.init(document.getElementById('chartLine'))
       this.chartLine.setOption({
+        color: ['#3398DB'],
         title: {
           text: '登录日志数据'
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认直线，可选 'line'|'shadow'
+          }
         },
         legend: {
           data: ['登录成功']
@@ -113,17 +127,21 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+          data: this.xData,
+          axisTick: {
+            alignWithLabel: true
+          }
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
+            barWidth: '60%',
             name: '登录成功',
-            type: 'line',
+            type: 'bar', // 'line'
             stack: '总量',
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: this.yData,
             smooth: true
           }
         ]
