@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
+    private $request = null;
+
     /**
      * IndexController constructor.
      *
@@ -19,9 +21,12 @@ class IndexController extends Controller
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
         // 如果把 refresh 也放进去，token 即使过期但仍在刷新期以内也可刷新
         // 不过刷新一次作废
-        // $this->middleware('auth:api', ['except' => ['login', 'show']]);
+        $this->middleware('auth:api', ['except' => ['login', 'show']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
+        if (!$this->request) {
+            $this->request = $request;
+        }
     }
 
     /**
@@ -60,11 +65,56 @@ class IndexController extends Controller
         return $this->out(200, ['usage' => $memory]);
     }
 
+    /**
+     * 日志报告
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function report()
     {
+        $input = $this->request->all();
+        // start, end 传递参数时
+        // if (empty($input['start']) || empty($input['end']) || $input['start'] > $input['end'] || $input['end'] > date('Y-m-d')) {
+        //     return $this->out(1006);
+        // }
+        // $start = strtotime($input['start']);
+        // $end = strtotime($input['end']);
+        //
+        // $day = ($end - $start) / 86400;
+        // if (!in_array($day, [0, 6, 29])) {
+        //     return $this->out(1006, [], '时间格式有误');
+        // }
+
+        if (empty($input['section']) || !in_array($input['section'], [0, 7, 30])) {
+            return $this->out(1006, [], '时间格式有误');
+        }
+
+        $start = strtotime('-'.($input['section'] - 1).' day', strtotime(date('Y-m-d')));
+        $end = time();
+
+        // 1. 取对应日期的日志
+        $datas = DB::table('login_log')->where('login_time', '>=', $start)->where('login_time', '<=', $end)->select('id', 'ip', 'login_time')->get();
+        $sum = count($datas);
+
+        $array = [];
+        // 2. 处理数据
+        for ($i = 0; $i <= $input['section']; $i++) {
+            $strTime = strtotime('+'.$i.' day', $start);
+            $time = date('Y-m-d', $strTime);
+            $count = 0;
+            foreach ($datas as $key => $item) {
+                if ($item->login_time < $strTime) {
+                    $count += 1;
+                    unset($datas[$key]);
+                }
+            }
+            $array[$time] = $count;
+        }
+
         $data = [
-            'date' => ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-            'success_slide' => [220, 182, 191, 234, 290, 330, 310],
+            'total' => $sum,
+            'date' => array_keys($array),
+            'success_slide' => array_values($array),
         ];
 
         return $this->out(200, $data);
