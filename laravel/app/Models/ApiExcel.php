@@ -11,6 +11,7 @@ class ApiExcel extends Model
      *
      * @var string
      */
-    // protected $table = 'api_excel';
-    protected $fillable = ['appkey', 'url', 'params', 'upload_url', 'finish_url', 'description', 'uid', 'state'];
+    protected $table = 'api_excel';
+
+    protected $fillable = ['appkey', 'url', 'param', 'upload_url', 'finish_url', 'description', 'uid', 'state'];
 }

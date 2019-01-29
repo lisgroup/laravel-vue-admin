@@ -39,6 +39,9 @@ Route::group(['namespace' => 'Api'], function () {
     Route::resource('tag', 'TagController');
     // 文章管理
     Route::resource('article', 'ArticleController');
+    // api_param
+    Route::resource('api_param', 'ApiParamController');
+    Route::resource('api_excel', 'ApiExcelController');
 });
 
 
