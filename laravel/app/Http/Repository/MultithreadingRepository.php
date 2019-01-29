@@ -32,22 +32,22 @@ class MultithreadingRepository
     private static $instance;
 
     /**
-     * @param array $conf
+     * 获取单例
      *
      * @return MultithreadingRepository
      */
-    public static function getInstent($conf = [])
+    public static function getInstent()
     {
         if (!isset(self::$instance)) {
-            self::$instance = new static($conf);
+            self::$instance = new static();
         }
         return self::$instance;
     }
 
-    public function setParam($fileName, $config)
+    public function setParam($fileName, $config = [])
     {
         $this->fileName = $fileName;
-        $this->config = $config;
+        $this->config || $this->config = $config ? $config : config('apiParam');
     }
 
     /**
@@ -163,11 +163,8 @@ class MultithreadingRepository
 
     /**
      * BusRepository constructor.
-     *
-     *
-     * @param $config
      */
-    private function __construct($config)
+    private function __construct()
     {
         //$this->ql || $this->ql = QueryList::getInstance();
     }
