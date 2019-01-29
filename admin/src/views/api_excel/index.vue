@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-button type="primary" size="medium">
-        <router-link to="/category/add">新增栏目</router-link>
+        <router-link to="/api_excel/add">上传测试</router-link>
       </el-button>
     </el-row>
     <el-table
@@ -17,24 +17,14 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="排序" width="70" align="center">
+      <el-table-column label="描述内容" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.sort }}</span>
+          <span>{{ scope.row.description }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="栏目名称">
+      <el-table-column label="用户ID">
         <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
-      <el-table-column label="关键词" width="" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.keywords }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="描述" width="" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
+          {{ scope.row.uid }}
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="">
@@ -44,15 +34,27 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作">
+      <el-table-column label="状态/操作" width="200" align="center">
         <template slot-scope="scope">
-          <el-button
+          <div v-if="scope.row.state === 0">
+            <el-tag type="danger">未处理</el-tag>
+          </div>
+          <div v-else-if="scope.row.state === 1">
+            <el-tag type="warning">正在处理</el-tag>
+          </div>
+          <div v-else>
+            <el-button
+              size="mini"
+              type="success"
+              @click="download(scope.$index, scope.row)">下载结果</el-button>
+          </div>
+          <!--<el-button
             size="mini"
             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -70,7 +72,7 @@
 </template>
 
 <script>
-import { getList, deleteAct, search } from '@/api/category'
+import { getList, deleteAct, search } from '@/api/api_excel'
 
 export default {
   filters: {
@@ -101,6 +103,9 @@ export default {
     this.fetchData()
   },
   methods: {
+    download(index, row) {
+      console.log(index, row)
+    },
     fetchData() {
       this.listLoading = true
       const params = Object.assign({ 'page': this.listQuery.page }, { 'perPage': this.perpage })
@@ -111,7 +116,7 @@ export default {
       })
     },
     handleEdit(index, row) {
-      this.$router.push({ path: '/category/edit/' + row.id })
+      this.$router.push({ path: '/api_excel/edit/' + row.id })
       // this.$router.push({ name: 'taskEdit', params: { id: row.id }})
       // console.log(index, row)
     },

@@ -45,22 +45,22 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/excel',
+    path: '/api_excel',
     component: Layout,
     name: 'Excel-List',
     meta: { title: '批量测试管理', icon: 'ico-table' },
     children: [
-      { path: '/excel/edit/:id', name: 'EditExcel', component: () => import('@/views/excel/edit'), hidden: true },
+      { path: '/api_excel/edit/:id', name: 'EditExcel', component: () => import('@/views/api_excel/edit'), hidden: true },
       {
-        path: '/excel/add',
+        path: '/api_excel/add',
         name: 'AddExcel',
-        component: () => import('@/views/excel/add'),
+        component: () => import('@/views/api_excel/add'),
         meta: { title: '上传测试', icon: 'excel' }
       },
       {
-        path: '/excel/index',
+        path: '/api_excel/index',
         name: 'Excel',
-        component: () => import('@/views/excel/index'),
+        component: () => import('@/views/api_excel/index'),
         meta: { title: '测试管理', icon: 'ico-aliyun' }
       },
       { path: '/api_param/add', name: 'AddApiParam', component: () => import('@/views/api_param/add'), hidden: true },

@@ -42,6 +42,7 @@ Route::group(['namespace' => 'Api'], function () {
     // api_param
     Route::resource('api_param', 'ApiParamController');
     Route::resource('api_excel', 'ApiExcelController');
+    Route::post('upload', 'ApiExcelController@upload');
 });
 
 
