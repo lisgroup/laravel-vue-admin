@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Category\Store;
-use App\Http\Requests\Category\Update;
-use App\Models\Category;
+use App\Http\Requests\ApiExcel\Store;
+use App\Http\Requests\ApiExcel\Update;
+use App\Models\ApiExcel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ExcelController extends Controller
+class ApiExcelController extends Controller
 {
     /**
      * @var int 默认分页条数
@@ -42,8 +42,13 @@ class ExcelController extends Controller
      */
     public function index()
     {
-        $list = Category::orderBy('sort')->paginate($this->perPage);
+        $list = ApiExcel::orderBy('id', 'desc')->paginate($this->perPage);
         return $this->out(200, $list);
+    }
+
+    public function upload(Request $request)
+    {
+        // TODO:
     }
 
     /**
@@ -66,9 +71,9 @@ class ExcelController extends Controller
     public function store(Store $request)
     {
         // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
-        // $rs = Category::insert($request->all());
+        // $rs = ApiExcel::insert($request->all());
         $input = $request->all();
-        $model = new Category($input);
+        $model = new ApiExcel($input);
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
         } else {
@@ -81,13 +86,13 @@ class ExcelController extends Controller
      * Display the specified resource.
      * 展示某个详情数据
      *
-     * @param Category $Category
+     * @param ApiExcel $ApiExcel
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $Category)
+    public function show(ApiExcel $ApiExcel)
     {
-        return $this->out(200, $Category);
+        return $this->out(200, $ApiExcel);
     }
 
     /**
@@ -100,7 +105,7 @@ class ExcelController extends Controller
      */
     public function edit($id)
     {
-        $data = Category::findOrFail($id);
+        $data = ApiExcel::findOrFail($id);
         return $this->out(200, $data);
     }
 
@@ -115,11 +120,11 @@ class ExcelController extends Controller
     public function update(Update $request, $id)
     {
         $input = $request->all();
-        // $model = new Category();$model->save($input, ['id' => $id]);
+        // $model = new ApiExcel();$model->save($input, ['id' => $id]);
         // 老版本更新操作如下，新版本先查询再更新
-        // Category::where('id', $id)->update($input)
-        $Category = Category::findOrFail($id);
-        if ($Category->update($input)) {
+        // ApiExcel::where('id', $id)->update($input)
+        $ApiExcel = ApiExcel::findOrFail($id);
+        if ($ApiExcel->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
             return $this->out(4000);
@@ -135,7 +140,7 @@ class ExcelController extends Controller
      */
     public function destroy($id)
     {
-        if (Category::findOrFail($id)->delete()) {
+        if (ApiExcel::findOrFail($id)->delete()) {
             $data = ['msg' => '删除成功', 'errno' => 0];
         } else {
             $data = ['msg' => '删除失败', 'errno' => 2];
