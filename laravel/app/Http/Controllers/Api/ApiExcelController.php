@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\ApiExcelEvent;
+use App\Http\Repository\MultithreadingRepository;
 use App\Http\Requests\ApiExcel\Store;
 use App\Http\Requests\ApiExcel\Update;
 use App\Models\ApiExcel;
@@ -95,6 +96,17 @@ class ApiExcelController extends Controller
      */
     public function startTask()
     {
+        $multi = MultithreadingRepository::getInstent();
+        $multi->setParam(public_path('/storage/20190130_220729_5c51afa15e70f.xlsx'));
+        // $result = $multi->multiRequest('http://118.25.87.12/token/php/index.php/hello/123', '111');
+
+        $result  = [
+            ['name' => 'lis', 'age' => 12, 'size' => '60'],
+            ['name' => 'zha', 'age' => 20, 'size' => '160'],
+            ['name' => 'hut', 'age' => 36, 'size' => '260'],
+        ];
+        ksort($result);
+
         $data = $this->request->all();
         // $data = ['id' => 2, 'api_excel_id' => 1, 'appkey' => '123','upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
         // 1. 检测参数是否正常
