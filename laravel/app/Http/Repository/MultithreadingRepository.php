@@ -44,10 +44,40 @@ class MultithreadingRepository
         return self::$instance;
     }
 
+    /**
+     * 设置参数
+     *
+     * @param $fileName
+     * @param array $config
+     */
     public function setParam($fileName, $config = [])
     {
         $this->fileName = $fileName;
-        $this->config || $this->config = $config ? $config : config('apiParam');
+        $this->config = $config;
+        // $this->config || $this->config = $config ? $config : config('apiParam');
+    }
+
+    /**
+     *  执行 1, 2, 3. 并发请求处理操作
+     *
+     * @param string $url
+     * @param string $appKey
+     *
+     * @return array
+     */
+    public function multiRequest($url, $appKey)
+    {
+        try {
+            /************************* 1. 读取 Excel 文件 ******************************/
+            if (!$this->loadExcel()) {
+                return [];
+            }
+            /************************* 2. 发送并发请求   ******************************/
+            // $config = $this->config;
+            return $this->request($url, $appKey);
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 
     /**
@@ -73,16 +103,26 @@ class MultithreadingRepository
             // 1. 根据第一列数据查询需要哪些参数
             $dataSet = [];
 
+            // 先取单元格第一列--作为参数数组
+            $params = [];
+            for ($i = 'A'; $i <= $highestColumn; $i++) {
+                $val = $sheet->getCell($i.'1')->getValue();
+                $params[$i] = (is_object($val)) ? trim($val->__toString()) : trim($val);
+            }
+            $dataSet['param'] = array_values($params);
+
             // 循环读取每个单元格的数据
             for ($row = 2; $row <= $highestRow; $row++) {
                 //    $dataSet[$row - 2]['name'] = $sheet->getCell('B'.$row)->getValue();
-                for ($i = 'A'; $i <= $highestColumn; $i++) {
-                    $value = $sheet->getCell($i.'1')->getValue();
-                    $dataSet['data'][$row - 2][$value] = $sheet->getCell($i.$row)->getValue();
+                // for ($i = 'A'; $i <= $highestColumn; $i++) {
+                //     $value = $sheet->getCell($i.'1')->getValue();
+                //     $dataSet['data'][$row - 2][$value] = $sheet->getCell($i.$row)->getValue();
+                // }
+                foreach ($params as $key => $param) {
+                    $value = $sheet->getCell($key.$row)->getValue();
+                    $dataSet['data'][$row - 2][$param] = (is_object($value)) ? trim($value->__toString()) : trim($value);
                 }
-            }
-            for ($i = 'A'; $i <= $highestColumn; $i++) {
-                $dataSet['param'][] = $sheet->getCell($i.'1')->getValue();
+
             }
 
             $this->dataSet = $dataSet;
@@ -92,10 +132,17 @@ class MultithreadingRepository
         }
     }
 
+    public function saveExcel($data)
+    {
+
+    }
+
     /**
      * 2. 发送并发请求
+     *
      * @param $url
      * @param $appkey
+     *
      * @return array
      */
     public function request($url, $appkey)
@@ -139,26 +186,6 @@ class MultithreadingRepository
             $returnArray[$k]['result'] = $v;
         }
         return $returnArray;
-    }
-
-    /**
-     *  执行 1, 2, 3. 并发请求处理操作
-     * @param string $appKey
-     * @return array
-     */
-    public function multiRequest($appKey)
-    {
-        try {
-            /************************* 1. 读取 Excel 文件 ******************************/
-            if (!$this->loadExcel()) {
-                return [];
-            }
-            /************************* 2. 发送并发请求   ******************************/
-            $config = $this->config;
-            return $this->request($config['url'], $appKey);
-        } catch (\Exception $e) {
-            return [];
-        }
     }
 
     /**

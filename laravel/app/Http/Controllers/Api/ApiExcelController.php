@@ -106,6 +106,7 @@ class ApiExcelController extends Controller
         if ($data['state'] != 0 || !file_exists($path)) {
             return $this->out(4007);
         }
+
         // 2. 查询数据库中任务真实状态
         $task = ApiExcel::find($data['id']);
         if (!$task || $task['state'] != 0) {
