@@ -62,7 +62,8 @@ class LoginListener implements ShouldQueue
             // 桌面设备
             $login_info['device_type'] = 'desktop';
         }
-        $login_info['created_at'] = $login_info['updated_at'] = date('Y-m-d H:i:s');
+        $login_info['created_at'] = date('Y-m-d H:i:s', $timestamp);
+        $login_info['updated_at'] = date('Y-m-d H:i:s');
 
         // 插入到数据库
         DB::table('login_log')->insert($login_info);
