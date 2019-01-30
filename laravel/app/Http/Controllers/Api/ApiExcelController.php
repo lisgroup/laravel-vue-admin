@@ -7,6 +7,7 @@ use App\Http\Requests\ApiExcel\Update;
 use App\Models\ApiExcel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ApiExcelController extends Controller
 {
@@ -48,7 +49,30 @@ class ApiExcelController extends Controller
 
     public function upload(Request $request)
     {
-        // TODO:
+        // 上传文件
+        if ($request->isMethod('post')) {
+
+            $file = $request->file('file');
+            // 文件是否上传成功
+            if ($file->isValid()) {
+
+                // 获取文件相关信息
+                // $originalName = $file->getClientOriginalName(); // 文件原名
+                $ext = $file->getClientOriginalExtension();     // 扩展名
+                $realPath = $file->getRealPath();   // 临时文件的绝对路径
+                // $type = $file->getClientMimeType();     // application/wps-office.xlsx
+
+                // 上传文件
+                $filename = date('Ymd_His') . '_' . uniqid() . '.' . $ext;
+                // 使用 public 配置，上传到 storage/app/public/ 目录
+                $bool = Storage::disk('public')->put($filename, file_get_contents($realPath));
+                if ($bool) {
+                    return $this->out(200, ['url' => '/storage/'.$filename, 'ext' => $ext]);
+                }
+                return $this->out(4006);
+            }
+        }
+        return $this->out(4000);
     }
 
     /**

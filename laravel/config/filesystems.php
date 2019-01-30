@@ -55,6 +55,15 @@ return [
             'visibility' => 'public',
         ],
 
+        // 新建 uploads 目录存储上传的文件
+        'uploads' => [
+            'driver' => 'local',
+            // 文件将上传到 storage/app/uploads 目录
+            'root' => storage_path('app/uploads'),
+            // 文件将上传到 public/uploads 目录 如果需要浏览器直接访问 请设置成这个
+            // 'root' => public_path('uploads'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

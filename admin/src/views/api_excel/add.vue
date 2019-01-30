@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="上传文件" prop="upload_url">
-        <input v-model="form.upload_url" type="hidden">
+        <input v-model="form.upload_url" type="text">
         <el-upload
           :action="uploadUrl"
           :on-preview="handlePreview"
@@ -33,11 +33,13 @@
 
 <script>
 import { postAdd } from '@/api/api_excel'
+import { getToken } from '@/utils/auth'
 
 export default {
   data() {
     return {
-      uploadUrl: process.env.BASE_API + '/api/upload',
+      // 请求需要携带 token
+      uploadUrl: process.env.BASE_API + '/api/upload?token=' + getToken(),
       fileList: [],
       form: {
         upload_url: '',
@@ -71,7 +73,8 @@ export default {
       return this.$confirm(`确定移除 ${file.name}？`)
     },
     handleSuccess(response, file, fileList) {
-      this.desc = response.data.words
+      console.log(response)
+      this.form.upload_url = response.data.url
     },
     onSubmit(form) {
       console.log(this.form)
