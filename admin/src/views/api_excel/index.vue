@@ -27,10 +27,9 @@
           {{ scope.row.uid }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="创建时间" width="">
+      <el-table-column label="原文件">
         <template slot-scope="scope">
-          <i class="el-icon-time"/>
-          <span>{{ scope.row.created_at }}</span>
+          {{ scope.row.upload_url }}
         </template>
       </el-table-column>
 
@@ -38,15 +37,20 @@
         <template slot-scope="scope">
           <div v-if="scope.row.state === 0">
             <el-tag type="danger">未处理</el-tag>
+            <el-button
+              size="mini"
+              type="success"
+              @click="download(scope.$index, scope.row)">点击开始任务</el-button>
           </div>
           <div v-else-if="scope.row.state === 1">
             <el-tag type="warning">正在处理</el-tag>
           </div>
           <div v-else>
+            <el-tag type="success">已完成</el-tag>
             <el-button
               size="mini"
               type="success"
-              @click="download(scope.$index, scope.row)">下载结果</el-button>
+              @click="download(scope.$index, scope.row)">点击下载</el-button>
           </div>
           <!--<el-button
             size="mini"
@@ -55,6 +59,13 @@
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" prop="created_at" label="创建时间" width="">
+        <template slot-scope="scope">
+          <i class="el-icon-time"/>
+          <span>{{ scope.row.created_at }}</span>
         </template>
       </el-table-column>
     </el-table>

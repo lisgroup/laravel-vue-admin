@@ -1,8 +1,22 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+      <el-form-item label="接口" prop="api_excel_id">
+        <el-select v-model="item" placeholder="请选择接口" value-key="name">
+          <el-option v-for="(cate, index) in apiParam" :key="index" :label="cate.name" :value="cate.id">
+            <span style="float: left; color: #8492a6; font-size: 13px">{{ cate.name }}</span>
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="appkey" prop="appkey">
+        <el-col :span="11">
+          <el-input v-model="form.appkey"/>
+        </el-col>
+        <el-col :span="13"/>
+      </el-form-item>
       <el-form-item label="上传文件" prop="upload_url">
-        <input v-model="form.upload_url" type="text">
+        <input v-model="form.upload_url" type="hidden">
         <el-upload
           :action="uploadUrl"
           :on-preview="handlePreview"
@@ -17,11 +31,17 @@
           <div slot="tip" class="el-upload__tip">只能上传 xls/xlsx 文件，且不超过 20M</div>
         </el-upload>
       </el-form-item>
-      <el-form-item label="用户ID" prop="uid">
-        <el-input v-model="form.uid"/>
-      </el-form-item>
       <el-form-item label="描述内容" prop="description">
-        <el-input v-model="form.description"/>
+        <el-col :span="11">
+          <el-input v-model="form.description" size="medium" placeholder="请输入内容" />
+        </el-col>
+        <el-col :span="13"/>
+      </el-form-item>
+      <el-form-item label="用户ID(可选)" prop="uid">
+        <el-col :span="11">
+          <el-input v-model="form.uid" size="medium" placeholder="请输入内容"/>
+        </el-col>
+        <el-col :span="13"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
@@ -32,6 +52,7 @@
 </template>
 
 <script>
+import { getList } from '@/api/api_param'
 import { postAdd } from '@/api/api_excel'
 import { getToken } from '@/utils/auth'
 
@@ -41,16 +62,26 @@ export default {
       // 请求需要携带 token
       uploadUrl: process.env.BASE_API + '/api/upload?token=' + getToken(),
       fileList: [],
+      item: '',
+      apiParam: [],
       form: {
         upload_url: '',
+        api_excel_id: '',
+        appkey: '',
         uid: '',
         description: '',
         sort: '',
         loading: false
       },
       rules: {
+        api_excel_id: [
+          { required: true, message: '请选择接口', trigger: 'blur' }
+        ],
         upload_url: [
           { required: true, message: '请上传文件', trigger: 'blur' }
+        ],
+        appkey: [
+          { required: true, message: '请输入 appkey', trigger: 'blur' }
         ],
         description: [
           { required: true, message: '请输入描述', trigger: 'blur' }
@@ -59,7 +90,25 @@ export default {
       redirect: '/api_excel/index'
     }
   },
+  watch: {
+    item(value) {
+      this.form.api_excel_id = value
+      console.log(this.form.api_excel_id)
+      this.getItem()
+    }
+  },
+  created() {
+    this.init()
+  },
   methods: {
+    getItem() {
+      this.$emit('getItem', this.form.apiParam)
+    },
+    init() {
+      getList({ perPage: 20 }).then(response => {
+        this.apiParam = response.data.data
+      })
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList)
     },
