@@ -39,50 +39,50 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import { getList } from '../../api/dashboard'
+import { mapGetters } from 'vuex'
+import { getList } from '../../api/dashboard'
 
-  export default {
-    name: 'Dashboard',
-    data() {
-      return {
-        loading: false,
-        is_serve: true,
-        is_php: true,
-        serve: [],
-        php: [],
-        activeNames: ['1', '2']
-      }
+export default {
+  name: 'Dashboard',
+  data() {
+    return {
+      loading: false,
+      is_serve: true,
+      is_php: true,
+      serve: [],
+      php: [],
+      activeNames: ['1', '2']
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'name',
+      'roles'
+    ])
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    init() {
+      this.loading = true
+      getList().then(response => {
+        this.loading = false
+        this.serve = response.data.serve
+        this.php = response.data.php
+      })
     },
-    computed: {
-      ...mapGetters([
-        'name',
-        'roles'
-      ])
+    closeServe() {
+      this.is_serve = false
     },
-    created() {
-      this.init()
+    closePhp() {
+      this.is_php = false
     },
-    methods: {
-      init() {
-        this.loading = true
-        getList().then(response => {
-          this.loading = false
-          this.serve = response.data.serve
-          this.php = response.data.php
-        })
-      },
-      closeServe() {
-        this.is_serve = false
-      },
-      closePhp() {
-        this.is_php = false
-      },
-      handleChange(val) {
-        console.log(val)
-      }
+    handleChange(val) {
+      console.log(val)
     }
   }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
