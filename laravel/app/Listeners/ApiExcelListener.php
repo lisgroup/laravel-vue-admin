@@ -42,7 +42,7 @@ class ApiExcelListener implements ShouldQueue
             case 1:
                 // 根据 upload 上传的数据批量测试数据
                 $path = public_path($data['upload_url']);
-                if ($data['state'] != 0 || !file_exists($path)) {
+                if ($data['state'] == 1 && file_exists($path)) {
 
                     $multi = MultithreadingRepository::getInstent();
                     $multi->setParam($path);
