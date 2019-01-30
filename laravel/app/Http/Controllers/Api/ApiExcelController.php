@@ -96,7 +96,7 @@ class ApiExcelController extends Controller
     public function startTask()
     {
         $data = $this->request->all();
-        $data = ['id' => 2, 'upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
+        // $data = ['id' => 2, 'api_excel_id' => 1, 'appkey' => '123','upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
         // 1. 检测参数是否正常
         if (empty($data['id']) || !isset($data['state']) || empty($data['upload_url'])) {
             return $this->out(1006);
@@ -109,7 +109,7 @@ class ApiExcelController extends Controller
         // 2. 查询数据库中任务真实状态
         $task = ApiExcel::find($data['id']);
         if (!$task || $task['state'] != 0) {
-            // return $this->out(4007);
+            return $this->out(4007);
         }
         $task->state = 1;
         // 3. 更新表字段状态
