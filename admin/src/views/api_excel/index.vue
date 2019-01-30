@@ -22,7 +22,7 @@
           <span>{{ scope.row.description }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="用户ID">
+      <el-table-column label="用户ID" align="center" width="80">
         <template slot-scope="scope">
           {{ scope.row.uid }}
         </template>
@@ -33,20 +33,34 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="状态/操作" width="200" align="center">
+      <el-table-column label="状态" width="90" align="center">
         <template slot-scope="scope">
           <div v-if="scope.row.state === 0">
             <el-tag type="danger">未处理</el-tag>
-            <el-button
-              size="mini"
-              type="success"
-              @click="download(scope.$index, scope.row)">点击开始任务</el-button>
           </div>
           <div v-else-if="scope.row.state === 1">
             <el-tag type="warning">正在处理</el-tag>
           </div>
           <div v-else>
             <el-tag type="success">已完成</el-tag>
+          </div>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作" width="200" align="center">
+        <template slot-scope="scope">
+          <div v-if="scope.row.state === 0">
+            <el-button
+              size="mini"
+              type="danger"
+              @click="startTask(scope.$index, scope.row)">点击开始任务</el-button>
+          </div>
+          <div v-else-if="scope.row.state === 1">
+            <el-button
+              size="mini"
+              type="warning">...</el-button>
+          </div>
+          <div v-else>
             <el-button
               size="mini"
               type="success"
@@ -62,9 +76,8 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" prop="created_at" label="创建时间" width="">
+      <el-table-column align="center" prop="created_at" label="创建时间" width="100">
         <template slot-scope="scope">
-          <i class="el-icon-time"/>
           <span>{{ scope.row.created_at }}</span>
         </template>
       </el-table-column>
@@ -83,7 +96,7 @@
 </template>
 
 <script>
-import { getList, deleteAct, search } from '@/api/api_excel'
+import { getList, deleteAct, search, startTask } from '@/api/api_excel'
 
 export default {
   filters: {
@@ -114,6 +127,33 @@ export default {
     this.fetchData()
   },
   methods: {
+    startTask(index, row) {
+      this.$confirm('此操作将开启任务, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        startTask(row).then(res => {
+          console.log(res)
+          let msg = ''
+          if (res.code === 200) {
+            row.state = 1
+            msg = 'success'
+          } else {
+            msg = 'error'
+          }
+          this.$message({
+            type: msg,
+            message: res.reason
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
+        })
+      })
+    },
     download(index, row) {
       console.log(index, row)
     },

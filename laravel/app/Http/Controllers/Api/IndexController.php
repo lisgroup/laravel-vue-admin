@@ -24,9 +24,8 @@ class IndexController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'show']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
-        if (!$this->request) {
-            $this->request = $request;
-        }
+
+        $this->request || $this->request = $request;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ApiExcelEvent;
 use App\Http\Requests\ApiExcel\Store;
 use App\Http\Requests\ApiExcel\Update;
 use App\Models\ApiExcel;
@@ -16,6 +17,8 @@ class ApiExcelController extends Controller
      */
     public $perPage = 10;
 
+    private $request = null;
+
     /**
      * Create a new AuthController instance.
      * 要求附带email和password（数据来源users表）
@@ -28,12 +31,14 @@ class ApiExcelController extends Controller
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
         // 如果把 refresh 也放进去，token 即使过期但仍在刷新期以内也可刷新
         // 不过刷新一次作废
-        $this->middleware('auth:api', ['except' => ['login', 'show']]);
+        // $this->middleware('auth:api', ['except' => ['login', 'show']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
 
         $perPage = intval($request->input('perPage'));
         $this->perPage = $perPage ?? 11;
+        
+        $this->request || $this->request = $request;
     }
 
     /**
@@ -47,12 +52,19 @@ class ApiExcelController extends Controller
         return $this->out(200, $list);
     }
 
+    /**
+     * 文件上传处理
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function upload(Request $request)
     {
         // 上传文件
         if ($request->isMethod('post')) {
 
-            $file = $request->file('file');
+            $file = $this->request->file('file');
             // 文件是否上传成功
             if ($file->isValid()) {
 
@@ -63,7 +75,7 @@ class ApiExcelController extends Controller
                 // $type = $file->getClientMimeType();     // application/wps-office.xlsx
 
                 // 上传文件
-                $filename = date('Ymd_His') . '_' . uniqid() . '.' . $ext;
+                $filename = date('Ymd_His').'_'.uniqid().'.'.$ext;
                 // 使用 public 配置，上传到 storage/app/public/ 目录
                 $bool = Storage::disk('public')->put($filename, file_get_contents($realPath));
                 if ($bool) {
@@ -73,6 +85,41 @@ class ApiExcelController extends Controller
             }
         }
         return $this->out(4000);
+    }
+
+
+    /**
+     * 将任务放入队列处理
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function startTask()
+    {
+        $data = $this->request->all();
+        // $data = ['id' => 2, 'upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
+        // 1. 检测参数是否正常
+        if (empty($data['id']) || !isset($data['state']) || empty($data['upload_url'])) {
+            return $this->out(1006);
+        }
+
+        $path = public_path($data['upload_url']);
+        if ($data['state'] != 0 || !file_exists($path)) {
+            return $this->out(4007);
+        }
+        // 2. 查询数据库中任务真实状态
+        $task = ApiExcel::find($data['id']);
+        if (!$task || $task['state'] != 0) {
+            return $this->out(4007);
+        }
+        $task->state = 1;
+        // 3. 更新表字段状态
+        $task->save();
+
+        // 4. 写入事件中处理
+        $task = $task->toArray();
+        event(new ApiExcelEvent($task));
+
+        return $this->out(200, [], '任务加入成功，请稍后下载处理结果');
     }
 
     /**
@@ -110,13 +157,13 @@ class ApiExcelController extends Controller
      * Display the specified resource.
      * 展示某个详情数据
      *
-     * @param ApiExcel $ApiExcel
+     * @param ApiExcel $apiExcel
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(ApiExcel $ApiExcel)
+    public function show(ApiExcel $apiExcel)
     {
-        return $this->out(200, $ApiExcel);
+        return $this->out(200, $apiExcel);
     }
 
     /**
@@ -147,8 +194,8 @@ class ApiExcelController extends Controller
         // $model = new ApiExcel();$model->save($input, ['id' => $id]);
         // 老版本更新操作如下，新版本先查询再更新
         // ApiExcel::where('id', $id)->update($input)
-        $ApiExcel = ApiExcel::findOrFail($id);
-        if ($ApiExcel->update($input)) {
+        $apiExcel = ApiExcel::findOrFail($id);
+        if ($apiExcel->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
             return $this->out(4000);

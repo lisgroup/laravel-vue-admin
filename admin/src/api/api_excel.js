@@ -36,3 +36,11 @@ export function search(params) {
     params
   })
 }
+
+export function startTask(params) {
+  return request({
+    url: '/api/start_task',
+    method: 'post',
+    params
+  })
+}
