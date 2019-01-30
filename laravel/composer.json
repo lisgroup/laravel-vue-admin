@@ -18,6 +18,7 @@
         "lisgroup/curl-http": "^1.2",
         "orangehill/iseed": "^2.6",
         "phpoffice/phpexcel": "^1.8",
+        "phpoffice/phpspreadsheet": "^1.6",
         "predis/predis": "^1.1",
         "tymon/jwt-auth": "1.*@rc",
         "vinkla/hashids": "3.3.0",
