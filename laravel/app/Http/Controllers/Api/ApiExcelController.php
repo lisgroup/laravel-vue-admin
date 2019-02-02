@@ -123,63 +123,68 @@ class ApiExcelController extends Controller
             ->setCategory("result file");
         /*以下就是对处理Excel里的数据， 横着取数据，主要是这一步，其他基本都不要改*/
 
-        // Excel的第A列，uid是你查出数组的键值，下面以此类推
-        $setActive = $objPHPExcel->setActiveSheetIndex(0);
-        // 第一行应该是 param 参数
-        foreach ($result as $key => $value) {
-            if ($value['error_code'] == 0) {
-                $message = $value['result']['res'] == 1 ? '一致' : '不一致';
-            } else {
-                $message = $value['reason'];
+        // Excel 的第 A 列，uid 是你查出数组的键值，下面以此类推
+        // * @throws \PhpOffice\PhpSpreadsheet\Exception
+        try {
+            $setActive = $objPHPExcel->setActiveSheetIndex(0);
+            // 第一行应该是 param 参数
+            foreach ($result as $key => $value) {
+                if ($value['error_code'] == 0) {
+                    $message = $value['result']['res'] == 1 ? '一致' : '不一致';
+                } else {
+                    $message = $value['reason'];
+                }
+
+                $num = $key + 2;
+                $setActive->setCellValue('A'.$num, "\t".$value['name'])
+                    ->setCellValue('B'.$num, "\t".$value['idcard'])
+                    ->setCellValue('C'.$num, "\t".$value['bankcard'])
+                    ->setCellValue('D'.$num, $message);
+
+                //sleep(0.15);
             }
 
-            $num = $key + 2;
-            $setActive->setCellValue('A'.$num, "\t".$value['name'])
-                ->setCellValue('B'.$num, "\t".$value['idcard'])
-                ->setCellValue('C'.$num, "\t".$value['bankcard'])
-                ->setCellValue('D'.$num, $message);
+            //得到当前活动的表,注意下文教程中会经常用到$objActSheet
+            $objActSheet = $objPHPExcel->getActiveSheet();
+            // 位置bbb  *为下文代码位置提供锚
+            // 给当前活动的表设置名称
+            $objActSheet->setTitle('Simple');
+            // 代码还没有结束，可以复制下面的代码来决定我们将要做什么
 
-            //sleep(0.15);
+            // 1,直接生成一个文件
+            $objWriter = IOFactory::createWriter($objPHPExcel, 'Xlsx');
+            $objWriter->save('out-207-'.date('mdHis').'.xlsx');
+
+
+            $data = $this->request->all();
+            // $data = ['id' => 2, 'api_excel_id' => 1, 'appkey' => '123','upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
+            // 1. 检测参数是否正常
+            if (empty($data['id']) || !isset($data['state']) || empty($data['upload_url'])) {
+                return $this->out(1006);
+            }
+
+            $path = public_path($data['upload_url']);
+            if ($data['state'] != 0 || !file_exists($path)) {
+                return $this->out(4007);
+            }
+
+            // 2. 查询数据库中任务真实状态
+            $task = ApiExcel::find($data['id']);
+            if (!$task || $task['state'] != 0) {
+                return $this->out(4007);
+            }
+            $task->state = 1;
+            // 3. 更新表字段状态
+            $task->save();
+
+            // 4. 写入事件中处理
+            $task = $task->toArray();
+            event(new ApiExcelEvent($task));
+
+            return $this->out(200, [], '任务加入成功，请稍后下载处理结果');
+        } catch (\PhpOffice\PhpSpreadsheet\Exception|\PhpOffice\PhpSpreadsheet\Writer\Exception $exception) {
+            return $this->out(5000);
         }
-
-        //得到当前活动的表,注意下文教程中会经常用到$objActSheet
-        $objActSheet = $objPHPExcel->getActiveSheet();
-        // 位置bbb  *为下文代码位置提供锚
-        // 给当前活动的表设置名称
-        $objActSheet->setTitle('Simple');
-        // 代码还没有结束，可以复制下面的代码来决定我们将要做什么
-
-        // 1,直接生成一个文件
-        $objWriter = IOFactory::createWriter($objPHPExcel, 'Xlsx');
-        $objWriter->save('out-207-'.date('mdHis').'.xlsx');
-
-
-        $data = $this->request->all();
-        // $data = ['id' => 2, 'api_excel_id' => 1, 'appkey' => '123','upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
-        // 1. 检测参数是否正常
-        if (empty($data['id']) || !isset($data['state']) || empty($data['upload_url'])) {
-            return $this->out(1006);
-        }
-
-        $path = public_path($data['upload_url']);
-        if ($data['state'] != 0 || !file_exists($path)) {
-            return $this->out(4007);
-        }
-
-        // 2. 查询数据库中任务真实状态
-        $task = ApiExcel::find($data['id']);
-        if (!$task || $task['state'] != 0) {
-            return $this->out(4007);
-        }
-        $task->state = 1;
-        // 3. 更新表字段状态
-        $task->save();
-
-        // 4. 写入事件中处理
-        $task = $task->toArray();
-        event(new ApiExcelEvent($task));
-
-        return $this->out(200, [], '任务加入成功，请稍后下载处理结果');
     }
 
     /**
