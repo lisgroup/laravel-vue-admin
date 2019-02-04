@@ -100,13 +100,8 @@ class ApiExcelController extends Controller
     {
         $multi = MultithreadingRepository::getInstent();
         $multi->setParam(public_path('/storage/20190130_220729_5c51afa15e70f.xlsx'));
-        // $result = $multi->multiRequest('http://118.25.87.12/token/php/index.php/hello/123', '111');
+        $result = $multi->multiRequest('http://118.25.87.12/token/php/index.php/hello/123', '111');
 
-        $result  = [
-            ['name' => 'lis', 'idcard' => 12, 'bankcard' => '111', 'error_code' => 10, 'reason' => 'error'],
-            ['name' => 'zha', 'idcard' => 20, 'bankcard' => '160', 'error_code' => 10, 'reason' => 'error'],
-            ['name' => 'hut', 'idcard' => 36, 'bankcard' => '260', 'error_code' => 400, 'reason' => 'error'],
-        ];
         ksort($result);
 
         /************************* 2. 写入 Excel 文件 ******************************/
@@ -127,19 +122,37 @@ class ApiExcelController extends Controller
         // * @throws \PhpOffice\PhpSpreadsheet\Exception
         try {
             $setActive = $objPHPExcel->setActiveSheetIndex(0);
-            // 第一行应该是 param 参数
-            foreach ($result as $key => $value) {
-                if ($value['error_code'] == 0) {
-                    $message = $value['result']['res'] == 1 ? '一致' : '不一致';
-                } else {
-                    $message = $value['reason'];
-                }
+            // 1. 第一行应该是 param 参数
+            $keys = array_keys($result[0]['param']);
+            $i = 'A';
+            foreach ($keys as $num => $key) {
+                $setActive->setCellValue($i.'1', "\t".$key);
+                $i++;
+            }
+            $setActive->setCellValue($i.'1', 'res');
 
-                $num = $key + 2;
-                $setActive->setCellValue('A'.$num, "\t".$value['name'])
-                    ->setCellValue('B'.$num, "\t".$value['idcard'])
-                    ->setCellValue('C'.$num, "\t".$value['bankcard'])
-                    ->setCellValue('D'.$num, $message);
+            // 2. 第二行开始循环数据
+            foreach ($result as $key => $value) {
+                $array = json_decode($value['result'], true);
+                if ($array['error_code'] == 0) {
+                    $message = $array['result']['res'] == 1 ? '一致' : '不一致';
+                } else {
+                    $message = $array['reason'];
+                }
+                // 2.1 第二行位置
+                $number = $key + 2;
+
+                $i = 'A';
+                foreach ($keys as $num => $key) {
+                    $setActive->setCellValue($i.$number, "\t".$value['param'][$key]);
+                    $i++;
+                }
+                $setActive->setCellValue(++$i.$number, $message);
+
+                // $setActive->setCellValue('A'.$num, "\t".$array['realname'])
+                //     ->setCellValue('B'.$num, "\t".$array['idcard'])
+                //     ->setCellValue('C'.$num, "\t".$array['bankcard'])
+                //     ->setCellValue('D'.$num, $message);
 
                 //sleep(0.15);
             }
@@ -153,7 +166,7 @@ class ApiExcelController extends Controller
 
             // 1,直接生成一个文件
             $objWriter = IOFactory::createWriter($objPHPExcel, 'Xlsx');
-            $objWriter->save('out-207-'.date('mdHis').'.xlsx');
+            $objWriter->save('public/storage/out-208-'.date('mdHis').'.xlsx');
 
 
             $data = $this->request->all();

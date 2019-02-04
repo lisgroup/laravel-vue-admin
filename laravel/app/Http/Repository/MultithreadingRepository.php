@@ -27,6 +27,11 @@ class MultithreadingRepository
     public $config;
 
     /**
+     * @var int 默认并发请求数 5
+     */
+    protected $concurrent = 5;
+
+    /**
      * @var self 单例
      */
     private static $instance;
@@ -160,7 +165,7 @@ class MultithreadingRepository
         };
 
         $pool = new Pool($client, $requests($url, $appkey, $this->dataSet['data']), [
-            'concurrency' => 5, // 并发设置
+            'concurrency' => $this->concurrent, // 并发设置
             'fulfilled' => function($response, $index) {
                 // this is delivered each successful response
                 $result = $response->getBody()->getContents();
