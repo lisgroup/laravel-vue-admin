@@ -119,7 +119,6 @@ class ApiExcelController extends Controller
         /*以下就是对处理Excel里的数据， 横着取数据，主要是这一步，其他基本都不要改*/
 
         // Excel 的第 A 列，uid 是你查出数组的键值，下面以此类推
-        // * @throws \PhpOffice\PhpSpreadsheet\Exception
         try {
             $setActive = $objPHPExcel->setActiveSheetIndex(0);
             // 1. 第一行应该是 param 参数
@@ -147,14 +146,7 @@ class ApiExcelController extends Controller
                     $setActive->setCellValue($i.$number, "\t".$value['param'][$key]);
                     $i++;
                 }
-                $setActive->setCellValue(++$i.$number, $message);
-
-                // $setActive->setCellValue('A'.$num, "\t".$array['realname'])
-                //     ->setCellValue('B'.$num, "\t".$array['idcard'])
-                //     ->setCellValue('C'.$num, "\t".$array['bankcard'])
-                //     ->setCellValue('D'.$num, $message);
-
-                //sleep(0.15);
+                $setActive->setCellValue($i.$number, $message);
             }
 
             //得到当前活动的表,注意下文教程中会经常用到$objActSheet
@@ -166,7 +158,9 @@ class ApiExcelController extends Controller
 
             // 1,直接生成一个文件
             $objWriter = IOFactory::createWriter($objPHPExcel, 'Xlsx');
-            $objWriter->save('public/storage/out-208-'.date('mdHis').'.xlsx');
+            $path = storage_path('app/public');
+            // is_dir($path) || mkdir($path, 777, true);
+            $objWriter->save($path.'/out-208-'.date('mdHis').'.xlsx');
 
 
             $data = $this->request->all();
