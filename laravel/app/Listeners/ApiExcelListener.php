@@ -7,6 +7,7 @@ use App\Http\Repository\MultithreadingRepository;
 use App\Models\ApiParam;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -52,7 +53,7 @@ class ApiExcelListener implements ShouldQueue
                     $param = ApiParam::find($data['api_excel_id']);
                     if ($param) {
                         $result = $multi->multiRequest($param['url'], $param['appkey']);
-                        // TODO 记录 result 到 excel 中
+
                         ksort($result);
 
                         /************************* 2. 写入 Excel 文件 ******************************/
@@ -69,37 +70,52 @@ class ApiExcelListener implements ShouldQueue
                             ->setCategory("result file");
                         /*以下就是对处理Excel里的数据， 横着取数据，主要是这一步，其他基本都不要改*/
 
-                        // Excel的第A列，uid是你查出数组的键值，下面以此类推
-                        $setActive = $objPHPExcel->setActiveSheetIndex(0);
-                        // 第一行应该是 param 参数
-                        foreach ($result as $key => $value) {
-                            if ($value['error_code'] == 0) {
-                                $message = $value['result']['res'] == 1 ? '一致' : '不一致';
-                            } else {
-                                $message = $value['reason'];
+                        // Excel 的第 A 列，uid 是你查出数组的键值，下面以此类推
+                        try {
+                            $setActive = $objPHPExcel->setActiveSheetIndex(0);
+                            // 1. 第一行应该是 param 参数
+                            $keys = array_keys($result[0]['param']);
+                            $i = 'A';
+                            foreach ($keys as $num => $key) {
+                                $setActive->setCellValue($i.'1', "\t".$key);
+                                $i++;
+                            }
+                            $setActive->setCellValue($i.'1', 'res');
+
+                            // 2. 第二行开始循环数据
+                            foreach ($result as $key => $value) {
+                                $array = json_decode($value['result'], true);
+                                if ($array['error_code'] == 0) {
+                                    $message = $array['result']['res'] == 1 ? '一致' : '不一致';
+                                } else {
+                                    $message = $array['reason'];
+                                }
+                                // 2.1 第二行位置
+                                $number = $key + 2;
+
+                                $i = 'A';
+                                foreach ($keys as $num => $key) {
+                                    $setActive->setCellValue($i.$number, "\t".$value['param'][$key]);
+                                    $i++;
+                                }
+                                $setActive->setCellValue($i.$number, $message);
                             }
 
-                            $num = $key + 2;
-                            $setActive->setCellValue('A'.$num, "\t".$value['name'])
-                                ->setCellValue('B'.$num, "\t".$value['idcard'])
-                                ->setCellValue('C'.$num, "\t".$value['bankcard'])
-                                ->setCellValue('D'.$num, $message);
+                            //得到当前活动的表,注意下文教程中会经常用到$objActSheet
+                            $objActSheet = $objPHPExcel->getActiveSheet();
+                            // 位置bbb  *为下文代码位置提供锚
+                            // 给当前活动的表设置名称
+                            $objActSheet->setTitle('Simple');
+                            // 代码还没有结束，可以复制下面的代码来决定我们将要做什么
 
-                            //sleep(0.15);
-                        }
-
-                        //得到当前活动的表,注意下文教程中会经常用到$objActSheet
-                        $objActSheet = $objPHPExcel->getActiveSheet();
-                        // 位置bbb  *为下文代码位置提供锚
-                        // 给当前活动的表设置名称
-                        $objActSheet->setTitle('Simple');
-                        // 代码还没有结束，可以复制下面的代码来决定我们将要做什么
-
-                        // 1,直接生成一个文件
-                        $objWriter = IOFactory::createWriter($objPHPExcel, 'Xlsx');
-                        $objWriter->save('out-207-'.date('mdHis').'.xlsx');
-
-                        {
+                            // 1,直接生成一个文件
+                            $objWriter = IOFactory::createWriter($objPHPExcel, 'Xlsx');
+                            $path = storage_path('app/public');
+                            // is_dir($path) || mkdir($path, 777, true);
+                            $objWriter->save($path.'/out-208-'.date('mdHis').'.xlsx');
+                        } catch (\PhpOffice\PhpSpreadsheet\Exception|\PhpOffice\PhpSpreadsheet\Writer\Exception $exception) {
+                            // 记录任务失败的错误日志
+                            Log::error('Api_Excel 任务执行失败: ', $exception);
                         }
                     }
                 }
