@@ -98,6 +98,41 @@ class ApiExcelController extends Controller
      */
     public function startTask()
     {
+        $data = $this->request->all();
+        // $data = ['id' => 2, 'api_excel_id' => 1, 'appkey' => '123','upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
+        // 1. 检测参数是否正常
+        if (empty($data['id']) || !isset($data['state']) || empty($data['upload_url'])) {
+            return $this->out(1006);
+        }
+
+        $path = public_path($data['upload_url']);
+        if ($data['state'] != 0 || !file_exists($path)) {
+            return $this->out(4007);
+        }
+
+        // 2. 查询数据库中任务真实状态
+        $task = ApiExcel::find($data['id']);
+        if (!$task || $task['state'] != 0) {
+            return $this->out(4007);
+        }
+        $task->state = 1;
+        // 3. 更新表字段状态
+        $task->save();
+
+        // 4. 写入事件中处理
+        $task = $task->toArray();
+        event(new ApiExcelEvent($task));
+
+        return $this->out(200, [], '任务加入成功，请稍后下载处理结果');
+    }
+
+    /**
+     * 模拟任务执行操作
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function todoTask()
+    {
         $multi = MultithreadingRepository::getInstent();
         $multi->setParam(public_path('/storage/20190130_220729_5c51afa15e70f.xlsx'));
         $result = $multi->multiRequest('http://118.25.87.12/token/php/index.php/hello/123', '111');
@@ -162,33 +197,7 @@ class ApiExcelController extends Controller
             // is_dir($path) || mkdir($path, 777, true);
             $objWriter->save($path.'/out-208-'.date('mdHis').'.xlsx');
 
-
-            $data = $this->request->all();
-            // $data = ['id' => 2, 'api_excel_id' => 1, 'appkey' => '123','upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
-            // 1. 检测参数是否正常
-            if (empty($data['id']) || !isset($data['state']) || empty($data['upload_url'])) {
-                return $this->out(1006);
-            }
-
-            $path = public_path($data['upload_url']);
-            if ($data['state'] != 0 || !file_exists($path)) {
-                return $this->out(4007);
-            }
-
-            // 2. 查询数据库中任务真实状态
-            $task = ApiExcel::find($data['id']);
-            if (!$task || $task['state'] != 0) {
-                return $this->out(4007);
-            }
-            $task->state = 1;
-            // 3. 更新表字段状态
-            $task->save();
-
-            // 4. 写入事件中处理
-            $task = $task->toArray();
-            event(new ApiExcelEvent($task));
-
-            return $this->out(200, [], '任务加入成功，请稍后下载处理结果');
+            return $this->out(200, [], '任务执行成功');
         } catch (\PhpOffice\PhpSpreadsheet\Exception|\PhpOffice\PhpSpreadsheet\Writer\Exception $exception) {
             return $this->out(5000);
         }
