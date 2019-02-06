@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Events\ApiExcelEvent;
 use App\Http\Repository\MultithreadingRepository;
-use App\Models\ApiParam;
+use App\Models\ApiExcel;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
@@ -50,7 +50,7 @@ class ApiExcelListener implements ShouldQueue
                     $multi = MultithreadingRepository::getInstent();
                     $multi->setParam($path);
                     // 获取 appkey 和 url
-                    $param = ApiParam::find($data['api_excel_id']);
+                    $param = ApiExcel::find($data['api_excel_id']);
                     if ($param) {
                         $result = $multi->multiRequest($param['url'], $param['appkey']);
 
