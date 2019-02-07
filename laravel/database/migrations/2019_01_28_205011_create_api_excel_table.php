@@ -17,14 +17,14 @@ class CreateApiExcelTable extends Migration {
 		{
 			$table->increments('id')->comment('主键 id');
 			$table->string('appkey')->default('')->comment('appkey');
-			$table->unsignedInteger('api_excel_id')->default('0')->comment('关联 api_param 表的 id');
+			$table->unsignedInteger('api_param_id')->default('0')->comment('关联 api_param 表的 id');
 			$table->string('upload_url', 255)->default('')->comment('上传地址');
 			$table->string('finish_url', 255)->default('')->comment('处理完成 url');
 			$table->string('description')->default('')->comment('描述');
 			$table->string('uid')->default('')->comment('上传用户');
 			$table->unsignedTinyInteger('state')->default('0')->comment('处理状态，0 新加入，1 开始处理；2 处理完成');
 			$table->timestamps();
-			$table->index('api_excel_id', 'index_api_excel_id');
+			$table->index('api_param_id', 'index_api_param_id');
 		});
 	}
 
