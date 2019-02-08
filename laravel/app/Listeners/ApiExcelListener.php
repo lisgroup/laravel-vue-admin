@@ -112,7 +112,13 @@ class ApiExcelListener implements ShouldQueue
                             $objWriter = IOFactory::createWriter($objPHPExcel, 'Xlsx');
                             $path = storage_path('app/public');
                             // is_dir($path) || mkdir($path, 777, true);
-                            $objWriter->save($path.'/out-208-'.date('mdHis').'.xlsx');
+                            $fileName = '/out-208-'.date('mdHis').'.xlsx';
+                            $objWriter->save($path.$fileName);
+
+                            // 更新任务状态
+                            $param->state = 2;
+                            $param->finish_url = '/storage'.$fileName;
+                            $param->save();
                         } catch (\PhpOffice\PhpSpreadsheet\Exception|\PhpOffice\PhpSpreadsheet\Writer\Exception $exception) {
                             // 记录任务失败的错误日志
                             Log::error('Api_Excel 任务执行失败: ', $exception);
