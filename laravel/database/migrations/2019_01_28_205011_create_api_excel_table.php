@@ -17,6 +17,7 @@ class CreateApiExcelTable extends Migration {
 		{
 			$table->increments('id')->comment('主键 id');
 			$table->string('appkey')->default('')->comment('appkey');
+            $table->unsignedTinyInteger('concurrent')->default('5')->comment('并发请求数，默认 5');
 			$table->unsignedInteger('api_param_id')->default('0')->comment('关联 api_param 表的 id');
 			$table->string('upload_url', 255)->default('')->comment('上传地址');
 			$table->string('finish_url', 255)->default('')->comment('处理完成 url');
