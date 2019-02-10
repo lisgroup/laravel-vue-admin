@@ -59,6 +59,7 @@ class MultithreadingRepository
     {
         $this->fileName = $fileName;
         $this->config = $config;
+        $this->concurrent = $config['concurrent'] ?? 5;
         // $this->config || $this->config = $config ? $config : config('apiParam');
     }
 
