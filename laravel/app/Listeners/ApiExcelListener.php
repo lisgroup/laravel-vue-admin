@@ -47,11 +47,13 @@ class ApiExcelListener implements ShouldQueue
                 $path = public_path($data['upload_url']);
                 if ($data['state'] == 1 && file_exists($path)) {
                     // 获取 appkey 和 url
-                    $param = ApiExcel::find($data['api_excel_id']);
+                    $param = ApiExcel::find($data['id']);
                     if ($param) {
                         $multi = MultithreadingRepository::getInstent();
                         $multi->setParam($path, ['concurrent' => $param['concurrent']]);
                         $result = $multi->multiRequest($param['url'], $param['appkey']);
+                        dump($result);
+                        Log::info('result', $result);
 
                         ksort($result);
 
@@ -71,6 +73,7 @@ class ApiExcelListener implements ShouldQueue
 
                         // Excel 的第 A 列，uid 是你查出数组的键值，下面以此类推
                         try {
+                            // ErrorException: Undefined offset: 0 in ApiExcelListener.php:76
                             $setActive = $objPHPExcel->setActiveSheetIndex(0);
                             // 1. 第一行应该是 param 参数
                             $keys = array_keys($result[0]['param']);
