@@ -25,7 +25,8 @@ class Store extends FormRequest
     {
         return [
             'appkey'=>'required',
-            'api_excel_id'=>'required',
+            'concurrent'=>'required|numeric',
+            'api_param_id'=>'required|numeric',
             'upload_url'=>'required',
             'description' => 'required',
         ];
@@ -40,7 +41,8 @@ class Store extends FormRequest
     {
         return [
             'name'=>'名称',
-            'api_excel_id'=>'接口地址',
+            'concurrent'=>'并发请求数',
+            'api_param_id'=>'接口地址',
             'upload_url'=>'上传文件',
             'description'=>'描述内容',
         ];

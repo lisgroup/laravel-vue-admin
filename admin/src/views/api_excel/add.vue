@@ -15,6 +15,14 @@
         </el-col>
         <el-col :span="13"/>
       </el-form-item>
+      <el-form-item label="并发请求" prop="concurrent">
+        <el-col :span="2">
+          <el-input v-model="form.concurrent"/>
+        </el-col>
+        <el-col :span="22">
+          &nbsp;&nbsp; 任务执行时并发请求的数量，字段必须是数字默认： 5
+        </el-col>
+      </el-form-item>
       <el-form-item label="上传文件" prop="upload_url">
         <input v-model="form.upload_url" type="hidden">
         <el-upload
@@ -68,6 +76,7 @@ export default {
         upload_url: '',
         api_excel_id: '',
         appkey: '',
+        concurrent: 5,
         uid: '',
         description: '',
         sort: '',
@@ -82,6 +91,9 @@ export default {
         ],
         appkey: [
           { required: true, message: '请输入 appkey', trigger: 'blur' }
+        ],
+        concurrent: [
+          { required: true, message: '请输入并发请求数', trigger: 'blur' }
         ],
         description: [
           { required: true, message: '请输入描述', trigger: 'blur' }
