@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="接口" prop="api_excel_id">
+      <el-form-item label="接口" prop="api_param_id">
         <el-select v-model="item" placeholder="请选择接口" value-key="name">
           <el-option v-for="(cate, index) in apiParam" :key="index" :label="cate.name" :value="cate.id">
             <span style="float: left; color: #8492a6; font-size: 13px">{{ cate.name }}</span>
@@ -74,7 +74,7 @@ export default {
       apiParam: [],
       form: {
         upload_url: '',
-        api_excel_id: '',
+        api_param_id: '',
         appkey: '',
         concurrent: 5,
         uid: '',
@@ -83,7 +83,7 @@ export default {
         loading: false
       },
       rules: {
-        api_excel_id: [
+        api_param_id: [
           { required: true, message: '请选择接口', trigger: 'blur' }
         ],
         upload_url: [
@@ -104,8 +104,8 @@ export default {
   },
   watch: {
     item(value) {
-      this.form.api_excel_id = value
-      console.log(this.form.api_excel_id)
+      this.form.api_param_id = value
+      console.log(this.form.api_param_id)
       this.getItem()
     }
   },
