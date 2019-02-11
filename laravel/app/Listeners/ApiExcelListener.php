@@ -46,12 +46,11 @@ class ApiExcelListener implements ShouldQueue
                 // 根据 upload 上传的数据批量测试数据
                 $path = public_path($data['upload_url']);
                 if ($data['state'] == 1 && file_exists($path)) {
-
-                    $multi = MultithreadingRepository::getInstent();
-                    $multi->setParam($path);
                     // 获取 appkey 和 url
                     $param = ApiExcel::find($data['api_excel_id']);
                     if ($param) {
+                        $multi = MultithreadingRepository::getInstent();
+                        $multi->setParam($path, ['concurrent' => $param['concurrent']]);
                         $result = $multi->multiRequest($param['url'], $param['appkey']);
 
                         ksort($result);
