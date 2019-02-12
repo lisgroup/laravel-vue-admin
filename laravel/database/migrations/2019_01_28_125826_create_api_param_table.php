@@ -21,6 +21,8 @@ class CreateApiParamTable extends Migration {
 			$table->enum('method', ['get', 'post', 'other'])->default('get')->comment('请求方式');
 			$table->string('url')->default('')->comment('接口地址');
 			$table->string('param')->default('')->comment('参数');
+			$table->string('result')->default('')->comment('结果集 result 中的需要展示在 excel 的字段名称如：res,msg');
+			$table->unsignedTinyInteger('is_need')->default('1')->comment('是否需要处理结果集，默认0，如开启1则 excel 列最后一栏展示一致不一致');
 			$table->unsignedTinyInteger('state')->default('1')->comment('是否启用，0 未启用，1 启用');
 			$table->timestamps();
 		});
