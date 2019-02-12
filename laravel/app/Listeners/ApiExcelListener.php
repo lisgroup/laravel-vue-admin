@@ -34,6 +34,7 @@ class ApiExcelListener implements ShouldQueue
      * Handle the event.
      *
      * @param  ApiExcelEvent $event
+     * @throws \Exception
      * @return void
      */
     public function handle(ApiExcelEvent $event)
@@ -47,13 +48,18 @@ class ApiExcelListener implements ShouldQueue
                 $path = public_path($data['upload_url']);
                 if ($data['state'] == 1 && file_exists($path)) {
                     // 获取 appkey 和 url
-                    $param = ApiExcel::find($data['id']);
+                    $apiExcel = ApiExcel::findOrFail($data['id']);
+                    $param = $apiExcel->apiParam()->get();
                     if ($param) {
+                        $param = $param[0];
                         $multi = MultithreadingRepository::getInstent();
                         $multi->setParam($path, ['concurrent' => $param['concurrent']]);
-                        $result = $multi->multiRequest($param['url'], $param['appkey']);
-                        dump($result);
+                        $result = $multi->multiRequest($param['url'], $data['appkey']);
+
                         Log::info('result', $result);
+                        if (!$result) {
+                            throw new \Exception(date('Y-m-d H:i:s').' 任务失败： 第三方请求错误～！'.$param['url']);
+                        }
 
                         ksort($result);
 
@@ -118,12 +124,12 @@ class ApiExcelListener implements ShouldQueue
                             $objWriter->save($path.$fileName);
 
                             // 更新任务状态
-                            $param->state = 2;
-                            $param->finish_url = '/storage'.$fileName;
-                            $param->save();
+                            $apiExcel->state = 2;
+                            $apiExcel->finish_url = '/storage'.$fileName;
+                            $apiExcel->save();
                         } catch (\PhpOffice\PhpSpreadsheet\Exception|\PhpOffice\PhpSpreadsheet\Writer\Exception $exception) {
                             // 记录任务失败的错误日志
-                            Log::error('Api_Excel 任务执行失败: ', $exception);
+                            Log::error('Api_Excel 任务执行失败: ', ['error' => $exception]);
                         }
                     }
                 }
