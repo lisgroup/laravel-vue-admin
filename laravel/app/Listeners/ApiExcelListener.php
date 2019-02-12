@@ -56,6 +56,7 @@ class ApiExcelListener implements ShouldQueue
                         $multi->setParam($path, ['concurrent' => $param['concurrent']]);
                         $result = $multi->multiRequest($param['url'], $data['appkey']);
 
+                        // TODO: 正式上线后注释下一行
                         Log::info('result', $result);
                         if (!$result) {
                             throw new \Exception(date('Y-m-d H:i:s').' 任务失败： 第三方请求错误～！'.$param['url']);
@@ -88,16 +89,21 @@ class ApiExcelListener implements ShouldQueue
                                 $setActive->setCellValue($i.'1', "\t".$key);
                                 $i++;
                             }
-                            $setActive->setCellValue($i.'1', 'res');
+
+                            // 1.2 处理配置的字段
+                            if ($param['result'] && $arr = explode(',', $param['result'])) {
+                                foreach ($arr as $item) {
+                                    $setActive->setCellValue($i.'1', $array['result'][$item] ?? '');
+                                    $i++;
+                                }
+                            }
+                            // 1.3 is_need 字段
+                            if ($param['is_need'] == 1) {
+                                $setActive->setCellValue($i.'1', 'res');
+                            }
 
                             // 2. 第二行开始循环数据
                             foreach ($result as $key => $value) {
-                                $array = json_decode($value['result'], true);
-                                if ($array['error_code'] == 0) {
-                                    $message = $array['result']['res'] == 1 ? '一致' : '不一致';
-                                } else {
-                                    $message = $array['reason'];
-                                }
                                 // 2.1 第二行位置
                                 $number = $key + 2;
 
@@ -106,7 +112,28 @@ class ApiExcelListener implements ShouldQueue
                                     $setActive->setCellValue($i.$number, "\t".$value['param'][$key]);
                                     $i++;
                                 }
-                                $setActive->setCellValue($i.$number, $message);
+
+                                // 2.2 处理配置的字段
+                                $array = json_decode($value['result'], true);
+
+                                if ($param['result'] && $arr = explode(',', $param['result'])) {
+                                    foreach ($arr as $item) {
+                                        $setActive->setCellValue($i.$number, $array['result'][$item] ?? '');
+                                        $i++;
+                                    }
+                                }
+
+                                // 1.3 is_need 字段
+                                if ($param['is_need'] == 1) {
+                                    if ($array['error_code'] == 0) {
+                                        $message = $array['result']['res'] == 1 ? '一致' : '不一致';
+                                    } else {
+                                        $message = $array['reason'];
+                                    }
+                                    $setActive->setCellValue($i.$number, $message);
+                                }
+
+
                             }
 
                             //得到当前活动的表,注意下文教程中会经常用到$objActSheet
