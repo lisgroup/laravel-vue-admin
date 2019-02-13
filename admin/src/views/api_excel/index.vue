@@ -17,6 +17,11 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
+      <el-table-column label="接口名称" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.api_param.name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="描述内容" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.description }}</span>

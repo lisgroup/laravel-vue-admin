@@ -51,7 +51,7 @@ class ApiExcelController extends Controller
      */
     public function index()
     {
-        $list = ApiExcel::orderBy('id', 'desc')->paginate($this->perPage);
+        $list = ApiExcel::with('apiParam')->orderBy('id', 'desc')->paginate($this->perPage);
 
         $appUrl = env('APP_URL') ?? '';
         $collect = collect(['appUrl' => $appUrl]);
