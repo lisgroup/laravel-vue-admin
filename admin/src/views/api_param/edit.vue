@@ -4,14 +4,36 @@
       <el-form-item label="接口名称" prop="name">
         <el-input v-model="form.name"/>
       </el-form-item>
-      <el-form-item label="关键词" prop="keywords">
-        <el-input v-model="form.keywords"/>
+      <el-form-item label="接口地址" prop="url">
+        <el-input v-model="form.url"/>
       </el-form-item>
-      <el-form-item label="描述" prop="description">
-        <el-input v-model="form.description"/>
+      <el-form-item label="接口参数" prop="param">
+        <el-input v-model="form.param"/>
+        <span>(多个参数请用英文 , 分割；如： realname,mobile,idcard)</span>
       </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input v-model="form.sort"/>
+      <el-form-item label="结果集 result" prop="result">
+        <el-input v-model="form.result"/>
+        <span>(多个参数请用英文 , 分割；如： res,msg)</span>
+      </el-form-item>
+      <el-form-item label="是否处理" prop="is_need">
+        <el-switch v-model="form.is_need"/>
+      </el-form-item>
+      <el-form-item label="网址" prop="website">
+        <el-input v-model="form.website"/>
+      </el-form-item>
+      <el-form-item label="请求方式" prop="method">
+        <!--<el-input v-model="form.method"/>-->
+        <el-select v-model="form.method" placeholder="请选择接口" value-key="name">
+          <el-option key="1" label="get" value="get">
+            <span style="float: left; color: #8492a6; font-size: 13px">get</span>
+          </el-option>
+          <el-option key="2" label="post" value="post">
+            <span style="float: left; color: #8492a6; font-size: 13px">post</span>
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="是否启用">
+        <el-switch v-model="form.state"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
@@ -29,23 +51,33 @@ export default {
     return {
       form: {
         name: '',
-        keywords: '',
-        description: '',
-        sort: '',
+        url: '',
+        param: '',
+        result: '',
+        is_need: false,
+        state: true,
+        website: '',
+        method: 'get',
         loading: false
       },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
         ],
-        keywords: [
-          { required: true, message: '请输入关键词', trigger: 'blur' }
+        url: [
+          { required: true, message: '请输入接口地址', trigger: 'blur' }
         ],
-        description: [
-          { required: true, message: '请输入描述', trigger: 'blur' }
+        param: [
+          { required: true, message: '请输入接口参数', trigger: 'blur' }
+        ],
+        result: [
+          { required: true, message: '请输入结果集 result', trigger: 'blur' }
+        ],
+        is_need: [
+          { required: true, message: '请选择是否处理', trigger: 'blur' }
         ]
       },
-      redirect: '/api_param'
+      redirect: '/api_param/index'
     }
   },
   created() {
@@ -60,14 +92,15 @@ export default {
         this.loading = false
         if (response.code === 200) {
           this.form = response.data
-          this.form.is_task = (response.data.is_task === 1)
+          this.form.is_need = (response.data.is_need === 1)
+          this.form.state = (response.data.state === 1)
         } else {
           this.$message.error(response.reason)
         }
       })
     },
     onSubmit(form) {
-      // console.log(this.form)
+      console.log(this.form)
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.loading = true

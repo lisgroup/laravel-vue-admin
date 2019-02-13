@@ -13,5 +13,5 @@ class ApiParam extends Model
      */
     protected $table = 'api_param';
 
-    protected $fillable = ['website', 'name', 'method', 'url', 'param', 'state'];
+    protected $fillable = ['website', 'name', 'method', 'url', 'param', 'result', 'is_need', 'state'];
 }
