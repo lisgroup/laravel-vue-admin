@@ -21,7 +21,10 @@ cp .env.example .env
 ```
 ### 2. 配置项修改 .env 文件数据库
 ```php
-# 修改数据库配置
+# 1. 修改域名
+APP_URL=http://localhost
+
+# 2. 修改数据库配置
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -29,7 +32,7 @@ DB_DATABASE=admin
 DB_USERNAME=root
 DB_PASSWORD=root
 
-# 如 redis 可用建议修改
+# 3. 如 redis 可用建议修改
 CACHE_DRIVER=redis
 REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
