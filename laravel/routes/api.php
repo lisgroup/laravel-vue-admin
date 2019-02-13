@@ -44,7 +44,6 @@ Route::group(['namespace' => 'Api'], function () {
     Route::resource('api_excel', 'ApiExcelController');
     Route::post('upload', 'ApiExcelController@upload');
     Route::any('start_task', 'ApiExcelController@startTask');
-    Route::any('todo_task', 'ApiExcelController@todoTask');
 });
 
 
