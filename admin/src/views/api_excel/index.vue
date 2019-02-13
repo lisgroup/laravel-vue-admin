@@ -116,7 +116,8 @@ export default {
       perpage: 10,
       total: 100,
       currentpage: 1,
-      listQuery: { page: 1 }
+      listQuery: { page: 1 },
+      url: null
     }
   },
   created() {
@@ -155,7 +156,7 @@ export default {
       })
     },
     download(index, row) {
-      console.log(index, row)
+      window.location.href = this.url + row.finish_url
     },
     fetchData() {
       this.listLoading = true
@@ -164,6 +165,7 @@ export default {
         this.list = response.data.data
         this.listLoading = false
         this.total = response.data.total
+        this.url = response.data.appUrl
       })
     },
     handleEdit(index, row) {

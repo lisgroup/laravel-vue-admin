@@ -52,7 +52,12 @@ class ApiExcelController extends Controller
     public function index()
     {
         $list = ApiExcel::orderBy('id', 'desc')->paginate($this->perPage);
-        return $this->out(200, $list);
+
+        $appUrl = env('APP_URL') ?? '';
+        $collect = collect(['appUrl' => $appUrl]);
+        $items = $collect->merge($list);
+
+        return $this->out(200, $items);
     }
 
     /**
