@@ -56,13 +56,13 @@ class ApiExcelListener implements ShouldQueue
                         $multi->setParam($path, ['concurrent' => $param['concurrent']]);
                         $result = $multi->multiRequest($param['url'], $data['appkey']);
 
-                        // TODO: 正式上线后注释下一行
-                        Log::info('result', $result);
+                        ksort($result);
+
+                        // 正式上线后注释下一行
+                        Log::info('ID-'.$data['id'].'-result: ', $result);
                         if (!$result) {
                             throw new \Exception(date('Y-m-d H:i:s').' 任务失败： 第三方请求错误～！'.$param['url']);
                         }
-
-                        ksort($result);
 
                         /************************* 2. 写入 Excel 文件 ******************************/
                         // 首先创建一个新的对象  PHPExcel object
