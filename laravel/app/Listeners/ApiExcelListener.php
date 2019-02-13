@@ -125,10 +125,14 @@ class ApiExcelListener implements ShouldQueue
 
                                 // 1.3 is_need 字段
                                 if ($param['is_need'] == 1) {
-                                    if ($array['error_code'] == 0) {
-                                        $message = $array['result']['res'] == 1 ? '一致' : '不一致';
+                                    if (isset($array['error_code']) && $array['error_code'] == 0) {
+                                        if (isset($array['result']['res'])) {
+                                            $message = $array['result']['res'] == 1 ? '一致' : '不一致';
+                                        } else {
+                                            $message = '';
+                                        }
                                     } else {
-                                        $message = $array['reason'];
+                                        $message = $array['reason'] ?? '';
                                     }
                                     $setActive->setCellValue($i.$number, $message);
                                 }
