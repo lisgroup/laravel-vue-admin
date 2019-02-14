@@ -153,7 +153,7 @@ class MultithreadingRepository
             // 1. 取出全部数组
             $data = $excel->getActiveSheet()->toArray('', true, true, true);
             // 2. 数组第一元素为参数名称
-            $this->dataSet['param']  = array_shift($data);
+            $this->dataSet['param'] = array_shift($data);
 
             // 3. 循环数组每个单元格的数据
             $this->dataSet['data'] = $data;
@@ -234,12 +234,13 @@ class MultithreadingRepository
         $client = new Client();
         // 简单本地并发的 GET 请求测试
         $requests = function($url, $appkey, $dataSet) use ($client) {
-            $newParam  = [];
+            $newParam = [];
             // 2.1 处理请求参数列
-            foreach ($dataSet['param'] as $ke  => $param) {
+            foreach ($dataSet['param'] as $ke => $param) {
                 if (empty($param)) {
                     continue;
                 }
+                // TODO: 还需要校验请求参数合法性, 如只允许的参数： idcard,realname,bankcard,mobile
                 $newParam[$ke] = (is_object($param)) ? trim($param->__toString()) : trim($param);
             }
             $this->dataSet['param'] = $newParam;
