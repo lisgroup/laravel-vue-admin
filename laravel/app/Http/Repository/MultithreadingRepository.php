@@ -11,6 +11,8 @@ namespace App\Http\Repository;
 
 use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 
 class MultithreadingRepository
 {
@@ -138,6 +140,31 @@ class MultithreadingRepository
         }
     }
 
+    /**
+     * 使用 PhpOffice/PhpSpreadsheet/IOFactory 获取 Excel 内容
+     *
+     * @return bool
+     */
+    public function loadNewExcel()
+    {
+        try {
+            // new PhpOffice\PhpSpreadsheet\IOFactory 读取 Excel 文件
+            $excel = IOFactory::load($this->fileName);
+            // 1. 取出全部数组
+            $data = $excel->getActiveSheet()->toArray('', true, true, true);
+            // 2. 数组第一元素为参数名称
+            $this->dataSet['param']  = array_shift($data);
+
+            // 3. 循环数组每个单元格的数据
+            $this->dataSet['data'] = $data;
+
+            return true;
+        } catch (Exception|\PhpOffice\PhpSpreadsheet\Exception $exception) {
+            return false;
+        }
+
+    }
+
     public function saveExcel($data)
     {
 
@@ -166,6 +193,79 @@ class MultithreadingRepository
         };
 
         $pool = new Pool($client, $requests($url, $appkey, $this->dataSet['data']), [
+            'concurrency' => $this->concurrent, // 并发设置
+            'fulfilled' => function($response, $index) {
+                // this is delivered each successful response
+                $result = $response->getBody()->getContents();
+                // var_dump($result);
+                // var_dump($index);
+                $this->data[$index] = $result;
+            },
+            'rejected' => function($reason, $index) {
+                // this is delivered each failed request
+                return 'Index: '.$index.' Reason:'.$reason;
+            },
+        ]);
+
+        // Initiate the transfers and create a promise
+        $promise = $pool->promise();
+        // Force the pool of requests to complete.
+        $promise->wait();
+
+        // 处理 data 数据然后返回
+        $returnArray = [];
+        foreach ($this->data as $k => $v) {
+            $returnArray[$k]['param'] = $this->dataSet['data'][$k];
+            $returnArray[$k]['result'] = $v;
+        }
+        return $returnArray;
+    }
+
+    /**
+     * 2. 发送并发请求
+     *
+     * @param $url
+     * @param $appkey
+     *
+     * @return array
+     */
+    public function newRequest($url, $appkey)
+    {
+        $client = new Client();
+        // 简单本地并发的 GET 请求测试
+        $requests = function($url, $appkey, $dataSet) use ($client) {
+            $newParam  = [];
+            // 2.1 处理请求参数列
+            foreach ($dataSet['param'] as $ke  => $param) {
+                if (empty($param)) {
+                    continue;
+                }
+                $newParam[$ke] = (is_object($param)) ? trim($param->__toString()) : trim($param);
+            }
+            $this->dataSet['param'] = $newParam;
+
+            $newData = [];
+            foreach ($dataSet['data'] as $key => $value) {
+                // $tmp = array_combine($dataSet['param'], $value);
+                $temp = [];
+                foreach ($value as $kk => $vv) {
+                    if (empty($vv)) {
+                        continue;
+                    }
+                    $temp[$dataSet['param'][$kk]] = (is_object($vv)) ? trim($vv->__toString()) : trim($vv);
+                }
+                $newData[] = $temp;
+
+                $params = array_merge($temp, ['key' => $appkey]);
+                $uri = $url.'?'.http_build_query($params);
+                yield function() use ($client, $uri) {
+                    return $client->getAsync($uri);
+                };
+            }
+            $this->dataSet['data'] = $newData;
+        };
+
+        $pool = new Pool($client, $requests($url, $appkey, $this->dataSet), [
             'concurrency' => $this->concurrent, // 并发设置
             'fulfilled' => function($response, $index) {
                 // this is delivered each successful response
