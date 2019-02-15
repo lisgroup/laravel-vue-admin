@@ -55,7 +55,7 @@ class NewBusRepository
     public function getLineID($line)
     {
         $html = new Http();
-        $result = $html->get($this->url.'/line.php', ['line' => $line], 4);
+        $result = $html->get($this->url.'/line.php', ['line' => $line]);
         // $result['content'] = $this->html();
 
         $queryList = QueryList::html($result['content']);
@@ -104,29 +104,49 @@ class NewBusRepository
             }
         }
 
+        if (count($line) == 0) {
+            return [];
+        }
+
         // 准备入库记录操作, 需要放入队列处理
         $list = BusLine::get();
-        foreach ($list as $l) {
+        foreach ($list as $key => $storage) {
+
+            $i = 0;
             foreach ($line as $value) {
-                if ($l['name'] == $value['en_name']) {
+                if ($storage['name'] == $value['en_name']) {
                     $arr = explode('—', $value['station']);
                     // bus_lines 表的 FromTo 字段是否存在 $value['station'] 元素
                     $end = end($arr);
-                    if (strpos($l['FromTo'], $end) !== false) {
-                        $databaseEnd = explode('—', $l['FromTo']);
+                    if (strpos($storage['FromTo'], $end) !== false) {
+                        $databaseEnd = explode('—', $storage['FromTo']);
                         if (end($databaseEnd) == $end) {
                             // — 符号最后元素相同的，满足条件更新数据库
-                            $l->station = $value['station'];
-                            $l->lineID = $value['lineID'];
-                            $rs = $l->save();
+                            $storage->station = $value['station'];
+                            $storage->lineID = $value['lineID'];
+                            $rs = $storage->save();
 
                             if (!$rs) {
-                                Log::error('error--ID: '.$l['id'], $value);
+                                Log::error('error--ID: '.$storage['id'], $value);
                             }
                         }
-
                     }
+                } else {
+                    $i++;
                 }
+            }
+
+            // TODO: 入库逻辑问题待处理
+            if ($key == 0 && count($line) == $i) {
+                // insert 操作
+                $value['name'] = $value['en_name'];
+                unset($value['en_name']);
+                $value['expiration'] = time() + 30 * 24 * 3600;
+                $rs = BusLine::insert($value);
+                if (!$rs) {
+                    Log::error('error--ID: '.$storage['id'], $value);
+                }
+
             }
         }
 
