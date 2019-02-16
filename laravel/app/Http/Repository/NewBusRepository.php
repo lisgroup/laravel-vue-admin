@@ -156,6 +156,38 @@ class NewBusRepository
         return $line;
     }
 
+    /**
+     * 处理数据
+     *
+     * @param $storage
+     * @param $value
+     * @return bool
+     */
+    private function handleData($storage, $value)
+    {
+        $arr = explode('—', $value['station']);
+        // bus_lines 表的 FromTo 字段是否存在 $value['station'] 元素
+        $end = end($arr);
+        if (strpos($storage['FromTo'], $end) !== false) {
+            $databaseEnd = explode('—', $storage['FromTo']);
+            if (end($databaseEnd) == $end) {
+                // — 符号最后元素相同的，满足条件更新数据库
+                $storage->station = $value['station'];
+                $storage->lineID = $value['lineID'];
+                $rs = $storage->save();
+
+                if (!$rs) {
+                    Log::error('error--ID: '.$storage['id'], $value);
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     private function returnData()
     {
         return $data = array(
@@ -1016,37 +1048,6 @@ class NewBusRepository
                 ),
         );
     }
-
-    /**
-     * 处理数据
-     *
-     * @param $storage
-     * @param $value
-     * @return bool
-     */
-    private function handleData($storage, $value)
-    {
-        $arr = explode('—', $value['station']);
-        // bus_lines 表的 FromTo 字段是否存在 $value['station'] 元素
-        $end = end($arr);
-        if (strpos($storage['FromTo'], $end) !== false) {
-            $databaseEnd = explode('—', $storage['FromTo']);
-            if (end($databaseEnd) == $end) {
-                // — 符号最后元素相同的，满足条件更新数据库
-                $storage->station = $value['station'];
-                $storage->lineID = $value['lineID'];
-                $rs = $storage->save();
-
-                if (!$rs) {
-                    Log::error('error--ID: '.$storage['id'], $value);
-                    return false;
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     /**
      * 替换字符串
