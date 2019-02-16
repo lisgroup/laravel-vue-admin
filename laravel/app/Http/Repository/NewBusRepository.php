@@ -92,65 +92,105 @@ class NewBusRepository
         $line = [];
         foreach ($data as $key => $datum) {
             if (isset($datum['lineID'])) {
-                $line[$key]['lineID'] = $datum['lineID'];
+                $line['data'][$key]['lineID'] = $datum['lineID'];
             }
             // 偶数列，直接除 2 得到下标，奇数先减 1 再除以 2
             if ($key % 2 == 0) {
                 $name = str_replace(['（', '）', '路'], ['(', ')', ''], $datum['pName']);
-                $line[$key / 2]['name'] = $datum['pName'];
-                $line[$key / 2]['en_name'] = $name;
+                $line['data'][$key / 2] = [
+                    'station' => $datum['pName'],
+                    'expiration' => time() + 30 * 24 * 3600,
+                ];
+                // $line['data'][$key / 2]['en_name'] = $name;
+                $line['line'][$key / 2] = $name;
             } else {
-                $line[($key - 1) / 2]['station'] = $datum['pName'];
+                $line['data'][($key - 1) / 2] = [
+                    'station' => $datum['pName'],
+                    'expiration' => time() + 30 * 24 * 3600,
+                ];
             }
         }
 
-        if (count($line) == 0) {
+        if (count($line['data']) == 0) {
             return [];
         }
 
         // 准备入库记录操作, 需要放入队列处理
-        $list = BusLine::get();
+        /**
+         * 循环更新和入库的思路：
+         * 1. 遍历 bus_lines , 并 $needInsert = $line['data'];
+         * 2. $line['data'] 中是否存在 $storage【'name'】 数据
+         * 2.1 存在的情况下， 更新数据 , 并删除 $needInsert 中的值
+         * 3. 遍历 $needInsert 插入数据
+         */
+        // 1. 步骤 1
+        $needInsert = $line['data'];
+        $list = BusLine::get()->toArray();
         foreach ($list as $key => $storage) {
 
-            $i = 0;
-            foreach ($line as $value) {
-                if ($storage['name'] == $value['en_name']) {
-                    $arr = explode('—', $value['station']);
-                    // bus_lines 表的 FromTo 字段是否存在 $value['station'] 元素
-                    $end = end($arr);
-                    if (strpos($storage['FromTo'], $end) !== false) {
-                        $databaseEnd = explode('—', $storage['FromTo']);
-                        if (end($databaseEnd) == $end) {
-                            // — 符号最后元素相同的，满足条件更新数据库
-                            $storage->station = $value['station'];
-                            $storage->lineID = $value['lineID'];
-                            $rs = $storage->save();
+            // 2. 步骤 2
+            if (in_array($storage['name'], $line['line'])) {
+                // 2.1 每个线路正常有两条数据，需处理两次
+                $key = array_search($storage['name'], $line['line']);
 
-                            if (!$rs) {
-                                Log::error('error--ID: '.$storage['id'], $value);
-                            }
-                        }
-                    }
+                $res = $this->handleData($storage, $line['data'][$key]);
+                unset($line['line'][$key]);
+                if ($res) {
+                    unset($needInsert[$key]);
                 } else {
-                    $i++;
+                    $key2 = array_search($storage['name'], $line['line']); // $key 补充回来
+                    $res = $this->handleData($storage, $line['data'][$key2]);
+                    if ($res) {
+                        unset($line['line'][$key2]);
+                        unset($needInsert[$key2]);
+                    }
                 }
-            }
-
-            // TODO: 入库逻辑问题待处理
-            if ($key == 0 && count($line) == $i) {
-                // insert 操作
-                $value['name'] = $value['en_name'];
-                unset($value['en_name']);
-                $value['expiration'] = time() + 30 * 24 * 3600;
-                $rs = BusLine::insert($value);
-                if (!$rs) {
-                    Log::error('error--ID: '.$storage['id'], $value);
-                }
-
             }
         }
 
+        // 3. $needInsert 记录需要插入的数据 : 入库操作新逻辑
+        $needKey = array_keys($needInsert);
+        $insert = [];
+        foreach ($needKey as $item) {
+            $insert[] = array_merge($line['data'][$item], ['expiration' => time() + 30 * 24 * 3600]);
+        }
+        $rs = BusLine::insert($insert);
+        if (!$rs) {
+            Log::error('Error--$needInsert 记录需要插入的数据失败: ', $insert);
+        }
+
         return $line;
+    }
+
+
+    /**
+     * 处理数据
+     *
+     * @param $storage
+     * @param $value
+     * @return bool
+     */
+    private function handleData($storage, $value)
+    {
+        $arr = explode('—', $value['station']);
+        // bus_lines 表的 FromTo 字段是否存在 $value['station'] 元素
+        $end = end($arr);
+        if (strpos($storage['FromTo'], $end) !== false) {
+            $databaseEnd = explode('—', $storage['FromTo']);
+            if (end($databaseEnd) == $end) {
+                // — 符号最后元素相同的，满足条件更新数据库
+                $storage->station = $value['station'];
+                $storage->lineID = $value['lineID'];
+                $rs = $storage->save();
+
+                if (!$rs) {
+                    Log::error('error--ID: '.$storage['id'], $value);
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
 
