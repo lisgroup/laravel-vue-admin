@@ -125,11 +125,6 @@ class NewBusRepository
         $needInsert = $line['data'];
         $list = BusLine::get();
         foreach ($list as $key => $storage) {
-
-            if ($storage['id'] > 644) {
-                echo $storage['id'].'<br>';
-            }
-
             // 2. 步骤 2
             $name = str_replace(['（', '）', '路'], ['(', ')', ''], $storage['name']);
             if (in_array($name, $line['line'])) {
@@ -169,6 +164,11 @@ class NewBusRepository
      */
     private function handleData($storage, $value)
     {
+        /**
+         * 更新数据的思路：
+         * 1. $storage['FromTo'] 或者 $storage['station'] 和 $value['station']
+         * 1.1 — 符号最后元素相同则需要更新数据
+         */
         $arr = explode('—', $value['station']);
         // bus_lines 表的 FromTo 字段是否存在 $value['station'] 元素
         $end = end($arr);
@@ -177,15 +177,17 @@ class NewBusRepository
             $databaseEnd = explode('—', $fromTo);
             if (end($databaseEnd) == $end) {
                 // — 符号最后元素相同的，满足条件更新数据库
-                $storage['FromTo'] || $storage->FromTo = $storage['station'];
-                $storage->station = $value['station'];
-                $storage->lineID = $value['lineID'];
-                // $rs = $storage->save();
-                $rs = true;
-                if (!$rs) {
-                    Log::error('error--ID: '.$storage['id'], $value);
-                    return false;
+                // 再判断下如果数据相同就不需要更新数据
+                if ($storage->FromTo != $storage['station'] || $storage->station != $value['station'] || $storage->lineID != $value['lineID']) {
+                    $storage['FromTo'] || $storage->FromTo = $storage['station'];
+                    $storage->station = $value['station'];
+                    $storage->lineID = $value['lineID'];
+                    if (!$storage->save()) {
+                        Log::error('error--ID: '.$storage['id'], $value);
+                        return false;
+                    }
                 }
+
                 return true;
             }
         }
