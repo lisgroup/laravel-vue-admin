@@ -54,7 +54,7 @@ class NewBusRepository
      */
     public function getLineID($line)
     {
-        /*$html = new Http();
+        $html = new Http();
         $result = $html->get($this->url.'/line.php', ['line' => $line]);
         // $result['content'] = $this->html();
 
@@ -77,18 +77,9 @@ class NewBusRepository
             return [];
         }
 
-        $data = $arrayData->all();*/
-        // $name = $arrayData[0]['line'];
-        // $busLines = BusLine::where('name', 'like', $name)->get();
+        $data = $arrayData->all();
 
-        // $data = [
-        //     ["pName" => "快线1号", "lineID" => "10000239"],
-        //     ["pName" => "木渎公交换乘枢纽站—星塘公交中心首末站", "lineID" => "10000317"],
-        //     ["pName" => "快线1号"],
-        //     ["pName" => "星塘公交中心首末站—木渎公交换乘枢纽站"]
-        // ];
-
-        $data = $this->returnData();
+        // $data = $this->returnData();
         // 遍历数据 下标奇偶数加工处理
         $line = [];
         foreach ($data as $key => $datum) {
@@ -177,14 +168,28 @@ class NewBusRepository
             $databaseEnd = explode('—', $fromTo);
             if (end($databaseEnd) == $end) {
                 // — 符号最后元素相同的，满足条件更新数据库
-                // 再判断下如果数据相同就不需要更新数据
-                if ($storage->FromTo != $storage['station'] || $storage->station != $value['station'] || $storage->lineID != $value['lineID']) {
+                // 再判断下如果数据库三个字段为空 数据相同就不需要更新数据
+                if (!$storage->FromTo || !$storage->station || !$storage->lineID) {
+                    Log::info('bus_lines 数据： ', $storage->toArray());
+                    Log::info('第三方请求的数据：  ', $value);
                     $storage['FromTo'] || $storage->FromTo = $storage['station'];
                     $storage->station = $value['station'];
                     $storage->lineID = $value['lineID'];
                     if (!$storage->save()) {
                         Log::error('error--ID: '.$storage['id'], $value);
                         return false;
+                    }
+                } else {
+                    // if ($storage->FromTo != $fromTo || $storage->station != $value['station'] || $storage->lineID != $value['lineID'])
+                    // 3.1 再次查询数据库中是否存在 lineID
+                    if (!BusLine::where('lineID', $value['lineID'])->get()) {
+                        Log::info('need insert 请求的数据：  ', $value);
+                        // 如果字段有不同的，需要插入数据
+                        $value['FromTo'] = $value['station'];
+                        if (!BusLine::insert($value)) {
+                            Log::error('INSERT Error--: ', $value);
+                            return false;
+                        }
                     }
                 }
 
@@ -194,8 +199,11 @@ class NewBusRepository
         return false;
     }
 
-
-    private function returnData()
+    /**
+     * 模拟的数据
+     * @return array
+     */
+    protected function returnData()
     {
         return $data = array(
             0 =>
