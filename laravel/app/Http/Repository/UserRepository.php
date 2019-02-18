@@ -106,7 +106,7 @@ class UserRepository
         }
         // 0. 校验新密码和重复密码是否一致
         if ($input['password'] != $input['repassword']) {
-            return ['code' => 1213, 'reason' => '重复密码和新密码不一致'];
+            return ['code' => 1213,'reason' => '重复密码和新密码不一致'];
         }
 
         // 1. 先获取个人信息

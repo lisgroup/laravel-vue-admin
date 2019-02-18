@@ -57,8 +57,7 @@ export default {
       php: [],
       activeNames: ['1', '2'],
       chartLine: null,
-      xData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-      yData: [1, 2, 2, 3, 4, 3, 3]
+      xData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
     }
   },
   computed: {
