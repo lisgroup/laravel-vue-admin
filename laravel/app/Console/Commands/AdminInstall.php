@@ -38,9 +38,10 @@ class AdminInstall extends Command
     public function handle()
     {
         $this->executeShellCommands('php artisan key:generate');
-        $this->executeShellCommands('php artisan migrate --seed');
-        $this->executeShellCommands('php artisan jwt:secret');
+        $this->executeShellCommands('php artisan migrate');
+        $this->executeShellCommands('php artisan db:seed');
         $this->executeShellCommands('php artisan storage:link');
+        $this->executeShellCommands('php artisan jwt:secret --force');
 
         $param = $this->argument('param'); // 不指定参数名的情况下用 argument
         if ($param == 'search') {

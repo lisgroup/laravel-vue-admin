@@ -54,6 +54,10 @@ CACHE_DRIVER=redis
 REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
+
+# 4. 极验 geetest 配置替换
+GEE_CAPTCHA_ID=`YOUR ID`
+GEE_PRIVATE_KEY=`YOUR KEY`
 ```
 
 ### 3. 运行安装命令，会自动执行数据迁移和填充，并生成 key
