@@ -109,11 +109,16 @@ class NewBusRepository
         /***************** 队列操作 start *******************/
         // $job = (new SaveNewBusLine($data->toArray()));
         // dispatch($job);
+        // $this->updateBusLine($line);
         SaveNewBusLine::dispatch($line);
 
         return $line;
     }
 
+    /**
+     * 循环更新和入库 bus_lines 表数据
+     * @param $line
+     */
     public function updateBusLine($line)
     {
         /**
