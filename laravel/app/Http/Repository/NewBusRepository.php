@@ -8,6 +8,7 @@
 
 namespace App\Http\Repository;
 
+use App\Jobs\SaveNewBusLine;
 use App\Models\BusLine;
 use Curl\Http;
 use Illuminate\Support\Facades\Log;
@@ -105,6 +106,16 @@ class NewBusRepository
         }
 
         // 准备入库记录操作, 需要放入队列处理
+        /***************** 队列操作 start *******************/
+        // $job = (new SaveNewBusLine($data->toArray()));
+        // dispatch($job);
+        SaveNewBusLine::dispatch($line);
+
+        return $line;
+    }
+
+    public function updateBusLine($line)
+    {
         /**
          * 循环更新和入库的思路：
          * 1. 遍历 bus_lines , 并 $needInsert = $line['data'];
@@ -142,8 +153,6 @@ class NewBusRepository
                 Log::error('Error--$needInsert 记录需要插入的数据失败: ', $needInsert);
             }
         }
-
-        return $line;
     }
 
     /**
@@ -186,6 +195,7 @@ class NewBusRepository
                         Log::info('need insert 请求的数据：  ', $value);
                         // 如果字段有不同的，需要插入数据
                         $value['FromTo'] = $value['station'];
+                        $value['created_at'] = $value['updated_at'] = date('Y-m-d H:i:s');
                         if (!BusLine::insert($value)) {
                             Log::error('INSERT Error--: ', $value);
                             return false;
