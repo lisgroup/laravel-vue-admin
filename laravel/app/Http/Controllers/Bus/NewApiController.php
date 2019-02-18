@@ -22,8 +22,10 @@ class NewApiController extends CommonController
     {
         $repo = NewBusRepository::getInstent();
 
-        $list = $repo->getLineID('10');
-        dump($list);
+        // $list = $repo->getLineID('10');
+        // dump($list);
+        $lineID = '10000239';
+        dump($repo->lineStatus($lineID));
 
         // BusRepository::getInstent()->cronTaskTable();
         if (PHP_SAPI == 'cli') {

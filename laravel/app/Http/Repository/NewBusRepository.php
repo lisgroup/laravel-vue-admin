@@ -46,6 +46,22 @@ class NewBusRepository
     }
 
     /**
+     * 获取线路状态详情
+     * POST http://bus.2500.tv/api_line_status.php
+     * 参数 lineID:102233
+     *
+     * @param $lineID
+     *
+     * @return array
+     */
+    public function lineStatus($lineID)
+    {
+        $url = $this->url.'/api_line_status.php';
+        $result = (new Http())->post($url, ['lineID' => $lineID], 7);
+        return $result['content'];
+    }
+
+    /**
      * 1. 采集所有线路的 lineID
      * 地址： http://bus.2500.tv/line.php?line=
      *
@@ -101,7 +117,7 @@ class NewBusRepository
             }
         }
 
-        if (count($line['data']) == 0) {
+        if (!isset($line['data']) || count($line['data']) == 0) {
             return [];
         }
 
