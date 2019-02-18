@@ -26,6 +26,11 @@ class NewBusRepository
     protected $url = 'http://bus.2500.tv';
 
     /**
+     * @var \Curl\Http $curl
+     */
+    private $curl;
+
+    /**
      * @var self 单例
      */
     private static $instance;
@@ -57,7 +62,8 @@ class NewBusRepository
     public function lineStatus($lineID)
     {
         $url = $this->url.'/api_line_status.php';
-        $result = (new Http())->post($url, ['lineID' => $lineID], 7);
+        $this->curl || $this->curl = new Http();
+        $result = ($this->curl)->post($url, ['lineID' => $lineID], 7);
         return $result['content'];
     }
 
@@ -71,8 +77,8 @@ class NewBusRepository
      */
     public function getLineID($line)
     {
-        $html = new Http();
-        $result = $html->get($this->url.'/line.php', ['line' => $line]);
+        $this->curl || $this->curl = new Http();
+        $result = $this->curl->get($this->url.'/line.php', ['line' => $line]);
         // $result['content'] = $this->html();
 
         $queryList = QueryList::html($result['content']);
