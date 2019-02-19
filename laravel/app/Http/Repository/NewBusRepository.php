@@ -247,10 +247,11 @@ class NewBusRepository
             if (end($databaseEnd) == $end) {
                 // — 符号最后元素相同的，满足条件更新数据库
                 // 再判断下如果数据库三个字段为空 数据相同就不需要更新数据
+                $value['station'] = str_replace(['（', '）', '－', '-', '=&gt;'], ['(', ')', '—', '—', '—'], $value['station']);
                 if (!$storage->FromTo || !$storage->station || !$storage->lineID) {
                     Log::info('bus_lines 数据： ', $storage->toArray());
                     Log::info('第三方请求的数据：  ', $value);
-                    $storage['FromTo'] || $storage->FromTo = $storage['station'];
+                    $storage->FromTo || $storage->FromTo = $storage['station'];
                     $storage->station = $value['station'];
                     $storage->lineID = $value['lineID'];
                     if (!$storage->save()) {
