@@ -17,6 +17,11 @@ use QL\QueryList;
 class NewBusRepository
 {
     /**
+     * @var int 默认分页条数
+     */
+    public $perPage = 20;
+
+    /**
      * @var mixed|QueryList 实例
      */
     protected $ql;
@@ -51,7 +56,7 @@ class NewBusRepository
     }
 
     /**
-     * 获取线路状态详情
+     * 2. 获取线路状态详情
      * POST http://bus.2500.tv/api_line_status.php
      * 参数 lineID:102233
      *
@@ -59,12 +64,40 @@ class NewBusRepository
      *
      * @return array
      */
-    public function lineStatus($lineID)
+    public function getLineStatus($lineID)
     {
         $url = $this->url.'/api_line_status.php';
         $this->curl || $this->curl = new Http();
         $result = ($this->curl)->post($url, ['lineID' => $lineID], 7);
-        return $result['content'];
+
+        // 处理数据结果
+        $lineDetail = json_decode($result['content'], true);
+
+        $return = [];
+        foreach ($lineDetail['data'] as $key => $detail) {
+            $return[$key]['stationName'] = $detail['StationCName'];
+            $return[$key]['stationCode'] = $detail['Code'];
+            $return[$key]['carCode'] = $detail['BusInfo'];
+            $return[$key]['ArrivalTime'] = $detail['InTime'];
+            $return[$key]['lineID'] = $detail['ID'];
+        }
+
+        return $return;
+    }
+
+    public function getLine($line)
+    {
+        // 从缓存库中搜索
+        try {
+            $list = BusLine::search($line)->paginate($this->perPage)->toArray();
+        } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException|\Exception $exception) {
+            $list = BusLine::where('name', 'LIKE', "%$line%")->paginate($this->perPage)->toArray();
+        }
+        // 如果 data 为空，请求第三方接口获取 lineID
+        if (empty($list['data'])) {
+            $list = $this->getLineID($line);
+        }
+        return $list;
     }
 
     /**
@@ -134,7 +167,16 @@ class NewBusRepository
         // $this->updateBusLine($line);
         SaveNewBusLine::dispatch($line);
 
-        return $line;
+        // "link":"APTSLine.aspx?LineGuid=792365ed-82b2-423f-bbdc-5376d1507d21&LineInfo=110(南线)","bus":"110","FromTo":"南线"
+        // 遍历数组处理数据
+        $return = [];
+        foreach ($line['data'] as $key => $value) {
+            $return[$key]['lineID'] = $value['lineID'];
+            $return[$key]['bus'] = $value['name'];
+            $return[$key]['FromTo'] = $value['station'];
+        }
+
+        return $return;
     }
 
     /**
