@@ -365,6 +365,8 @@ class BusRepository
          * 入库前需要先判断是否已经存在
          */
         if (!empty($lines)) {
+            $station = str_replace(['（', '）', '－', '-', '=&gt;'], ['(', ')', '—', '—', '—'], $lines['FromTo']);
+            $lines = array_merge($lines, ['FromTo' => $station, 'station' => $station, 'lineID' => '']);
             $line = BusLine::where('name', $lines['name'])->where('FromTo', $lines['FromTo'])->first();
             if (!empty($line)) {
                 $rs = BusLine::where('id', $line['id'])->update($lines);
