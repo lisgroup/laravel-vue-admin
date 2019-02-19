@@ -14,7 +14,7 @@ class BusLine extends Model
      * @var string
      */
     // protected $table = 'bus_lines';
-    protected $fillable = ['name', 'cid', 'LineGuid', 'LineInfo', 'FromTo', 'expiration'];
+    protected $fillable = ['name', 'cid', 'LineGuid', 'LineInfo', 'FromTo', 'station', 'expiration', 'lineID'];
 
     /**
      * 索引的字段
@@ -23,6 +23,6 @@ class BusLine extends Model
      */
     public function toSearchableArray()
     {
-        return $this->only('name', 'LineInfo', 'FromTo');
+        return $this->only('name', 'LineInfo', 'FromTo', 'station');
     }
 }
