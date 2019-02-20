@@ -23,7 +23,7 @@
           &nbsp;&nbsp; 任务执行时并发请求的数量，字段必须是数字默认： 5
         </el-col>
       </el-form-item>
-      <el-form-item label="上传文件" prop="upload_url">
+      <el-form-item label="上传文件" prop="upload_url" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
         <input v-model="form.upload_url" type="hidden">
         <el-upload
           :action="uploadUrl"
