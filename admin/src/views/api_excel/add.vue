@@ -134,8 +134,15 @@ export default {
       return this.$confirm(`确定移除 ${file.name}？`)
     },
     handleSuccess(response, file, fileList) {
-      console.log(response)
-      this.form.upload_url = response.data.url
+      // console.log(response)
+      if (response.code !== 200) {
+        this.$message({
+          message: response.reason,
+          type: 'error'
+        })
+      } else {
+        this.form.upload_url = response.data.url
+      }
     },
     onSubmit(form) {
       console.log(this.form)
