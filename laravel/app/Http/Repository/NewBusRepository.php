@@ -85,20 +85,28 @@ class NewBusRepository
                 $return[$key]['lineID'] = $detail['ID'];
             }
         }
+        //"to":"1001(景城邻里中心首末站-景城邻里中心首末站)","line"
 
-        return $return;
+        return ['to' => '', 'line' => $return];
     }
 
+    /**
+     * 111--数据库查询获取线路的列表
+     *
+     * @param $line
+     *
+     * @return array
+     */
     public function getLine($line)
     {
         // 从缓存库中搜索
         try {
-            $list = BusLine::search($line)->paginate($this->perPage)->toArray();
+            $list = BusLine::search($line)->get('name', 'cid', 'LineGuid', 'LineInfo', 'station', 'lineID')->toArray();
         } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException|\Exception $exception) {
-            $list = BusLine::where('name', 'LIKE', "%$line%")->select('name', 'cid', 'LineGuid', 'LineInfo', 'station', 'lineID')->paginate($this->perPage)->toArray();
+            $list = BusLine::where('name', 'LIKE', "%$line%")->select('name', 'cid', 'LineGuid', 'LineInfo', 'station', 'lineID')->toArray();
         }
         // 如果 data 为空，请求第三方接口获取 lineID
-        if (empty($list['data']['a'])) {
+        if (empty($list['data'])) {
             $list = $this->getLineID($line);
         }
         return $list;
@@ -175,6 +183,7 @@ class NewBusRepository
         // 遍历数组处理数据
 
         foreach ($line['data'] as $key => $value) {
+            $line['data'][$key]['bus'] = $value['name'];
             $line['data'][$key]['FromTo'] = $value['station'];
             $line['data'][$key]['cid'] = '';
             $line['data'][$key]['LineGuid'] = '';

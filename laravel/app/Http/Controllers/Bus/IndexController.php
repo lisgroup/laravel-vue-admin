@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Bus;
 
 use App\Http\Repository\BusRepository;
+use App\Http\Repository\NewBusRepository;
 use Illuminate\Http\Request;
 
 class IndexController extends CommonController
@@ -40,7 +41,12 @@ class IndexController extends CommonController
     {
         $line = $request['linename'];
         $line = preg_replace('/快\b(\d)/', '快线$1号', $line);
+
         $list = BusRepository::getInstent()->getList($line);
+
+        if (empty($list)) {
+            $list = NewBusRepository::getInstent()->getLine($line);
+        }
 
         // return $this->exportData($list);
         return $this->out(200, $list);
@@ -61,10 +67,12 @@ class IndexController extends CommonController
         // $request->input('href', '');
         // $post = input('post.', '', 'htmlspecialchars');
         $post = $request->all();
-        // $postJson = '{"href":"APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4","LineGuid":"af9b209b-f99d-4184-af7d-e6ac105d8e7f","LineInfo":"\u5feb\u7ebf1\u53f7(\u6728\u6e0e\u516c\u4ea4\u6362\u4e58\u67a2\u7ebd\u7ad9)"}';
-        // $post = json_decode($postJson, true);
-        // 'href' => string 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4' (length=54)  'LineGuid' => string '9d090af5-c5c6-4db8-b34e-2e8af4f63216' (length=36)  'LineInfo' => string '1(公交一路新村)' (length=21)
-        if (!empty($post) && !empty($post['href']) && !empty($post['LineGuid']) && !empty($post['LineInfo'])) {
+
+        // 新版公交查询
+        if (!empty($post['lineID'])) {
+            $data = NewBusRepository::getInstent()->getLineStatus($post['lineID']);
+        } elseif (!empty($post) && !empty($post['href']) && !empty($post['LineGuid']) && !empty($post['LineInfo'])) {
+            // 'href' => string 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4' (length=54)  'LineGuid' => string '9d090af5-c5c6-4db8-b34e-2e8af4f63216' (length=36)  'LineInfo' => string '1(公交一路新村)' (length=21)
             $parseUrl = parse_url($post['href']);
             parse_str($parseUrl['query'], $params);
             unset($post['href']);
