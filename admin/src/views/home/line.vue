@@ -7,26 +7,6 @@
       <el-button slot="append" icon="el-icon-search" @click="goSearch">搜索</el-button>
     </el-input>
 
-    <el-table
-      v-if="isShow"
-      :data="tableData"
-      border
-      style="width: 100%">
-      <el-table-column
-        label="线路"
-        width="100">
-        <template slot-scope="scope">
-          <el-button type="text" @click="handleCheck(scope.$index, scope.row.link)">{{ scope.row.bus }}
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label="方向" width="">
-        <template slot-scope="scope">
-          <el-button type="text" @click="handleCheck(scope.$index, scope.row.link)" v-html="scope.row.FromTo"/>
-        </template>
-      </el-table-column>
-    </el-table>
-
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;color:green;">
       <legend>{{ to }}&nbsp;<button class="layui-btn layui-btn-normal" @click="handleReload()">刷新</button>
       </legend>
@@ -55,27 +35,29 @@ export default {
       isShow: false,
       input: '',
       to: '',
+      href: '',
       tableData: [],
       tableLine: []
     }
   },
   created() {
+    this.href = this.$route.query
     this.handleReload()
   },
   methods: {
-    handleReload(href) {
+    handleReload() {
       this.loading = true
-      const url = '/api/busLine'
-      if (!href) {
-        // console.log(href)
-        href = this.$route.query.href
-      }
-      // console.log(href)
-      const param = 'href=' + href
-      request.post(url, param).then(res => {
+      this.to = this.href.to
+
+      const lineID = this.href.lineID
+      const params = lineID ? 'lineID=' + lineID + '&to=' + this.href.to : 'href=' + this.href.href
+
+      request.post('/api/busLine', params).then(res => {
         // this.loading = false
         // console.log(res.data)
-        this.to = res.data.to
+        if (res.data.to) {
+          this.to = res.data.to
+        }
         this.tableLine = res.data.line
       }).catch(err => {
         return err
@@ -95,23 +77,7 @@ export default {
         })
         return false
       }
-      this.isShow = true
-      const url = '/api/getList?linename=' + line
-      request.get(url).then(res => {
-        this.tableData = res.data
-      }).catch(err => {
-        return err
-        // console.log(err)
-      })
-    },
-    handleCheck(index, link) {
-      // console.log(this.tableData.length)
-      if (this.tableData.length > 5) {
-        this.isShow = false
-      }
-      // this.$router.push({ name: 'line', query: { href: link } })
-      this.handleReload(link)
-      // console.log(link)
+      this.$router.push({ name: 'index', query: { linename: line }})
     }
   }
 }

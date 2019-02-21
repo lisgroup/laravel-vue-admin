@@ -14,12 +14,12 @@
       style="width: 100%">
       <el-table-column label="线路" width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleCheck(scope.$index, scope.row.link)">{{ scope.row.bus }}</el-button>
+          <el-button type="text" @click="handleCheck(scope.$index, scope.row)">{{ scope.row.bus }}</el-button>
         </template>
       </el-table-column>
       <el-table-column label="方向" width="">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleCheck(scope.$index, scope.row.link)" v-html="scope.row.FromTo"/>
+          <el-button type="text" @click="handleCheck(scope.$index, scope.row)" v-html="scope.row.FromTo"/>
         </template>
       </el-table-column>
     </el-table>
@@ -38,6 +38,9 @@ export default {
       tableData: []
     }
   },
+  created() {
+    this.getLine()
+  },
   methods: {
     goSearch() {
       const line = this.input
@@ -53,14 +56,30 @@ export default {
       request.get(url).then(res => {
         // const data = res.data
         this.tableData = res.data
+        // console.log(this.tableData)
       }).catch(err => {
         return err
         // console.log(err);
       })
     },
-    handleCheck(index, link) {
-      this.$router.push({ name: 'line', query: { href: link }})
-      // console.log(link);
+    handleCheck(index, row) {
+      // keep-alive 实现前进后退不刷新
+      const query = row.lineID ? { lineID: row.lineID, to: row.LineInfo } : { href: row.link }
+      this.$router.push({ name: 'line', query })
+    },
+
+    getLine() {
+      const that = this
+      this.loading = true
+      const line = this.$route.query.linename
+      if (line) {
+        that.input = line
+        that.goSearch()
+      }
+
+      setTimeout(() => {
+        this.loading = false
+      }, 800)
     }
   }
 }
