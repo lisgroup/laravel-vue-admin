@@ -71,15 +71,19 @@ class NewBusRepository
         $result = ($this->curl)->post($url, ['lineID' => $lineID], 7);
 
         // 处理数据结果
-        $lineDetail = json_decode($result['content'], true);
+        $content = trim($result['content']);
+        $str = substr($content, strpos($content, '{'));
+        $lineDetail = json_decode($str, true);
 
         $return = [];
-        foreach ($lineDetail['data'] as $key => $detail) {
-            $return[$key]['stationName'] = $detail['StationCName'];
-            $return[$key]['stationCode'] = $detail['Code'];
-            $return[$key]['carCode'] = $detail['BusInfo'];
-            $return[$key]['ArrivalTime'] = $detail['InTime'];
-            $return[$key]['lineID'] = $detail['ID'];
+        if ($lineDetail && !empty($lineDetail['data'])) {
+            foreach ($lineDetail['data'] as $key => $detail) {
+                $return[$key]['stationName'] = $detail['StationCName'];
+                $return[$key]['stationCode'] = $detail['Code'];
+                $return[$key]['carCode'] = $detail['BusInfo'];
+                $return[$key]['ArrivalTime'] = $detail['InTime'];
+                $return[$key]['lineID'] = $detail['ID'];
+            }
         }
 
         return $return;
@@ -91,10 +95,10 @@ class NewBusRepository
         try {
             $list = BusLine::search($line)->paginate($this->perPage)->toArray();
         } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException|\Exception $exception) {
-            $list = BusLine::where('name', 'LIKE', "%$line%")->paginate($this->perPage)->toArray();
+            $list = BusLine::where('name', 'LIKE', "%$line%")->select('name', 'cid', 'LineGuid', 'LineInfo', 'station', 'lineID')->paginate($this->perPage)->toArray();
         }
         // 如果 data 为空，请求第三方接口获取 lineID
-        if (empty($list['data'])) {
+        if (empty($list['data']['a'])) {
             $list = $this->getLineID($line);
         }
         return $list;
@@ -169,14 +173,15 @@ class NewBusRepository
 
         // "link":"APTSLine.aspx?LineGuid=792365ed-82b2-423f-bbdc-5376d1507d21&LineInfo=110(南线)","bus":"110","FromTo":"南线"
         // 遍历数组处理数据
-        $return = [];
+
         foreach ($line['data'] as $key => $value) {
-            $return[$key]['lineID'] = $value['lineID'];
-            $return[$key]['bus'] = $value['name'];
-            $return[$key]['FromTo'] = $value['station'];
+            $line['data'][$key]['FromTo'] = $value['station'];
+            $line['data'][$key]['cid'] = '';
+            $line['data'][$key]['LineGuid'] = '';
+            $line['data'][$key]['LineInfo'] = $value['name'].'('.$value['station'].')';
         }
 
-        return $return;
+        return $line['data'];
     }
 
     /**

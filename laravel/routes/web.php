@@ -43,6 +43,7 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
     Route::any('search', 'IndexController@search');
     Route::any('new', 'NewApiController@index');
     Route::any('line', 'NewApiController@getList');
+    Route::any('new_line', 'NewApiController@newBusLine');
 });
 
 /******** 测试任务的接口地址 *********/

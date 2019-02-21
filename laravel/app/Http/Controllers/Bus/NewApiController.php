@@ -54,4 +54,22 @@ class NewApiController extends CommonController
         return $this->out(200, $list);
     }
 
+    /**
+     * 线路查询详情，列表展示
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function newBusLine(Request $request)
+    {
+        $data = [];
+        $post = $request->all();
+        if ($post && !empty($post['lineID'])) {
+            $data = NewBusRepository::getInstent()->getLineStatus($post['lineID']);
+        }
+
+        return $this->out(200, $data);
+    }
+
 }
