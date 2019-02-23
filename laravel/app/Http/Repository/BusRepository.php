@@ -170,7 +170,8 @@ class BusRepository
             /***************** 队列操作 start *******************/
             // $job = (new SaveBusLine($data->toArray()))->delay(Carbon::now()->addMinute(1));
             // dispatch($job);
-            SaveBusLine::dispatch($arrayData)->delay(Carbon::now()->addMinute(1));
+            // 新版公交查询暂关闭入库队列
+            // SaveBusLine::dispatch($arrayData)->delay(Carbon::now()->addMinute(1));
             /***************** 队列操作 end   *******************/
             // 注释下面代码，使用队列异步处理
             // 车次入库操作
