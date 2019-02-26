@@ -275,13 +275,15 @@ class MultithreadingRepository
                     }
                     $temp[$dataSet['param'][$kk]] = (is_object($vv)) ? trim($vv->__toString()) : trim($vv);
                 }
-                $newData[] = $temp;
+                if ($temp) {
+                    $newData[] = $temp;
 
-                $params = array_merge($temp, ['key' => $appkey]);
-                $uri = $url.'?'.http_build_query($params);
-                yield function() use ($client, $uri) {
-                    return $client->getAsync($uri);
-                };
+                    $params = array_merge($temp, ['key' => $appkey]);
+                    $uri = $url.'?'.http_build_query($params);
+                    yield function() use ($client, $uri) {
+                        return $client->getAsync($uri);
+                    };
+                }
             }
             $this->dataSet['data'] = $newData;
         };
