@@ -48,7 +48,8 @@ class IndexController extends CommonController
                 break;
 
             default:
-                $list = BusRepository::getInstent()->getList($line);
+                // $list = BusRepository::getInstent()->getList($line);
+                $list = [];
                 if (empty($list)) {
                     $list = NewBusRepository::getInstent()->getLine($line);
                 }
