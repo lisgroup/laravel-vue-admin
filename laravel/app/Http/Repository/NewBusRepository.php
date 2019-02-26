@@ -103,7 +103,7 @@ class NewBusRepository
         try {
             $list = BusLine::search($line)->get('name', 'cid', 'LineGuid', 'LineInfo', 'station', 'lineID')->toArray();
         } catch (\Elasticsearch\Common\Exceptions\NoNodesAvailableException|\Exception $exception) {
-            $list = BusLine::where('name', 'LIKE', "%$line%")->select('name', 'cid', 'LineGuid', 'LineInfo', 'station', 'lineID')->toArray();
+            $list = BusLine::where('name', 'LIKE', "%$line%")->select('name', 'cid', 'LineGuid', 'LineInfo', 'station', 'lineID')->get()->toArray();
         }
         // 如果 data 为空，请求第三方接口获取 lineID
         if (empty($list['data'])) {
