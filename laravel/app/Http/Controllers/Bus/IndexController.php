@@ -41,11 +41,17 @@ class IndexController extends CommonController
     {
         $line = $request['linename'];
         $line = preg_replace('/快\b(\d)/', '快线$1号', $line);
+        switch ($request['type']) {
+            case '1':
+            case 'new':
+                $list = NewBusRepository::getInstent()->getLine($line);
+                break;
 
-        $list = BusRepository::getInstent()->getList($line);
-
-        if (empty($list)) {
-            $list = NewBusRepository::getInstent()->getLine($line);
+            default:
+                $list = BusRepository::getInstent()->getList($line);
+                if (empty($list)) {
+                    $list = NewBusRepository::getInstent()->getLine($line);
+                }
         }
 
         // return $this->exportData($list);
