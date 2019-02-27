@@ -430,7 +430,9 @@ class MultithreadingRepository
             $objWriter = IOFactory::createWriter($objPHPExcel, 'Xlsx');
             $path = storage_path('app/public');
             // is_dir($path) || mkdir($path, 777, true);
-            $fileName = '/out-208-'.date('mdHis').'.xlsx';
+            $did = explode('/', $param['website']);
+            $did = is_numeric(end($did)) ? end($did) : '999';
+            $fileName = '/out-'.$did.'-'.date('YmdHis').uniqid().'.xlsx';
             $objWriter->save($path.$fileName);
 
             return '/storage'.$fileName;
