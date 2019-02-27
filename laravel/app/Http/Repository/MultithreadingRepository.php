@@ -357,7 +357,12 @@ class MultithreadingRepository
             // 1.2 处理配置的字段
             if ($param['result'] && $arr = explode(',', $param['result'])) {
                 foreach ($arr as $item) {
-                    $setActive->setCellValue($i.'1', $array['result'][$item] ?? '');
+                    $val = $item ?? '';
+                    if (strpos($item, '.') !== false) {
+                        $kems = explode('.', $item);
+                        $val = end($kems);
+                    }
+                    $setActive->setCellValue($i.'1', $val ?? '');
                     $i++;
                 }
             }
@@ -384,18 +389,16 @@ class MultithreadingRepository
                     foreach ($arr as $item) {
                         // 2019-02-27 日新增： 354 接口配置 data.0.status 字段
                         // 输出需要 $array['result']['data'][0]['status']
+                        $val = $array['result'][$item] ?? '';
                         if (strpos($item, '.') !== false) {
                             $kems = explode('.', $item);
                             $val = $array['result'];
                             foreach ($kems as $kem) {
                                 $val = $val[$kem] ?? '';
                             }
-                            if (is_array($val)) {
-                                $val = '';
-                            }
-                        } else {
-                            $val = $array['result'][$item] ?? '';
+
                         }
+
                         $setActive->setCellValue($i.$number, $val);
                         $i++;
                     }
