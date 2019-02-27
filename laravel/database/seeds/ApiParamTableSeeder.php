@@ -39,11 +39,11 @@ class ApiParamTableSeeder extends Seeder
                 'method' => 'get',
                 'url' => 'http://v.juhe.cn/telecom/query',
                 'param' => 'idcard,realname,mobile',
-                'result' => '',
-                'is_need' => 1,
+                'result' => 'res,resmsg',
+                'is_need' => 0,
                 'state' => 1,
                 'created_at' => '2019-01-29 20:10:08',
-                'updated_at' => '2019-01-29 20:15:10',
+                'updated_at' => '2019-02-27 14:24:11',
             ),
             2 => 
             array (
@@ -114,6 +114,20 @@ class ApiParamTableSeeder extends Seeder
                 'state' => 1,
                 'created_at' => '2019-01-29 20:10:08',
                 'updated_at' => '2019-01-29 20:15:10',
+            ),
+            7 => 
+            array (
+                'id' => 8,
+                'website' => 'https://www.juhe.cn/docs/api/id/354',
+                'name' => '手机状态查询',
+                'method' => 'get',
+                'url' => 'http://apis.juhe.cn/invalid_number/query',
+                'param' => 'mobiles',
+                'result' => 'data.0.status',
+                'is_need' => 0,
+                'state' => 1,
+                'created_at' => '2019-02-27 06:06:23',
+                'updated_at' => '2019-02-27 06:06:23',
             ),
         ));
         
