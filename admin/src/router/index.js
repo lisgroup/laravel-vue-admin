@@ -135,8 +135,8 @@ export const constantRouterMap = [
     path: '/list',
     component: Layout,
     redirect: '/task',
-    name: '列表',
-    meta: { title: '列表展示', icon: 'example' },
+    name: '公交',
+    meta: { title: '公交管理', icon: 'bus' },
     children: [
       { path: '/task/search', name: 'search', component: () => import('@/views/task/search'), hidden: true },
       { path: '/task/newBus', name: 'NewBus', component: () => import('@/views/task/newBus'), hidden: true },
@@ -145,7 +145,7 @@ export const constantRouterMap = [
         path: '/task',
         name: '定时任务',
         component: () => import('@/views/task/index'),
-        meta: { title: '定时任务', icon: 'table' }
+        meta: { title: '定时任务', icon: 'task' }
       },
       { path: 'lines/add', name: 'linesAdd', component: () => import('@/views/lines/add'), hidden: true },
       { path: 'lines/edit/:id', name: 'linesEdit', component: () => import('@/views/lines/edit'), hidden: true },
