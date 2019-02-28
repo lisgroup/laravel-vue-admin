@@ -51,6 +51,10 @@ export default {
         })
         return false
       }
+
+      const query = { linename: line }
+      this.$router.push({ name: 'index', query })
+
       this.isShow = true
       const url = '/api/getList?linename=' + line
       request.get(url).then(res => {
