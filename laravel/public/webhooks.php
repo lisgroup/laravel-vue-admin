@@ -9,7 +9,7 @@ if (empty($requestBody)) {
 }
 $content = json_decode($requestBody, true);
 var_dump($content);
-//若是主分支且提交数大于0
+// 若是主分支且提交数大于 0
 if ($content['ref'] == 'refs/heads/master' && $content['total_commits_count'] > 0) {
     $res = shell_exec("cd {$path} && git pull 2>&1");//以www用户运行
     $res_log = '-------------------------'.PHP_EOL;
