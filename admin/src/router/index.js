@@ -156,6 +156,12 @@ export const constantRouterMap = [
         meta: { title: '公交列表', icon: 'table' }
       },
       {
+        path: 'config',
+        name: '配置管理',
+        component: () => import('@/views/lines/index'),
+        meta: { title: '配置列表', icon: 'table' }
+      },
+      {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
