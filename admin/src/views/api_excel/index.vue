@@ -70,14 +70,14 @@
               size="mini"
               type="success"
               @click="download(scope.$index, scope.row)">点击下载</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </div>
           <!--<el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
+            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
         </template>
       </el-table-column>
 

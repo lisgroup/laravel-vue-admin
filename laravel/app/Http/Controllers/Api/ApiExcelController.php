@@ -220,15 +220,42 @@ class ApiExcelController extends Controller
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
-     * @throws \Exception
      */
     public function destroy($id)
     {
-        if (ApiExcel::findOrFail($id)->delete()) {
+        if (ApiExcel::destroy($id)) {
             $data = ['msg' => '删除成功', 'errno' => 0];
         } else {
             $data = ['msg' => '删除失败', 'errno' => 2];
         }
         return $this->out(200, $data);
+    }
+
+    /**
+     * 恢复操作
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        ApiExcel::onlyTrashed()->find($id)->restore();
+
+        return $this->out(200);
+    }
+
+    /**
+     * 彻底删除操作
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function forceDelete($id)
+    {
+        ApiExcel::onlyTrashed()->find($id)->forceDelete();
+
+        return $this->out(200);
     }
 }
