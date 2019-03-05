@@ -13,7 +13,7 @@ class ApiExcel extends Model
      */
     protected $table = 'api_excel';
 
-    protected $fillable = ['appkey', 'concurrent', 'api_param_id', 'upload_url', 'finish_url', 'description', 'uid', 'state'];
+    protected $fillable = ['appkey', 'concurrent', 'api_param_id', 'upload_url', 'finish_url', 'description', 'auto_delete', 'uid', 'state'];
 
     /**
      * 获取关联关系

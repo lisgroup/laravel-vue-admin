@@ -45,6 +45,15 @@
         </el-col>
         <el-col :span="13"/>
       </el-form-item>
+      <el-form-item label="自动删除时间" prop="auto_delete">
+        <el-col :span="2">
+          <el-input v-model="form.auto_delete"/>
+        </el-col>
+        <el-col :span="22">
+          &nbsp;&nbsp; 任务执行完成后自动删除的时间（单位：天），默认： 5 天
+        </el-col>
+        <el-col :span="13"/>
+      </el-form-item>
       <el-form-item label="用户ID(可选)" prop="uid">
         <el-col :span="11">
           <el-input v-model="form.uid" size="medium" placeholder="请输入内容"/>
@@ -79,6 +88,7 @@ export default {
         concurrent: 5,
         uid: '',
         description: '',
+        auto_delete: 5,
         sort: '',
         loading: false
       },
@@ -97,6 +107,9 @@ export default {
         ],
         description: [
           { required: true, message: '请输入描述', trigger: 'blur' }
+        ],
+        auto_delete: [
+          { required: true, message: '请输入天数', trigger: 'blur' }
         ]
       },
       redirect: '/api_excel/index'
