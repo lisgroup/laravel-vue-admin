@@ -42,11 +42,12 @@ class ApiRepository
         $excels = ApiExcel::where('state', 2)->get(['id', 'auto_delete', 'updated_at']);
 
         foreach ($excels as $excel) {
-            // 获取过期时间戳
-            $date = strtotime($excel['updated_at']) + $excel['auto_delete'] * 3600 * 24;
-            if ($date < time()) {
+            if ($excel['auto_delete'] > 0 && strtotime($excel['updated_at']) + $excel['auto_delete'] * 86400 < time()) {
+                // 获取过期时间戳
                 ApiExcel::destroy($excel['id']);
+
             }
+
         }
     }
 
