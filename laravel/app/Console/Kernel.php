@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Http\Repository\ApiRepository;
 use App\Http\Repository\BusRepository;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -43,6 +44,11 @@ class Kernel extends ConsoleKernel
             // // 每隔五分钟入库操作
             BusRepository::getInstent()->cronTaskTable();
         })->everyFiveMinutes()->between('5:00', '23:00');
+
+        // 每隔一小时检测需要自动删除的任务
+        $schedule->call(function() {
+            ApiRepository::getInstent()->handleAutoDelete();
+        })->hourly()->between('4:00', '23:59');
     }
 
     /**
