@@ -19,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any authentication / authorization services.
      *
+     *
      * @return void
      */
     public function boot()
@@ -26,5 +27,12 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+
+        $permissions = \App\Permission::with('roles')->get();
+        foreach ($permissions as $permission) {
+            Gate::define($permission->name, function($user) use ($permission) {
+                return $user->hasPermission($permission);
+            });
+        }
     }
 }

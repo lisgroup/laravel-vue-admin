@@ -61,3 +61,10 @@ Route::any('login', function() {
 })->name('login');
 
 // Route::get('/login', 'UserController@login')->name('login');
+
+Route::get('/test', function () {
+    $user = \App\User::find(3);
+    $rs = Auth::login($user);
+    dump($rs);
+    return view('test');
+});
