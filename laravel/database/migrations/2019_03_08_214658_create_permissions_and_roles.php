@@ -24,9 +24,11 @@ class CreatePermissionsAndRoles extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('route')->default('');
             $table->string('label');
             $table->string('description')->nullable();
             $table->timestamps();
+            $table->index('route');
         });
 
         Schema::create('permission_role', function (Blueprint $table) {
