@@ -108,5 +108,8 @@ class Kernel extends HttpKernel
 
         // 访问节流，类似于 『1 分钟只能请求 10 次』的需求，一般在 API 中使用
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        // 增加权限中间件
+        'role' => \App\Http\Middleware\PermissionAuth::class,
     ];
 }

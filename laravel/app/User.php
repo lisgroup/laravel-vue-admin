@@ -75,9 +75,32 @@ class User extends Authenticatable implements JWTSubject
     }
 
     // 判断用户是否具有某权限
-    public function hasPermission($permission)
+    public function hasPermissions($permission)
     {
         return $this->hasRole($permission->roles);
+    }
+
+    /**
+     * 封装一个方法方便使用
+     * 1. 需要的权限
+     * 2. 遍历当期那用户拥有的所有角色
+     * 3. 再通过角色判断是否有当前需要的权限
+     *
+     * @param $permissionName
+     *
+     * @return bool
+     */
+    public function hasPermission($permissionName)
+    {
+        foreach ($this->roles as $role) {
+            $permissions = array_column($role->permissions->toArray(), 'name');
+            return in_array($permissionName, $permissions);
+            // if ($role->permisssions()->where('name', $permissionName)->exists()) {
+            //     return true;
+            // }
+        }
+
+        return false;
     }
 
     // 给用户分配角色

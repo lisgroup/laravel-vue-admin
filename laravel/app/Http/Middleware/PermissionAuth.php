@@ -21,14 +21,30 @@ class PermissionAuth
          */
         $route = URL::current();
         $arr = explode('/', $route);
-        // $method = $request->getMethod();
-        dump(auth()->user());
+        $action = end($arr);
+        if (in_array($action, ['create', 'update', 'delete', 'show'])) {
+            $action = $arr[count($arr) - 2];
+        }
+        $method = $request->getMethod();
+        switch (strtoupper($method)) {
+            case 'POST':
+                $pre = 'create';
+                break;
+            case 'PUT':
+                $pre = 'update';
+                break;
+            case 'DELETE':
+                $pre = 'delete';
+                break;
+            default:
+                $pre = 'show';
+        }
 
         // 判断权限表中这条路由是否需要验证
-        if ($permission = Permission::where('route', end($arr))->first()) {
+        if ($permission = Permission::where('name', $pre.'-'.$action)->first()) {
             // 当前用户不拥有这个权限的名字
             if (!auth()->user()->hasPermission($permission->name)) {
-                return route('login');
+                return response()->json(['code' => 4001, 'reason' => '未授权', 'data' => null])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
                 // return response()->view('errors.403', ['status' => "权限不足，需要：{$permission->name}权限"]);
             }
         }
