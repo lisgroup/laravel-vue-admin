@@ -75,7 +75,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     // 判断用户是否具有某权限
-    public function hasPermissions($permission)
+    public function hasPermissionOld($permission)
     {
         return $this->hasRole($permission->roles);
     }
@@ -90,7 +90,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return bool
      */
-    public function hasPermission($permissionName)
+    public function hasPermissionMy($permissionName)
     {
         foreach ($this->roles as $role) {
             $permissions = array_column($role->permissions->toArray(), 'name');
@@ -101,6 +101,35 @@ class User extends Authenticatable implements JWTSubject
         }
 
         return false;
+    }
+
+    /**
+     * @param $permissions []
+     * @param $option [] valid_all 是否判断全部权限
+     *
+     * @return array|bool|null
+     */
+    function hasPermission($permissions, $option = [])
+    {
+        $option = array_merge(['valid_all' => false,], $option);
+        if (!is_array($permissions)) $permissions = [$permissions];
+        $gates = cacheUserRolesAndPermissions(\Auth::id());
+
+        foreach ($permissions as $permission) {
+            if (in_array($permission, $gates['permissions'])) {
+                if (!$option['valid_all']) {
+                    return true;
+                }
+            } else {
+                if ($option['valid_all']) {
+                    return false;
+                }
+            }
+        }
+        if ($option['valid_all'])
+            return true;
+        else
+            return false;
     }
 
     // 给用户分配角色
