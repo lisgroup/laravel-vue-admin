@@ -193,6 +193,15 @@ export const constantRouterMap = [
         name: '权限列表',
         component: () => import('@/views/permission/index'),
         meta: { title: '权限列表', icon: 'permission' }
+      },
+
+      { path: 'role/add', name: 'AddRole', component: () => import('@/views/role/add'), hidden: true },
+      { path: 'role/edit/:id', name: 'EditRole', component: () => import('@/views/role/edit'), hidden: true },
+      {
+        path: 'role',
+        name: '角色管理',
+        component: () => import('@/views/role/index'),
+        meta: { title: '角色管理', icon: 'role' }
       }
     ]
   },
