@@ -174,6 +174,32 @@ export const constantRouterMap = [
   {
     path: '/user',
     component: Layout,
+    redirect: '/user',
+    name: '权限',
+    meta: { title: '权限管理', icon: 'auth' },
+    children: [
+      { path: '/user/add', name: 'AddUser', component: () => import('@/views/user/add'), hidden: true },
+      { path: '/user/edit/:id', name: 'EditUser', component: () => import('@/views/user/edit'), hidden: true },
+      {
+        path: '/user',
+        name: '用户管理',
+        component: () => import('@/views/user/index'),
+        meta: { title: '用户列表', icon: 'user' }
+      },
+      { path: 'permission/add', name: 'AddPermission', component: () => import('@/views/permission/add'), hidden: true },
+      { path: 'permission/edit/:id', name: 'EditPermission', component: () => import('@/views/permission/edit'), hidden: true },
+      {
+        path: 'permission',
+        name: '权限列表',
+        component: () => import('@/views/permission/index'),
+        meta: { title: '权限列表', icon: 'permission' }
+      }
+    ]
+  },
+
+  {
+    path: '/user',
+    component: Layout,
     redirect: '/user/index',
     hidden: true,
     children: [
