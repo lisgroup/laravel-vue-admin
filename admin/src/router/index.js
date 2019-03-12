@@ -47,6 +47,7 @@ export const constantRouterMap = [
   {
     path: '/api_excel',
     component: Layout,
+    redirect: '/api_excel/index',
     name: 'Excel-List',
     meta: { title: '批量测试管理', icon: 'ico-table' },
     children: [
@@ -178,6 +179,8 @@ export const constantRouterMap = [
     name: '权限',
     meta: { title: '权限管理', icon: 'auth' },
     children: [
+      { path: 'index', name: 'userIndex', component: () => import('@/views/user/index'), hidden: true },
+      { path: 'password', name: 'userPassword', component: () => import('@/views/user/password'), hidden: true },
       { path: '/user/add', name: 'AddUser', component: () => import('@/views/user/add'), hidden: true },
       { path: '/user/edit/:id', name: 'EditUser', component: () => import('@/views/user/edit'), hidden: true },
       {
@@ -203,17 +206,6 @@ export const constantRouterMap = [
         component: () => import('@/views/role/index'),
         meta: { title: '角色管理', icon: 'role' }
       }
-    ]
-  },
-
-  {
-    path: '/user',
-    component: Layout,
-    redirect: '/user/index',
-    hidden: true,
-    children: [
-      { path: 'index', name: 'userIndex', component: () => import('@/views/user/index'), hidden: true },
-      { path: 'password', name: 'userPassword', component: () => import('@/views/user/password'), hidden: true }
     ]
   },
 
