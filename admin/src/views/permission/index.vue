@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row>
       <el-button type="primary" size="medium">
-        <router-link to="/api_param/add">新增接口配置</router-link>
+        <router-link to="/permission/add">新增权限</router-link>
       </el-button>
     </el-row>
     <el-table
@@ -17,38 +17,12 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="接口名称">
+      <el-table-column label="权限名称">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
 
-      <el-table-column label="接口地址" width="170" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.url }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="请求参数" width="" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.param }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="网址" width="" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.website }}
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" width="" align="center">
-        <template slot-scope="scope">
-          <!--{{ scope.row.state }}-->
-          <div v-if="scope.row.state === 1">
-            <el-tag>已启用</el-tag>
-          </div>
-          <div v-else>
-            <el-tag type="danger">未启用</el-tag>
-          </div>
-        </template>
-      </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="">
         <template slot-scope="scope">
           <i class="el-icon-time"/>
@@ -61,10 +35,10 @@
           <el-button
             size="mini"
             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <!--<el-button-->
-            <!--size="mini"-->
-            <!--type="danger"-->
-            <!--@click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -82,7 +56,7 @@
 </template>
 
 <script>
-import { getList, deleteAct, search } from '@/api/api_param'
+import { getList, deleteAct, search } from '@/api/permission'
 
 export default {
   filters: {
@@ -123,7 +97,7 @@ export default {
       })
     },
     handleEdit(index, row) {
-      this.$router.push({ path: '/api_param/edit/' + row.id })
+      this.$router.push({ path: '/permission/edit/' + row.id })
       // this.$router.push({ name: 'taskEdit', params: { id: row.id }})
       // console.log(index, row)
     },

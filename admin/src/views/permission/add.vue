@@ -1,42 +1,21 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="接口名称" prop="name">
-        <el-input v-model="form.name"/>
+    <el-form ref="form" :model="form" :rules="rules" label-width="220px">
+      <el-form-item label="权限名称" prop="name">
+        <el-col :span="10">
+          <el-input v-model="form.name"/>
+        </el-col>
+        <el-col :span="14"/>
       </el-form-item>
-      <el-form-item label="接口地址" prop="url">
-        <el-input v-model="form.url"/>
+
+      <el-form-item label="新增权限赋值角色" prop="roles">
+        <template>
+          <el-checkbox-group v-model="form.checkedRoles" @change="handleCheckedRolesChange">
+            <el-checkbox v-for="role in form.roles" :label="role.id" :key="role.id">{{ role.name }}</el-checkbox>
+          </el-checkbox-group>
+        </template>
       </el-form-item>
-      <el-form-item label="接口参数" prop="param">
-        <el-input v-model="form.param"/>
-        <span>(多个参数请用英文 , 分割；如： realname,mobile,idcard)</span>
-      </el-form-item>
-      <el-form-item label="结果集 result" prop="result">
-        <el-input v-model="form.result"/>
-        <span>(多个参数请用英文 , 分割；如： res,msg)</span>
-      </el-form-item>
-      <el-form-item label="是否处理" prop="is_need">
-        <el-switch v-model="form.is_need"/>
-        <br>
-        <span>(开启后，输出的 Excel 最后一栏将根据 result 字段 res 1 展示一致 2 不一致)</span>
-      </el-form-item>
-      <el-form-item label="网址" prop="website">
-        <el-input v-model="form.website"/>
-      </el-form-item>
-      <el-form-item label="请求方式" prop="method">
-        <!--<el-input v-model="form.method"/>-->
-        <el-select v-model="form.method" placeholder="请选择接口" value-key="name">
-          <el-option key="1" label="get" value="get">
-            <span style="float: left; color: #8492a6; font-size: 13px">get</span>
-          </el-option>
-          <el-option key="2" label="post" value="post">
-            <span style="float: left; color: #8492a6; font-size: 13px">post</span>
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="是否启用">
-        <el-switch v-model="form.state"/>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
@@ -46,43 +25,43 @@
 </template>
 
 <script>
-import { postAdd } from '@/api/api_param'
+
+import { postAdd, getRole } from '@/api/permission'
 
 export default {
   data() {
     return {
       form: {
         name: '',
-        url: '',
-        param: '',
-        result: '',
-        is_need: false,
-        state: true,
-        website: '',
-        method: 'get',
+        checkedRoles: [],
+        roles: [],
+        isIndeterminate: true,
         loading: false
       },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
-        ],
-        url: [
-          { required: true, message: '请输入接口地址', trigger: 'blur' }
-        ],
-        param: [
-          { required: true, message: '请输入接口参数', trigger: 'blur' }
-        ],
-        result: [
-          { required: true, message: '请输入结果集 result', trigger: 'blur' }
-        ],
-        is_need: [
-          { required: true, message: '请选择是否处理', trigger: 'blur' }
         ]
       },
-      redirect: '/api_param/index'
+      redirect: '/permission'
     }
   },
+  created() {
+    this.fetchData()
+  },
   methods: {
+    fetchData() {
+      this.listLoading = true
+      getRole().then(response => {
+        console.log(response.data)
+        this.form.roles = response.data.roles
+        this.listLoading = false
+      })
+    },
+    handleCheckedRolesChange(value) {
+      const checkedCount = value.length
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.form.roles.length
+    },
     onSubmit(form) {
       console.log(this.form)
       this.$refs[form].validate((valid) => {
@@ -126,4 +105,3 @@ export default {
     text-align: center;
   }
 </style>
-
