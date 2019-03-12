@@ -33,7 +33,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $list = Role::orderBy('sort')->paginate($this->perPage);
+        $list = Role::paginate($this->perPage);
         return $this->out(200, $list);
     }
 
@@ -44,9 +44,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $roles = Permission::get(); // 获取所有权限
+        $permissions = Permission::get(); // 获取所有权限
 
-        return $this->out(200, ['roles' => $roles, 'method' => 'create']);
+        return $this->out(200, ['permissions' => $permissions, 'method' => 'create']);
     }
 
     /**
