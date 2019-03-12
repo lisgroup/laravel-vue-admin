@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Repository\UserRepository;
 use App\Http\Requests\StoreUserRequest;
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -62,6 +63,16 @@ class UserController extends Controller
         $input = $request->all();
         $model = new User($input);
         if ($model->save()) {
+
+            $roles = $request['roles']; // 获取输入的角色字段
+            // 检查是否某个角色被选中
+            if (isset($roles)) {
+                foreach ($roles as $role) {
+                    $role_r = Role::where('id', '=', $role)->firstOrFail();
+                    $model->assignRole($role_r); // Assigning role to user
+                }
+            }
+
             return $this->out(200, ['data' => ['id' => $model->id]]);
         } else {
             return $this->out(4000);
@@ -93,7 +104,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = User::findOrFail($id);
-        return $this->out(200, $data);
+
+        $roles = Role::get(); // 获取所有角色
+        return $this->out(200, array_merge($data, $roles));
     }
 
     /**
@@ -107,13 +120,18 @@ class UserController extends Controller
      */
     public function update(StoreUserRequest $request, $id)
     {
-        $input = $request->only('name', 'email', 'password');
-        // var_dump($input);exit();
-        // $model = new User();$model->save($input, ['id' => $id]);
-        // 老版本更新操作如下，新版本先查询再更新
-        // User::where('id', $id)->update($input)
-        $User = User::findOrFail($id);
-        if ($User->update($input)) {
+        $user = User::findOrFail($id);
+        // 新增角色操作
+        $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段
+        $roles = $request['roles']; // 获取所有角色
+
+        if ($user->fill($input)->save()) {
+            if (isset($roles)) {
+                $user->roles()->sync($roles);  // 如果有角色选中与用户关联则更新用户角色
+            } else {
+                $user->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
+            }
+
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
             return $this->out(4000);

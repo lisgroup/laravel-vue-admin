@@ -33,7 +33,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $list = Permission::orderBy('sort')->paginate($this->perPage);
+        $list = Permission::paginate($this->perPage);
         return $this->out(200, $list);
     }
 
