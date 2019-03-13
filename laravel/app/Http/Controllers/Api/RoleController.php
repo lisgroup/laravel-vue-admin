@@ -115,15 +115,14 @@ class RoleController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Update $request)
+    public function update(Update $request, $id)
     {
-        $id = 3;
         $role = Role::findOrFail($id); // 通过给定id获取角色
         // 验证 name 和 permission 字段
-        $this->validate($request, [
-            'name' => 'required|max:10|unique:roles,name,'.$id,
-            'permissions' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required|max:10|unique:roles,name,'.$id,
+        //     'permissions' => 'required',
+        // ]);
 
         $input = $request->only(['name']);
         $permissions = $request['checkedPermissions'];

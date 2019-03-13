@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Repository\UserRepository;
-use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\User\Store;
+use App\Http\Requests\User\Update;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -53,10 +54,10 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      * 新增入库操作
      *
-     * @param  StoreUserRequest $request
+     * @param  Store $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(Store $request)
     {
         // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
         // $rs = User::insert($request->all());
@@ -64,7 +65,7 @@ class UserController extends Controller
         $model = new User($input);
         if ($model->save()) {
 
-            $roles = $request['roles']; // 获取输入的角色字段
+            $roles = $request['checkedRoles']; // 获取输入的角色字段
             // 检查是否某个角色被选中
             if (isset($roles)) {
                 foreach ($roles as $role) {
@@ -114,23 +115,26 @@ class UserController extends Controller
      * Update the specified resource in storage.
      * 更新数据
      *
-     * @param  StoreUserRequest $request
+     * @param  Update $request
      * @param  int $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUserRequest $request, $id)
+    public function update(Update $request, $id)
     {
         $user = User::findOrFail($id);
         // 新增角色操作
         $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段
-        $roles = $request['roles']; // 获取所有角色
+        if (empty($input['password'])) {
+            unset($input['password']);
+        }
+        $roles = $request['checkedRoles']; // 获取所有角色
 
         if ($user->fill($input)->save()) {
             if (isset($roles)) {
                 $user->roles()->sync($roles);  // 如果有角色选中与用户关联则更新用户角色
             } else {
-                $user->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
+                $user->roles()->detach(\Auth::id()); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
             }
 
             return $this->out(200, ['data' => ['id' => $id]]);

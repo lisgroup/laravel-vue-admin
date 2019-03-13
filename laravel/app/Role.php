@@ -32,4 +32,34 @@ class Role extends Model
     {
         return $this->permissions()->delete($permission);
     }
+
+    /**
+     * 用户增加角色
+     *
+     * @param $roles
+     *
+     * @return bool
+     */
+    public function sync($roles)
+    {
+        $flag = true;
+        foreach ($roles as $role) {
+            if ($this->save($role)) {
+                $flag = false;
+            }
+        }
+        return $flag;
+    }
+
+    /**
+     * 用户删除角色
+     *
+     * @param $user_id
+     *
+     * @return mixed
+     */
+    public function detach($user_id)
+    {
+        return $this->where('user_id', $user_id)->delete();
+    }
 }
