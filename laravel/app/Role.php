@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
+
+    protected $fillable = ['name'];
+
     // 用户和角色的模型关联关系
     public function users()
     {
@@ -22,5 +25,11 @@ class Role extends Model
     public function givePermissionTo($permission)
     {
         return $this->permissions()->save($permission);
+    }
+
+    // 角色删除权限
+    public function revokePermissionTo($permission)
+    {
+        return $this->permissions()->delete($permission);
     }
 }
