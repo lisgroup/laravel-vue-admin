@@ -61,6 +61,7 @@ class PermissionController extends Controller
         $name = $request['name'];
         $permission = new Permission();
         $permission->name = $name;
+        !is_null($request['route']) && $permission->route = $request['route'];
 
         if ($permission->save()) {
             if (!empty($request['roles'])) { // 如果选择了角色
@@ -116,6 +117,7 @@ class PermissionController extends Controller
     public function update(Update $request, $id)
     {
         $input = $request->all();
+        is_null($input['route']) && $input['route'] = '';
         // $model = new Category();$model->save($input, ['id' => $id]);
         // 老版本更新操作如下，新版本先查询再更新
         // Category::where('id', $id)->update($input)
