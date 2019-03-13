@@ -1,11 +1,19 @@
 import request from '@/utils/request'
 
-export function getUser(params) {
+export function getList(params) {
   return request({
     url: '/api/user',
     method: 'get',
     params
   })
+}
+
+export function getRole() {
+  return request.get('/api/permissions/create')
+}
+
+export function postAdd(params) {
+  return request.post('/api/user', params)
 }
 
 export function postUser(params) {
@@ -20,10 +28,22 @@ export function postEditUser(id, params) {
   return request.patch('/api/user/' + id, params)
 }
 
-export function deleteUser(id) {
+export function deleteAct(id) {
   return request.delete('/api/user/' + id)
 }
 
 export function postEditPassword(params) {
   return request.post('/api/user_password', params)
+}
+
+/**
+ * 搜索 api_param
+ * @param params
+ */
+export function search(params) {
+  return request({
+    url: '/api/api_user_search',
+    method: 'get',
+    params
+  })
 }

@@ -10,6 +10,8 @@
 
       <el-form-item label="新增角色赋值权限" prop="roles">
         <template>
+          <el-checkbox v-model="checkAll" @change="CheckAll">全选</el-checkbox>
+          <div style="margin: 15px 0;"/>
           <el-checkbox-group v-model="form.checkedPermissions" @change="PerChange">
             <el-checkbox v-for="permission in form.permissions" :label="permission.id" :key="permission.id">{{ permission.name }}</el-checkbox>
           </el-checkbox-group>
@@ -25,16 +27,18 @@
 </template>
 
 <script>
-import { postEdit, edit, getPermission } from '@/api/role'
+import { postEdit, edit } from '@/api/role'
 
 export default {
   data() {
     return {
+      checkAll: false,
+      isIndeterminate: true,
+
       form: {
         name: '',
         checkedPermissions: [],
         permissions: [],
-        isIndeterminate: true,
         loading: false
       },
       rules: {
@@ -48,26 +52,35 @@ export default {
   created() {
     this.id = this.$route.params.id
     this.getData(this.id)
-    this.fetchData()
+    // this.fetchData()
   },
   methods: {
     getData(id) {
       edit(id).then(response => {
         this.loading = false
         if (response.code === 200) {
-          this.form.name = response.data.name
+          this.form.name = response.data.role.name
+          this.form.permissions = response.data.permissions
+          this.form.checkedPermissions = response.data.checkedPermissions
+
+          // 是否全选中
+          if (this.form.permissions.length === this.form.checkedPermissions.length) {
+            this.checkAll = true
+          }
         } else {
           this.$message.error(response.reason)
         }
       })
     },
-    fetchData() {
-      this.listLoading = true
-      getPermission().then(response => {
-        console.log(response.data)
-        this.form.permissions = response.data.permissions
-        this.listLoading = false
-      })
+    CheckAll(val) {
+      this.form.checkedPermissions = []
+      if (val) {
+        for (let i = 0, len = this.form.permissions.length; i < len; i++) {
+          this.form.checkedPermissions.push(this.form.permissions[i].id)
+        }
+      }
+
+      this.isIndeterminate = false
     },
     PerChange(value) {
       const checkedCount = value.length
