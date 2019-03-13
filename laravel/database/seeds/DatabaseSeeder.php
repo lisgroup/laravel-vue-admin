@@ -16,5 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call(LinesTableSeeder::class);
         $this->call(BusLinesTableSeeder::class);
         $this->call(ApiParamTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(PermissionRoleTableSeeder::class);
+        $this->call(RoleUserTableSeeder::class);
     }
 }
