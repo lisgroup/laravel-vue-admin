@@ -8,6 +8,13 @@
         <el-col :span="14"/>
       </el-form-item>
 
+      <el-form-item label="路由" prop="route">
+        <el-col :span="10">
+          <el-input v-model="form.route"/>
+        </el-col>
+        <el-col :span="14"/>
+      </el-form-item>
+
       <el-form-item label="新增权限赋值角色" prop="roles">
         <template>
           <el-checkbox-group v-model="form.checkedRoles" @change="handleCheckedRolesChange">
@@ -33,6 +40,7 @@ export default {
     return {
       form: {
         name: '',
+        route: '',
         checkedRoles: [],
         roles: [],
         isIndeterminate: true,

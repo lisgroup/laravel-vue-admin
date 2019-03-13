@@ -7,6 +7,12 @@
         </el-col>
         <el-col :span="14"/>
       </el-form-item>
+      <el-form-item label="路由" prop="route">
+        <el-col :span="10">
+          <el-input v-model="form.route"/>
+        </el-col>
+        <el-col :span="14"/>
+      </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
@@ -25,6 +31,7 @@ export default {
     return {
       form: {
         name: '',
+        route: '',
         loading: false
       },
       rules: {
