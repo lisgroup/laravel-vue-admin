@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // 清除表时先忽略外键约束
+        $this->foreign(0);
         $this->call(UsersTableSeeder::class);
         $this->call(CronTasksTableSeeder::class);
         $this->call(LinesTableSeeder::class);
@@ -20,5 +22,11 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(PermissionRoleTableSeeder::class);
         $this->call(RoleUserTableSeeder::class);
+        $this->foreign(1);
+    }
+
+    public function foreign($type = 0)
+    {
+        DB::statement("SET FOREIGN_KEY_CHECKS=$type");
     }
 }
