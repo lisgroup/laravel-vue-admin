@@ -31,6 +31,7 @@ class PermissionAuth
                 $pre = 'create';
                 break;
             case 'PUT':
+            case 'PATCH':
                 $pre = 'update';
                 break;
             case 'DELETE':
