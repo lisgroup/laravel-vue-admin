@@ -20,7 +20,7 @@ class RoleController extends Controller
 
     public function __construct(Request $request)
     {
-        // $this->middleware(['auth', 'isAdmin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
+        // $this->middleware(['auth:api', 'role']); // role 中间件让具备指定权限的用户才能访问该资源
 
         $perPage = intval($request->input('perPage'));
         $this->perPage = $perPage ?? 11;

@@ -84,13 +84,14 @@ class UserController extends Controller
      * Display the specified resource.
      * 展示某个详情数据
      *
-     * @param User $User
+     * @param User $user
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(User $User)
+    public function show(User $user)
     {
-        return $this->out(200, $User);
+        $roles = Role::all();
+        return $this->out(200, ['roles' => $roles, 'checkedRoles' => array_column($user->roles->toArray(), 'id'), 'user' => $user]);
     }
 
     /**
