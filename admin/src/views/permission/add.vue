@@ -62,7 +62,6 @@ export default {
     fetchData() {
       this.listLoading = true
       getRole().then(response => {
-        console.log(response.data)
         this.form.roles = response.data.roles
         this.listLoading = false
       })
@@ -72,7 +71,6 @@ export default {
       this.isIndeterminate = checkedCount > 0 && checkedCount < this.form.roles.length
     },
     onSubmit(form) {
-      console.log(this.form)
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.loading = true

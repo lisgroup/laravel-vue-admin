@@ -1,40 +1,42 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="接口名称" prop="name">
-        <el-input v-model="form.name"/>
+    <el-form ref="form" :model="form" :rules="rules" label-width="220px">
+      <el-form-item label="用户名称" prop="name">
+        <el-col :span="10">
+          <el-input v-model="form.name"/>
+        </el-col>
+        <el-col :span="14"/>
       </el-form-item>
-      <el-form-item label="接口地址" prop="url">
-        <el-input v-model="form.url"/>
+
+      <el-form-item label="用户邮箱" prop="email">
+        <el-col :span="10">
+          <el-input v-model="form.email"/>
+        </el-col>
+        <el-col :span="14"/>
       </el-form-item>
-      <el-form-item label="接口参数" prop="param">
-        <el-input v-model="form.param"/>
-        <span>(多个参数请用英文 , 分割；如： realname,mobile,idcard)</span>
+
+      <el-form-item label="密码" prop="password">
+        <el-col :span="10">
+          <el-input v-model="form.password" type="password"/>
+        </el-col>
+        <el-col :span="14"/>
       </el-form-item>
-      <el-form-item label="结果集 result" prop="result">
-        <el-input v-model="form.result"/>
-        <span>(多个参数请用英文 , 分割；如： res,msg)</span>
+
+      <el-form-item label="确认密码" prop="checkPass">
+        <el-col :span="10">
+          <el-input v-model="form.checkPass" type="password"/>
+        </el-col>
+        <el-col :span="14"/>
       </el-form-item>
-      <el-form-item label="是否处理" prop="is_need">
-        <el-switch v-model="form.is_need"/>
+
+      <el-form-item label="赋值角色" prop="roles">
+        <template>
+          <el-checkbox-group v-model="form.checkedRoles" @change="handleCheckedRolesChange">
+            <el-checkbox v-for="role in form.roles" :label="role.id" :key="role.id">{{ role.name }}</el-checkbox>
+          </el-checkbox-group>
+        </template>
       </el-form-item>
-      <el-form-item label="网址" prop="website">
-        <el-input v-model="form.website"/>
-      </el-form-item>
-      <el-form-item label="请求方式" prop="method">
-        <!--<el-input v-model="form.method"/>-->
-        <el-select v-model="form.method" placeholder="请选择接口" value-key="name">
-          <el-option key="1" label="get" value="get">
-            <span style="float: left; color: #8492a6; font-size: 13px">get</span>
-          </el-option>
-          <el-option key="2" label="post" value="post">
-            <span style="float: left; color: #8492a6; font-size: 13px">post</span>
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="是否启用">
-        <el-switch v-model="form.state"/>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
@@ -44,63 +46,89 @@
 </template>
 
 <script>
-import { edit, postEdit } from '@/api/api_param'
+import { getRole, edit, postEdit } from '@/api/user'
 
 export default {
   data() {
+    const validatePass = (rule, value, callback) => {
+      if (this.form.password !== '') {
+        this.$refs.form.validateField('checkPass')
+      }
+      callback()
+    }
+    const validatePass2 = (rule, value, callback) => {
+      if (value === undefined) {
+        value = ''
+      }
+      console.log(this.form.password)
+      if (value !== this.form.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
+      checkAll: false,
       form: {
         name: '',
-        url: '',
-        param: '',
-        result: '',
-        is_need: false,
-        state: true,
-        website: '',
-        method: 'get',
+        email: '',
+        password: '',
+        checkedRoles: [],
+        roles: [],
+        isIndeterminate: true,
         loading: false
       },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
         ],
-        url: [
-          { required: true, message: '请输入接口地址', trigger: 'blur' }
+        password: [
+          { validator: validatePass, trigger: 'blur' }
         ],
-        param: [
-          { required: true, message: '请输入接口参数', trigger: 'blur' }
-        ],
-        result: [
-          { required: true, message: '请输入结果集 result', trigger: 'blur' }
-        ],
-        is_need: [
-          { required: true, message: '请选择是否处理', trigger: 'blur' }
+        checkPass: [
+          { validator: validatePass2, trigger: 'blur' }
         ]
       },
-      redirect: '/api_param/index'
+      redirect: '/user'
     }
   },
   created() {
+    // this.fetchData()
     this.id = this.$route.params.id
     this.getData(this.id)
   },
   methods: {
     getData(id) {
-      // this.id = this.$route.params.id
       edit(id).then(response => {
-        // console.log(response)
         this.loading = false
         if (response.code === 200) {
-          this.form = response.data
-          this.form.is_need = (response.data.is_need === 1)
-          this.form.state = (response.data.state === 1)
+          this.form.name = response.data.user.name
+          this.form.email = response.data.user.email
+          this.form.roles = response.data.roles
+          this.form.checkedRoles = response.data.checkedRoles
+
+          // 是否全选中
+          if (this.form.roles.length === this.form.checkedRoles.length) {
+            this.checkAll = true
+          }
         } else {
           this.$message.error(response.reason)
         }
       })
     },
+    fetchData() {
+      this.listLoading = true
+      getRole().then(response => {
+        this.form.roles = response.data.roles
+        this.listLoading = false
+      })
+    },
+    handleCheckedRolesChange(value) {
+      const checkedCount = value.length
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.form.roles.length
+    },
     onSubmit(form) {
-      console.log(this.form)
+      // console.log(this.form)
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.loading = true
@@ -142,4 +170,3 @@ export default {
     text-align: center;
   }
 </style>
-

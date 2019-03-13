@@ -16,15 +16,11 @@ export function postAdd(params) {
   return request.post('/api/user', params)
 }
 
-export function postUser(params) {
-  return request.post('/api/user', params)
-}
-
-export function editUser(id) {
+export function edit(id) {
   return request.get('/api/user/' + id)
 }
 
-export function postEditUser(id, params) {
+export function postEdit(id, params) {
   return request.patch('/api/user/' + id, params)
 }
 
