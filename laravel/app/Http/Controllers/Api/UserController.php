@@ -24,7 +24,7 @@ class UserController extends Controller
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
         // 如果把 refresh 也放进去，token 即使过期但仍在刷新期以内也可刷新
         // 不过刷新一次作废
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware(['auth:api', 'role'], ['except' => ['login']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
     }
@@ -62,16 +62,16 @@ class UserController extends Controller
         // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
         // $rs = User::insert($request->all());
         $input = $request->all();
+        if (empty($input['email'])) {
+            $input['email'] = $this->getEmail();
+        }
         $model = new User($input);
         if ($model->save()) {
 
             $roles = $request['checkedRoles']; // 获取输入的角色字段
             // 检查是否某个角色被选中
             if (isset($roles)) {
-                foreach ($roles as $role) {
-                    $role_r = Role::where('id', '=', $role)->firstOrFail();
-                    $model->assignRole($role_r); // Assigning role to user
-                }
+                $model->roles()->sync($roles);  // 如果有角色选中与用户关联则更新用户角色
             }
 
             return $this->out(200, ['data' => ['id' => $model->id]]);
@@ -174,5 +174,11 @@ class UserController extends Controller
         $result = UserRepository::getInstent()->changePassword($input);
 
         return $this->out($result['code']);
+    }
+
+    public function getEmail()
+    {
+        $faker = \Faker\Factory::create();
+        return $faker->email;
     }
 }
