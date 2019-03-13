@@ -20,7 +20,7 @@ class PermissionController extends Controller
 
     public function __construct(Request $request)
     {
-        // $this->middleware(['auth', 'isAdmin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
+        // $this->middleware(['auth:api', 'role']); // role 中间件让具备指定权限的用户才能访问该资源
 
         $perPage = intval($request->input('perPage'));
         $this->perPage = $perPage ?? 11;
@@ -64,8 +64,8 @@ class PermissionController extends Controller
         !is_null($request['route']) && $permission->route = $request['route'];
 
         if ($permission->save()) {
-            if (!empty($request['roles'])) { // 如果选择了角色
-                $roles = $request['roles'];
+            if (!empty($request['checkedRoles'])) { // 如果选择了角色
+                $roles = $request['checkedRoles'];
                 foreach ($roles as $role) {
                     $r = Role::where('id', '=', $role)->firstOrFail(); // 将输入角色和数据库记录进行匹配
 
