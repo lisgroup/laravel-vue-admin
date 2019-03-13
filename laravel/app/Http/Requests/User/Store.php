@@ -24,8 +24,8 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|between:5,80',
-            'email' => 'email|max:255',
+            'name' => 'required|between:3,80',
+            'email' => 'nullable|email|max:255',
             'password' => 'required|between:5,80',
         ];
     }
@@ -39,11 +39,11 @@ class Store extends FormRequest
     {
         return [
             'name.required' => '名称不能为空',
-            'name.between' => '名称输入有误',
+            'name.between' => '名称输入长度3-80位',
             'email.email' => '邮箱格式有误',
             'email.max' => 'cid 输入有误',
             'password.required' => '密码不能为空',
-            'password.between' => '密码输入有误',
+            'password.between' => '密码输入长度5-80位',
         ];
     }
 }
