@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class Update extends FormRequest
 {
@@ -21,10 +22,10 @@ class Update extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
-            'name'=>'required|string|max:100',
+            'name' => 'required|string|max:100,'.$request->get('id'),
             'permissions' => 'required',
         ];
     }

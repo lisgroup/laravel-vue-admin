@@ -64,7 +64,7 @@ class RoleController extends Controller
 
         if ($role->save()) {
 
-            $permissions = $request['permissions'];
+            $permissions = $request['checkedPermissions'];
             // 遍历选择的权限
             foreach ($permissions as $permission) {
                 $p = Permission::where('id', '=', $permission)->firstOrFail();
@@ -89,7 +89,8 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        return $this->out(200, $role);
+        $permissions = Permission::all();
+        return $this->out(200, ['permissions' => $permissions, 'checkedPermissions' => array_column($role->permissions->toArray(), 'id'), 'role' => $role]);
     }
 
     /**
@@ -103,7 +104,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $permissions = Permission::all();
 
-        return $this->out(200, [$role, $permissions]);
+        return $this->out(200, ['permissions' => $permissions, 'role' => $role]);
     }
 
     /**
@@ -114,8 +115,9 @@ class RoleController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Update $request, $id)
+    public function update(Update $request)
     {
+        $id = 3;
         $role = Role::findOrFail($id); // 通过给定id获取角色
         // 验证 name 和 permission 字段
         $this->validate($request, [
@@ -123,8 +125,8 @@ class RoleController extends Controller
             'permissions' => 'required',
         ]);
 
-        $input = $request->except(['permissions']);
-        $permissions = $request['permissions'];
+        $input = $request->only(['name']);
+        $permissions = $request['checkedPermissions'];
         if ($role->fill($input)->save()) {
 
             $p_all = Permission::all();//获取所有权限
