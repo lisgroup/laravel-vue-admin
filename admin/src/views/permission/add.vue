@@ -6,6 +6,7 @@
           <el-input v-model="form.name"/>
         </el-col>
         <el-col :span="14"/>
+        <br>示例：create-article, update-article, delete-article, show-article
       </el-form-item>
 
       <el-form-item label="路由" prop="route">
