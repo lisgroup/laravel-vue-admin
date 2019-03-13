@@ -65,6 +65,7 @@ class UserController extends Controller
         if (empty($input['email'])) {
             $input['email'] = $this->getEmail();
         }
+        $input['password'] = bcrypt($input['password']);
         $model = new User($input);
         if ($model->save()) {
 
@@ -127,6 +128,8 @@ class UserController extends Controller
         $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段
         if (empty($input['password'])) {
             unset($input['password']);
+        } else {
+            $input['password'] = bcrypt($input['password']);
         }
         $roles = $request['checkedRoles']; // 获取所有角色
 
