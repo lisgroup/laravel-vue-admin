@@ -18,3 +18,8 @@ export function logout() {
     method: 'post'
   })
 }
+
+// import { getRoute, setRoute } from '@/utils/auth'
+export function route(token) {
+  return request.get('/api/routes', token)
+}
