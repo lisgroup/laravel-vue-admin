@@ -113,7 +113,7 @@ class User extends Authenticatable implements JWTSubject
     {
         $option = array_merge(['valid_all' => false,], $option);
         if (!is_array($permissions)) $permissions = [$permissions];
-        $gates = cacheUserRolesAndPermissions(\Auth::id(), true);
+        $gates = cacheUserRolesAndPermissions(\Auth::id(), false);
 
         foreach ($permissions as $permission) {
             if (in_array($permission, $gates['permissions'])) {

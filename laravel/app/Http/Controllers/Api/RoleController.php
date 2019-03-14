@@ -127,6 +127,12 @@ class RoleController extends Controller
         $input = $request->only(['name']);
         $permissions = $request['checkedPermissions'];
         if ($role->fill($input)->save()) {
+            // 清除用户缓存角色权限记录
+            $users = $role->users;
+            foreach ($users as $user) {
+                \Cache::forget('user_r_p_'.$user->id);
+            }
+
 
             $p_all = Permission::all();//获取所有权限
 
