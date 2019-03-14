@@ -37,6 +37,9 @@ class UserController extends Controller
     public function index()
     {
         $list = User::paginate(11);
+        foreach ($list as $key => $item) {
+            $list[$key]['roles'] = $item->roles;
+        }
         return $this->out(200, $list);
     }
 

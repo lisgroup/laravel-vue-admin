@@ -17,9 +17,22 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="用户名称">
+
+      <el-table-column label="用户昵称">
         <template slot-scope="scope">
           {{ scope.row.name }}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="邮箱">
+        <template slot-scope="scope">
+          {{ scope.row.email }}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="分配的角色">
+        <template slot-scope="scope">
+          <el-tag v-for="role in scope.row.roles" :key="role.id">{{ role.name }}</el-tag>
         </template>
       </el-table-column>
 
@@ -177,5 +190,8 @@ export default {
   }
   .pagination {
     margin: 20px auto;
+  }
+  .el-tag {
+    margin: 0 5px;
   }
 </style>
