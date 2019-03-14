@@ -25,8 +25,10 @@ class DatabaseSeeder extends Seeder
         $this->foreign(1);
     }
 
-    public function foreign($type = 0)
+    private function foreign($type = 0)
     {
-        DB::statement("SET FOREIGN_KEY_CHECKS=$type");
+        if (in_array($type, [0, 1])) {
+            DB::statement("SET FOREIGN_KEY_CHECKS=$type");
+        }
     }
 }
