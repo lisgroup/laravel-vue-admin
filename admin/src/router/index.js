@@ -21,8 +21,9 @@ const Layout = () => import('../views/layout/Layout')
     icon: 'svg-name'             the icon show in the sidebar,
   }
  **/
-export const constantRouterMap = [
-  // { path: '/', redirect: '/index', hidden: true },
+
+// 基础路由
+const routeBase = [
   { path: '/', name: 'index', component: () => import('@/views/home/index'), hidden: true },
   { path: '/line', name: 'line', component: () => import('@/views/home/line'), hidden: true },
   { path: '/home', component: () => import('@/views/home/home'), hidden: true },
@@ -42,8 +43,11 @@ export const constantRouterMap = [
       path: 'dashboard',
       component: () => import('@/views/dashboard/index')
     }]
-  },
+  }
+]
 
+// 管理一般路由
+const routeManage = [
   {
     path: '/api_excel',
     component: Layout,
@@ -73,7 +77,11 @@ export const constantRouterMap = [
         meta: { title: '接口列表', icon: 'api' }
       }
     ]
-  },
+  }
+]
+
+const routerAdmin = [
+  // { path: '/', redirect: '/index', hidden: true },
 
   {
     path: '/category',
@@ -207,8 +215,11 @@ export const constantRouterMap = [
         meta: { title: '角色管理', icon: 'role' }
       }
     ]
-  },
+  }
 
+]
+
+const routeOther = [
   {
     path: '/form',
     component: Layout,
@@ -221,7 +232,6 @@ export const constantRouterMap = [
       }
     ], hidden: true
   },
-
   {
     path: '/nested',
     component: Layout,
@@ -281,6 +291,8 @@ export const constantRouterMap = [
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
+
+export const constantRouterMap = [...routeBase, ...routeManage, ...routerAdmin, ...routeOther]
 
 export default new Router({
   // mode: 'history', //后端支持可开
