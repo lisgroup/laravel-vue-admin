@@ -133,16 +133,18 @@ class RoleController extends Controller
                 \Cache::forget('user_r_p_'.$user->id);
             }
 
-
-            $p_all = Permission::all();//获取所有权限
-
-            foreach ($p_all as $p) {
-                $role->revokePermissionTo($p); // 移除与角色关联的所有权限
+            // $p_all = Permission::all();//获取所有权限
+            // foreach ($p_all as $p) {
+            //     $role->revokePermissionTo($p); // 将会移除与角色关联的所有权限
+            // }
+            // Fix: 一并移除了权限的错误
+            foreach ($role->permissions as $permission) {
+                $role->permissions()->detach($permission->id); // 仅移除 permission_role 表与角色关联的权限
             }
 
             foreach ($permissions as $permission) {
-                $p = Permission::where('id', '=', $permission)->firstOrFail(); //从数据库中获取相应权限
-                $role->givePermissionTo($p);  // 分配权限到角色
+                $p = Permission::where('id', '=', $permission)->first(); //从数据库中获取相应权限
+                $p && $role->givePermissionTo($p);  // 分配权限到角色
             }
 
             return $this->out(200, ['data' => ['id' => $id]]);
