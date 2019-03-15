@@ -18,6 +18,10 @@ class ApiExcel extends Model
 
     protected $fillable = ['appkey', 'concurrent', 'api_param_id', 'upload_url', 'finish_url', 'description', 'auto_delete', 'uid', 'state'];
 
+    protected $hidden = [
+        'appkey',
+    ];
+
     protected $datas = ['deleted_at'];
 
     /**
