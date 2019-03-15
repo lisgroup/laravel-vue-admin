@@ -385,18 +385,25 @@ class MultithreadingRepository
                 // 2.2 处理配置的字段
                 $array = json_decode($value['result'], true);
 
+                // 示例1： $param['result'] = 'res'; -- 为 api_param 表一行数据
+                // 示例2： $value = ['param' => ['realname' => '**', 'idcard' => '***'], 'result' => '{"reason":"成功","result":{"realname":"**","idcard":"***","res":2},"error_code":0}'];
                 if ($param['result'] && $arr = explode(',', $param['result'])) {
-                    foreach ($arr as $item) {
-                        // 2019-02-27 日新增： 354 接口配置 data.0.status 字段
-                        // 输出需要 $array['result']['data'][0]['status']
-                        $val = $array['result'][$item] ?? '';
-                        if (strpos($item, '.') !== false) {
-                            $kems = explode('.', $item);
-                            $val = $array['result'];
-                            foreach ($kems as $kem) {
-                                $val = $val[$kem] ?? '';
-                            }
+                    foreach ($arr as $k => $item) {
+                        // 2019-03-15 输出可能的参数异常等错误信息，需判断最后一列输出
+                        if ((isset($array['error_code']) && $array['error_code'] != 0) && ($k == count($arr) - 1)) {
+                            $val = $array['reason'];
+                        } else {
+                            // 2019-02-27 日新增： 354 接口配置 data.0.status 字段
+                            // 输出需要 $array['result']['data'][0]['status']
+                            $val = $array['result'][$item] ?? '';
+                            if (strpos($item, '.') !== false) {
+                                $kems = explode('.', $item);
+                                $val = $array['result'];
+                                foreach ($kems as $kem) {
+                                    $val = $val[$kem] ?? '';
+                                }
 
+                            }
                         }
 
                         $setActive->setCellValue($i.$number, $val);
