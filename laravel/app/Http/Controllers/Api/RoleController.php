@@ -138,14 +138,19 @@ class RoleController extends Controller
             //     $role->revokePermissionTo($p); // 将会移除与角色关联的所有权限
             // }
             // Fix: 一并移除了权限的错误
-            foreach ($role->permissions as $permission) {
-                $role->permissions()->detach($permission->id); // 仅移除 permission_role 表与角色关联的权限
-            }
+            /**
+             * 多对多关联
+             * 附加 / 移除 attach 和 detach
+             * @link https://learnku.com/docs/laravel/5.5/eloquent-relationships/1333#a93d4c
+             */
+            $role->permissions()->detach(); // 仅移除 permission_role 表与角色关联的权限
 
-            foreach ($permissions as $permission) {
-                $p = Permission::where('id', '=', $permission)->first(); //从数据库中获取相应权限
-                $p && $role->givePermissionTo($p);  // 分配权限到角色
-            }
+            $role->permissions()->attach($permissions);
+
+            // foreach ($permissions as $permission) {
+            //     $p = Permission::where('id', '=', $permission)->first(); //从数据库中获取相应权限
+            //     $p && $role->givePermissionTo($p);  // 分配权限到角色
+            // }
 
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {

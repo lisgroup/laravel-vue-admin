@@ -140,7 +140,7 @@ class UserController extends Controller
             if (isset($roles)) {
                 $user->roles()->sync($roles);  // 如果有角色选中与用户关联则更新用户角色
             } else {
-                $user->roles()->detach(\Auth::id()); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
+                $user->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
             }
 
             return $this->out(200, ['data' => ['id' => $id]]);
