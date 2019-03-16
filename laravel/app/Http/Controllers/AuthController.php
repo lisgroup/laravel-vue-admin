@@ -71,8 +71,11 @@ class AuthController extends Controller
         // return response()->json(auth('api')->user());
         // 输出管理员 roles
         $userInfo = auth('api')->user();
+        $roles = $userInfo->roles->map(function($item) {
+            return $item->name;
+        });
         $data = [
-            'roles' => 'admin',
+            'roles' => $roles,
             'name' => $userInfo['name'],
             // 'avatar' => 'https://note.youdao.com/favicon.ico',
             'avatar' => 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
