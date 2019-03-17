@@ -15,7 +15,16 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.roles.length === 0) {
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
-          next()
+          if (!to.meta.role || res.data.roles.indexOf('Super Administrator') >= 0 || res.data.roles.indexOf(to.meta.role) >= 0) {
+            next()
+          } else {
+            if (whiteList.indexOf(to.path) !== -1) {
+              next()
+            } else {
+              next({ path: '/404' })
+              NProgress.done()
+            }
+          }
         }).catch((err) => {
           store.dispatch('FedLogOut').then(() => {
             Message.error(err || 'Verification failed, please login again')
@@ -23,7 +32,16 @@ router.beforeEach((to, from, next) => {
           })
         })
       } else {
-        next()
+        if (!to.meta.role || store.getters.roles.indexOf('Super Administrator') >= 0 || store.getters.roles.indexOf(to.meta.role) >= 0) {
+          next()
+        } else {
+          if (whiteList.indexOf(to.path) !== -1) {
+            next()
+          } else {
+            next({ path: '/404' })
+            NProgress.done()
+          }
+        }
       }
     }
   } else {
