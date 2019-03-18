@@ -117,7 +117,8 @@ class MultithreadingRepository
             $params = [];
             for ($i = 'A'; $i <= $highestColumn; $i++) {
                 $val = $sheet->getCell($i.'1')->getValue();
-                $params[$i] = (is_object($val)) ? trim($val->__toString()) : trim($val);
+                $str = (is_object($val)) ? trim($val->__toString()) : trim($val);
+                $params[$i] = str_replace(["\n", "\r\n", " "], '', $str);
             }
             $dataSet['param'] = array_values($params);
 
@@ -130,7 +131,8 @@ class MultithreadingRepository
                 // }
                 foreach ($params as $key => $param) {
                     $value = $sheet->getCell($key.$row)->getValue();
-                    $dataSet['data'][$row - 2][$param] = (is_object($value)) ? trim($value->__toString()) : trim($value);
+                    $str = (is_object($value)) ? trim($value->__toString()) : trim($value);
+                    $dataSet['data'][$row - 2][$param] = str_replace(["\n", "\r\n", " "], '', $str);
                 }
 
             }
@@ -261,7 +263,8 @@ class MultithreadingRepository
                     continue;
                 }
                 // TODO: 还需要校验请求参数合法性, 如只允许的参数： idcard,realname,bankcard,mobile
-                $newParam[$ke] = (is_object($param)) ? trim($param->__toString()) : trim($param);
+                $str = (is_object($param)) ? trim($param->__toString()) : trim($param);
+                $newParam[$ke] = str_replace(["\n", "\r\n", " "], '', $str);
             }
             $this->dataSet['param'] = $newParam;
 
@@ -273,7 +276,8 @@ class MultithreadingRepository
                     if (empty($vv)) {
                         continue;
                     }
-                    $temp[$dataSet['param'][$kk]] = (is_object($vv)) ? trim($vv->__toString()) : trim($vv);
+                    $str = (is_object($vv)) ? trim($vv->__toString()) : trim($vv);
+                    $temp[$this->dataSet['param'][$kk]] = str_replace(["\n", "\r\n", " "], '', $str);
                 }
                 if ($temp) {
                     $newData[] = $temp;
