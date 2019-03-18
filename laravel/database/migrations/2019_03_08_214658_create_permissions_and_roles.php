@@ -23,6 +23,8 @@ class CreatePermissionsAndRoles extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('route')->default('');
+            $table->string('view')->default('');
+            $table->boolean('hidden')->default(1);
             $table->timestamps();
             $table->index('route');
         });
