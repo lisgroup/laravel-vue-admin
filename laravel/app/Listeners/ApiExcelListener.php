@@ -38,6 +38,7 @@ class ApiExcelListener implements ShouldQueue
     public function handle(ApiExcelEvent $event)
     {
         // 获取事件中保存的数据
+        // $data = ['id' => 6, 'state' => 1, 'upload_url' => '/storage/20190318_103542_5c8f03fe14d89.xlsx'];
         $data = $event->getData();
         // 根据状态处理数据
         switch ($data['state']) {
@@ -46,13 +47,12 @@ class ApiExcelListener implements ShouldQueue
                 $path = public_path($data['upload_url']);
                 if ($data['state'] == 1 && file_exists($path)) {
                     // 获取 appkey 和 url
-                    $apiExcel = ApiExcel::findOrFail($data['id']);
-                    $param = $apiExcel->apiParam()->get();
+                    $apiExcel = ApiExcel::find($data['id']);
+                    $param = $apiExcel->apiParam()->first();
                     if ($param) {
-                        $param = $param[0];
                         $multi = MultithreadingRepository::getInstent();
-                        $multi->setParam($path, ['concurrent' => $apiExcel['concurrent']]);
-                        $result = $multi->newMultiRequest($param['url'], $data['appkey']);
+                        $multi->setParam($path, ['concurrent' => $apiExcel->concurrent]);
+                        $result = $multi->newMultiRequest($param->url, $apiExcel->appkey);
 
                         ksort($result);
 
