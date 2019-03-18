@@ -127,7 +127,7 @@ export default {
       })
     },
     handleEdit(index, row) {
-      this.$router.push({ path: 'article/edit/' + row.id })
+      this.$router.push({ path: '/article/edit/' + row.id })
       // this.$router.push({ name: 'taskEdit', params: { id: row.id }})
       // console.log(index, row)
     },

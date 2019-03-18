@@ -11,7 +11,11 @@
         <el-input v-model="form.description"/>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
-        <el-input v-model="form.sort"/>
+        <el-col :span="6">
+          <el-input v-model="form.sort"/>
+        </el-col>
+        取值范围 【-128 到 128】 的整数，数值越小越靠前
+        <el-col :span="18"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
