@@ -50,7 +50,7 @@
           <el-input v-model="form.auto_delete"/>
         </el-col>
         <el-col :span="22">
-          &nbsp;&nbsp; 任务执行完成后自动删除的时间（单位：天），默认： 5 天
+          &nbsp;&nbsp; 任务执行完成后自动删除的时间（单位：天），默认： 2 天
         </el-col>
         <el-col :span="13"/>
       </el-form-item>
@@ -88,7 +88,7 @@ export default {
         concurrent: 5,
         uid: '',
         description: '',
-        auto_delete: 5,
+        auto_delete: 2,
         sort: '',
         loading: false
       },

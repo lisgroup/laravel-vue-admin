@@ -37,6 +37,15 @@
         </el-col>
         <el-col :span="13"/>
       </el-form-item>
+      <el-form-item label="自动删除时间" prop="auto_delete">
+        <el-col :span="2">
+          <el-input v-model="form.auto_delete"/>
+        </el-col>
+        <el-col :span="22">
+          &nbsp;&nbsp; 任务执行完成后自动删除的时间（单位：天），默认： 2 天
+        </el-col>
+        <el-col :span="13"/>
+      </el-form-item>
       <el-form-item label="用户ID(可选)" prop="uid">
         <el-col :span="11">
           <el-input v-model="form.uid" size="medium" placeholder="请输入内容"/>
@@ -70,6 +79,7 @@ export default {
         appkey: '',
         uid: '',
         description: '',
+        auto_delete: 2,
         sort: '',
         loading: false
       },
