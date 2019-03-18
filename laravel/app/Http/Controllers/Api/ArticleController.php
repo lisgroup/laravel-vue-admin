@@ -119,6 +119,8 @@ class ArticleController extends Controller
         // 老版本更新操作如下，新版本先查询再更新
         // Article::where('id', $id)->update($input)
         $article = Article::findOrFail($id);
+        is_null($input['description']) && $input['description'] = '';
+        is_null($input['cover_img']) && $input['cover_img'] = '';
         if ($article->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {

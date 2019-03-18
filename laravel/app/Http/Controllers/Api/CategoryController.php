@@ -68,6 +68,7 @@ class CategoryController extends Controller
         // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
         // $rs = Category::insert($request->all());
         $input = $request->all();
+        is_null($input['sort']) && $input['sort'] = 100;
         $model = new Category($input);
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);
