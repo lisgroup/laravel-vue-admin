@@ -235,7 +235,6 @@ class MultithreadingRepository
 
             // 3. 循环数组每个单元格的数据
             $this->dataSet['data'] = $data;
-            Log::info('excel-data: ', $this->dataSet);
 
             return true;
         } catch (Exception|\PhpOffice\PhpSpreadsheet\Exception $exception) {
@@ -304,7 +303,9 @@ class MultithreadingRepository
             },
             'rejected' => function($reason, $index) {
                 // this is delivered each failed request
-                return 'Index: '.$index.' Reason:'.$reason;
+                Log::error('request-failed: ID-'.$index, ['reason' => $reason]);
+                $this->data[$index] = [];
+                //return 'Index: '.$index.' Reason:'.$reason;
             },
         ]);
 
@@ -319,7 +320,7 @@ class MultithreadingRepository
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
             $returnArray[$k]['result'] = $v;
         }
-        Log::info('return-array', $returnArray);
+        // Log::info('return-array', $returnArray);
         return $returnArray;
     }
 
