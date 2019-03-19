@@ -235,6 +235,7 @@ class MultithreadingRepository
 
             // 3. 循环数组每个单元格的数据
             $this->dataSet['data'] = $data;
+            Log::info('excel-data: ', $this->dataSet);
 
             return true;
         } catch (Exception|\PhpOffice\PhpSpreadsheet\Exception $exception) {
@@ -318,6 +319,7 @@ class MultithreadingRepository
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
             $returnArray[$k]['result'] = $v;
         }
+        Log::info('return-array', $returnArray);
         return $returnArray;
     }
 
