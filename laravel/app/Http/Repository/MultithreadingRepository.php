@@ -303,9 +303,13 @@ class MultithreadingRepository
             },
             'rejected' => function($reason, $index) {
                 // this is delivered each failed request
-                Log::error('request-failed: ID-'.$index, ['reason' => $reason]);
+                if (is_object($reason) && is_callable([$reason, 'getMessage'])) {
+                    $reason = 'Line:'.$reason->getLine().' in '.$reason->getFile().'; Message: '.$reason->getMessage();
+                }
+                Log::error('MultithreadingRepository.php Line:309 Get Failed Request: ', ['ExcelName' => $this->fileName, 'Index' => $index, 'Param' => $this->dataSet['data'][$index], 'Error' => $reason]);
                 $this->data[$index] = '';
-                //return 'Index: '.$index.' Reason:'.$reason;
+                // 拼接字符串--后面跟的 $reason 是对象导致异常退出任务
+                // return 'Index: '.$index.' Reason:'.$reason;
             },
         ]);
 
