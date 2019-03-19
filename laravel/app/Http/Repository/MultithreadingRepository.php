@@ -253,7 +253,7 @@ class MultithreadingRepository
      */
     public function newRequest($url, $appkey)
     {
-        $client = new Client();
+        $client = new Client(['timeout' => 5]);
         // 简单本地并发的 GET 请求测试
         $requests = function($url, $appkey, $dataSet) use ($client) {
             $newParam = [];
@@ -304,7 +304,7 @@ class MultithreadingRepository
             'rejected' => function($reason, $index) {
                 // this is delivered each failed request
                 Log::error('request-failed: ID-'.$index, ['reason' => $reason]);
-                $this->data[$index] = [];
+                $this->data[$index] = '';
                 //return 'Index: '.$index.' Reason:'.$reason;
             },
         ]);
