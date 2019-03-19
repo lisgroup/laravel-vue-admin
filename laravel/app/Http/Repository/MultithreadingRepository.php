@@ -306,7 +306,14 @@ class MultithreadingRepository
                 if (is_object($reason) && is_callable([$reason, 'getMessage'])) {
                     $reason = 'Line:'.$reason->getLine().' in '.$reason->getFile().'; Message: '.$reason->getMessage();
                 }
-                Log::error('MultithreadingRepository.php Line:309 Get Failed Request: ', ['ExcelName' => $this->fileName, 'Index' => $index, 'Param' => $this->dataSet['data'][$index], 'Error' => $reason]);
+                $log = [
+                    'Param' => $this->dataSet['param'],
+                    'Data' => $this->dataSet['data'][$index],
+                    'ExcelName' => $this->fileName,
+                    'Index' => $index,
+                    'Error' => $reason
+                ];
+                Log::error('MultithreadingRepository.php Line:316 Get Failed Request: ', $log);
                 $this->data[$index] = '';
                 // 拼接字符串--后面跟的 $reason 是对象导致异常退出任务
                 // return 'Index: '.$index.' Reason:'.$reason;
