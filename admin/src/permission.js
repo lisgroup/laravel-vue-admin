@@ -1,10 +1,14 @@
 import router from './router'
+import { routeManage, routerAdmin } from './router'
 import store from './store'
 import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
 
+console.log(router)
+router.addRoutes(routerAdmin)
+router.addRoutes(routeManage)
 const whiteList = ['/login', '/index', '/line', '/home', '/404', '/', '', '/md'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start()
@@ -15,6 +19,11 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.roles.length === 0) {
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
+          const roles = res.data.roles
+          store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+          })
           if (!to.meta.role || res.data.roles.indexOf('Super Administrator') >= 0 || res.data.roles.indexOf(to.meta.role) >= 0) {
             next()
           } else {

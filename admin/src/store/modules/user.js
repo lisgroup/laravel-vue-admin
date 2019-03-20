@@ -1,5 +1,6 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { routeManage, routerAdmin, routeOther } from '../../router/router'
 
 const user = {
   state: {
@@ -21,6 +22,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_ROUTERS: (state, routers) => {
+      state.addRouters = routers
     }
   },
 
@@ -78,6 +82,23 @@ const user = {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         removeToken()
+        resolve()
+      })
+    },
+
+    GenerateRoutes({ commit }, data) {
+      return new Promise(resolve => {
+        let userLimitRouters = null
+        console.log(data)
+        if (data.roles.indexOf('Super Administrator') >= 0) {
+          console.log('SuperAdmin')
+          userLimitRouters = [...routerAdmin, ...routeManage, ...routeOther]
+        } else if (data.roles.indexOf('Admin') >= 0) {
+          userLimitRouters = routeManage
+        } else {
+          userLimitRouters = routeOther
+        }
+        commit('SET_ROUTERS', userLimitRouters)
         resolve()
       })
     }

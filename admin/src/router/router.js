@@ -1,11 +1,3 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-
-// in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
-// detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
-
-Vue.use(Router)
-
 /* Layout */
 const Layout = () => import('../views/layout/Layout')
 
@@ -23,30 +15,6 @@ const Layout = () => import('../views/layout/Layout')
  **/
 const Super = 'Super Administrator'
 const Admin = 'Admin'
-
-// 基础路由
-const routeBase = [
-  { path: '/', name: 'index', component: () => import('@/views/home/index'), hidden: true },
-  { path: '/line', name: 'line', component: () => import('@/views/home/line'), hidden: true },
-  { path: '/home', component: () => import('@/views/home/home'), hidden: true },
-  { path: '/md', name: 'md', component: () => import('@/views/markdown/index'), hidden: true },
-  { path: '/echarts', name: 'echarts', component: () => import('@/views/echarts/index'), hidden: true },
-  // { path: '/index', component: () => import('@/views/home/index'), hidden: true },
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
-
-  {
-    path: '/admin',
-    component: Layout,
-    redirect: '/admin/dashboard',
-    name: 'Dashboard',
-    hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
-    }]
-  }
-]
 
 // 管理一般路由
 export const routeManage = [
@@ -221,7 +189,7 @@ export const routerAdmin = [
 
 ]
 
-const routeOther = [
+export const routeOther = [
   {
     path: '/form',
     component: Layout,
@@ -293,11 +261,3 @@ const routeOther = [
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
-
-export const constantRouterMap = [...routeBase, ...routeOther]
-
-export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
-})
