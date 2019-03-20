@@ -89,9 +89,8 @@ const user = {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
         let userLimitRouters = null
-        console.log(data)
+        // console.log(data)
         if (data.roles.indexOf('Super Administrator') >= 0) {
-          console.log('SuperAdmin')
           userLimitRouters = [...routerAdmin, ...routeManage, ...routeOther]
         } else if (data.roles.indexOf('Admin') >= 0) {
           userLimitRouters = routeManage
