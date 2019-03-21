@@ -60,7 +60,7 @@ export default {
       if (value === undefined) {
         value = ''
       }
-      console.log(this.form.password)
+      // console.log(this.form.password)
       if (value !== this.form.password) {
         callback(new Error('两次输入密码不一致!'))
       } else {

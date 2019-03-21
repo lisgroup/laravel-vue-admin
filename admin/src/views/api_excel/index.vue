@@ -140,7 +140,7 @@ export default {
         type: 'warning'
       }).then(() => {
         startTask(row).then(res => {
-          console.log(res)
+          // console.log(res)
           let msg = ''
           if (res.code === 200) {
             row.state = 1

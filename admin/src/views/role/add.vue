@@ -53,7 +53,7 @@ export default {
     fetchData() {
       this.listLoading = true
       getPermission().then(response => {
-        console.log(response.data)
+        // console.log(response.data)
         this.form.permissions = response.data.permissions
         this.listLoading = false
       })
