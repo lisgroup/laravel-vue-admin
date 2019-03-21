@@ -17,7 +17,7 @@ const Super = 'Super Administrator'
 const Admin = 'Admin'
 
 // 管理一般路由
-export const routeManage = [
+export const routeSuper = [
   {
     path: '/api_excel',
     component: Layout,

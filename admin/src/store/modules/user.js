@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { routeManage, routerAdmin, routeOther } from '../../router/router'
+import { routeSuper, routerAdmin, routeOther } from '../../router/router'
 
 const user = {
   state: {
@@ -91,9 +91,9 @@ const user = {
         let userLimitRouters = null
         // console.log(data)
         if (data.roles.indexOf('Super Administrator') >= 0) {
-          userLimitRouters = [...routerAdmin, ...routeManage, ...routeOther]
+          userLimitRouters = [...routerAdmin, ...routeSuper, ...routeOther]
         } else if (data.roles.indexOf('Admin') >= 0) {
-          userLimitRouters = routeManage
+          userLimitRouters = routeSuper
         } else {
           userLimitRouters = routeOther
         }

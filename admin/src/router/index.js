@@ -46,7 +46,7 @@ const routeBase = [
   }
 ]
 
-const routeOther = [
+const routeTest = [
   {
     path: '/form',
     component: Layout,
@@ -119,7 +119,7 @@ const routeOther = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-export const constantRouterMap = [...routeBase, ...routeOther]
+export const constantRouterMap = [...routeBase, ...routeTest]
 
 export default new Router({
   // mode: 'history', //后端支持可开

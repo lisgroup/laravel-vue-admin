@@ -1,5 +1,5 @@
 import router from './router'
-import { routeManage, routerAdmin } from './router/router'
+import { routeSuper, routerAdmin } from './router/router'
 import store from './store'
 import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
@@ -8,7 +8,7 @@ import { getToken } from '@/utils/auth' // 验权
 
 console.log(router)
 router.addRoutes(routerAdmin)
-router.addRoutes(routeManage)
+router.addRoutes(routeSuper)
 const whiteList = ['/login', '/index', '/line', '/home', '/404', '/', '', '/md'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start()
