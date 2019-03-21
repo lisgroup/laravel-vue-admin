@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Log;
 class ApiExcelListener implements ShouldQueue
 {
     /**
+     * 任务运行的超时时间。
+     *
+     * @var int
+     */
+    public $timeout = 3600;
+
+    /**
      * 失败重试次数
      *
      * @var int

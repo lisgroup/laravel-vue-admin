@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     onSubmit(form) {
-      console.log(this.form)
+      // console.log(this.form)
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.loading = true

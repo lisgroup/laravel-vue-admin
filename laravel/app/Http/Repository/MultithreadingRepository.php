@@ -253,7 +253,7 @@ class MultithreadingRepository
      */
     public function newRequest($url, $appkey)
     {
-        $client = new Client();
+        $client = new Client(['timeout' => 5]);
         // 简单本地并发的 GET 请求测试
         $requests = function($url, $appkey, $dataSet) use ($client) {
             $newParam = [];
@@ -303,7 +303,20 @@ class MultithreadingRepository
             },
             'rejected' => function($reason, $index) {
                 // this is delivered each failed request
-                return 'Index: '.$index.' Reason:'.$reason;
+                if (is_object($reason) && is_callable([$reason, 'getMessage'])) {
+                    $reason = 'Line:'.$reason->getLine().' in '.$reason->getFile().'; Message: '.$reason->getMessage();
+                }
+                $log = [
+                    'Param' => $this->dataSet['param'],
+                    'Data' => $this->dataSet['data'][$index],
+                    'ExcelName' => $this->fileName,
+                    'Index' => $index,
+                    'Error' => $reason
+                ];
+                Log::error('MultithreadingRepository.php Line:316 Get Failed Request: ', $log);
+                $this->data[$index] = '';
+                // 拼接字符串--后面跟的 $reason 是对象导致异常退出任务
+                // return 'Index: '.$index.' Reason:'.$reason;
             },
         ]);
 
@@ -318,6 +331,7 @@ class MultithreadingRepository
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
             $returnArray[$k]['result'] = $v;
         }
+        // Log::info('return-array', $returnArray);
         return $returnArray;
     }
 
