@@ -34,6 +34,17 @@ class ApiRepository
     }
 
     /**
+     * 自动任务
+     */
+    public function handleAutoTask()
+    {
+        // 1. 自动删除任务
+        $this->handleAutoDelete();
+        // 2. 大于自动删除时间，state = 1 的置为 5 失败
+        $this->autoFailed();
+    }
+
+    /**
      * 自动删除的任务
      */
     public function handleAutoDelete()
@@ -45,6 +56,24 @@ class ApiRepository
             if ($excel['auto_delete'] > 0 && strtotime($excel['updated_at']) + $excel['auto_delete'] * 86400 < time()) {
                 // 获取过期时间戳
                 ApiExcel::destroy($excel['id']);
+
+            }
+
+        }
+    }
+
+    /**
+     * 自动失败的任务
+     */
+    public function autoFailed()
+    {
+        // 查询数据库已完成的任务，判断过期条件
+        $excels = ApiExcel::where('state', 1)->get(['id', 'auto_delete', 'updated_at']);
+
+        foreach ($excels as $excel) {
+            if ($excel['auto_delete'] > 0 && strtotime($excel['updated_at']) + $excel['auto_delete'] * 86400 < time()) {
+                // 获取过期时间戳
+                ApiExcel::where('id', $excel['id'])->update(['state' => 5]);
 
             }
 

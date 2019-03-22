@@ -45,9 +45,9 @@ class Kernel extends ConsoleKernel
             BusRepository::getInstent()->cronTaskTable();
         })->everyFiveMinutes()->between('5:00', '23:00');
 
-        // 每隔一小时检测需要自动删除的任务
+        // 每隔一小时检测需要自动处理的任务
         $schedule->call(function() {
-            ApiRepository::getInstent()->handleAutoDelete();
+            ApiRepository::getInstent()->handleAutoTask();
         })->hourly()->between('4:00', '23:59');
     }
 
