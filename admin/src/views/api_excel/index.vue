@@ -41,13 +41,16 @@
       <el-table-column label="状态" width="90" align="center">
         <template slot-scope="scope">
           <div v-if="scope.row.state === 0">
-            <el-tag type="danger">未处理</el-tag>
+            <el-tag type="warning">未开启</el-tag>
           </div>
           <div v-else-if="scope.row.state === 1">
-            <el-tag type="warning">正在处理</el-tag>
+            <el-tag type="primary">正在处理</el-tag>
+          </div>
+          <div v-else-if="scope.row.state === 2">
+            <el-tag type="success">已完成</el-tag>
           </div>
           <div v-else>
-            <el-tag type="success">已完成</el-tag>
+            <el-tag type="info">失败</el-tag>
           </div>
         </template>
       </el-table-column>
@@ -57,19 +60,25 @@
           <div v-if="scope.row.state === 0">
             <el-button
               size="mini"
-              type="danger"
-              @click="startTask(scope.$index, scope.row)">点击开始任务</el-button>
+              type="warning"
+              @click="openTask(scope.$index, scope.row)">点击开始任务</el-button>
           </div>
           <div v-else-if="scope.row.state === 1">
             <el-button
               size="mini"
-              type="warning">...</el-button>
+              type="primary">...</el-button>
           </div>
-          <div v-else>
+          <div v-else-if="scope.row.state === 2">
             <el-button
               size="mini"
               type="success"
               @click="download(scope.$index, scope.row)">点击下载</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </div>
+          <div v-else>
             <el-button
               size="mini"
               type="danger"
@@ -160,6 +169,31 @@ export default {
         })
       })
     },
+    openTask(index, row) {
+      this.$alert('此操作将开启任务, 是否继续?', '开启任务提醒', {
+        confirmButtonText: '确定',
+        center: true,
+        type: 'success',
+        callback: action => {
+          if (action === 'confirm') {
+            startTask(row).then(res => {
+              // console.log(res)
+              let msg = ''
+              if (res.code === 200) {
+                row.state = 1
+                msg = 'success'
+              } else {
+                msg = 'error'
+              }
+              this.$message({
+                type: msg,
+                message: res.reason
+              })
+            })
+          }
+        }
+      })
+    },
     download(index, row) {
       window.location.href = this.url + row.finish_url
     },
@@ -182,7 +216,7 @@ export default {
       this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'error'
       }).then(() => {
         // 删除操作
         deleteAct(row.id).then(response => {

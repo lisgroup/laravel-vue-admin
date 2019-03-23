@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
 
-console.log(router)
+// console.log(router)
 router.addRoutes(routerAdmin)
 router.addRoutes(routeSuper)
 const whiteList = ['/login', '/index', '/line', '/home', '/404', '/', '', '/md'] // 不重定向白名单
