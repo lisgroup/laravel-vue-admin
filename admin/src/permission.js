@@ -7,6 +7,10 @@ import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
 
 // console.log(router)
+if (!localStorage.getItem('new')) {
+  localStorage.setItem('new', JSON.stringify({ 'path': '/test', 'component': 'test' })) // 路由
+  console.log(localStorage.getItem('new'))
+}
 router.addRoutes(routerAdmin)
 router.addRoutes(routeSuper)
 const whiteList = ['/login', '/index', '/line', '/home', '/404', '/', '', '/md'] // 不重定向白名单
