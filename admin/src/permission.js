@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
 
-if (sessionStorage.getItem('roles') && store.getters.roles.length === 0) {
+if (store.getters.roles.length === 0 && sessionStorage.getItem('roles')) {
   const roles = JSON.parse(sessionStorage.getItem('roles'))
   // 设置权限
   let userLimitRouters = null
