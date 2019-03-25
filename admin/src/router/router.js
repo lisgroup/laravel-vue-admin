@@ -182,7 +182,7 @@ export const routeSuper = [
         path: '/role',
         name: '角色管理',
         component: () => import('@/views/role/index'),
-        meta: { title: '角色管理', icon: 'roles', roles: [Super] }
+        meta: { title: '角色管理', icon: 'role', roles: [Super] }
       }
     ]
   }
