@@ -17,7 +17,7 @@ const Super = 'Super Administrator'
 const Admin = 'Admin'
 
 // 管理一般路由
-export const routeSuper = [
+export const routeAdmin = [
   {
     path: '/api_excel',
     component: Layout,
@@ -50,7 +50,7 @@ export const routeSuper = [
   }
 ]
 
-export const routerAdmin = [
+export const routeSuper = [
   // { path: '/', redirect: '/index', hidden: true },
 
   {
