@@ -1,13 +1,14 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { routeSuper, routerAdmin, routeOther } from '../../router/router'
+// import { routeSuper, routeAdmin, routeOther } from '../../router/router'
 
 const user = {
   state: {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    addRouters: []
   },
 
   mutations: {
@@ -50,6 +51,17 @@ const user = {
         getInfo(state.token).then(response => {
           const data = response.data
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+            // 存储 sessionStorage
+            sessionStorage.setItem('roles', JSON.stringify(data.roles))
+            // let userLimitRouters = null
+            // if (data.roles.indexOf('Super Administrator') >= 0) {
+            //   userLimitRouters = [...routeAdmin, ...routeSuper, ...routeOther]
+            // } else if (data.roles.indexOf('Admin') >= 0) {
+            //   userLimitRouters = routeAdmin
+            // } else {
+            //   userLimitRouters = routeOther
+            // }
+            // commit('SET_ROUTERS', userLimitRouters)
             commit('SET_ROLES', data.roles)
           } else {
             reject('getInfo: roles must be a non-null array !')
@@ -86,18 +98,9 @@ const user = {
       })
     },
 
-    GenerateRoutes({ commit }, data) {
+    GenerateRoutes({ commit }, routers) {
       return new Promise(resolve => {
-        let userLimitRouters = null
-        // console.log(data)
-        if (data.roles.indexOf('Super Administrator') >= 0) {
-          userLimitRouters = [...routerAdmin, ...routeSuper, ...routeOther]
-        } else if (data.roles.indexOf('Admin') >= 0) {
-          userLimitRouters = routeSuper
-        } else {
-          userLimitRouters = routeOther
-        }
-        commit('SET_ROUTERS', userLimitRouters)
+        commit('SET_ROUTERS', routers)
         resolve()
       })
     }
