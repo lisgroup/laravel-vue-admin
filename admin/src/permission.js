@@ -9,15 +9,7 @@ import { getToken } from '@/utils/auth' // 验权
 if (store.getters.roles.length === 0 && sessionStorage.getItem('roles')) {
   const roles = JSON.parse(sessionStorage.getItem('roles'))
   // 设置权限
-  let userLimitRouters = null
-  if (roles.indexOf('Super Administrator') >= 0) {
-    userLimitRouters = [...routeAdmin, ...routeSuper, ...routeOther]
-  } else if (roles.indexOf('Admin') >= 0) {
-    userLimitRouters = routeAdmin
-    // router.addRoutes(routeAdmin)
-  } else {
-    userLimitRouters = routeOther
-  }
+  const userLimitRouters = getRouters(roles)
   store.dispatch('GenerateRoutes', userLimitRouters)
   router.addRoutes(userLimitRouters)
 }
@@ -39,6 +31,11 @@ router.beforeEach((to, from, next) => {
       // 3. 添加默认 router
       if (store.getters.roles.length === 0) {
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
+          // sessionStorage 不存在
+          // console.log(sessionStorage.getItem('roles'))
+          const userLimitRouters = getRouters(res.data.roles)
+          store.dispatch('GenerateRoutes', userLimitRouters)
+          router.addRoutes(userLimitRouters)
           // const roles = res.data.roles
           // console.log(roles)
           // store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
@@ -87,4 +84,18 @@ function hasPermission(roles, permissionRoles) {
   if (roles.indexOf('Super Administrator') >= 0) return true // admin permission passed directly
   if (!permissionRoles) return true
   return roles.some(role => permissionRoles.indexOf(role) >= 0)
+}
+
+// 根据角色返回路由列表
+function getRouters(roles) {
+  // 设置权限
+  let userLimitRouters = null
+  if (roles.indexOf('Super Administrator') >= 0) {
+    userLimitRouters = [...routeAdmin, ...routeSuper, ...routeOther]
+  } else if (roles.indexOf('Admin') >= 0) {
+    userLimitRouters = routeAdmin
+  } else {
+    userLimitRouters = routeOther
+  }
+  return userLimitRouters
 }

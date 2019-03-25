@@ -82,6 +82,7 @@ const user = {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           removeToken()
+          sessionStorage.setItem('roles', '')
           resolve()
         }).catch(error => {
           reject(error)
