@@ -58,6 +58,7 @@ class ApiExcelListener implements ShouldQueue
                     $param = $apiExcel->apiParam()->first();
                     if ($param) {
                         $multi = MultithreadingRepository::getInstent();
+                        $multi->setApiExcelId($data['id']);
                         $multi->setParam($path, ['concurrent' => $apiExcel->concurrent]);
                         $result = $multi->newMultiRequest($param->url, $apiExcel->appkey);
 

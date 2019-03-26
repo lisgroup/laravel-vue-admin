@@ -9,6 +9,7 @@
 namespace App\Http\Repository;
 
 
+use App\Models\ApiExcelLogs;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -27,6 +28,7 @@ class MultithreadingRepository
      */
     public $data = [];
 
+    public $api_excel_id = 0;
     public $fileName;
     public $config;
 
@@ -51,6 +53,11 @@ class MultithreadingRepository
             self::$instance = new static();
         }
         return self::$instance;
+    }
+
+    public function setApiExcelId($id)
+    {
+        $this->api_excel_id = $id;
     }
 
     /**
@@ -297,12 +304,30 @@ class MultithreadingRepository
             'fulfilled' => function($response, $index) {
                 // this is delivered each successful response
                 $result = $response->getBody()->getContents();
-                Log::info($index.'-result', ['result' => $result]);
+                // 记录返回数据到数据库 api_excel_logs 中
+                $para = array_values($this->dataSet['data'][$index]);
+                $logs = [
+                    'api_excel_id' => $this->api_excel_id,
+                    'sort_index' => $index,
+                    'param' => implode('|', $para),
+                    'result' => $result,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ];
+                ApiExcelLogs::insert($logs);
                 // var_dump($result);
                 // var_dump($index);
                 $this->data[$index] = $result;
             },
             'rejected' => function($reason, $index) {
+                $para = array_values($this->dataSet['data'][$index]);
+                $logs = [
+                    'api_excel_id' => $this->api_excel_id,
+                    'sort_index' => $index,
+                    'param' => implode('|', $para),
+                    'result' => '',
+                    'created_at' => date('Y-m-d H:i:s'),
+                ];
+                ApiExcelLogs::insert($logs);
                 // this is delivered each failed request
                 if (is_object($reason) && is_callable([$reason, 'getMessage'])) {
                     $reason = 'Line:'.$reason->getLine().' in '.$reason->getFile().'; Message: '.$reason->getMessage();
