@@ -297,7 +297,7 @@ class MultithreadingRepository
             'fulfilled' => function($response, $index) {
                 // this is delivered each successful response
                 $result = $response->getBody()->getContents();
-                Log::info($index.'-result', $result);
+                Log::info($index.'-result', ['result' => $result]);
                 // var_dump($result);
                 // var_dump($index);
                 $this->data[$index] = $result;
