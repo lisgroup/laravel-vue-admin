@@ -51,17 +51,6 @@ const user = {
         getInfo(state.token).then(response => {
           const data = response.data
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            // 存储 sessionStorage
-            sessionStorage.setItem('roles', JSON.stringify(data.roles))
-            // let userLimitRouters = null
-            // if (data.roles.indexOf('Super Administrator') >= 0) {
-            //   userLimitRouters = [...routeAdmin, ...routeSuper, ...routeOther]
-            // } else if (data.roles.indexOf('Admin') >= 0) {
-            //   userLimitRouters = routeAdmin
-            // } else {
-            //   userLimitRouters = routeOther
-            // }
-            // commit('SET_ROUTERS', userLimitRouters)
             commit('SET_ROLES', data.roles)
           } else {
             reject('getInfo: roles must be a non-null array !')
@@ -99,9 +88,21 @@ const user = {
       })
     },
 
-    GenerateRoutes({ commit }, routers) {
+    GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        commit('SET_ROUTERS', routers)
+        commit('SET_ROUTERS', data.routers)
+
+        // 存储 sessionStorage
+        sessionStorage.setItem('roles', JSON.stringify(data.roles))
+        // let userLimitRouters = null
+        // if (data.roles.indexOf('Super Administrator') >= 0) {
+        //   userLimitRouters = [...routeAdmin, ...routeSuper, ...routeOther]
+        // } else if (data.roles.indexOf('Admin') >= 0) {
+        //   userLimitRouters = routeAdmin
+        // } else {
+        //   userLimitRouters = routeOther
+        // }
+        // commit('SET_ROUTERS', userLimitRouters)
         resolve()
       })
     }

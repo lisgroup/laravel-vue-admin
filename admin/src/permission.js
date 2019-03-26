@@ -10,7 +10,7 @@ if (store.getters.roles.length === 0 && sessionStorage.getItem('roles')) {
   const roles = JSON.parse(sessionStorage.getItem('roles'))
   // 设置权限
   const userLimitRouters = getRouters(roles)
-  store.dispatch('GenerateRoutes', userLimitRouters)
+  store.dispatch('GenerateRoutes', { routers: userLimitRouters, roles })
   router.addRoutes(userLimitRouters)
 }
 
@@ -34,8 +34,10 @@ router.beforeEach((to, from, next) => {
           // sessionStorage 不存在
           // console.log(sessionStorage.getItem('roles'))
           const userLimitRouters = getRouters(res.data.roles)
-          store.dispatch('GenerateRoutes', userLimitRouters)
-          router.addRoutes(userLimitRouters)
+          if (!sessionStorage.getItem('roles')) {
+            router.addRoutes(userLimitRouters)
+          }
+          store.dispatch('GenerateRoutes', { routers: userLimitRouters, roles: res.data.roles })
           // const roles = res.data.roles
           // console.log(roles)
           // store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
