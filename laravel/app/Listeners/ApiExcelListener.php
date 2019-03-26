@@ -66,6 +66,9 @@ class ApiExcelListener implements ShouldQueue
                         // 正式上线后注释下一行
                         Log::info('ID-'.$data['id'].'-result: ', $result);
                         if (!$result) {
+                            // 更新任务失败
+                            $apiExcel->state = 5;
+                            $apiExcel->save();
                             throw new \Exception(date('Y-m-d H:i:s').' 任务失败： 第三方请求错误～！'.$param['url']);
                         }
 

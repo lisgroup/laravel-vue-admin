@@ -305,6 +305,8 @@ class MultithreadingRepository
                 // this is delivered each failed request
                 if (is_object($reason) && is_callable([$reason, 'getMessage'])) {
                     $reason = 'Line:'.$reason->getLine().' in '.$reason->getFile().'; Message: '.$reason->getMessage();
+                } else {
+                    $reason = '';
                 }
                 $log = [
                     'Param' => $this->dataSet['param'],
