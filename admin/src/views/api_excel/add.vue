@@ -54,12 +54,6 @@
         </el-col>
         <el-col :span="13"/>
       </el-form-item>
-      <el-form-item label="用户ID(可选)" prop="uid">
-        <el-col :span="11">
-          <el-input v-model="form.uid" size="medium" placeholder="请输入内容"/>
-        </el-col>
-        <el-col :span="13"/>
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
