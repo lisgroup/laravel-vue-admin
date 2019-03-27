@@ -33,4 +33,28 @@ class ApiExcel extends Model
     {
         return $this->belongsTo(ApiParam::class, 'api_param_id');
     }
+
+    /**
+     * 访问器--访问用户名
+     *
+     * @param $uid
+     *
+     * @return mixed|string
+     */
+    public function getUidAttribute($uid)
+    {
+        $user = \App\User::where('id', $uid)->first(['name']);
+        return $user->name ?? '';
+    }
+
+    /**
+     * 修改器--修改为用户 id
+     *
+     * @param $uid
+     */
+    public function setUidAttribute($uid)
+    {
+        // 根据 jwt 查询用户 ID
+        $this->attributes['uid'] = auth('api')->user()['id'];
+    }
 }
