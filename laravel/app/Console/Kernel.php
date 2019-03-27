@@ -43,6 +43,7 @@ class Kernel extends ConsoleKernel
             // file_put_contents($path.'/cache.txt', $query->getHtml().PHP_EOL, FILE_APPEND);
             // // 每隔五分钟入库操作
             BusRepository::getInstent()->cronTaskTable();
+            ApiRepository::getInstent()->autoFailed();
         })->everyFiveMinutes()->between('5:00', '23:00');
 
         // 每隔一小时检测需要自动处理的任务
