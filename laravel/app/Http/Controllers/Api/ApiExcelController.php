@@ -51,7 +51,14 @@ class ApiExcelController extends Controller
      */
     public function index()
     {
-        $list = ApiExcel::with('apiParam')->orderBy('id', 'desc')->paginate($this->perPage);
+        $user_id = auth('api')->user()['id'];
+
+        // 查询对应用户的上传数据
+        $where = [];
+        if ($user_id != 1) {
+            $where = ['uid' => $user_id];
+        }
+        $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($this->perPage);
 
         $appUrl = env('APP_URL') ?? '';
         $collect = collect(['appUrl' => $appUrl]);
