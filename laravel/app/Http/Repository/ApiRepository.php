@@ -64,15 +64,16 @@ class ApiRepository
 
     /**
      * 自动失败的任务
+     * 开启任务后 state = 1 的一直未更新状态的为失败任务
      */
     public function autoFailed()
     {
         // 查询数据库已完成的任务，判断过期条件
-        $excels = ApiExcel::where('state', 1)->get(['id', 'auto_delete', 'created_at']);
+        $excels = ApiExcel::where('state', 1)->get(['id', 'auto_delete', 'created_at', 'updated_at']);
 
         foreach ($excels as $excel) {
-            if ($excel['auto_delete'] > 0 && strtotime($excel['created_at']) + $excel['auto_delete'] * 86400 < time()) {
-                // 获取过期时间戳
+            // 开启任务后 10 分钟未查询出结果=》失败
+            if ($excel['auto_delete'] > 0 && strtotime($excel['updated_at']) + 600 < time()) {
                 ApiExcel::where('id', $excel['id'])->update(['state' => 5]);
 
             }

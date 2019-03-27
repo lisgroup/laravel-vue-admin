@@ -47,7 +47,7 @@ class Kernel extends ConsoleKernel
 
         // 每隔一小时检测需要自动处理的任务
         $schedule->call(function() {
-            ApiRepository::getInstent()->handleAutoTask();
+            ApiRepository::getInstent()->handleAutoDelete();
         })->hourly()->between('4:00', '23:59');
     }
 
