@@ -57,28 +57,22 @@
 
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <div v-if="scope.row.state === 0">
+          <div>
             <el-button
+              v-if="scope.row.state === 0"
               size="mini"
               type="warning"
-              @click="openTask(scope.$index, scope.row)">点击开始任务</el-button>
-          </div>
-          <div v-else-if="scope.row.state === 1">
+              @click="openTask(scope.$index, scope.row)">点击开启任务</el-button>
             <el-button
+              v-else-if="scope.row.state === 1"
               size="mini"
               type="primary">...</el-button>
-          </div>
-          <div v-else-if="scope.row.state === 2">
             <el-button
+              v-else-if="scope.row.state === 2"
               size="mini"
               type="success"
               @click="download(scope.$index, scope.row)">点击下载</el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-          </div>
-          <div v-else>
+
             <el-button
               size="mini"
               type="danger"
