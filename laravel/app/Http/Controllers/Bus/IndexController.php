@@ -107,4 +107,8 @@ class IndexController extends CommonController
         return $this->out(200, $list);
     }
 
+    public function getMe($req)
+    {
+        return $req;
+    }
 }
