@@ -109,6 +109,7 @@ class IndexController extends CommonController
 
     public function getMe($req)
     {
+        echo 'test';
         return $req;
     }
 }
