@@ -2,6 +2,7 @@
 
 ## 1. 一些基础命令
 1. 创建一个 Crons 表迁移和模型
+
 ```php
 php artisan make:model Models/Cron -m
 ```
@@ -9,6 +10,7 @@ php artisan make:model Models/Cron -m
 2. 添加表的相应字段
 
 /database/migrations/2018_10_27_151143_create_crons_table.php
+
 ```
 /**
  * Run the migrations.
@@ -25,21 +27,29 @@ public function up()
     });
 }
 ```
+
 2.1 修改 `.env` 数据库配置项；
+
 ```
 DB_DATABASE=test
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
+
 2.2 运行迁移生成表;
+
 ```
 php artisan migrate
 ```
+
 2.3 创建填充文件;
+
 ```
 php artisan make:seed CronTasksTableSeeder
 ```
+
 2.4 生成测试数据;
+
 ```
 public function run()
 {
@@ -61,7 +71,9 @@ public function run()
     ]);
 }
 ```
+
 运行填充；
+
 ```
 php artisan db:seed --class=CronTasksTableSeeder
 ```
@@ -69,6 +81,7 @@ php artisan db:seed --class=CronTasksTableSeeder
 3. 添加路由
 
 /routes/web.php
+
 ```
 <?php
 use App\Models\Cron;
@@ -80,7 +93,9 @@ Route::get('search', function () {
 ```
 
 4. 定时任务和创建命令相关
+
 启动定时任务
+
 ```shell
 # 使用 crontab 的定时任务调用 php artisan 调度任务：
 crontab -e
@@ -94,24 +109,30 @@ crontab -e
 
 
 ## 2. TODO 待完成工作
+
 ~~1. 查询的公交线路存入数据库保存。（目前保存在文件中）已完成~~
 
 
 ## 3. Laravel使用 iseed 扩展导出表数据
+
 iseed地址： [https://github.com/orangehill/iseed](https://github.com/orangehill/iseed)
 
 ### 3.1 iseed 安装
+
 ```
 composer require orangehill/iseed
 ```
 
 ### 3.2 使用方法
+
 如生成 lines 表的 seeder 文件:
+
 ```
 php artisan iseed lines
 ```
 
 ## 4. 开箱即用注册登录功能
+
 ```shell
 # 快速生成认证所需要的路由和视图
 php artisan make:auth
