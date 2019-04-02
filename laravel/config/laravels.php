@@ -21,8 +21,8 @@ return [
     'event_handlers'           => [
     ],
     'websocket'                => [
-        'enable' => false,
-        //'handler' => XxxWebSocketHandler::class,
+        'enable'  => true, // 看清楚，这里是true
+        'handler' => \App\Services\WebSocketService::class,
     ],
     'sockets'                  => [
     ],
@@ -46,6 +46,7 @@ return [
     ],
     'swoole'                   => [
         'daemonize'          => env('LARAVELS_DAEMONIZE', false),
+        // dispatch_mode 只能设置为 2、4、5，https://wiki.swoole.com/wiki/page/277.html
         'dispatch_mode'      => 2,
         'reactor_num'        => function_exists('\swoole_cpu_num') ? \swoole_cpu_num() * 2 : 4,
         'worker_num'         => function_exists('\swoole_cpu_num') ? \swoole_cpu_num() * 2 : 8,
