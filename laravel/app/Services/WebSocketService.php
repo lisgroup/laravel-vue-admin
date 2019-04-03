@@ -39,7 +39,7 @@ class WebSocketService implements WebSocketHandlerInterface
                     $str = floor($total / $api_excel['total_excel'] * 100).'%';
                     // 3. 输出完成率
                     $server->push($request->fd, $str);
-                    sleep(1);
+                    sleep(3);
                     if ($total >= $api_excel['total_excel']) {
                         break;
                     }
