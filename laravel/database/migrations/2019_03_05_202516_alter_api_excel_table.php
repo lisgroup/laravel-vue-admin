@@ -13,8 +13,9 @@ class AlterApiExcelTable extends Migration
      */
     public function up()
     {
-        Schema::table('api_excel', function (Blueprint $table) {
-            $table->string('auto_delete')->after('state');
+        Schema::table('api_excel', function(Blueprint $table) {
+            $table->integer('total_excel', false, true)->default(0)->after('state')->comment('计算任务总行数');
+            $table->unsignedDecimal('auto_delete', 10, 3)->default(1)->after('state');
             $table->softDeletes();
         });
     }
