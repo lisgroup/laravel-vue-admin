@@ -55,13 +55,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="进度条" width="1" align="center" display="none">
+      <el-table-column label="进度条" width="100" align="center" display="none">
         <template slot-scope="scope">
           <div v-if="scope.row.state === 0">
             <el-progress :text-inside="true" :stroke-width="18" :percentage="0"/>
           </div>
           <div v-else-if="scope.row.state === 1">
-            <el-progress :text-inside="true" :stroke-width="18" :percentage="1"/>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="scope.row.rate"/>
           </div>
           <div v-else-if="scope.row.state === 2">
             <el-progress :text-inside="true" :stroke-width="18" :percentage="100" status="success"/>
@@ -228,18 +228,20 @@ export default {
       // console.log(rs)
     },
     onerror() { // 连接建立失败重连
-      this.initWebSocket()
+      // this.initWebSocket()
     },
     onmessage(e) { // 数据接收
       console.log(e.data)
-      const redata = JSON.parse(e.data)
-      console.log(redata)
+      const data = JSON.parse(e.data)
+      this.list[2].rate = parseInt(data.data.rate)
+      console.log(this.list[2].rate)
+      console.log(data)
     },
     send(Data) {
       this.websock.send(Data)
     },
-    close(e) { // 关闭
-      console.log('断开连接', e)
+    close() { // 关闭
+      console.log('断开连接')
     },
     download(index, row) {
       window.location.href = this.url + row.finish_url
@@ -252,6 +254,8 @@ export default {
         this.listLoading = false
         this.total = response.data.total
         this.url = response.data.appUrl
+
+        this.initWebSocket(8)
       })
     },
     handleEdit(index, row) {
