@@ -52,3 +52,19 @@ if (!function_exists('cacheUserRolesAndPermissions')) {
         }
     }
 }
+
+if (!function_exists('cacheTotalExcel')) {
+    function cacheTotalExcel($api_excel_id, $file_path, $flash = false)
+    {
+        if ($flash) {
+            Cache::forget('api_excel_total_'.$api_excel_id);
+            return cacheTotalExcel($api_excel_id, false);
+        } else {
+            return Cache::remember('api_excel_total_'.$api_excel_id, 60, function() use ($api_excel_id, $file_path) {
+                $excel = \App\Http\Repository\MultithreadingRepository::getInstent();
+                $data = $excel->getExcelData($file_path);
+                return isset($data['data']) ? count($data['data']) : 0;
+            });
+        }
+    }
+}

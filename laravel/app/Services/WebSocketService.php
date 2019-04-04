@@ -8,6 +8,7 @@
 
 namespace App\Services;
 
+use App\Http\Repository\MultithreadingRepository;
 use App\Models\ApiExcel;
 use App\Models\ApiExcelLogs;
 use Hhxsv5\LaravelS\Swoole\WebSocketHandlerInterface;
@@ -31,21 +32,41 @@ class WebSocketService implements WebSocketHandlerInterface
         // \Log::info('New WebSocket connection', [$request->fd, request()->all(), session()->getId(), session('xxx'), session(['yyy' => time()])]);
         // 1. 根据 api_excel 的 id 查询总数，
         $req = $request->get;
-        if (isset($req['id']) && $api_excel = ApiExcel::find($req['id'])) {
-            if ($api_excel['state'] == 1 && $api_excel['total_excel'] > 0) {
-                // 2. 查询 api_excel_logs 表更新的数据量
-                while (true) {
-                    $total = ApiExcelLogs::where('api_excel_id', $req['id'])->count();
-                    $str = floor($total / $api_excel['total_excel'] * 100).'%';
-                    // 3. 输出完成率
-                    $server->push($request->fd, $str);
-                    sleep(3);
-                    if ($total >= $api_excel['total_excel']) {
-                        break;
-                    }
+
+        if (isset($req['id']) && $req['id'] == floor($req['id'])) {
+            while (true) {
+                // 3. 输出完成率
+                $rate = MultithreadingRepository::getInstent()->completionRate($req['id']);
+                $server->push($request->fd, $rate);
+                sleep(3);
+                if ($rate) {
+                    break;
                 }
+            }
+        }
+
+
+        if (isset($req['id']) && $api_excel = ApiExcel::find($req['id'])) {
+            if ($api_excel['state'] == 1) {
+                $total_excel = cacheTotalExcel($req['id'], $api_excel['upload_url']);
+                if ($total_excel > 0) {
+                    // 2. 查询 api_excel_logs 表更新的数据量
+                    while (true) {
+                        $total = ApiExcelLogs::where('api_excel_id', $req['id'])->count();
+                        $str = floor($total / $api_excel['total_excel'] * 100).'%';
+                        // 3. 输出完成率
+                        $server->push($request->fd, $str);
+                        sleep(3);
+                        if ($total >= $api_excel['total_excel']) {
+                            break;
+                        }
+                    }
+                } else {
+                    $server->push($request->fd, '100%');
+                }
+
             } else {
-                $server->push($request->fd, '100%');
+                $server->push($request->fd, '0%');
             }
         } else {
             $server->push($request->fd, '100%');

@@ -9,6 +9,7 @@
 namespace App\Http\Repository;
 
 
+use App\Models\ApiExcel;
 use App\Models\ApiExcelLogs;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
@@ -493,6 +494,60 @@ class MultithreadingRepository
             // 记录任务失败的错误日志
             Log::error('Api_Excel 任务执行失败: ', ['error' => $exception]);
             return false;
+        }
+    }
+
+    /**
+     * 加载 Excel 文件返回内容数组
+     *
+     * @param $fileName
+     *
+     * @return bool
+     */
+    public function getExcelData($fileName)
+    {
+        try {
+            // new PhpOffice\PhpSpreadsheet\IOFactory 读取 Excel 文件
+            $excel = IOFactory::load($fileName);
+            // 1. 取出全部数组
+            $data = $excel->getActiveSheet()->toArray('', true, true, true);
+            // 2. 数组第一元素为参数名称
+            $dataSet['param'] = array_shift($data);
+
+            // 3. 循环数组每个单元格的数据
+            $dataSet['data'] = $data;
+
+            return $dataSet;
+        } catch (Exception|\PhpOffice\PhpSpreadsheet\Exception $exception) {
+            return false;
+        }
+    }
+
+    /**
+     * 计算任务完成百分比
+     *
+     * @param $excel_id
+     *
+     * @return string
+     */
+    public function completionRate($excel_id)
+    {
+        if ($api_excel = ApiExcel::find($excel_id)) {
+            if ($api_excel['state'] == 1) {
+                $total_excel = cacheTotalExcel($excel_id, $api_excel['upload_url']);
+                if ($total_excel > 0) {
+                    // 2. 查询 api_excel_logs 表更新的数据量
+                    $total = ApiExcelLogs::where('api_excel_id', $excel_id)->count();
+                    // 3. 返回完成率
+                    return floor($total / $api_excel['total_excel'] * 100).'%';
+                } else {
+                    return '100%';
+                }
+            } else {
+                return '';
+            }
+        } else {
+            return '100%';
         }
     }
 
