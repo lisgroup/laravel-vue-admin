@@ -37,7 +37,8 @@ class WebSocketService implements WebSocketHandlerInterface
             while (true) {
                 // 3. 输出完成率
                 $rate = MultithreadingRepository::getInstent()->completionRate($req['id']);
-                $server->push($request->fd, $rate.'%');
+                $data = $this->outJson(200, ['rate' => $rate]);
+                $server->push($request->fd, $data);
                 sleep(3);
 
                 if ($rate >= 100) {
@@ -45,7 +46,7 @@ class WebSocketService implements WebSocketHandlerInterface
                 }
             }
         } else {
-            $server->push($request->fd, '100%');
+            $server->push($request->fd, $this->outJson(200, ['rate' => '100']));
         }
 
         // throw new \Exception('an exception');// 此时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
@@ -61,5 +62,23 @@ class WebSocketService implements WebSocketHandlerInterface
     public function onClose($server, $fd, $reactorId)
     {
         // throw new \Exception('an exception');// 此时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
+    }
+
+    /**
+     * 处理输出
+     *
+     * @param int $code
+     * @param array $data
+     * @param string $reason
+     *
+     * @return array
+     */
+    public function outJson($code = 200, $data = [], $reason = 'success')
+    {
+        if ($reason === 'success') {
+            $reason = config('errorCode.'.$code.'.reason') ?? 'success';
+        }
+
+        return json_encode(['code' => $code, 'reason' => $reason, 'data' => $data], JSON_UNESCAPED_UNICODE);
     }
 }
