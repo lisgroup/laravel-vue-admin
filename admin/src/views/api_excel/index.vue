@@ -55,6 +55,23 @@
         </template>
       </el-table-column>
 
+      <el-table-column label="进度条" width="1" align="center" display="none">
+        <template slot-scope="scope">
+          <div v-if="scope.row.state === 0">
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="0"/>
+          </div>
+          <div v-else-if="scope.row.state === 1">
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="1"/>
+          </div>
+          <div v-else-if="scope.row.state === 2">
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="100" status="success"/>
+          </div>
+          <div v-else>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="50" status="exception"/>
+          </div>
+        </template>
+      </el-table-column>
+
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <div>
@@ -125,7 +142,8 @@ export default {
       total: 100,
       currentpage: 1,
       listQuery: { page: 1 },
-      url: null
+      url: null,
+      websock: null
     }
   },
   created() {
@@ -134,6 +152,9 @@ export default {
     const perPage = parseInt(this.$route.query.perPage)
     this.perpage = isNaN(perPage) ? this.perpage : perPage
     this.fetchData()
+  },
+  destroyed() {
+    this.websock.close() // 离开路由之后断开 websocket 连接
   },
   methods: {
     startTask(index, row) {
@@ -167,7 +188,7 @@ export default {
       this.$alert('此操作将开启任务, 是否继续?', '开启任务提醒', {
         confirmButtonText: '确定',
         center: true,
-        type: 'success',
+        type: 'warning',
         callback: action => {
           if (action === 'confirm') {
             startTask(row).then(res => {
@@ -187,6 +208,38 @@ export default {
           }
         }
       })
+    },
+    initWebSocket(id) { // 初始化 weosocket
+      if ('WebSocket' in window) {
+        const url = 'ws://127.0.0.1:5200?id=' + id
+        this.websock = new WebSocket(url)
+        this.websock.onmessage = this.onmessage
+        this.websock.onopen = this.onopen
+        this.websock.onerror = this.onerror
+        this.websock.onclose = this.close
+      } else {
+        // 浏览器不支持 WebSocket，使用 ajax 轮询
+        console.log('Your browser does not support WebSocket!')
+      }
+    },
+    onopen() { // 连接建立之后执行send方法发送数据
+      // const actions = { 'id': '7' }
+      // const rs = this.send(JSON.stringify(actions))
+      // console.log(rs)
+    },
+    onerror() { // 连接建立失败重连
+      this.initWebSocket()
+    },
+    onmessage(e) { // 数据接收
+      console.log(e.data)
+      const redata = JSON.parse(e.data)
+      console.log(redata)
+    },
+    send(Data) {
+      this.websock.send(Data)
+    },
+    close(e) { // 关闭
+      console.log('断开连接', e)
     },
     download(index, row) {
       window.location.href = this.url + row.finish_url
