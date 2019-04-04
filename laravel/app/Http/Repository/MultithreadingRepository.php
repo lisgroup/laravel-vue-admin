@@ -528,27 +528,23 @@ class MultithreadingRepository
      *
      * @param $excel_id
      *
-     * @return string
+     * @return string|bool
      */
     public function completionRate($excel_id)
     {
         if ($api_excel = ApiExcel::find($excel_id)) {
             if ($api_excel['state'] == 1) {
-                $total_excel = cacheTotalExcel($excel_id, $api_excel['upload_url']);
+                $total_excel = cacheTotalExcel($excel_id, public_path($api_excel['upload_url']));
                 if ($total_excel > 0) {
                     // 2. 查询 api_excel_logs 表更新的数据量
                     $total = ApiExcelLogs::where('api_excel_id', $excel_id)->count();
                     // 3. 返回完成率
-                    return floor($total / $api_excel['total_excel'] * 100).'%';
-                } else {
-                    return '100%';
+                    return floor($total / $api_excel['total_excel'] * 100);
                 }
-            } else {
-                return '';
             }
-        } else {
-            return '100%';
         }
+
+        return '100';
     }
 
     /**

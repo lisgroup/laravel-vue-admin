@@ -37,40 +37,17 @@ class WebSocketService implements WebSocketHandlerInterface
             while (true) {
                 // 3. 输出完成率
                 $rate = MultithreadingRepository::getInstent()->completionRate($req['id']);
-                $server->push($request->fd, $rate);
+                $server->push($request->fd, $rate.'%');
                 sleep(3);
-                if ($rate) {
+
+                if ($rate >= 100) {
                     break;
                 }
-            }
-        }
-
-
-        if (isset($req['id']) && $api_excel = ApiExcel::find($req['id'])) {
-            if ($api_excel['state'] == 1) {
-                $total_excel = cacheTotalExcel($req['id'], $api_excel['upload_url']);
-                if ($total_excel > 0) {
-                    // 2. 查询 api_excel_logs 表更新的数据量
-                    while (true) {
-                        $total = ApiExcelLogs::where('api_excel_id', $req['id'])->count();
-                        $str = floor($total / $api_excel['total_excel'] * 100).'%';
-                        // 3. 输出完成率
-                        $server->push($request->fd, $str);
-                        sleep(3);
-                        if ($total >= $api_excel['total_excel']) {
-                            break;
-                        }
-                    }
-                } else {
-                    $server->push($request->fd, '100%');
-                }
-
-            } else {
-                $server->push($request->fd, '0%');
             }
         } else {
             $server->push($request->fd, '100%');
         }
+
         // throw new \Exception('an exception');// 此时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
     }
 
