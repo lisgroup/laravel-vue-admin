@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Bus;
 
 use App\Http\Repository\NewBusRepository;
 use Illuminate\Http\Request;
+use Jxlwqq\ChineseTypesetting\ChineseTypesetting;
 
 class NewApiController extends CommonController
 {
@@ -70,6 +71,23 @@ class NewApiController extends CommonController
         }
 
         return $this->out(200, $data);
+    }
+
+    public function output(Request $request)
+    {
+        $chineseTypesetting = new ChineseTypesetting();
+
+        // 使用指定方法来纠正排版（推荐此用法）
+        $text = '<p class="class-name" style="color: #FFFFFF;"> Hello世界。\n option</p>';
+        $out = $chineseTypesetting->correct($text, ['insertSpace', 'removeClass', 'removeIndent']);
+        // output: <p style="color: #FFFFFF;">Hello 世界。</p>
+
+        // 使用全部方法来纠正排版（不推荐此用法）
+        $text = '<p class="class-name" style="color: #FFFFFF;"> Hello世界。</p>';
+        $out1 = $chineseTypesetting->correct($text);
+        // output: <p>Hello 世界。</p>
+        var_dump($out);
+        var_dump($out1);
     }
 
 }

@@ -13,6 +13,7 @@
         "hhxsv5/laravel-s": "~3.3",
         "jaeger/querylist": "^4.0",
         "jenssegers/agent": "^2.6",
+        "jxlwqq/chinese-typesetting": "^1.2",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "^1.0",
         "lisgroup/curl-http": "^1.2",

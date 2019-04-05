@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf8a4b6179f5f683159b9d84b8025ef9",
+    "content-hash": "8efb7c7abccde519c75dfec15a7c345e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1707,6 +1707,52 @@
                 "useragent"
             ],
             "time": "2019-01-19T21:32:55+00:00"
+        },
+        {
+            "name": "jxlwqq/chinese-typesetting",
+            "version": "1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jxlwqq/chinese-typesetting.git",
+                "reference": "f2150ec15164fc5bf964a8eb8a23016aac4944df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jxlwqq/chinese-typesetting/zipball/f2150ec15164fc5bf964a8eb8a23016aac4944df",
+                "reference": "f2150ec15164fc5bf964a8eb8a23016aac4944df",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jxlwqq\\ChineseTypesetting\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jxlwqq",
+                    "email": "jxlwqq@gmail.com",
+                    "homepage": "https://jxlwqq.github.io"
+                }
+            ],
+            "description": "Better Typesetting for Chinese",
+            "time": "2018-10-17T03:15:50+00:00"
         },
         {
             "name": "laravel/framework",
