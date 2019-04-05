@@ -75,19 +75,26 @@ class NewApiController extends CommonController
 
     public function output(Request $request)
     {
-        $chineseTypesetting = new ChineseTypesetting();
+        $input = $request->input('input');
+        $output = '';
+        if ($input) {
+            $chineseTypesetting = new ChineseTypesetting();
+            $arrays = explode("\n", $input);
 
-        // 使用指定方法来纠正排版（推荐此用法）
-        $text = '<p class="class-name" style="color: #FFFFFF;"> Hello世界。\n option</p>';
-        $out = $chineseTypesetting->correct($text, ['insertSpace', 'removeClass', 'removeIndent']);
-        // output: <p style="color: #FFFFFF;">Hello 世界。</p>
+            $newArr = [];
+            foreach ($arrays as $key => $item) {
+                // 使用指定方法来纠正排版（推荐此用法）
+                $newArr[] = $chineseTypesetting->correct($item, ['insertSpace', 'removeClass', 'removeIndent']);
+            }
+            $output = implode("\n", $newArr);
+        }
+
+        return $this->out(200, ['output' => $output]);
 
         // 使用全部方法来纠正排版（不推荐此用法）
-        $text = '<p class="class-name" style="color: #FFFFFF;"> Hello世界。</p>';
-        $out1 = $chineseTypesetting->correct($text);
+        // $text = '<p class="class-name" style="color: #FFFFFF;"> Hello世界。</p>';
+        // $out1 = $chineseTypesetting->correct($text);
         // output: <p>Hello 世界。</p>
-        var_dump($out);
-        var_dump($out1);
     }
 
 }
