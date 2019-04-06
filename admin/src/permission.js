@@ -17,7 +17,7 @@ if (store.getters.roles.length === 0 && sessionStorage.getItem('roles')) {
 // router.addRoutes(routeAdmin)
 // router.addRoutes(routeSuper)
 
-const whiteList = ['/login', '/index', '/line', '/home', '/404', '/', '', '/md'] // 不重定向白名单
+const whiteList = ['/login', '/index', '/line', '/home', '/404', '/', '', '/md', 'out'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) {
