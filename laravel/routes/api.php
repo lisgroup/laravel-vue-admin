@@ -44,6 +44,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::resource('api_excel', 'ApiExcelController');
     Route::post('upload', 'ApiExcelController@upload');
     Route::any('start_task', 'ApiExcelController@startTask');
+    Route::any('download_log', 'ApiExcelController@downloadLog');
 
     // 权限相关路由
     Route::get('permissions/store', 'PermissionController@store');
