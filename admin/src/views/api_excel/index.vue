@@ -55,7 +55,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="进度条" width="100" align="center" display="none">
+      <el-table-column label="进度条" width="1" align="center" display="none">
         <template slot-scope="scope">
           <div v-if="scope.row.state === 0">
             <el-progress :text-inside="true" :stroke-width="18" :percentage="0"/>
@@ -72,7 +72,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column label="操作" width="300" align="center">
         <template slot-scope="scope">
           <div>
             <el-button
@@ -89,6 +89,11 @@
               size="mini"
               type="success"
               @click="download(scope.$index, scope.row)">点击下载</el-button>
+            <el-button
+              v-else-if="scope.row.state === 5"
+              size="mini"
+              type="warning"
+              @click="download_log(scope.$index, scope.row)">下载已测试数据</el-button>
 
             <el-button
               size="mini"
@@ -121,7 +126,7 @@
 </template>
 
 <script>
-import { getList, deleteAct, search, startTask } from '@/api/api_excel'
+import { getList, deleteAct, search, startTask, download_log } from '@/api/api_excel'
 
 export default {
   filters: {
@@ -246,6 +251,14 @@ export default {
     download(index, row) {
       window.location.href = this.url + row.finish_url
     },
+    download_log(index, row) {
+      download_log({ id: row.id }).then(res => {
+        console.log(res)
+        if (res.code === 200) {
+          window.location.href = this.url + res.data.failed_done_file
+        }
+      })
+    },
     fetchData() {
       this.listLoading = true
       const params = Object.assign({ 'page': this.listQuery.page }, { 'perPage': this.perpage })
@@ -254,6 +267,7 @@ export default {
         this.listLoading = false
         this.total = response.data.total
         this.url = response.data.appUrl
+        console.log('type', Object.prototype.toString.call(this.list))
 
         this.initWebSocket(8)
       })

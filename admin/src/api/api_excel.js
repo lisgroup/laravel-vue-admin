@@ -44,3 +44,11 @@ export function startTask(params) {
     params
   })
 }
+
+export function download_log(params) {
+  return request({
+    url: '/api/download_log',
+    method: 'post',
+    params
+  })
+}
