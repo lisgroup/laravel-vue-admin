@@ -9,6 +9,8 @@
 namespace App\Http\Repository;
 
 
+use App\Models\ApiExcel;
+use App\Models\ApiExcelLogs;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
@@ -123,10 +125,11 @@ class ExcelRepository
      *
      * @param $param
      * @param $result
+     * @param $file
      *
-     * @return bool|string
+     * @return string
      */
-    public function saveExcel($param, $result)
+    public function saveExcel($param, $result, $file = '')
     {
         /************************* 2. 写入 Excel 文件 ******************************/
         // 首先创建一个新的对象  PHPExcel object
@@ -239,15 +242,53 @@ class ExcelRepository
             // is_dir($path) || mkdir($path, 777, true);
             $did = explode('/', $param['website']);
             $did = is_numeric(end($did)) ? end($did) : '999';
-            $fileName = '/out-'.$did.'-'.date('YmdHis').uniqid().'.xlsx';
+            $fileName = '/out-'.$file.$did.'-'.date('YmdHis').uniqid().'.xlsx';
             $objWriter->save($path.$fileName);
 
             return '/storage'.$fileName;
         } catch (\PhpOffice\PhpSpreadsheet\Exception|\PhpOffice\PhpSpreadsheet\Writer\Exception $exception) {
             // 记录任务失败的错误日志
             Log::error('Api_Excel 任务执行失败: ', ['error' => $exception]);
-            return false;
+            return '';
         }
+    }
+
+
+    /**
+     * @param $api_excel_id
+     * @param $user_id
+     *
+     * @return bool|string
+     */
+    public function exportExcelLogs($api_excel_id, $user_id)
+    {
+        $api_excel = ApiExcel::find($api_excel_id);
+        if ($api_excel->finish_url) {
+            return $api_excel->finish_url;
+        }
+
+        if ($api_excel && ($user_id == 1 || $user_id == $api_excel['uid'])) {
+            // 有权限查询
+            $param = $api_excel->apiParam;
+
+            $excel_logs = ApiExcelLogs::where('api_excel_id', $api_excel_id)->orderBy('sort_index')->get();
+
+            $result = [];
+            foreach ($excel_logs as $key => $excel_log) {
+                $reqParam = explode('|', $excel_log->param);
+                $result[] = ['param' => $reqParam, 'result' => $excel_log->result];
+            }
+            if (!$result) {
+                return '';
+            }
+            $failed_done_file = $this->saveExcel($param, $result, 'failed-done-');
+            $api_excel->finish_url = $failed_done_file;
+            $api_excel->save();
+
+            return $failed_done_file;
+        }
+
+        return false;
     }
 
     /**
