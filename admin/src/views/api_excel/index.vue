@@ -92,7 +92,7 @@
             <el-button
               v-else-if="scope.row.state === 5"
               size="mini"
-              type="warning"
+              type="info"
               @click="download_log(scope.$index, scope.row)">下载已测试数据</el-button>
 
             <el-button
