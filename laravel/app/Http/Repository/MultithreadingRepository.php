@@ -412,9 +412,11 @@ class MultithreadingRepository
                     $setActive->setCellValue($i.'1', $val ?? '');
                     $i++;
                 }
+                $setActive->setCellValue($i.'1', 'reason');
             }
             // 1.3 is_need 字段
             if ($param['is_need'] == 1) {
+                $i++;
                 $setActive->setCellValue($i.'1', 'res');
             }
 
@@ -436,9 +438,8 @@ class MultithreadingRepository
                 // 示例2： $value = ['param' => ['realname' => '**', 'idcard' => '***'], 'result' => '{"reason":"成功","result":{"realname":"**","idcard":"***","res":2},"error_code":0}'];
                 if ($param['result'] && $arr = explode(',', $param['result'])) {
                     foreach ($arr as $k => $item) {
-                        // 2019-03-15 输出可能的参数异常等错误信息，需判断最后一列输出
-                        if ((isset($array['error_code']) && $array['error_code'] != 0) && ($k == count($arr) - 1)) {
-                            $val = $array['reason'];
+                        if ($item == 'error_code') {
+                            $val = $array['error_code'] ?? '';
                         } else {
                             // 2019-02-27 日新增： 354 接口配置 data.0.status 字段
                             // 输出需要 $array['result']['data'][0]['status']
@@ -453,13 +454,19 @@ class MultithreadingRepository
                             }
                         }
 
-                        $setActive->setCellValue($i.$number, $val);
+                        $setActive->setCellValue($i.$number, "\t".$val);
                         $i++;
                     }
+                    // 2019-03-15 输出可能的参数异常等错误信息，需判断最后一列输出
+                    // if ((isset($array['error_code']) && $array['error_code'] != 0) && ($k == count($arr) - 1)) {
+                    $reason = $array['reason'] ?? '';
+                    $setActive->setCellValue($i.$number, $reason);
+                    // }
                 }
 
                 // 1.3 is_need 字段
                 if ($param['is_need'] == 1) {
+                    $i++;
                     if (isset($array['error_code']) && $array['error_code'] == 0) {
                         if (isset($array['result']['res'])) {
                             $message = $array['result']['res'] == 1 ? '一致' : '不一致';
