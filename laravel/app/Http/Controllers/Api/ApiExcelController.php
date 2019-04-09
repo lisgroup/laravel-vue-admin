@@ -269,7 +269,7 @@ class ApiExcelController extends Controller
         $api_excel_id = $this->request->input('id');
         // 判断用户有没有下载权限
         $user_id = auth('api')->user()['id'];
-        $user_id = 1;
+        // $user_id = 1;
         $failed_done_file = ExcelRepository::getInstent()->exportExcelLogs($api_excel_id, $user_id);
         if ($failed_done_file === false) {
             // 权限不足

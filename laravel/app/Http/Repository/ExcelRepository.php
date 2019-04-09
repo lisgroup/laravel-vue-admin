@@ -270,11 +270,12 @@ class ExcelRepository
     public function exportExcelLogs($api_excel_id, $user_id)
     {
         $api_excel = ApiExcel::find($api_excel_id);
+        $raw_data = $api_excel->getAttributes();
         if ($api_excel->finish_url) {
             return $api_excel->finish_url;
         }
 
-        if ($api_excel && ($user_id == 1 || $user_id == $api_excel['uid'])) {
+        if ($api_excel && ($user_id == 1 || $user_id == $raw_data['uid'])) {
             // 有权限查询
             $param = $api_excel->apiParam;
 
