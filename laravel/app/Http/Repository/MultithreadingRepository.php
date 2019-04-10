@@ -11,6 +11,7 @@ namespace App\Http\Repository;
 
 use App\Models\ApiExcel;
 use App\Models\ApiExcelLogs;
+use Curl\Http;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -204,26 +205,102 @@ class MultithreadingRepository
     }
 
     /**
+     * 2. 发送同步请求
+     *
+     * @param $url
+     * @param $appkey
+     *
+     * @return array
+     */
+    public function syncRequest($url, $appkey)
+    {
+        $newParam = [];
+        // 2.1 处理请求参数列
+        $dataSet = $this->dataSet;
+        foreach ($dataSet['param'] as $ke => $param) {
+            if (empty($param)) {
+                continue;
+            }
+            // TODO: 还需要校验请求参数合法性, 如只允许的参数： idcard,realname,bankcard,mobile
+            $str = (is_object($param)) ? trim($param->__toString()) : trim($param);
+            $newParam[$ke] = str_replace(["\n", "\r\n", " "], '', $str);
+        }
+        $this->dataSet['param'] = $newParam;
+
+        $http = new Http();
+        $newData = [];
+        foreach ($dataSet['data'] as $key => $value) {
+            // $tmp = array_combine($dataSet['param'], $value);
+            $temp = [];
+            foreach ($value as $kk => $vv) {
+                if (empty($vv)) {
+                    continue;
+                }
+                $str = (is_object($vv)) ? trim($vv->__toString()) : trim($vv);
+                $temp[$this->dataSet['param'][$kk]] = str_replace(["\n", "\r\n", " "], '', $str);
+            }
+            if ($temp) {
+                $newData[] = $temp;
+
+                $params = array_merge($temp, ['key' => $appkey]);
+                $uri = $url.'?'.http_build_query($params);
+
+                // 发送请求
+                $httpResult = $http->get($uri, 4);
+                $result = $httpResult['content'] ?? '';
+
+                $this->data[$key] = $result;
+
+                // 记录返回数据到数据库 api_excel_logs 中
+                $para = array_values($this->dataSet['data'][$key]);
+                $logs = [
+                    'api_excel_id' => $this->api_excel_id,
+                    'sort_index' => $key,
+                    'param' => implode('|', $para),
+                    'result' => $result,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ];
+                ApiExcelLogs::insert($logs);
+            }
+        }
+        $this->dataSet['data'] = $newData;
+
+        // 处理 data 数据然后返回
+        $returnArray = [];
+        foreach ($this->data as $k => $v) {
+            $returnArray[$k]['param'] = $this->dataSet['data'][$k];
+            $returnArray[$k]['result'] = $v;
+        }
+
+        return $returnArray;
+    }
+
+    /**
      *  执行 a, b 并发请求处理操作
      *
      * @param string $url
      * @param string $appKey
+     * @param mixed $isOpen 是否启动并发请求
      *
      * @return array
      */
-    public function newMultiRequest($url, $appKey)
+    public function newMultiRequest($url, $appKey, $isOpen = false)
     {
-        try {
-            /************************* 1. 读取 Excel 文件 ******************************/
-            if (!$this->newLoadExcel()) {
-                return [];
-            }
-            /************************* 2. 发送并发请求   ******************************/
-            // $config = $this->config;
-            return $this->newRequest($url, $appKey);
-        } catch (\Exception $e) {
+        // try {
+        /************************* 1. 读取 Excel 文件 ******************************/
+        if (!$this->newLoadExcel()) {
             return [];
         }
+        /************************* 2. 发送并发请求   ******************************/
+        // $config = $this->config;
+        if ($isOpen) {
+            return $this->newRequest($url, $appKey);
+        } else {
+            return $this->syncRequest($url, $appKey);
+        }
+        // } catch (\Exception $e) {
+        //     return [];
+        // }
     }
 
     /**
