@@ -246,7 +246,7 @@ class MultithreadingRepository
                 $uri = $url.'?'.http_build_query($params);
 
                 // 发送请求
-                $httpResult = $http->get($uri, 4);
+                $httpResult = $http->get($uri);
                 $result = $httpResult['content'] ?? '';
 
                 $this->data[$key] = $result;
