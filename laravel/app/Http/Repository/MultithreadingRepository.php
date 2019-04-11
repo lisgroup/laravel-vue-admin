@@ -11,6 +11,7 @@ namespace App\Http\Repository;
 
 use App\Models\ApiExcel;
 use App\Models\ApiExcelLogs;
+use App\Models\Article;
 use Curl\Http;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
@@ -433,6 +434,8 @@ class MultithreadingRepository
 
         // 处理 data 数据然后返回
         $returnArray = [];
+        Article::insert(['content' => json_encode($this->data, JSON_UNESCAPED_UNICODE)]);
+        Article::insert(['content' => json_encode($this->dataSet['data'], JSON_UNESCAPED_UNICODE)]);
         foreach ($this->data as $k => $v) {
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
             $returnArray[$k]['result'] = $v;
