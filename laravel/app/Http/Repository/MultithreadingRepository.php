@@ -71,6 +71,7 @@ class MultithreadingRepository
      */
     public function setParam($fileName, $config = [])
     {
+        $this->data = $this->dataSet = null;
         $this->fileName = $fileName;
         $this->config = $config;
         $this->concurrent = $config['concurrent'] ?? 5;
@@ -433,9 +434,14 @@ class MultithreadingRepository
         $promise->wait();
 
         // 处理 data 数据然后返回
+        $insert = [
+            'title' => $this->api_excel_id,
+            'markdown' => json_encode($this->data, JSON_UNESCAPED_UNICODE),
+            'content' => json_encode($this->dataSet['data'], JSON_UNESCAPED_UNICODE)
+        ];
+        Article::insert($insert);
+
         $returnArray = [];
-        Article::insert(['content' => json_encode($this->data, JSON_UNESCAPED_UNICODE)]);
-        Article::insert(['content' => json_encode($this->dataSet['data'], JSON_UNESCAPED_UNICODE)]);
         foreach ($this->data as $k => $v) {
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
             $returnArray[$k]['result'] = $v;
