@@ -443,6 +443,10 @@ class MultithreadingRepository
 
         $returnArray = [];
         foreach ($this->data as $k => $v) {
+            if (!isset($this->dataSet['data'][$k])) {
+                Article::insert(['title' => $this->api_excel_id, 'content' => $k]);
+                return [];
+            }
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
             $returnArray[$k]['result'] = $v;
         }
