@@ -27,6 +27,7 @@ class CreateApiExcelTable extends Migration {
 			$table->timestamps();
 			$table->index('api_param_id', 'index_api_param_id');
 			$table->index('uid', 'index_uid');
+			$table->index('state', 'index_state');
 		});
 	}
 

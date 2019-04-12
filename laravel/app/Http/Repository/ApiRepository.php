@@ -50,7 +50,7 @@ class ApiRepository
     public function handleAutoDelete()
     {
         // 查询数据库已完成的任务，判断过期条件
-        $excels = ApiExcel::where('state', 2)->get(['id', 'auto_delete', 'updated_at']);
+        $excels = ApiExcel::whereIn('state', [2, 5])->get(['id', 'auto_delete', 'updated_at']);
 
         foreach ($excels as $excel) {
             if ($excel['auto_delete'] > 0 && strtotime($excel['updated_at']) + $excel['auto_delete'] * 86400 < time()) {
