@@ -385,7 +385,7 @@ class MultithreadingRepository
                 // this is delivered each successful response
                 $result = $response->getBody()->getContents();
                 // 记录返回数据到数据库 api_excel_logs 中
-                $para = array_values($this->dataSet['data'][$index]);
+                $para = array_filter(array_values($this->dataSet['data'][$index]));
                 $logs = [
                     'api_excel_id' => $this->api_excel_id,
                     'sort_index' => $index,
@@ -399,7 +399,7 @@ class MultithreadingRepository
                 $this->data[$index] = $result;
             },
             'rejected' => function($reason, $index) {
-                $para = array_values($this->dataSet['data'][$index]);
+                $para = array_filter(array_values($this->dataSet['data'][$index]));
                 $logs = [
                     'api_excel_id' => $this->api_excel_id,
                     'sort_index' => $index,
