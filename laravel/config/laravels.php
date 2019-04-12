@@ -12,7 +12,7 @@ return [
     'handle_static'            => env('LARAVELS_HANDLE_STATIC', false),
     'laravel_base_path'        => env('LARAVEL_BASE_PATH', base_path()),
     'inotify_reload'           => [
-        'enable'        => env('LARAVELS_INOTIFY_RELOAD', false),
+        'enable'        => env('LARAVELS_INOTIFY_RELOAD', true),
         'watch_path'    => base_path(),
         'file_types'    => ['.php'],
         'excluded_dirs' => [],
