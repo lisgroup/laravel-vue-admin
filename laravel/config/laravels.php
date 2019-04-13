@@ -12,7 +12,7 @@ return [
     'handle_static'            => env('LARAVELS_HANDLE_STATIC', false),
     'laravel_base_path'        => env('LARAVEL_BASE_PATH', base_path()),
     'inotify_reload'           => [
-        'enable'        => env('LARAVELS_INOTIFY_RELOAD', false),
+        'enable'        => env('LARAVELS_INOTIFY_RELOAD', true),
         'watch_path'    => base_path(),
         'file_types'    => ['.php'],
         'excluded_dirs' => [],
@@ -38,7 +38,11 @@ return [
             // \App\Jobs\XxxCronJob::class, // Override the corresponding method to return the configuration
         ],
     ],
-    'events'                   => [
+    // 绑定事件与监听器，一个事件可以有多个监听器，多个监听器按顺序执行
+    'events' => [
+        \App\Tasks\TaskEvent::class => [
+            \App\Listeners\TaskListener::class,
+        ],
     ],
     'swoole_tables'            => [
     ],
@@ -56,7 +60,7 @@ return [
         'dispatch_mode'      => 2,
         'reactor_num'        => function_exists('\swoole_cpu_num') ? \swoole_cpu_num() * 2 : 4,
         'worker_num'         => function_exists('\swoole_cpu_num') ? \swoole_cpu_num() * 2 : 8,
-        //'task_worker_num'    => function_exists('\swoole_cpu_num') ? \swoole_cpu_num() * 2 : 8,
+        'task_worker_num'    => function_exists('\swoole_cpu_num') ? \swoole_cpu_num() * 2 : 8,
         'task_ipc_mode'      => 1,
         'task_max_request'   => 5000,
         'task_tmpdir'        => @is_writable('/dev/shm/') ? '/dev/shm' : '/tmp',
