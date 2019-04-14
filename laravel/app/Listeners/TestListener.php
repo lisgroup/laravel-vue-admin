@@ -14,7 +14,7 @@ use Hhxsv5\LaravelS\Swoole\Task\Task;
 use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Hhxsv5\LaravelS\Swoole\Task\Listener;
 
-class TaskListener extends Listener
+class TestListener extends Listener
 {
     // 声明没有参数的构造函数
     public function __construct()
@@ -29,8 +29,8 @@ class TaskListener extends Listener
         // 注意：
         // 1.参数2需传true
         // 2.config/laravels.php中修改配置 task_ipc_mode 为1或2，参考 https://wiki.swoole.com/wiki/page/296.html
-        $ret = Task::deliver(new TaskEvent('task data'), true);
-        var_dump($ret);
+        // $ret = Task::deliver(new TaskEvent('task data'), true);
+        // var_dump($ret);
         // throw new \Exception('an exception');// handle时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
     }
 }

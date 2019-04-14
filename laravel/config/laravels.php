@@ -40,8 +40,8 @@ return [
     ],
     // 绑定事件与监听器，一个事件可以有多个监听器，多个监听器按顺序执行
     'events' => [
-        \App\Tasks\TaskEvent::class => [
-            \App\Listeners\TaskListener::class,
+        \App\Events\TestEvent::class => [
+            \App\Listeners\TestListener::class,
         ],
     ],
     'swoole_tables'            => [
