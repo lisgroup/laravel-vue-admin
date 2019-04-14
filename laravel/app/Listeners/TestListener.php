@@ -9,7 +9,7 @@
 
 namespace App\Listeners;
 
-use App\Tasks\TaskEvent;
+use App\Tasks\TestTask;
 use Hhxsv5\LaravelS\Swoole\Task\Task;
 use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Hhxsv5\LaravelS\Swoole\Task\Listener;
