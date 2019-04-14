@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
 use Zhuzhichao\IpLocationZh\Ip;
 
-class LoginListener extends Listener implements ShouldQueue
+class LoginListener implements ShouldQueue
 {
     // 声明没有参数的构造函数
     public function __construct()
