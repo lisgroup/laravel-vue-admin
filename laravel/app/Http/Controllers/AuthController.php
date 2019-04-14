@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         // 登录成功，触发事件
         event(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
-        Event::fire(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
+        // Event::fire(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
 
         $data = [
             'access_token' => $token,
