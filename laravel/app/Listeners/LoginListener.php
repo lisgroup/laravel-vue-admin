@@ -3,12 +3,19 @@
 namespace App\Listeners;
 
 use App\Events\LoginEvent;
+use Hhxsv5\LaravelS\Swoole\Task\Event;
+use Hhxsv5\LaravelS\Swoole\Task\Listener;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
 use Zhuzhichao\IpLocationZh\Ip;
 
-class LoginListener implements ShouldQueue
+class LoginListener extends Listener implements ShouldQueue
 {
+    // 声明没有参数的构造函数
+    public function __construct()
+    {
+    }
+
     /**
      * 失败重试次数
      *
@@ -21,7 +28,7 @@ class LoginListener implements ShouldQueue
      *
      * @param LoginEvent $event
      */
-    public function handle(LoginEvent $event)
+    public function handle(Event $event)
     {
         //获取事件中保存的信息
         $user = $event->getUser();

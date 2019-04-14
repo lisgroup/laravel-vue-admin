@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 
 use App\Events\LoginEvent;
 use App\Http\Repository\UserRepository;
+use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Jenssegers\Agent\Agent;
 
 class AuthController extends Controller
@@ -52,6 +53,7 @@ class AuthController extends Controller
 
         // 登录成功，触发事件
         event(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
+        Event::fire(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
 
         $data = [
             'access_token' => $token,

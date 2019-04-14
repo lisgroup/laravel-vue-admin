@@ -29,20 +29,29 @@ return [
     'processes'                => [
     ],
     'timer'                    => [
-        'enable' => false,
+        'enable' => false, // 开启定时任务类
         'jobs'   => [
+            // 启用LaravelScheduleJob来执行`php artisan schedule:run`，每分钟一次，替代Linux Crontab
+            // \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
+            // 两种配置参数的方式：
+            // [\App\Jobs\Timer\TestCronJob::class, [1000, true]], // 注册时传入参数
+            \App\Jobs\Timer\TestCronJob::class, // 重载对应的方法来返回参数
             // Enable LaravelScheduleJob to run `php artisan schedule:run` every 1 minute, replace Linux Crontab
             //\Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
             // Two ways to configure parameters:
             // [\App\Jobs\XxxCronJob::class, [1000, true]], // Pass in parameters when registering
             // \App\Jobs\XxxCronJob::class, // Override the corresponding method to return the configuration
         ],
+        'max_wait_time' => 5, // Reload 时最大等待时间
     ],
     // 绑定事件与监听器，一个事件可以有多个监听器，多个监听器按顺序执行
     'events' => [
         \App\Events\TestEvent::class => [
             \App\Listeners\TestListener::class,
         ],
+        // App\Events\LoginEvent::class => [
+        //     App\Listeners\LoginListener::class,
+        // ],
     ],
     'swoole_tables'            => [
     ],

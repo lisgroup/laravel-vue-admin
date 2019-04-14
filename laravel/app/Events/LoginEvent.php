@@ -11,7 +11,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use App\Models\User;
 use Jenssegers\Agent\Agent;
 
-class LoginEvent
+class LoginEvent extends \Hhxsv5\LaravelS\Swoole\Task\Event
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
