@@ -29,7 +29,7 @@ return [
     'processes'                => [
     ],
     'timer'                    => [
-        'enable' => false, // 开启定时任务类
+        'enable' => true, // 开启定时任务类
         'jobs'   => [
             // 启用LaravelScheduleJob来执行`php artisan schedule:run`，每分钟一次，替代Linux Crontab
             // \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
