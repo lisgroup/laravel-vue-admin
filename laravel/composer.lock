@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8efb7c7abccde519c75dfec15a7c345e",
+    "content-hash": "e2959debe5c26087b4cdf046d0e74e1d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1256,16 +1256,16 @@
         },
         {
             "name": "hhxsv5/laravel-s",
-            "version": "v3.3.9",
+            "version": "v3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhxsv5/laravel-s.git",
-                "reference": "2a21c452ced4ed255eadf282b43ba14ff1456af2"
+                "reference": "026abbd3a42865473cab04285c411a197837644a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhxsv5/laravel-s/zipball/2a21c452ced4ed255eadf282b43ba14ff1456af2",
-                "reference": "2a21c452ced4ed255eadf282b43ba14ff1456af2",
+                "url": "https://api.github.com/repos/hhxsv5/laravel-s/zipball/026abbd3a42865473cab04285c411a197837644a",
+                "reference": "026abbd3a42865473cab04285c411a197837644a",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1329,7 +1329,7 @@
                 "udp",
                 "websocket"
             ],
-            "time": "2019-01-02T11:41:08+00:00"
+            "time": "2019-04-04T09:15:32+00:00"
         },
         {
             "name": "jaeger/g-http",
@@ -6439,6 +6439,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-08-09T05:50:03+00:00"
         },
         {

@@ -10,7 +10,7 @@
         "barryvdh/laravel-cors": "^0.11.2",
         "fideloper/proxy": "^3.0",
         "guzzlehttp/guzzle": "^6.3",
-        "hhxsv5/laravel-s": "~3.3",
+        "hhxsv5/laravel-s": "~3.4.0",
         "jaeger/querylist": "^4.0",
         "jenssegers/agent": "^2.6",
         "jxlwqq/chinese-typesetting": "^1.2",
