@@ -36,6 +36,9 @@ class Kernel extends HttpKernel
         // 跨域访问中间件
         // \App\Http\Middleware\Cors::class,
         \Barryvdh\Cors\HandleCors::class,
+
+        // 执行时间记录和统计工具
+        \RunningTime\Middleware\RunningTimeMiddleware::class,
     ];
 
     /**

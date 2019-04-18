@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2959debe5c26087b4cdf046d0e74e1d",
+    "content-hash": "0b73bd1e38aa441e16275308a1577110",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5165,6 +5165,52 @@
                 "environment"
             ],
             "time": "2019-01-29T11:11:52+00:00"
+        },
+        {
+            "name": "y-ui/laravel-running-time",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/y-ui/laravel-running-time.git",
+                "reference": "ff8c35705e3645203f660a0cbd9a58b90aedb5c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/y-ui/laravel-running-time/zipball/ff8c35705e3645203f660a0cbd9a58b90aedb5c5",
+                "reference": "ff8c35705e3645203f660a0cbd9a58b90aedb5c5",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "predis/predis": "^1.1"
+            },
+            "require-dev": {
+                "php": ">=7.0.0",
+                "predis/predis": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RunningTime\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "刘正伟"
+                }
+            ],
+            "description": "A request execution time statistics tools with Laravel",
+            "time": "2019-04-11T07:55:33+00:00"
         },
         {
             "name": "zhuzhichao/ip-location-zh",

@@ -23,6 +23,7 @@
         "predis/predis": "^1.1",
         "tymon/jwt-auth": "1.*@rc",
         "vinkla/hashids": "3.3.0",
+        "y-ui/laravel-running-time": "^1.1",
         "zhuzhichao/ip-location-zh": "^2.4"
     },
     "require-dev": {

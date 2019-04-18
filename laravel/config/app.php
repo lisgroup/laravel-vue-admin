@@ -196,6 +196,9 @@ return [
         Laravel\Scout\ScoutServiceProvider::class,
         Baijunyao\LaravelScoutElasticsearch\ElasticsearchServiceProvider::class,
 
+        // 执行时间记录和统计工具
+        \RunningTime\RunningTimeServiceProvider::class,
+
     ],
 
     /*
