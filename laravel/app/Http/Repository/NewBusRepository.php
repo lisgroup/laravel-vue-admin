@@ -99,6 +99,9 @@ class NewBusRepository
      */
     public function getLine($line)
     {
+        if (empty($line)) {
+            return [];
+        }
         // 从缓存库中搜索
         try {
             $list = BusLine::search($line)->get('name', 'cid', 'LineGuid', 'LineInfo', 'station', 'lineID')->toArray();
