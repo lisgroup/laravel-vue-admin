@@ -216,7 +216,7 @@ export default {
     },
     initWebSocket(id) { // 初始化 weosocket
       if ('WebSocket' in window) {
-        const url = 'ws://118.25.87.12:5200?id=' + id
+        const url = 'wss://www.guke1.com/ws?id=' + id
         this.websock = new WebSocket(url)
         this.websock.onmessage = this.onmessage
         this.websock.onopen = this.onopen
