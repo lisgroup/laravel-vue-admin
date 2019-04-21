@@ -12,6 +12,19 @@
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       <div slot="tip" class="el-upload__tip">只能上传 Excel 文件，且不超过 500kb</div>
     </el-upload>
+
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>数据预览</span>
+      </div>
+      <div class="text item">
+        <el-table :data="tableData" border highlight-current-row style="width: 100%;">
+          <el-table-column :label="tableTitle" >
+            <el-table-column v-for="item in tableHeader" :prop="item" :label="item" :key="item" min-width="150" />
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -20,7 +33,11 @@ import XLSX from 'xlsx'
 export default {
   data() {
     return {
-      fileList: []
+      fileList: [],
+      upLoadNumber: 100000,
+      tableTitle: '',
+      tableData: [],
+      tableHeader: ''
     }
   },
   methods: {
@@ -67,9 +84,17 @@ export default {
             }
             const outdata = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
             console.log(outdata)
+            const tableTitle = workbook.SheetNames[0]
+            console.log(tableTitle)
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]]
+            const header = _this.get_header_row(worksheet)
+            console.log(header)
+            const results = XLSX.utils.sheet_to_json(worksheet)
+            console.log(results)
+            _this.generateDate({ tableTitle, header, results })
             // console.log(batteryArr)
             if (batteryArr.length > _this.upLoadNumber) {
-              console.log('上传电芯数量不能超过6条')
+              console.log('不能超过')
               resolve(false)
             } else {
               resolve(true)
@@ -80,6 +105,80 @@ export default {
         }
         reader.readAsBinaryString(file)
       })
+    },
+    generateDate({ tableTitle, header, results }) {
+      console.log(tableTitle)
+      console.log(header)
+      console.log(results)
+      this.tableTitle = tableTitle
+      this.tableData = results
+      this.tableHeader = header
+    },
+    handleDrop(e) {
+      e.stopPropagation()
+      e.preventDefault()
+      const files = e.dataTransfer.files
+      if (files.length !== 1) {
+        this.$message.error('Only support uploading one file!')
+        return
+      }
+      const itemFile = files[0] // only use files[0]
+      this.readerData(itemFile)
+      e.stopPropagation()
+      e.preventDefault()
+    },
+    handleDragover(e) {
+      e.stopPropagation()
+      e.preventDefault()
+      e.dataTransfer.dropEffect = 'copy'
+    },
+    readerData(itemFile) {
+      if (itemFile.name.split('.')[1] !== 'xls' && itemFile.name.split('.')[1] !== 'xlsx') {
+        this.$message({ message: '上传文件格式错误，请上传xls、xlsx文件！', type: 'warning' })
+      } else {
+        const reader = new FileReader()
+        reader.onload = e => {
+          const data = e.target.result
+          const fixedData = this.fixdata(data)
+          // const fixedData = data
+          const workbook = XLSX.read(btoa(fixedData), { type: 'base64' })
+          const firstSheetName = workbook.SheetNames[0] // 第一张表 sheet1
+          console.log(firstSheetName)
+          const worksheet = workbook.Sheets[firstSheetName] // 读取sheet1表中的数据 delete worksheet['!merges']
+          const A_l = worksheet['!ref'].split(':')[1] // 当excel存在标题行时
+          worksheet['!ref'] = `A2:${A_l}`
+          const tableTitle = firstSheetName
+          const header = this.get_header_row(worksheet)
+          console.log(header)
+          const results = XLSX.utils.sheet_to_json(worksheet)
+          console.log(results)
+          this.generateDate({ tableTitle, header, results })
+        }
+        reader.readAsArrayBuffer(itemFile)
+      }
+    },
+    fixdata(data) {
+      let o = ''
+      let l = 0
+      const w = 10240
+      for (l = 0; l < data.byteLength / w; ++l) {
+        o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)))
+        o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)))
+        return o
+      }
+    },
+    get_header_row(sheet) {
+      const headers = []
+      const range = XLSX.utils.decode_range(sheet['!ref'])
+      let C
+      const R = range.s.r /* start in the first row */
+      for (C = range.s.c; C <= range.e.c; ++C) { /* walk every column in the range */
+        var cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })] /* find the cell in the first row */
+        var hdr = 'UNKNOWN ' + C // <-- replace with your desired defaultif (cell && cell.t)
+        hdr = XLSX.utils.format_cell(cell)
+        headers.push(hdr)
+      }
+      return headers
     }
   }
 }
