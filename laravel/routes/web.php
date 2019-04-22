@@ -46,6 +46,13 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
     Route::any('new_line', 'NewApiController@newBusLine');
     Route::any('output', 'NewApiController@output');
     Route::any('test', 'NewApiController@Task');
+
+    // 1. 获取七牛上传操作的 token
+    Route::get('getToken', 'AutoController@getToken');
+    // 2. 七牛 303 状态码 回调上传完成文件信息
+    Route::get('qiniuCallback', 'AutoController@qiniuCallback');
+    // 3. 百度 OCR
+    Route::get('baiduOCR', 'AutoController@baiduOCR');
 });
 
 /******** 测试任务的接口地址 *********/
