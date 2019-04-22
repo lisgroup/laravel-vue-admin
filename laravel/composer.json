@@ -21,6 +21,7 @@
         "phpoffice/phpexcel": "^1.8",
         "phpoffice/phpspreadsheet": "^1.6",
         "predis/predis": "^1.1",
+        "qiniu/php-sdk": "^7.2",
         "tymon/jwt-auth": "1.*@rc",
         "vinkla/hashids": "3.3.0",
         "y-ui/laravel-running-time": "^1.1",
