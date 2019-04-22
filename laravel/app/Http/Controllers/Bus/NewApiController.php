@@ -9,7 +9,11 @@
 namespace App\Http\Controllers\Bus;
 
 
+use App\Events\TestEvent;
 use App\Http\Repository\NewBusRepository;
+use App\Tasks\TestTask;
+use Hhxsv5\LaravelS\Swoole\Task\Event;
+use Hhxsv5\LaravelS\Swoole\Task\Task;
 use Illuminate\Http\Request;
 use Jxlwqq\ChineseTypesetting\ChineseTypesetting;
 
@@ -95,6 +99,20 @@ class NewApiController extends CommonController
         // $text = '<p class="class-name" style="color: #FFFFFF;"> Hello世界。</p>';
         // $out1 = $chineseTypesetting->correct($text);
         // output: <p>Hello 世界。</p>
+    }
+
+    public function Task()
+    {
+        // 实例化TestEvent并通过fire触发，此操作是异步的，触发后立即返回，由Task进程继续处理监听器中的handle逻辑
+        // use Hhxsv5\LaravelS\Swoole\Task\Event;
+        $success = Event::fire(new TestEvent('event data'));
+        var_dump($success);//判断是否触发成功
+
+        // 实例化TestTask并通过deliver投递，此操作是异步的，投递后立即返回，由Task进程继续处理TestTask中的handle逻辑
+        $task = new TestTask('task data222');
+        // $task->delay(3);// 延迟3秒投放任务
+        $ret = Task::deliver($task);
+        var_dump($ret);//判断是否投递成功
     }
 
 }

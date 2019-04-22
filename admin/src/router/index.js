@@ -29,6 +29,7 @@ const routeBase = [
   { path: '/home', component: () => import('@/views/home/home'), hidden: true },
   { path: '/md', name: 'md', component: () => import('@/views/markdown/index'), hidden: true },
   { path: '/out', name: 'out', component: () => import('@/views/home/out'), hidden: true },
+  { path: '/excel', name: 'excel', component: () => import('@/views/home/excel'), hidden: true },
   { path: '/websocket', name: 'websocket', component: () => import('@/views/home/websocket'), hidden: true },
   { path: '/echarts', name: 'echarts', component: () => import('@/views/echarts/index'), hidden: true },
   // { path: '/index', component: () => import('@/views/home/index'), hidden: true },
