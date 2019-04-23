@@ -109,7 +109,10 @@ class AutoController extends Controller
             }
 
             // 3. 保存到数据库
-            ToolRepository::getInstance()->saveUploadData($imgUrl, $words);
+            $upload = new \App\Models\Upload();
+            $upload->img_url = $imgUrl;
+            $upload->content = $words;
+            return $upload->save();
         }
         return $words;
     }
