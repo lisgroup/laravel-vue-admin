@@ -33,7 +33,7 @@ if (!function_exists('cacheUserRolesAndPermissions')) {
             Cache::forget('user_r_p_'.$user_id);
             return cacheUserRolesAndPermissions($user_id, false);
         } else {
-            return Cache::remember('user_r_p_'.$user_id, 60, function() use ($user_id) {
+            return Cache::remember('user_r_p_'.$user_id, 3600 * 24 * 30, function() use ($user_id) {
                 $res = collect(DB::table('role_user')
                     ->where('role_user.user_id', $user_id)
                     ->join('roles', 'roles.id', '=', 'role_user.role_id')
