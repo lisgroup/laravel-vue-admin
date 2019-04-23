@@ -77,19 +77,11 @@ class AutoController extends Controller
      */
     public function baiduOCR($img, $imgUrl)
     {
-        // 1. 获取 Access Token
-        $config = [
-            'url' => 'https://aip.baidubce.com/oauth/2.0/token',
-            // 'params' => [
-            //     'grant_type' => 'client_credentials',
-            //     'client_id' => 'Va5yQRHlA4Fq5eR3LT0vuXV4',
-            //     'client_secret' => '0rDSjzQ20XUj5itV6WRtznPQSzr5pVw2'
-            // ]
-        ];
-        $accessToken = AccessToken::getInstance($config)->getToken();
+        // 1. 获取 BaiDu Access Token
+        $accessToken = AccessToken::getInstance()->getBaiDuToken();
 
         if (empty($accessToken)) {
-            Log::error('######### GET baiduOCR ERROR !!!'); //error_log($e->getMessage());
+            Log::error('######### GET baiduOCR $accessToken ERROR !!!'); //error_log($e->getMessage());
             return '';
         }
 

@@ -10,10 +10,13 @@ namespace App\Http\Repository;
 
 
 use Curl\Http;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class AccessToken
 {
+    /**
+     * @var int 默认缓存 30 天
+     */
     protected $expiresIn = 2592000;
 
     /**
@@ -28,26 +31,11 @@ class AccessToken
      */
     protected $header = [];
 
-    /**
-     * @var string|array  模拟表单提交的数据,发送 JSON 数据必须定义为 String
-     * 如：{"username":"admin","password":"123456"}
-     */
-    protected $params = 'api=11959004&grant_type=client_credentials&client_id=yxGSiFRIbfdl7WwGGXIGlmnR&client_secret=nE2rXH6ScEUg8MifDPbTzCrD5SHoC4vh';
-
-    private $fileName = '';
-
-    private $url;
     private static $instance;
 
     /**
      * TokenUtil constructor.
      * @param array $config
-     *
-     * $config = [
-     *      'url' => "https://api.yii2.wang/v1/authorize",
-     *      'expiresIn' => '86400', // 24H
-     *      'params' => ['username' => '13776036576', 'password' => '123456'],
-     * ];
      */
     private function __construct($config)
     {
@@ -70,22 +58,30 @@ class AccessToken
      * @param bool $bool 是否强制刷新缓存 token
      * @return bool|string
      */
-    public function getToken($bool = false)
+    public function getBaiDuToken($bool = false)
     {
-        try {
-            $data = Storage::get('token.txt');
-        } catch (\Exception $e) {
-            return $this->buildAccessToken();
-        }
-        $store = json_decode($data, true);
-        // 1. 强制获取，文件不存在，文件过期 =》 刷新 Token
-        if ($bool || empty($store['create_at']) || time() - $store['create_at'] > $this->expiresIn) {
-            // HTTP 请求获取 token 并写入文件缓存
-            return $this->buildAccessToken();
-        }
+        $bool && Cache::forget('baidu_access_token');
 
-        // 2. 在有效期内,直接读取返回
-        return $store['access_token'];
+        return Cache::remember('baidu_access_token', $this->expiresIn, function() {
+            $url = env('BAIDU_token_url') ?? 'https://aip.baidubce.com/oauth/2.0/token';
+            $curl = new Http();
+            $params = [
+                'api' => env('BAIDU_api'),
+                'grant_type' => env('BAIDU_grant_type'),
+                'client_id' => env('BAIDU_client_id'),
+                'client_secret' => env('BAIDU_client_secret'),
+            ];
+
+            $httpResult = $curl->request($url, $params, 'post', 5, $this->header);
+
+            // 2. 写入缓存
+            if (!empty($httpResult['content'])) {
+                $content = json_decode($httpResult['content'], true);
+                return $content['access_token'] ?? '';
+            } else {
+                return '';
+            }
+        });
     }
 
     /**
@@ -98,7 +94,7 @@ class AccessToken
         $interval = $this->expiresIn;//每隔一定时间运行
         do {
             try {
-                $this->buildAccessToken();
+                $this->getBaiDuToken();
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
@@ -106,29 +102,4 @@ class AccessToken
         } while (true);
     }
 
-    /**
-     * 获取 access_token 并保存到 token.txt 文件中
-     * @return string|bool 返回 access_token
-     */
-    private function buildAccessToken()
-    {
-        if (empty($this->url)) {
-            return false;
-        }
-
-        $curl = new Http();
-        $httpResult = $curl->request($this->url, $this->params, 'post', 6, $this->header);
-
-        // 2. 写入文件缓存
-        if (!empty($httpResult['content'])) {
-            $content = json_decode($httpResult['content'], true);
-            $response = array_merge($content, ['create_at' => time()]);
-            $json = json_encode($response, JSON_UNESCAPED_UNICODE);
-
-            // 2018-10-11 使用 Laravel Storage 存储数据
-            return Storage::disk('local')->put('token.txt', $json) ? $content['access_token'] : false;
-        } else {
-            return false;
-        }
-    }
 }
