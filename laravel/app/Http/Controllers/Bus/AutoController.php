@@ -13,6 +13,15 @@ use Qiniu\Auth;
 class AutoController extends Controller
 {
     /**
+     * @var Http 请求类
+     */
+    private $http;
+
+    public function __construct()
+    {
+        $this->http = Http::getInstent();
+    }
+    /**
      * 获取七牛 Token 的方法
      *
      * @return \Illuminate\Http\Response
@@ -43,7 +52,7 @@ class AutoController extends Controller
      *
      * @param Request $request
      *
-     * @return array
+     * @return \Illuminate\Http\Response
      */
     public function qiniuCallback(Request $request)
     {
@@ -51,22 +60,27 @@ class AutoController extends Controller
         $ret = base64_decode($uploadRet);
         $cbody = json_decode($ret, true);
         if (empty($cbody['key'])) {
-            return ['code' => 1, 'data' => [], 'msg' => 'error'];
+            // return ['code' => 1, 'data' => [], 'msg' => 'error'];
+            return $this->out(1100);
         }
         // 七牛云访问的 url
         $dn = env('QINIU_URL');
         Log::info('qiniuCallback: ', $cbody); // error_log(print_r($cbody, true));
         $url = $dn.$cbody['key'];
 
-        $stat_ = file_get_contents($url.'?stat');
-        $stat = json_decode($stat_, true);
-        $mtype = $stat['mimeType'];
-        if (substr($mtype, 0, 6) == 'image/') {
+        // $stat_ = file_get_contents($url.'?stat');
+        // $stat = json_decode($stat_, true);
+
+        $stat_get = $this->http->get($url.'?stat', [], 4);
+        $stat = json_decode($stat_get['content'], true);
+
+        if ($stat && $stat['mimeType'] && substr($stat['mimeType'], 0, 6) == 'image/') {
             // 3. 调用百度 OCR 识别信息
             $words = $this->baiduOCR('', $url);
-            return ['code' => 0, 'data' => ['url' => $url, 'words' => $words], 'msg' => 'success'];
+            return $this->out(200, ['url' => $url, 'words' => $words]);
         }
-        return ['code' => 1, 'data' => [], 'msg' => 'error'];
+
+        return $this->out(1100);
     }
 
     /**
@@ -97,8 +111,8 @@ class AutoController extends Controller
             return '';
         }
 
-        $http = new Http();
-        $res = $http->request($url, $bodys, 'POST');
+        // $http = new Http();
+        $res = $this->http->request($url, $bodys, 'POST');
 
         $result = json_decode($res['content'], true);
 
