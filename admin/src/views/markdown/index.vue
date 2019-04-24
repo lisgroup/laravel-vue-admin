@@ -1,5 +1,6 @@
 <template>
   <div id="main">
+    <nav-bar/>
     <mavon-editor ref="md" v-model="value" @imgAdd="imgAdd" @imgDel="imgDel" />
   </div>
 </template>

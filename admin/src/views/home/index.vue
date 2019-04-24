@@ -1,6 +1,7 @@
 <template>
   <div>
     <nav-bar/>
+    <fieldSet/>
 
     <el-input v-model="input" placeholder="线路名称，例：快线1, 55" @keyup.enter.native="goSearch">
       <template slot="prepend">线路</template>
@@ -28,9 +29,13 @@
 
 <script>
 import request from '@/utils/request'
+import fieldSet from '../../components/common/fieldSet'
 
 export default {
   name: 'Index',
+  components: {
+    fieldSet
+  },
   data() {
     return {
       isShow: false,

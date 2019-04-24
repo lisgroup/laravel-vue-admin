@@ -1,6 +1,7 @@
 <template>
   <div>
     <nav-bar/>
+    <fieldSet/>
     <div id="content">
       <form id="form" class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
@@ -37,8 +38,13 @@
 </template>
 
 <script>
+import fieldSet from '../../components/common/fieldSet'
+
 export default {
   name: 'Home',
+  components: {
+    fieldSet
+  },
   data() {
     return {
       lineName: ''
