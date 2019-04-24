@@ -3,12 +3,13 @@
     <nav-bar/>
     <el-upload
       ref="upload"
+      :data="dataObj"
+      :action="uploadUrl"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
       :before-upload="beforeUpload"
       :file-list="fileList"
-      class="upload-demo"
-      action="">
+      class="upload-demo">
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       <div slot="tip" class="el-upload__tip">只能上传 Excel 文件，且不超过 500kb</div>
     </el-upload>
@@ -30,6 +31,8 @@
 
 <script>
 import XLSX from 'xlsx'
+import request from '../../utils/request'
+
 export default {
   data() {
     return {
@@ -37,8 +40,22 @@ export default {
       upLoadNumber: 100000,
       tableTitle: '',
       tableData: [],
-      tableHeader: ''
+      tableHeader: '',
+      uploadUrl: 'http://up.qiniu.com',
+      dialogImageUrl: '',
+      dialogVisible: false,
+      desc: '',
+      dataObj: {}
     }
+  },
+  created() {
+    // 加载页面时候需要获取本次上传七牛的 Token ，并且赋值
+    const that = this
+    request.get('/api/getToken').then(res => {
+      // console.log(that.dataObj)
+      that.dataObj = { 'token': res.data.token }
+      console.log(that.dataObj)
+    })
   },
   methods: {
     submitUpload() {
