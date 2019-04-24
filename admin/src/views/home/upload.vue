@@ -39,7 +39,7 @@ export default {
   name: 'Upload',
   data() {
     return {
-      uploadUrl: 'http://up.qiniu.com',
+      uploadUrl: 'https://up.qiniup.com',
       dialogImageUrl: '',
       dialogVisible: false,
       desc: '',

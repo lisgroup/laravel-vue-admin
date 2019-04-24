@@ -41,7 +41,7 @@ export default {
       tableTitle: '',
       tableData: [],
       tableHeader: '',
-      uploadUrl: 'http://up.qiniu.com',
+      uploadUrl: 'https://up.qiniup.com',
       dialogImageUrl: '',
       dialogVisible: false,
       desc: '',
