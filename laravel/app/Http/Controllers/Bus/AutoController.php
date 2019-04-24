@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Bus;
 
 use App\Http\Repository\AccessToken;
-use App\Http\Repository\ToolRepository;
 use Curl\Http;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
