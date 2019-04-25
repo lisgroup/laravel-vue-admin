@@ -517,7 +517,7 @@ class MultithreadingRepository
 
                 $i = 'A';
                 foreach ($keys as $num => $key) {
-                    $setActive->setCellValue($i.$number, "\t".$value['param'][$key]);
+                    $setActive->setCellValue($i.$number, "\t".($value['param'][$key] ?? ''));
                     $i++;
                 }
 
