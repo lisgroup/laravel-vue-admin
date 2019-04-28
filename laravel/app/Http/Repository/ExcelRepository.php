@@ -240,7 +240,7 @@ class ExcelRepository
             $objActSheet = $objPHPExcel->getActiveSheet();
             // 位置bbb  *为下文代码位置提供锚
             // 给当前活动的表设置名称
-            $objActSheet->setTitle('Simple');
+            $objActSheet->setTitle('Sheet1');
             // 代码还没有结束，可以复制下面的代码来决定我们将要做什么
 
             // 1,直接生成一个文件
