@@ -28,6 +28,11 @@ class WebSocketService implements WebSocketHandlerInterface
 
     public function onOpen($server, $request)
     {
+        $userInfo = auth('api')->user();
+        if (empty($userInfo)) {
+            $data = $this->outJson(1200, [], '用户未登录或登录超时');
+            return $server->push($request->fd, $data);
+        }
         // 在触发 onOpen 事件之前 Laravel 的生命周期已经完结，所以 Laravel 的 Request 是可读的，Session 是可读写的
         // \Log::info('New WebSocket connection', [$request->fd, request()->all(), session()->getId(), session('xxx'), session(['yyy' => time()])]);
         // 1. 根据 api_excel 的 id 查询总数，
