@@ -4,6 +4,7 @@
       <el-button type="primary" size="medium">
         <router-link to="/api_excel/add">上传测试</router-link>
       </el-button>
+      <el-button :loading="reload" type="primary" class="reload" plain @click="fetchData">{{ reload_name }}</el-button>
     </el-row>
     <el-table
       v-loading="listLoading"
@@ -141,6 +142,8 @@ export default {
   },
   data() {
     return {
+      reload: false,
+      reload_name: '点击刷新',
       list: null,
       listLoading: true,
       perpage: 10,
@@ -260,15 +263,19 @@ export default {
       })
     },
     fetchData() {
-      this.listLoading = true
+      this.listLoading = this.reload = true
+      this.reload_name = '加载中'
       const params = Object.assign({ 'page': this.listQuery.page }, { 'perPage': this.perpage })
       getList(params).then(response => {
         this.list = response.data.data
         this.listLoading = false
         this.total = response.data.total
         this.url = response.data.appUrl
-        console.log('type', Object.prototype.toString.call(this.list))
-
+        // console.log('type', Object.prototype.toString.call(this.list))
+        setTimeout(() => {
+          this.reload = false
+          this.reload_name = '刷新'
+        }, 800)
         this.initWebSocket(8)
       })
     },
@@ -353,5 +360,9 @@ export default {
   }
   .pagination {
       margin: 20px auto;
+  }
+  .reload {
+    margin-right: 300px;
+    float: right;
   }
 </style>
