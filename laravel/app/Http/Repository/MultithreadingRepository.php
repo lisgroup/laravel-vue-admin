@@ -9,6 +9,7 @@
 namespace App\Http\Repository;
 
 
+use App\Events\SaveApiExcelLogEvent;
 use App\Models\ApiExcel;
 use App\Models\ApiExcelLogs;
 use App\Models\Article;
@@ -393,7 +394,8 @@ class MultithreadingRepository
                     'result' => $result,
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
-                ApiExcelLogs::insert($logs);
+                // ApiExcelLogs::insert($logs);
+                event(new SaveApiExcelLogEvent($logs));
                 // var_dump($result);
                 // var_dump($index);
                 $this->data[$index] = $result;
@@ -407,7 +409,8 @@ class MultithreadingRepository
                     'result' => '',
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
-                ApiExcelLogs::insert($logs);
+                // ApiExcelLogs::insert($logs);
+                event(new SaveApiExcelLogEvent($logs));
                 // this is delivered each failed request
                 if (is_object($reason) && is_callable([$reason, 'getMessage'])) {
                     $reason = 'Line:'.$reason->getLine().' in '.$reason->getFile().'; Message: '.$reason->getMessage();
