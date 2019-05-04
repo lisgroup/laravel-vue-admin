@@ -643,7 +643,7 @@ class MultithreadingRepository
                     // 2. 查询 api_excel_logs 表更新的数据量
                     $total = ApiExcelLogs::where('api_excel_id', $excel_id)->count();
                     // 3. 返回完成率
-                    return floor($total / $api_excel['total_excel'] * 100);
+                    return floor($total / $total_excel * 100);
                 }
             }
         }
