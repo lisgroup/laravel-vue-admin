@@ -56,7 +56,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="进度条" width="1" align="center" display="none">
+      <el-table-column label="进度条" width="100" align="center" display="none">
         <template slot-scope="scope">
           <div v-if="scope.row.state === 0">
             <el-progress :text-inside="true" :stroke-width="18" :percentage="0"/>
