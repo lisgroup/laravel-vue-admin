@@ -150,7 +150,9 @@ class MultithreadingRepository
             }
 
             $this->dataSet = $dataSet;
-            return true;
+            // return true;
+            // 更新 api_excel 表 total_excel 条数
+            return $this->saveTotalExcel($this->api_excel_id, count($dataSet['data']));
         } catch (\Exception $e) {
             return false;
         }
@@ -324,7 +326,9 @@ class MultithreadingRepository
             // 3. 循环数组每个单元格的数据
             $this->dataSet['data'] = $data;
 
-            return true;
+            // return true;
+            // 更新 api_excel 表 total_excel 条数
+            return $this->saveTotalExcel($this->api_excel_id, count($data));
         } catch (Exception|\PhpOffice\PhpSpreadsheet\Exception $exception) {
             return false;
         }
@@ -645,6 +649,19 @@ class MultithreadingRepository
         }
 
         return '100';
+    }
+
+    /**
+     * 保存 total_excel 字段
+     *
+     * @param $api_id
+     * @param $total
+     *
+     * @return bool
+     */
+    private function saveTotalExcel($api_id, $total)
+    {
+        return ApiExcel::where('id', $api_id)->update(['total_excel' => $total]);
     }
 
     /**
