@@ -8,9 +8,9 @@
 
 namespace App\Services;
 
+use App\Http\Repository\ApiRepository;
 use App\Http\Repository\MultithreadingRepository;
 use App\Models\ApiExcel;
-use App\Models\ApiExcelLogs;
 use Hhxsv5\LaravelS\Swoole\WebSocketHandlerInterface;
 use Swoole\Http\Request;
 use Swoole\WebSocket\Frame;
@@ -21,6 +21,8 @@ use Swoole\WebSocket\Server;
  */
 class WebSocketService implements WebSocketHandlerInterface
 {
+    public $perPage = 10;
+
     // 声明没有参数的构造函数
     public function __construct()
     {
@@ -37,10 +39,13 @@ class WebSocketService implements WebSocketHandlerInterface
         // \Log::info('New WebSocket connection', [$request->fd, request()->all(), session()->getId(), session('xxx'), session(['yyy' => time()])]);
         // 1. 根据 api_excel 的 id 查询总数，
         $req = $request->get;
+        $this->perPage = isset($req['perPage']) ? intval($req['perPage']) : 10;
+
         $action = $req['action'] ?? '';
         switch ($action) {
             case 'api_excel':
-
+                return $this->apiExcel();
+                break;
         }
 
         if (isset($req['id']) && $req['id'] == floor($req['id'])) {
@@ -90,5 +95,25 @@ class WebSocketService implements WebSocketHandlerInterface
         }
 
         return json_encode(['code' => $code, 'reason' => $reason, 'data' => $data], JSON_UNESCAPED_UNICODE);
+    }
+
+    private function apiExcel()
+    {
+        $user_id = auth('api')->user()['id'];
+
+        // 查询对应用户的上传数据
+        $where = [];
+        if ($user_id != 1) {
+            $where = ['uid' => $user_id];
+        }
+        $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($this->perPage);
+        // 获取完成进度情况
+        $list = ApiRepository::getInstent()->workProgress($list);
+
+        $appUrl = env('APP_URL') ?? '';
+        $collect = collect(['appUrl' => $appUrl]);
+        $items = $collect->merge($list);
+
+        return $this->outJson(200, $items);
     }
 }
