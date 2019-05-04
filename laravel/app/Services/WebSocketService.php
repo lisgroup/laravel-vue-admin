@@ -37,6 +37,11 @@ class WebSocketService implements WebSocketHandlerInterface
         // \Log::info('New WebSocket connection', [$request->fd, request()->all(), session()->getId(), session('xxx'), session(['yyy' => time()])]);
         // 1. 根据 api_excel 的 id 查询总数，
         $req = $request->get;
+        $action = $req['action'] ?? '';
+        switch ($action) {
+            case 'api_excel':
+
+        }
 
         if (isset($req['id']) && $req['id'] == floor($req['id'])) {
             while (true) {
