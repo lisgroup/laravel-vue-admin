@@ -107,4 +107,13 @@ class ApiRepository
     {
         return (float)sprintf('%.0f', microtime(true) * 1000);
     }
+
+
+    /**
+     * 获取下载进度条
+     */
+    public function workProgress($list)
+    {
+        return $list;
+    }
 }
