@@ -121,6 +121,9 @@ class ApiRepository
         foreach ($lists as $key => $list) {
             $rate = 100;
             switch ($list['state']) {
+                case '0': // 未开启任务
+                    $rate = 0;
+                    break;
                 case '1': // 正在处理的任务
                 case '5': // 失败任务
                     $rate = $this->progressRate($list['id'], $list['total_excel']);

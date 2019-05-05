@@ -68,7 +68,7 @@
             <el-progress :text-inside="true" :stroke-width="18" :percentage="100" status="success"/>
           </div>
           <div v-else>
-            <el-progress :text-inside="true" :stroke-width="18" :percentage="50" status="exception"/>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="scope.row.rate" status="exception"/>
           </div>
         </template>
       </el-table-column>
