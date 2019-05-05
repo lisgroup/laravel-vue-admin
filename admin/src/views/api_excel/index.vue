@@ -221,7 +221,7 @@ export default {
     },
     initWebSocket() { // 初始化 weosocket
       if ('WebSocket' in window) {
-        // const url = 'wss://www.guke1.com/ws?id=' + id
+        // const url = 'wss://www.guke1.com/ws?action=api_excel&token=' + getToken()
         const url = 'ws://localhost:5200?action=api_excel&token=' + getToken()
         this.websock = new WebSocket(url)
         this.websock.onmessage = this.onmessage
