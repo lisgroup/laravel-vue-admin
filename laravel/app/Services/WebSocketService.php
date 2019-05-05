@@ -46,13 +46,14 @@ class WebSocketService implements WebSocketHandlerInterface
 
         $action = $req['action'] ?? '';
         switch ($action) {
-            case 'api_excel':
+            case 'api_excel': // api_excel 列表完成率
                 while (true) {
-                    $data = $this->apiExcel();
-                    $server->push($request->fd, $data);
+                    $user_id = auth('api')->user()['id'];
+                    $server->push($request->fd, $this->apiExcel($user_id));
                     sleep(5);
                     $state = ApiExcel::where('state', 1)->first();
                     if (!$state) {
+                        $server->push($request->fd, $this->apiExcel($user_id));
                         break;
                     }
                     // 每个用户 fd 限制请求次数
@@ -65,7 +66,7 @@ class WebSocketService implements WebSocketHandlerInterface
                         $count = $this->redis->incr($redisKey);
                         if ($count == 1) {
                             // 设置过期时间
-                            $this->redis->expire($redisKey, 600);
+                            $this->redis->expire($redisKey, 6000);
                         }
                         if ($count > 200) { // 防止刷单的安全拦截
                             break; // 超出就跳出循环
@@ -137,12 +138,12 @@ class WebSocketService implements WebSocketHandlerInterface
     /**
      * 获取api_excel 列表-完成率
      *
+     * @param int $user_id 用户 id
+     *
      * @return array
      */
-    private function apiExcel()
+    private function apiExcel($user_id)
     {
-        $user_id = auth('api')->user()['id'];
-
         // 查询对应用户的上传数据
         $where = [];
         if ($user_id != 1) {
