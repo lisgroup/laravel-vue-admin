@@ -44,25 +44,33 @@ class WebSocketService implements WebSocketHandlerInterface
         $action = $req['action'] ?? '';
         switch ($action) {
             case 'api_excel':
-                return $this->apiExcel();
-                break;
-        }
-
-        if (isset($req['id']) && $req['id'] == floor($req['id'])) {
-            while (true) {
-                // 3. 输出完成率
-                $rate = MultithreadingRepository::getInstent()->completionRate($req['id']);
-                $data = $this->outJson(200, ['rate' => $rate]);
-                $server->push($request->fd, $data);
-                sleep(3);
-
-                if ($rate >= 100) {
-                    break;
+                while (true) {
+                    $data = $this->apiExcel();
+                    $server->push($request->fd, $data);
+                    sleep(5);
+                    $state = ApiExcel::where('state', 1)->first();
+                    if (!$state) {
+                        break;
+                    }
                 }
-            }
-        } else {
-            $server->push($request->fd, $this->outJson(200, ['rate' => '100']));
         }
+        return '';
+
+        // if (isset($req['id']) && $req['id'] == floor($req['id'])) {
+        //     while (true) {
+        //         // 3. 输出完成率
+        //         $rate = MultithreadingRepository::getInstent()->completionRate($req['id']);
+        //         $data = $this->outJson(200, ['rate' => $rate]);
+        //         $server->push($request->fd, $data);
+        //         sleep(3);
+        //
+        //         if ($rate >= 100) {
+        //             break;
+        //         }
+        //     }
+        // } else {
+        //     $server->push($request->fd, $this->outJson(200, ['rate' => '100']));
+        // }
 
         // throw new \Exception('an exception');// 此时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
     }
@@ -97,6 +105,11 @@ class WebSocketService implements WebSocketHandlerInterface
         return json_encode(['code' => $code, 'reason' => $reason, 'data' => $data], JSON_UNESCAPED_UNICODE);
     }
 
+    /**
+     * 获取api_excel 列表-完成率
+     *
+     * @return array
+     */
     private function apiExcel()
     {
         $user_id = auth('api')->user()['id'];
