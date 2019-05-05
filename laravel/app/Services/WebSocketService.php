@@ -12,6 +12,7 @@ use App\Http\Repository\ApiRepository;
 use App\Http\Repository\MultithreadingRepository;
 use App\Models\ApiExcel;
 use Hhxsv5\LaravelS\Swoole\WebSocketHandlerInterface;
+use Illuminate\Support\Facades\Redis;
 use Swoole\Http\Request;
 use Swoole\WebSocket\Frame;
 use Swoole\WebSocket\Server;
@@ -22,6 +23,8 @@ use Swoole\WebSocket\Server;
 class WebSocketService implements WebSocketHandlerInterface
 {
     public $perPage = 10;
+
+    private $redis;
 
     // 声明没有参数的构造函数
     public function __construct()
@@ -52,25 +55,33 @@ class WebSocketService implements WebSocketHandlerInterface
                     if (!$state) {
                         break;
                     }
+                    // 每个用户 fd 限制请求次数
+                    $redisKey = 'websocket_fd_'.$request->fd;
+                    if (empty($this->redis)) {
+                        $this->redis = Redis::connection();
+                    }
+                    // 如果获取不到 redis 实例，使用总计数次数
+                    if ($this->redis) {
+                        $count = $this->redis->incr($redisKey);
+                        if ($count == 1) {
+                            // 设置过期时间
+                            $this->redis->expire($redisKey, 600);
+                        }
+                        if ($count > 200) { // 防止刷单的安全拦截
+                            break; // 超出就跳出循环
+                        }
+                    } else {
+                        $count_fd = 'count_'.$request->fd;
+                        $this->incrKey($count_fd);
+                        // 单fd超过 1000 次跳出循环
+                        if ($this->$count_fd > 1000) {
+                            unset($this->$count_fd);
+                            break;
+                        }
+                    }
                 }
         }
         return '';
-
-        // if (isset($req['id']) && $req['id'] == floor($req['id'])) {
-        //     while (true) {
-        //         // 3. 输出完成率
-        //         $rate = MultithreadingRepository::getInstent()->completionRate($req['id']);
-        //         $data = $this->outJson(200, ['rate' => $rate]);
-        //         $server->push($request->fd, $data);
-        //         sleep(3);
-        //
-        //         if ($rate >= 100) {
-        //             break;
-        //         }
-        //     }
-        // } else {
-        //     $server->push($request->fd, $this->outJson(200, ['rate' => '100']));
-        // }
 
         // throw new \Exception('an exception');// 此时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
     }
@@ -146,5 +157,13 @@ class WebSocketService implements WebSocketHandlerInterface
         $items = $collect->merge($list);
 
         return $this->outJson(200, $items);
+    }
+
+    private function incrKey($key)
+    {
+        if (!isset($this->$key)) {
+            $this->$key = 1;
+        }
+        $this->$key++;
     }
 }

@@ -214,6 +214,7 @@ export default {
                 type: msg,
                 message: res.reason
               })
+              this.initWebSocket()
             })
           }
         }
