@@ -222,14 +222,14 @@ export default {
     },
     initWebSocket() { // 初始化 weosocket
       if ('WebSocket' in window) {
-        // const url = 'wss://www.guke1.com/ws?action=api_excel&token=' + getToken()
-        const url = 'ws://localhost:5200?action=api_excel&token=' + getToken()
+        const url = process.env.WEBSOCKET + '?action=api_excel&token=' + getToken()
         this.websock = new WebSocket(url)
         this.websock.onmessage = this.onmessage
         this.websock.onopen = this.onopen
         this.websock.onerror = this.onerror
         this.websock.onclose = this.close
       } else {
+        this.fetchData()
         // 浏览器不支持 WebSocket，使用 ajax 轮询
         console.log('Your browser does not support WebSocket!')
       }
@@ -249,7 +249,7 @@ export default {
       const data = JSON.parse(e.data)
       // this.list[2].rate = parseInt(data.data.rate)
       // console.log(this.list[2].rate)
-      console.log(data)
+      // console.log(data)
       // websocket 返回的数据
       this.list = data.data.data
       this.listLoading = false
@@ -265,14 +265,14 @@ export default {
       this.websock.send(Data)
     },
     close() { // 关闭
-      console.log('断开连接')
+      // console.log('断开连接')
     },
     download(index, row) {
       window.location.href = this.url + row.finish_url
     },
     download_log(index, row) {
       download_log({ id: row.id }).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.code === 200) {
           window.location.href = this.url + res.data.failed_done_file
         }
