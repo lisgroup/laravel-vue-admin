@@ -28,7 +28,7 @@ class LoginListener implements ShouldQueue
      *
      * @param LoginEvent $event
      */
-    public function handle(Event $event)
+    public function handle(LoginEvent $event)
     {
         //获取事件中保存的信息
         $user = $event->getUser();

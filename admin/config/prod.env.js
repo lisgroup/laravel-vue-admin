@@ -2,4 +2,5 @@
 module.exports = {
   NODE_ENV: '"production"',
   BASE_API: '"https://www.guke1.com"',
+  WEBSOCKET: '"wss://www.guke1.com/ws"',
 }

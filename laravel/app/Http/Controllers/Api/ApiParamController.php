@@ -68,6 +68,7 @@ class ApiParamController extends Controller
         // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
         // $rs = ApiParam::insert($request->all());
         $input = $request->all();
+        $input['website'] = $input['website'] ?? '';
         $model = new ApiParam($input);
         if ($model->save()) {
             return $this->out(200, ['data' => ['id' => $model->id]]);

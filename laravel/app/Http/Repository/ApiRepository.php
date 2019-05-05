@@ -10,6 +10,7 @@ namespace App\Http\Repository;
 
 
 use App\Models\ApiExcel;
+use App\Models\ApiExcelLogs;
 
 class ApiRepository
 {
@@ -75,7 +76,6 @@ class ApiRepository
             // 开启任务后 10 分钟未查询出结果=》失败
             if ($excel['auto_delete'] > 0 && strtotime($excel['updated_at']) + 600 < time()) {
                 ApiExcel::where('id', $excel['id'])->update(['state' => 5]);
-
             }
 
         }
@@ -107,4 +107,54 @@ class ApiRepository
     {
         return (float)sprintf('%.0f', microtime(true) * 1000);
     }
+
+
+    /**
+     * 获取下载进度条
+     *
+     * @param $lists
+     *
+     * @return mixed
+     */
+    public function workProgress($lists)
+    {
+        foreach ($lists as $key => $list) {
+            $rate = 100;
+            switch ($list['state']) {
+                case '0': // 未开启任务
+                    $rate = 0;
+                    break;
+                case '1': // 正在处理的任务
+                case '5': // 失败任务
+                    $rate = $this->progressRate($list['id'], $list['total_excel']);
+                    break;
+            }
+
+            $lists[$key]['rate'] = $rate;
+        }
+        return $lists;
+    }
+
+
+    /**
+     * 计算任务完成百分比
+     *
+     * @param int $excel_id api_excel 主键 id
+     * @param int $total_excel 总数
+     *
+     * @return int|bool
+     */
+    private function progressRate($excel_id, $total_excel)
+    {
+        if ($total_excel > 0) {
+            // 2. 查询 api_excel_logs 表更新的数据量
+            $total = ApiExcelLogs::where('api_excel_id', $excel_id)->count();
+            // 3. 返回完成率
+            $rate = floor($total / $total_excel * 100);
+            return $rate > 100 ? 100 : $rate;
+        }
+
+        return 100;
+    }
+
 }

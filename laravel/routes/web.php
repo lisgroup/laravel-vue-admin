@@ -45,7 +45,7 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
     Route::any('line', 'NewApiController@getList');
     Route::any('new_line', 'NewApiController@newBusLine');
     Route::any('output', 'NewApiController@output');
-    Route::any('test', 'NewApiController@Task');
+    Route::any('test', 'NewApiController@jwt');
 
     // 1. 获取七牛上传操作的 token
     Route::get('getToken', 'AutoController@getToken');
