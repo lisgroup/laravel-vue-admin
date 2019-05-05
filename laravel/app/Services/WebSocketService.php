@@ -105,6 +105,24 @@ class WebSocketService implements WebSocketHandlerInterface
         return json_encode(['code' => $code, 'reason' => $reason, 'data' => $data], JSON_UNESCAPED_UNICODE);
     }
 
+
+    /**
+     * 根据 api_excel_id 获取完成率
+     *
+     * @param $id
+     *
+     * @return array
+     */
+    protected function getRateById($id)
+    {
+        $rate = '100';
+        if ($id && $id == floor($id)) {
+            // 3. 输出完成率
+            $rate = MultithreadingRepository::getInstent()->completionRate($id);
+        }
+        return $this->outJson(200, ['rate' => $rate]);
+    }
+
     /**
      * 获取api_excel 列表-完成率
      *
