@@ -127,6 +127,7 @@
 </template>
 
 <script>
+import { getToken } from '@/utils/auth'
 import { getList, deleteAct, search, startTask, download_log } from '@/api/api_excel'
 
 export default {
@@ -159,7 +160,8 @@ export default {
     this.currentpage = parseInt(this.listQuery.page)
     const perPage = parseInt(this.$route.query.perPage)
     this.perpage = isNaN(perPage) ? this.perpage : perPage
-    this.fetchData()
+    // this.fetchData()
+    this.initWebSocket()
   },
   destroyed() {
     this.websock.close() // 离开路由之后断开 websocket 连接
@@ -217,9 +219,10 @@ export default {
         }
       })
     },
-    initWebSocket(id) { // 初始化 weosocket
+    initWebSocket() { // 初始化 weosocket
       if ('WebSocket' in window) {
-        const url = 'wss://www.guke1.com/ws?id=' + id
+        // const url = 'wss://www.guke1.com/ws?id=' + id
+        const url = 'ws://localhost:5200?action=api_excel&token=' + getToken()
         this.websock = new WebSocket(url)
         this.websock.onmessage = this.onmessage
         this.websock.onopen = this.onopen
@@ -235,15 +238,27 @@ export default {
       // const rs = this.send(JSON.stringify(actions))
       // console.log(rs)
     },
-    onerror() { // 连接建立失败重连
+    onerror() {
+      // 连接建立失败, 发送 http 请求获取数据
       // this.initWebSocket()
+      this.fetchData()
     },
     onmessage(e) { // 数据接收
-      console.log(e.data)
+      // console.log(e.data)
       const data = JSON.parse(e.data)
       // this.list[2].rate = parseInt(data.data.rate)
       // console.log(this.list[2].rate)
       console.log(data)
+      // websocket 返回的数据
+      this.list = data.data.data
+      this.listLoading = false
+      this.total = data.data.total
+      this.url = data.data.appUrl
+      // console.log('type', Object.prototype.toString.call(this.list))
+      setTimeout(() => {
+        this.reload = false
+        this.reload_name = '刷新'
+      }, 800)
     },
     send(Data) {
       this.websock.send(Data)
@@ -276,7 +291,7 @@ export default {
           this.reload = false
           this.reload_name = '刷新'
         }, 800)
-        this.initWebSocket(8)
+        // this.initWebSocket()
       })
     },
     handleEdit(index, row) {
