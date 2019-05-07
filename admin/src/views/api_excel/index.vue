@@ -157,7 +157,8 @@ export default {
   },
   created() {
     this.listQuery = this.$route.query
-    this.currentpage = parseInt(this.listQuery.page)
+    const page = parseInt(this.listQuery.page)
+    this.currentpage = isNaN(page) ? 1 : page
     const perPage = parseInt(this.$route.query.perPage)
     this.perpage = isNaN(perPage) ? this.perpage : perPage
     // this.fetchData()
@@ -222,7 +223,7 @@ export default {
     },
     initWebSocket() { // 初始化 weosocket
       if ('WebSocket' in window) {
-        const url = process.env.WEBSOCKET + '?action=api_excel&token=' + getToken()
+        const url = process.env.WEBSOCKET + '?action=api_excel&token=' + getToken() + '&page=' + this.currentpage + '&perPage=' + this.perpage
         this.websock = new WebSocket(url)
         this.websock.onmessage = this.onmessage
         this.websock.onopen = this.onopen
