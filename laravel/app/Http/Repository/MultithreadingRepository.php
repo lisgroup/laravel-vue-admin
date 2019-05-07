@@ -444,14 +444,15 @@ class MultithreadingRepository
         $insert = [
             'title' => $this->api_excel_id,
             'markdown' => json_encode($this->data, JSON_UNESCAPED_UNICODE),
-            'content' => json_encode($this->dataSet['data'], JSON_UNESCAPED_UNICODE)
+            'content' => json_encode($this->dataSet['data'], JSON_UNESCAPED_UNICODE),
+            'created_at' => date('Y-m-d H:i:s'),
         ];
         Article::insert($insert);
 
         $returnArray = [];
         foreach ($this->data as $k => $v) {
             if (!isset($this->dataSet['data'][$k])) {
-                Article::insert(['title' => $this->api_excel_id, 'content' => $k]);
+                Article::insert(['title' => $this->api_excel_id, 'content' => $k, 'created_at' => date('Y-m-d H:i:s')]);
                 return [];
             }
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
