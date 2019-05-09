@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Config;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ConfigController extends Controller
 {
@@ -12,6 +13,8 @@ class ConfigController extends Controller
      * @var int 默认分页条数
      */
     public $perPage = 10;
+
+    private $allow = ['name', 'title', 'default_open', 'state'];
 
     /**
      * Create a new AuthController instance.
@@ -25,7 +28,7 @@ class ConfigController extends Controller
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
         // 如果把 refresh 也放进去，token 即使过期但仍在刷新期以内也可刷新
         // 不过刷新一次作废
-        $this->middleware(['auth:api', 'role']);
+        // $this->middleware(['auth:api', 'role']);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
 
@@ -40,7 +43,10 @@ class ConfigController extends Controller
      */
     public function index()
     {
-        $list = Config::orderBy('sort')->paginate($this->perPage);
+        $list = [];
+        foreach ($this->allow as $item) {
+            $list[$item] = Cache::get($item) ?? '';
+        }
         return $this->out(200, $list);
     }
 
@@ -63,17 +69,15 @@ class ConfigController extends Controller
      */
     public function store(Request $request)
     {
-        // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
-        // $rs = Config::insert($request->all());
+        // 全部数据
         $input = $request->all();
-        is_null($input['sort']) && $input['sort'] = 100;
-        $model = new Config($input);
-        if ($model->save()) {
-            return $this->out(200, ['data' => ['id' => $model->id]]);
-        } else {
-            return $this->out(4000);
+        // 存入缓存数据
+        foreach ($input as $key => $item) {
+            if (in_array($key, $this->allow)) {
+                Cache::forever($key, $item);
+            }
         }
-
+        return $this->out(200);
     }
 
     /**

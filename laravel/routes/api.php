@@ -53,7 +53,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::resource('roles', 'RoleController');
 
     // 配置相关
-    Route::resource('config', 'Api\ConfigController');
+    Route::resource('config', 'ConfigController');
 });
 
 
