@@ -51,6 +51,9 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('roles/store', 'RoleController@store');
     Route::resource('permissions', 'PermissionController');
     Route::resource('roles', 'RoleController');
+
+    // 配置相关
+    Route::resource('config', 'Api\ConfigController');
 });
 
 
