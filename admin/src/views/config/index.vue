@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { postAdd } from '@/api/config'
+import { postAdd, getList } from '@/api/config'
 
 export default {
   data() {
@@ -44,7 +44,18 @@ export default {
       redirect: '/config/index'
     }
   },
+  created() {
+    this.init()
+  },
   methods: {
+    init() {
+      const that = this
+      getList({ perPage: 20 }).then(response => {
+        const data = response.data
+        that.form.name = data.name
+        that.form.default_open = data.default_open
+      })
+    },
     onSubmit(form) {
       // console.log(this.form)
       this.$refs[form].validate((valid) => {
@@ -58,7 +69,7 @@ export default {
                 message: '操作成功',
                 type: 'success'
               })
-              this.$router.push({ path: this.redirect || '/' })
+              // this.$router.push({ path: this.redirect || '/' })
             } else {
               this.$message.error(response.reason)
             }
