@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Article\Store;
-use App\Http\Requests\Article\Update;
-use App\Models\Article;
+use App\Models\Config;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
-class ArticleController extends Controller
+class ConfigController extends Controller
 {
     /**
      * @var int 默认分页条数
      */
     public $perPage = 10;
+
+    private $allow = ['name', 'title', 'default_open', 'state'];
 
     /**
      * Create a new AuthController instance.
@@ -42,7 +43,10 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $list = Article::orderBy('id', 'DESC')->select('id', 'title', 'author', 'keywords', 'created_at')->paginate($this->perPage);
+        $list = [];
+        foreach ($this->allow as $item) {
+            $list[$item] = Cache::get($item) ?? '';
+        }
         return $this->out(200, $list);
     }
 
@@ -60,34 +64,33 @@ class ArticleController extends Controller
      * Store a newly created resource in storage.
      * 新增入库操作
      *
-     * @param Store $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Store $request)
+    public function store(Request $request)
     {
-        // 会出现 Unknown column 'guid' in 'field list' 不存在的字段入库报错问题
-        // $rs = Article::insert($request->all());
+        // 全部数据
         $input = $request->all();
-        $model = new Article($input);
-        if ($model->save()) {
-            return $this->out(200, ['data' => ['id' => $model->id]]);
-        } else {
-            return $this->out(4000);
+        // 存入缓存数据
+        foreach ($input as $key => $item) {
+            if (in_array($key, $this->allow)) {
+                Cache::forever($key, $item);
+            }
         }
-
+        return $this->out(200);
     }
 
     /**
      * Display the specified resource.
      * 展示某个详情数据
      *
-     * @param Article $article
+     * @param Config $Config
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(Config $Config)
     {
-        return $this->out(200, $article);
+        return $this->out(200, $Config);
     }
 
     /**
@@ -100,7 +103,7 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $data = Article::findOrFail($id);
+        $data = Config::findOrFail($id);
         return $this->out(200, $data);
     }
 
@@ -108,20 +111,18 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      * 更新数据
      *
-     * @param  Update $request
+     * @param  Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Update $request, $id)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
-        // $model = new Article();$model->save($input, ['id' => $id]);
+        // $model = new Config();$model->save($input, ['id' => $id]);
         // 老版本更新操作如下，新版本先查询再更新
-        // Article::where('id', $id)->update($input)
-        $article = Article::findOrFail($id);
-        is_null($input['description']) && $input['description'] = '';
-        is_null($input['cover_img']) && $input['cover_img'] = '';
-        if ($article->update($input)) {
+        // Config::where('id', $id)->update($input)
+        $Config = Config::findOrFail($id);
+        if ($Config->update($input)) {
             return $this->out(200, ['data' => ['id' => $id]]);
         } else {
             return $this->out(4000);
@@ -137,7 +138,7 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        if (Article::findOrFail($id)->delete()) {
+        if (Config::findOrFail($id)->delete()) {
             $data = ['msg' => '删除成功', 'errno' => 0];
         } else {
             $data = ['msg' => '删除失败', 'errno' => 2];

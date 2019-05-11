@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Bus;
 use App\Http\Repository\BusRepository;
 use App\Http\Repository\NewBusRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class IndexController extends CommonController
 {
@@ -41,22 +42,72 @@ class IndexController extends CommonController
     {
         $line = $request['linename'];
         $line = preg_replace('/快\b(\d)/', '快线$1号', $line);
-        switch ($request['type']) {
-            case '1':
-            case 'new':
-                $list = NewBusRepository::getInstent()->getLine($line);
-                break;
-
-            default:
-                // $list = BusRepository::getInstent()->getList($line);
-                $list = [];
-                if (empty($list)) {
-                    $list = NewBusRepository::getInstent()->getLine($line);
-                }
+        // 1. 前端直接传递 type 参数时先判断
+        if (isset($request['type'])) {
+            switch ($request['type']) {
+                case '1':
+                case 'new':
+                    $list = $this->getNewList($line);
+                    break;
+                default:
+                    $list = $this->getOldList($line);
+                    // $list = [];
+                    if (empty($list)) {
+                        $list = $this->getNewList($line);
+                    }
+            }
+        } else {
+            // 2. 根据后台配置查询不同的结果
+            $default_open = Cache::get('default_open');
+            switch ($default_open) {
+                case '2': // 查询新版
+                    $list = $this->getNewList($line);
+                    break;
+                case '3': // 先查老版再查新版
+                    $list = $this->getOldList($line);
+                    // $list = [];
+                    if (empty($list)) {
+                        $list = $this->getNewList($line);
+                    }
+                    break;
+                case '4': // 先查新版再查老版
+                    $list = $this->getNewList($line);
+                    // $list = [];
+                    if (empty($list)) {
+                        $list = $this->getOldList($line);
+                    }
+                    break;
+                default: // 查询老版
+                    $list = $this->getOldList($line);
+            }
         }
 
         // return $this->exportData($list);
         return $this->out(200, $list);
+    }
+
+    /**
+     * 获取老线路列表
+     *
+     * @param $line
+     *
+     * @return array
+     */
+    private function getNewList($line)
+    {
+        return NewBusRepository::getInstent()->getLine($line);
+    }
+
+    /**
+     * 获取老线路列表
+     *
+     * @param $line
+     *
+     * @return array
+     */
+    private function getOldList($line)
+    {
+        return BusRepository::getInstent()->getList($line);
     }
 
     /**
