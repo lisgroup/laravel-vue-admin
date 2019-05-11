@@ -138,8 +138,8 @@ npm run dev
 
 # 打包(可选)
 npm run build
-# 将 dist 目录下的文件 copy 到 php/public 目录。
 ```
+~~npm run build 命令会自动将 dist 目录下的文件 copy 到 laravel/public 目录下。~~
 
 ## 域名绑定
 域名需要绑定到根目录，即项目的 laravel/public 目录下。
