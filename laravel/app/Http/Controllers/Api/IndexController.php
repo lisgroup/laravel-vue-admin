@@ -99,7 +99,7 @@ class IndexController extends Controller
         // 2. 处理数据
         for ($i = 0; $i < $input['section']; $i++) {
             $strTime = strtotime('+'.$i.' day', $start);
-            $time = date('Y-m-d', $strTime);
+            $time = date('m-d', $strTime);
             $count = 0;
             foreach ($datas as $key => $item) {
                 if ($item->login_time < ($strTime + 24 * 3600)) {
