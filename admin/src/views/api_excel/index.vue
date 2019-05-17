@@ -4,6 +4,7 @@
       <el-button type="primary" size="medium">
         <router-link to="/api_excel/add">上传测试</router-link>
       </el-button>
+      <el-button :loading="reload" type="primary" class="reload" plain @click="fetchData">{{ reload_name }}</el-button>
     </el-row>
     <el-table
       v-loading="listLoading"
@@ -55,7 +56,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="进度条" width="1" align="center" display="none">
+      <el-table-column label="进度条" width="100" align="center" display="none">
         <template slot-scope="scope">
           <div v-if="scope.row.state === 0">
             <el-progress :text-inside="true" :stroke-width="18" :percentage="0"/>
@@ -67,7 +68,7 @@
             <el-progress :text-inside="true" :stroke-width="18" :percentage="100" status="success"/>
           </div>
           <div v-else>
-            <el-progress :text-inside="true" :stroke-width="18" :percentage="50" status="exception"/>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="scope.row.rate" status="exception"/>
           </div>
         </template>
       </el-table-column>
@@ -126,6 +127,7 @@
 </template>
 
 <script>
+import { getToken } from '@/utils/auth'
 import { getList, deleteAct, search, startTask, download_log } from '@/api/api_excel'
 
 export default {
@@ -141,6 +143,8 @@ export default {
   },
   data() {
     return {
+      reload: false,
+      reload_name: '点击刷新',
       list: null,
       listLoading: true,
       perpage: 10,
@@ -153,10 +157,12 @@ export default {
   },
   created() {
     this.listQuery = this.$route.query
-    this.currentpage = parseInt(this.listQuery.page)
+    const page = parseInt(this.listQuery.page)
+    this.currentpage = isNaN(page) ? 1 : page
     const perPage = parseInt(this.$route.query.perPage)
     this.perpage = isNaN(perPage) ? this.perpage : perPage
-    this.fetchData()
+    // this.fetchData()
+    this.initWebSocket()
   },
   destroyed() {
     this.websock.close() // 离开路由之后断开 websocket 连接
@@ -209,20 +215,22 @@ export default {
                 type: msg,
                 message: res.reason
               })
+              this.initWebSocket()
             })
           }
         }
       })
     },
-    initWebSocket(id) { // 初始化 weosocket
+    initWebSocket() { // 初始化 weosocket
       if ('WebSocket' in window) {
-        const url = 'wss://www.guke1.com/ws?id=' + id
+        const url = process.env.WEBSOCKET + '?action=api_excel&token=' + getToken() + '&page=' + this.currentpage + '&perPage=' + this.perpage
         this.websock = new WebSocket(url)
         this.websock.onmessage = this.onmessage
         this.websock.onopen = this.onopen
         this.websock.onerror = this.onerror
         this.websock.onclose = this.close
       } else {
+        this.fetchData()
         // 浏览器不支持 WebSocket，使用 ajax 轮询
         console.log('Your browser does not support WebSocket!')
       }
@@ -232,44 +240,60 @@ export default {
       // const rs = this.send(JSON.stringify(actions))
       // console.log(rs)
     },
-    onerror() { // 连接建立失败重连
+    onerror() {
+      // 连接建立失败, 发送 http 请求获取数据
       // this.initWebSocket()
+      this.fetchData()
     },
     onmessage(e) { // 数据接收
-      console.log(e.data)
+      // console.log(e.data)
       const data = JSON.parse(e.data)
       // this.list[2].rate = parseInt(data.data.rate)
       // console.log(this.list[2].rate)
-      console.log(data)
+      // console.log(data)
+      // websocket 返回的数据
+      this.list = data.data.data
+      this.listLoading = false
+      this.total = data.data.total
+      this.url = data.data.appUrl
+      // console.log('type', Object.prototype.toString.call(this.list))
+      setTimeout(() => {
+        this.reload = false
+        this.reload_name = '刷新'
+      }, 800)
     },
     send(Data) {
       this.websock.send(Data)
     },
     close() { // 关闭
-      console.log('断开连接')
+      // console.log('断开连接')
     },
     download(index, row) {
       window.location.href = this.url + row.finish_url
     },
     download_log(index, row) {
       download_log({ id: row.id }).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.code === 200) {
           window.location.href = this.url + res.data.failed_done_file
         }
       })
     },
     fetchData() {
-      this.listLoading = true
+      this.listLoading = this.reload = true
+      this.reload_name = '加载中'
       const params = Object.assign({ 'page': this.listQuery.page }, { 'perPage': this.perpage })
       getList(params).then(response => {
         this.list = response.data.data
         this.listLoading = false
         this.total = response.data.total
         this.url = response.data.appUrl
-        console.log('type', Object.prototype.toString.call(this.list))
-
-        this.initWebSocket(8)
+        // console.log('type', Object.prototype.toString.call(this.list))
+        setTimeout(() => {
+          this.reload = false
+          this.reload_name = '刷新'
+        }, 800)
+        // this.initWebSocket()
       })
     },
     handleEdit(index, row) {
@@ -353,5 +377,9 @@ export default {
   }
   .pagination {
       margin: 20px auto;
+  }
+  .reload {
+    margin-right: 300px;
+    float: right;
   }
 </style>

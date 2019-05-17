@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ApiExcelEvent' => [
             'App\Listeners\ApiExcelListener',
         ],
+        'App\Events\SaveApiExcelLogEvent' => [
+            'App\Listeners\SaveApiExcelLogListener',
+        ],
     ];
 
     /**

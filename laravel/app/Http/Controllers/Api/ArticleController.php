@@ -42,7 +42,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $list = Article::orderBy('id', 'DESC')->paginate($this->perPage);
+        $list = Article::orderBy('id', 'DESC')->select('id', 'title', 'author', 'keywords', 'created_at')->paginate($this->perPage);
         return $this->out(200, $list);
     }
 

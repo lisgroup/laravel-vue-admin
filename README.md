@@ -138,8 +138,8 @@ npm run dev
 
 # 打包(可选)
 npm run build
-# 将 dist 目录下的文件 copy 到 php/public 目录。
 ```
+~~npm run build 命令会自动将 dist 目录下的文件 copy 到 laravel/public 目录下。~~
 
 ## 域名绑定
 域名需要绑定到根目录，即项目的 laravel/public 目录下。
@@ -149,7 +149,7 @@ npm run build
 ```shell
 server {
     listen 443 ssl;
-    root /www/vueBus/laravel/public;
+    root /www/laravel-vue-admin/laravel/public;
     server_name www.guke1.com; # 改为绑定证书的域名
     
     # ssl 配置
@@ -217,8 +217,8 @@ upstream laravels {
 server {
     listen 80;
     # 别忘了绑Host哟
-    server_name www.bus.com;
-    root /home/www/vueBus/laravel/public;
+    server_name www.guke1.com;
+    root /home/www/laravel-vue-admin/laravel/public;
     access_log /home/wwwlogs/nginx/$server_name.access.log;
     autoindex off;
     index index.html index.htm;

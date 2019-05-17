@@ -9,6 +9,7 @@
 namespace App\Http\Repository;
 
 
+use App\Events\SaveApiExcelLogEvent;
 use App\Models\ApiExcel;
 use App\Models\ApiExcelLogs;
 use App\Models\Article;
@@ -149,7 +150,9 @@ class MultithreadingRepository
             }
 
             $this->dataSet = $dataSet;
-            return true;
+            // return true;
+            // 更新 api_excel 表 total_excel 条数
+            return $this->saveTotalExcel($this->api_excel_id, count($dataSet['data']));
         } catch (\Exception $e) {
             return false;
         }
@@ -323,7 +326,9 @@ class MultithreadingRepository
             // 3. 循环数组每个单元格的数据
             $this->dataSet['data'] = $data;
 
-            return true;
+            // return true;
+            // 更新 api_excel 表 total_excel 条数
+            return $this->saveTotalExcel($this->api_excel_id, count($data));
         } catch (Exception|\PhpOffice\PhpSpreadsheet\Exception $exception) {
             return false;
         }
@@ -394,6 +399,7 @@ class MultithreadingRepository
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
                 ApiExcelLogs::insert($logs);
+                // event(new SaveApiExcelLogEvent($logs));
                 // var_dump($result);
                 // var_dump($index);
                 $this->data[$index] = $result;
@@ -408,6 +414,7 @@ class MultithreadingRepository
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
                 ApiExcelLogs::insert($logs);
+                // event(new SaveApiExcelLogEvent($logs));
                 // this is delivered each failed request
                 if (is_object($reason) && is_callable([$reason, 'getMessage'])) {
                     $reason = 'Line:'.$reason->getLine().' in '.$reason->getFile().'; Message: '.$reason->getMessage();
@@ -437,14 +444,15 @@ class MultithreadingRepository
         $insert = [
             'title' => $this->api_excel_id,
             'markdown' => json_encode($this->data, JSON_UNESCAPED_UNICODE),
-            'content' => json_encode($this->dataSet['data'], JSON_UNESCAPED_UNICODE)
+            'content' => json_encode($this->dataSet['data'], JSON_UNESCAPED_UNICODE),
+            'created_at' => date('Y-m-d H:i:s'),
         ];
         Article::insert($insert);
 
         $returnArray = [];
         foreach ($this->data as $k => $v) {
             if (!isset($this->dataSet['data'][$k])) {
-                Article::insert(['title' => $this->api_excel_id, 'content' => $k]);
+                Article::insert(['title' => $this->api_excel_id, 'content' => $k, 'created_at' => date('Y-m-d H:i:s')]);
                 return [];
             }
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
@@ -517,7 +525,7 @@ class MultithreadingRepository
 
                 $i = 'A';
                 foreach ($keys as $num => $key) {
-                    $setActive->setCellValue($i.$number, "\t".$value['param'][$key]);
+                    $setActive->setCellValue($i.$number, "\t".($value['param'][$key] ?? ''));
                     $i++;
                 }
 
@@ -574,7 +582,7 @@ class MultithreadingRepository
             $objActSheet = $objPHPExcel->getActiveSheet();
             // 位置bbb  *为下文代码位置提供锚
             // 给当前活动的表设置名称
-            $objActSheet->setTitle('Simple');
+            $objActSheet->setTitle('Sheet1');
             // 代码还没有结束，可以复制下面的代码来决定我们将要做什么
 
             // 1,直接生成一个文件
@@ -636,12 +644,25 @@ class MultithreadingRepository
                     // 2. 查询 api_excel_logs 表更新的数据量
                     $total = ApiExcelLogs::where('api_excel_id', $excel_id)->count();
                     // 3. 返回完成率
-                    return floor($total / $api_excel['total_excel'] * 100);
+                    return floor($total / $total_excel * 100);
                 }
             }
         }
 
         return '100';
+    }
+
+    /**
+     * 保存 total_excel 字段
+     *
+     * @param $api_id
+     * @param $total
+     *
+     * @return bool
+     */
+    private function saveTotalExcel($api_id, $total)
+    {
+        return ApiExcel::where('id', $api_id)->update(['total_excel' => $total]);
     }
 
     /**

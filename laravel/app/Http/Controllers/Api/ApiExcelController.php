@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\ApiExcelEvent;
+use App\Http\Repository\ApiRepository;
 use App\Http\Repository\ExcelRepository;
 use App\Http\Requests\ApiExcel\Store;
 use App\Http\Requests\ApiExcel\Update;
@@ -57,6 +58,8 @@ class ApiExcelController extends Controller
             $where = ['uid' => $user_id];
         }
         $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($this->perPage);
+        // 获取完成进度情况
+        $list = ApiRepository::getInstent()->workProgress($list);
 
         $appUrl = env('APP_URL') ?? '';
         $collect = collect(['appUrl' => $appUrl]);
@@ -264,6 +267,11 @@ class ApiExcelController extends Controller
         return $this->out(200);
     }
 
+    /**
+     * 下载已完成数据
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function downloadLog()
     {
         $api_excel_id = $this->request->input('id');
@@ -280,4 +288,5 @@ class ApiExcelController extends Controller
         }
         return $this->out(200, ['failed_done_file' => $failed_done_file]);
     }
+
 }

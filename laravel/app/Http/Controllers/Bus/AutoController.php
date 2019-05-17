@@ -18,7 +18,7 @@ class AutoController extends Controller
 
     public function __construct()
     {
-        $this->http = Http::getInstent();
+        $this->http || $this->http = Http::getInstent();
     }
     /**
      * 获取七牛 Token 的方法

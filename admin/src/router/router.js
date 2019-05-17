@@ -137,7 +137,7 @@ export const routeSuper = [
       {
         path: 'config',
         name: '配置管理',
-        component: () => import('@/views/lines/index'),
+        component: () => import('@/views/config/index'),
         meta: { title: '配置列表', icon: 'table', roles: [Super] }
       },
       {

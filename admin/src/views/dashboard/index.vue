@@ -138,7 +138,7 @@ export default {
           {
             barWidth: '60%',
             name: '登录成功',
-            type: 'bar', // 'line'
+            type: 'line', // 'bar','line'
             stack: '总量',
             data: this.yData,
             smooth: true
