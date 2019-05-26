@@ -130,12 +130,19 @@ class IndexController extends CommonController
         if (!empty($post['lineID'])) {
             $data = NewBusRepository::getInstent()->getLineStatus($post['lineID']);
         } elseif (!empty($post) && !empty($post['href']) && !empty($post['LineGuid']) && !empty($post['LineInfo'])) {
-            // 'href' => string 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4' (length=54)  'LineGuid' => string '9d090af5-c5c6-4db8-b34e-2e8af4f63216' (length=36)  'LineInfo' => string '1(公交一路新村)' (length=21)
-            $parseUrl = parse_url($post['href']);
-            parse_str($parseUrl['query'], $params);
+            // ['href' => 'APTSLine.aspx?cid=175ecd8d-c39d-4116-83ff-109b946d7cb4', 'LineGuid' => '9d090af5-c5c6-4db8-b34e-2e8af4f63216', 'LineInfo' => '1(公交一路新村)']
+            if (isset($post['cid'])) {
+                $aspUrl = $post['href'] ?? 'APTSLine.aspx';
+            } else {
+                $parseUrl = parse_url($post['href']);
+                $query = $parseUrl['query'] ?? '';
+                parse_str($query, $params);
+                $post['cid'] = $params['cid'];
+                $aspUrl = $parseUrl['path'] ?? 'APTSLine.aspx';
+            }
             unset($post['href']);
-            $post['cid'] = $params['cid'];
-            $data = BusRepository::getInstent()->getLine($parseUrl['path'], $post);
+
+            $data = BusRepository::getInstent()->getLine($aspUrl, $post);
         }
 
         return $this->out(200, $data);
