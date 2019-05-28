@@ -15,6 +15,7 @@ use App\Tasks\TestTask;
 use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Hhxsv5\LaravelS\Swoole\Task\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Jxlwqq\ChineseTypesetting\ChineseTypesetting;
 
 class NewApiController extends CommonController
@@ -113,6 +114,25 @@ class NewApiController extends CommonController
         // $task->delay(3);// 延迟3秒投放任务
         $ret = Task::deliver($task);
         var_dump($ret);//判断是否投递成功
+    }
+
+    public function jwt(Request $request)
+    {
+        $input = $request->all();
+        $rules = [
+            'name' => 'required|numeric',
+        ];
+
+        $messages = [
+            'required' => 'The :attribute field is required.',
+        ];
+
+        $validator = Validator::make($input, $rules, $messages);
+
+        if ($validator->fails()) {
+            return $this->out(4000, ['error' => $validator]);
+        }
+        return $this->out(200);
     }
 
 }
