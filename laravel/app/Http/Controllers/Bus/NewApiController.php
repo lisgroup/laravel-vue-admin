@@ -121,16 +121,18 @@ class NewApiController extends CommonController
         $input = $request->all();
         $rules = [
             'name' => 'required|numeric',
+            'id' => 'required',
         ];
 
         $messages = [
-            'required' => 'The :attribute field is required.',
+            'required' => ':attribute 不能为空',
+            'numeric' => ':attribute 必须是数字',
         ];
 
         $validator = Validator::make($input, $rules, $messages);
 
         if ($validator->fails()) {
-            return $this->out(4000, ['error' => $validator]);
+            return $this->out(4000, [], $validator->errors()->first());
         }
         return $this->out(200);
     }
