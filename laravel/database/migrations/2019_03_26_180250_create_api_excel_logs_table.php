@@ -17,7 +17,7 @@ class CreateApiExcelLogsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('api_excel_id')->default('0')->comment('关联 api_excel 表的 id');
             $table->unsignedInteger('sort_index')->default('0')->comment('本次查询的排序');
-            $table->text('param')->default('')->comment('请求参数');
+            $table->text('param')->comment('请求参数');
             $table->text('result')->comment('响应结果');
             $table->timestamp('created_at')->nullable();
             $table->index('api_excel_id', 'index_api_excel_id');
