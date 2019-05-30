@@ -120,8 +120,17 @@ class NewApiController extends CommonController
     {
         $input = $request->all();
         $rules = [
-            'name' => 'required|numeric',
-            'id' => 'required',
+            'id' => 'required|numeric',
+            'name' => 'required',
+            'title' => [
+                'required',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    if ($value === 'foo') {
+                        $fail($attribute.' is invalid.');
+                    }
+                },
+            ],
         ];
 
         $messages = [
