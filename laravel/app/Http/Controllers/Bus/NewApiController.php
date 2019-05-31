@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Bus;
 
 use App\Events\TestEvent;
 use App\Http\Repository\NewBusRepository;
+use App\Rules\Uppercase;
 use App\Tasks\TestTask;
 use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Hhxsv5\LaravelS\Swoole\Task\Task;
@@ -125,12 +126,15 @@ class NewApiController extends CommonController
             'title' => [
                 'required',
                 'max:255',
-                function ($attribute, $value, $fail) {
+                function($attribute, $value, $fail) {
                     if ($value === 'foo') {
                         $fail($attribute.' is invalid.');
                     }
                 },
             ],
+            'upper' => [
+                'required', 'string', new Uppercase()
+            ]
         ];
 
         $messages = [
