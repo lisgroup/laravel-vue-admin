@@ -117,6 +117,12 @@ class NewApiController extends CommonController
         var_dump($ret);//判断是否投递成功
     }
 
+    /**
+     * 验证器示例
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function jwt(Request $request)
     {
         $input = $request->all();
@@ -132,9 +138,7 @@ class NewApiController extends CommonController
                     }
                 },
             ],
-            'upper' => [
-                'required', 'string', new Uppercase()
-            ]
+            'upper' => ['required', 'string', new Uppercase()]
         ];
 
         $messages = [
