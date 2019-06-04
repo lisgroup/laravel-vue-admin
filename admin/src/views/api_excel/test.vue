@@ -3,26 +3,26 @@
     <!-- Table -->
     <el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>
 
-    <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
+    <el-dialog :visible.sync="dialogTableVisible" title="收货地址">
       <el-table :data="gridData">
-        <el-table-column property="date" label="日期" width="150"></el-table-column>
-        <el-table-column property="name" label="姓名" width="200"></el-table-column>
-        <el-table-column property="address" label="地址"></el-table-column>
+        <el-table-column property="date" label="日期" width="150"/>
+        <el-table-column property="name" label="姓名" width="200"/>
+        <el-table-column property="address" label="地址"/>
       </el-table>
     </el-dialog>
 
     <!-- Form -->
     <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
 
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+    <el-dialog :visible.sync="dialogFormVisible" title="收货地址">
       <el-form :model="form">
-        <el-form-item label="活动名称" :label-width="formLabelWidth">
+        <el-form-item :label-width="formLabelWidth" label="活动名称">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
+        <el-form-item :label-width="formLabelWidth" label="活动区域">
           <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+            <el-option label="区域一" value="shanghai"/>
+            <el-option label="区域二" value="beijing"/>
           </el-select>
         </el-form-item>
       </el-form>
