@@ -17,7 +17,7 @@
     <el-dialog :visible.sync="dialogFormVisible" title="收货地址">
       <el-form :model="form">
         <el-form-item :label-width="formLabelWidth" label="活动名称">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+          <el-input v-model="form.name" autocomplete="off"/>
         </el-form-item>
         <el-form-item :label-width="formLabelWidth" label="活动区域">
           <el-select v-model="form.region" placeholder="请选择活动区域">
