@@ -80,39 +80,126 @@
 </template>
 
 <script>
+import { getList } from '@/api/api_param'
+import { postAdd } from '@/api/api_excel'
+import { getToken } from '@/utils/auth'
+
 export default {
   data() {
     return {
-      gridData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }],
-      dialogTableVisible: false,
-      dialogFormVisible: false,
+      // 请求需要携带 token
+      uploadUrl: process.env.BASE_API + '/api/upload?token=' + getToken(),
+      fileList: [],
+      item: '',
+      apiParam: [],
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        upload_url: '',
+        api_param_id: '',
+        appkey: '',
+        concurrent: 5,
+        uid: '',
+        description: '',
+        auto_delete: 2,
+        sort: '',
+        loading: false
       },
-      formLabelWidth: '120px'
+      rules: {
+        api_param_id: [
+          { required: true, message: '请选择接口', trigger: 'blur' }
+        ],
+        upload_url: [
+          { required: true, message: '请上传文件', trigger: 'blur' }
+        ],
+        appkey: [
+          { required: true, message: '请输入 appkey', trigger: 'blur' }
+        ],
+        concurrent: [
+          { required: true, message: '请输入并发请求数', trigger: 'blur' }
+        ],
+        description: [
+          { required: true, message: '请输入描述', trigger: 'blur' }
+        ],
+        auto_delete: [
+          { required: true, message: '请输入天数', trigger: 'blur' }
+        ]
+      },
+      redirect: '/api_excel/index'
+    }
+  },
+  watch: {
+    item(value) {
+      this.form.api_param_id = value
+      // console.log(this.form.api_param_id)
+      this.getItem()
+    }
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    getItem() {
+      this.$emit('getItem', this.form.apiParam)
+    },
+    init() {
+      getList({ perPage: 20 }).then(response => {
+        this.apiParam = response.data.data
+      })
+    },
+    handleRemove(file, fileList) {
+      // console.log(file, fileList)
+    },
+    handlePreview(file) {
+      // console.log(file)
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
+    },
+    handleSuccess(response, file, fileList) {
+      // console.log(response)
+      if (response.code !== 200) {
+        this.$message({
+          message: response.reason,
+          type: 'error'
+        })
+      } else {
+        this.form.upload_url = response.data.url
+      }
+    },
+    onSubmit(form) {
+      // console.log(this.form)
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          this.loading = true
+          postAdd(this.form).then(response => {
+            this.loading = false
+            if (response.code === 200) {
+              this.$message({
+                message: '操作成功',
+                type: 'success'
+              })
+              this.$router.push({ path: this.redirect || '/' })
+            } else {
+              this.$message.error(response.reason)
+            }
+          })
+        } else {
+          // this.$message('error submit!')
+          // console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    onCancel() {
+      this.$message({
+        message: 'cancel!',
+        type: 'warning'
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
     }
   }
 }
