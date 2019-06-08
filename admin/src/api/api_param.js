@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getList(params) {
+export function getListParam(params) {
   return request({
     url: '/api/api_param',
     method: 'get',
