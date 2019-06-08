@@ -523,7 +523,9 @@ export default {
                 message: '操作成功',
                 type: 'success'
               })
-              this.$router.push({ path: this.redirect || '/' })
+              this.dialogFormVisible = false
+              this.fetchData()
+              // this.$router.push({ path: this.redirect || '/' })
             } else {
               this.$message.error(response.reason)
             }
