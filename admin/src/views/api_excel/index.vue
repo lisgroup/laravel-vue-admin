@@ -4,8 +4,26 @@
       <el-button type="primary" size="medium">
         <router-link to="/api_excel/add">上传测试</router-link>
       </el-button>
+      <el-button type="primary" size="medium" @click="dialogFormVisible = true">Dialog</el-button>
       <el-button :loading="reload" type="primary" class="reload" plain @click="fetchData">{{ reload_name }}</el-button>
     </el-row>
+    <el-dialog :visible.sync="dialogFormVisible" title="收货地址">
+      <el-form :model="form">
+        <el-form-item :label-width="formLabelWidth" label="活动名称">
+          <el-input v-model="form.name" autocomplete="off"/>
+        </el-form-item>
+        <el-form-item :label-width="formLabelWidth" label="活动区域">
+          <el-select v-model="form.region" placeholder="请选择活动区域">
+            <el-option label="区域一" value="shanghai"/>
+            <el-option label="区域二" value="beijing"/>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -143,6 +161,18 @@ export default {
   },
   data() {
     return {
+      dialogFormVisible: false,
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      formLabelWidth: '120px',
       reload: false,
       reload_name: '点击刷新',
       list: null,
