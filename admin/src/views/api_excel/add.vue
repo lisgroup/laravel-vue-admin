@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/api_param'
+import { getListParam } from '@/api/api_param'
 import { postAdd } from '@/api/api_excel'
 import { getToken } from '@/utils/auth'
 
@@ -124,7 +124,7 @@ export default {
       this.$emit('getItem', this.form.apiParam)
     },
     init() {
-      getList({ perPage: 20 }).then(response => {
+      getListParam({ perPage: 20 }).then(response => {
         this.apiParam = response.data.data
       })
     },

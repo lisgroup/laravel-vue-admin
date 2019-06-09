@@ -11,10 +11,12 @@ namespace App\Http\Controllers\Bus;
 
 use App\Events\TestEvent;
 use App\Http\Repository\NewBusRepository;
+use App\Rules\Uppercase;
 use App\Tasks\TestTask;
 use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Hhxsv5\LaravelS\Swoole\Task\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Jxlwqq\ChineseTypesetting\ChineseTypesetting;
 
 class NewApiController extends CommonController
@@ -113,6 +115,43 @@ class NewApiController extends CommonController
         // $task->delay(3);// 延迟3秒投放任务
         $ret = Task::deliver($task);
         var_dump($ret);//判断是否投递成功
+    }
+
+    /**
+     * 验证器示例
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function jwt(Request $request)
+    {
+        $input = $request->all();
+        $rules = [
+            'id' => 'required|numeric',
+            'name' => 'required',
+            'title' => [
+                'required',
+                'max:255',
+                function($attribute, $value, $fail) {
+                    if ($value === 'foo') {
+                        $fail($attribute.' is invalid.');
+                    }
+                },
+            ],
+            'upper' => ['required', 'string', new Uppercase()]
+        ];
+
+        $messages = [
+            'required' => ':attribute 不能为空',
+            'numeric' => ':attribute 必须是数字',
+        ];
+
+        $validator = Validator::make($input, $rules, $messages);
+
+        if ($validator->fails()) {
+            return $this->out(4000, [], $validator->errors()->first());
+        }
+        return $this->out(200);
     }
 
 }
