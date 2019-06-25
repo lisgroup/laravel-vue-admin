@@ -116,7 +116,7 @@ class AutoController extends Controller
         $result = json_decode($res['content'], true);
 
         $words = '';
-        if ($result && $result['words_result']) {
+        if ($result && isset($result['words_result'])) {
             foreach ($result['words_result'] as $value) {
                 $words .= $value['words'].PHP_EOL;
             }
