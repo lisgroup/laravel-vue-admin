@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { getList, deleteAct, search } from '@/api/api_param'
+import { getListParam, deleteAct, search } from '@/api/api_param'
 
 export default {
   filters: {
@@ -116,7 +116,7 @@ export default {
     fetchData() {
       this.listLoading = true
       const params = Object.assign({ 'page': this.listQuery.page }, { 'perPage': this.perpage })
-      getList(params).then(response => {
+      getListParam(params).then(response => {
         this.list = response.data.data
         this.listLoading = false
         this.total = response.data.total
