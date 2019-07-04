@@ -1,45 +1,24 @@
 import request from '@/utils/request'
 
-export function getList(params) {
+export function login(data) {
   return request({
-    url: '/api/user',
-    method: 'get',
-    params
+    url: '/user/login',
+    method: 'post',
+    data
   })
 }
 
-export function getRole() {
-  return request.get('/api/permissions/create')
-}
-
-export function postAdd(params) {
-  return request.post('/api/user', params)
-}
-
-export function edit(id) {
-  return request.get('/api/user/' + id)
-}
-
-export function postEdit(id, params) {
-  return request.patch('/api/user/' + id, params)
-}
-
-export function deleteAct(id) {
-  return request.delete('/api/user/' + id)
-}
-
-export function postEditPassword(params) {
-  return request.post('/api/user_password', params)
-}
-
-/**
- * 搜索 api_param
- * @param params
- */
-export function search(params) {
+export function getInfo(token) {
   return request({
-    url: '/api/api_user_search',
+    url: '/user/info',
     method: 'get',
-    params
+    params: { token }
+  })
+}
+
+export function logout() {
+  return request({
+    url: '/user/logout',
+    method: 'post'
   })
 }

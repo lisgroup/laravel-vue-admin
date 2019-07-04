@@ -1,56 +1,82 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
-// detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
-
 Vue.use(Router)
 
 /* Layout */
-const Layout = () => import('../views/layout/Layout')
+import Layout from '@/layout'
 
 /**
- * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
- *                                if not set alwaysShow, only more than one route under the children
+ * Note: sub-menu only appear when route children.length >= 1
+ * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
+ *
+ * hidden: true                   if set true, item will not show in the sidebar(default is false)
+ * alwaysShow: true               if set true, will always show the root menu
+ *                                if not set alwaysShow, when item has more than one children route,
  *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noredirect           if `redirect:noredirect` will no redirect in the breadcrumb
+ * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
-    title: 'title'               the name show in submenu and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar,
+    roles: ['admin','editor']    control the page roles (you can set multiple roles)
+    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
+    icon: 'svg-name'             the icon show in the sidebar
+    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
- **/
+ */
 
-// 基础路由
-const routeBase = [
-  { path: '/', name: 'index', component: () => import('@/views/home/index'), hidden: true },
-  { path: '/line', name: 'line', component: () => import('@/views/home/line'), hidden: true },
-  { path: '/home', component: () => import('@/views/home/home'), hidden: true },
-  { path: '/md', name: 'md', component: () => import('@/views/markdown/index'), hidden: true },
-  { path: '/out', name: 'out', component: () => import('@/views/home/out'), hidden: true },
-  { path: '/excel', name: 'excel', component: () => import('@/views/home/excel'), hidden: true },
-  { path: '/upload', name: 'upload', component: () => import('@/views/home/upload'), hidden: true },
-  { path: '/websocket', name: 'websocket', component: () => import('@/views/home/websocket'), hidden: true },
-  { path: '/echarts', name: 'echarts', component: () => import('@/views/echarts/index'), hidden: true },
-  // { path: '/index', component: () => import('@/views/home/index'), hidden: true },
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
+/**
+ * constantRoutes
+ * a base page that does not have permission requirements
+ * all roles can be accessed
+ */
+export const constantRoutes = [
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
 
   {
-    path: '/admin',
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
+  },
+
+  {
+    path: '/',
     component: Layout,
-    redirect: '/admin/dashboard',
-    name: 'Dashboard',
-    hidden: true,
+    redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
-  }
-]
+  },
 
-const routeTest = [
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/table',
+    name: 'Example',
+    meta: { title: 'Example', icon: 'example' },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/table/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'Tree', icon: 'tree' }
+      }
+    ]
+  },
+
   {
     path: '/form',
     component: Layout,
@@ -61,8 +87,9 @@ const routeTest = [
         component: () => import('@/views/form/index'),
         meta: { title: 'Form', icon: 'form' }
       }
-    ], hidden: true
+    ]
   },
+
   {
     path: '/nested',
     component: Layout,
@@ -120,13 +147,34 @@ const routeTest = [
       }
     ]
   },
+
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+        meta: { title: 'External Link', icon: 'link' }
+      }
+    ]
+  },
+
+  // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-export const constantRouterMap = [...routeBase, ...routeTest]
-
-export default new Router({
-  // mode: 'history', // 后端支持可开
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
+  routes: constantRoutes
 })
+
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
+export default router
