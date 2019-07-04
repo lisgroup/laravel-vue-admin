@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-row>
-      <el-button type="primary" size="medium">
+      <!--<el-button type="primary" size="medium">
         <router-link to="/api_excel/add">上传测试</router-link>
-      </el-button>
-      <el-button type="primary" size="medium" @click="dialogFormVisible = true">Dialog</el-button>
+      </el-button>-->
+      <el-button type="primary" size="medium" @click="dialogFormVisible = true">上传测试</el-button>
       <el-button :loading="reload" type="primary" class="reload" plain @click="fetchData">{{ reload_name }}</el-button>
     </el-row>
     <el-dialog :visible.sync="dialogFormVisible" title="上传测试">
