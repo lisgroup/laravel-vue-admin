@@ -111,7 +111,7 @@ export default {
           let params = this.mergeJsonObject(this.loginForm, { uuid: this.uuidData })
           params = this.mergeJsonObject(params, this.gtCapValid)
 
-          this.$store.dispatch('Login', params).then(() => {
+          this.$store.dispatch('user/login', params).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {

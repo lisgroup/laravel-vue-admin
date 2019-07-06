@@ -21,14 +21,14 @@ const mutations = {
 }
 
 const actions = {
-  // user login
+  // 登录
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    // const username = userInfo.username.trim()
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+      login(userInfo).then(response => {
+        const data = response.data
+        setToken(data.access_token)
+        commit('SET_TOKEN', data.access_token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -36,34 +36,33 @@ const actions = {
     })
   },
 
-  // get user info
+  // 获取用户信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
+        const data = response.data
+        if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+          commit('SET_ROLES', data.roles)
+        } else {
+          reject('getInfo: roles must be a non-null array !')
         }
-
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
+        commit('SET_NAME', data.name)
+        commit('SET_AVATAR', data.avatar)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
     })
   },
 
-  // user logout
+  // 登出
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
         removeToken()
-        resetRouter()
+        sessionStorage.setItem('roles', '')
         resolve()
       }).catch(error => {
         reject(error)
@@ -76,6 +75,25 @@ const actions = {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
       removeToken()
+      resolve()
+    })
+  },
+
+  // 前端 登出
+  FedLogOut({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      removeToken()
+      resolve()
+    })
+  },
+
+  GenerateRoutes({ commit }, data) {
+    return new Promise(resolve => {
+      commit('SET_ROUTERS', data.routers)
+
+      // 存储 sessionStorage
+      sessionStorage.setItem('roles', JSON.stringify(data.roles))
       resolve()
     })
   }
