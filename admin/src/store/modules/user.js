@@ -16,6 +16,12 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  },
+  SET_ROUTERS: (state, routers) => {
+    state.addRouters = routers
   }
 }
 
