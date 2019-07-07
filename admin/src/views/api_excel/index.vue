@@ -218,7 +218,7 @@ export default {
       // Add -- start
       dialogFormVisible: false,
       // 请求需要携带 token
-      uploadUrl: process.env.BASE_API + '/api/upload?token=' + getToken(),
+      uploadUrl: process.env.VUE_APP_BASE_API + '/api/upload?token=' + getToken(),
       fileList: [],
       item: '',
       apiParam: [],
@@ -343,7 +343,7 @@ export default {
     },
     initWebSocket() { // 初始化 weosocket
       if ('WebSocket' in window) {
-        const url = process.env.WEBSOCKET + '?action=api_excel&token=' + getToken() + '&page=' + this.currentpage + '&perPage=' + this.perpage
+        const url = process.env.VUE_APP_WEBSOCKET + '?action=api_excel&token=' + getToken() + '&page=' + this.currentpage + '&perPage=' + this.perpage
         this.websock = new WebSocket(url)
         this.websock.onmessage = this.onmessage
         this.websock.onopen = this.onopen

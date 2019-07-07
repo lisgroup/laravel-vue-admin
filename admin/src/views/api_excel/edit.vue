@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       // 请求需要携带 token
-      uploadUrl: process.env.BASE_API + '/api/upload?token=' + getToken(),
+      uploadUrl: process.env.VUE_APP_BASE_API + '/api/upload?token=' + getToken(),
       fileList: [],
       item: '',
       apiParam: [],
