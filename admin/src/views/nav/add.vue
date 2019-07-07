@@ -1,0 +1,88 @@
+<template>
+  <div class="app-container">
+    <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+      <el-form-item label="导航名称" prop="name">
+        <el-input v-model="form.name" />
+      </el-form-item>
+      <el-form-item label="地址链接" prop="url">
+        <el-input v-model="form.url" />
+      </el-form-item>
+      <el-form-item label="排序" prop="sort">
+        <el-input v-model="form.sort" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit('form')">提交</el-button>
+        <el-button @click="resetForm('form')">重置</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+
+<script>
+import { postAdd } from '@/api/nav'
+
+export default {
+  data() {
+    return {
+      form: {
+        name: '',
+        url: '',
+        sort: '1',
+        loading: false
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ],
+        url: [
+          { required: true, message: '请输入链接地址', trigger: 'blur' }
+        ]
+      },
+      redirect: '/nav'
+    }
+  },
+  methods: {
+    onSubmit(form) {
+      // console.log(this.form)
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          this.loading = true
+          postAdd(this.form).then(response => {
+            // console.log(response)
+            this.loading = false
+            if (response.code === 200) {
+              this.$message({
+                message: '操作成功',
+                type: 'success'
+              })
+              this.$router.push({ path: this.redirect || '/' })
+            } else {
+              this.$message.error(response.reason)
+            }
+          })
+        } else {
+          // this.$message('error submit!')
+          // console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    onCancel() {
+      this.$message({
+        message: 'cancel!',
+        type: 'warning'
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    }
+  }
+}
+</script>
+
+<style scoped>
+  .line {
+    text-align: center;
+  }
+</style>
+
