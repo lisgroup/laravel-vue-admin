@@ -50,7 +50,7 @@ service.interceptors.response.use(
      */
     if (res.code !== 200) {
       Message({
-        message: res.message || 'Error',
+        message: res.reason || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
@@ -80,7 +80,7 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.message,
+      message: error.reason,
       type: 'error',
       duration: 5 * 1000
     })
