@@ -42,3 +42,12 @@
     display: block
   }
 }
+
+// button > a
+.el-button {
+  a,
+  a:focus,
+  a:hover {
+    color: #ffffff;
+  }
+}
