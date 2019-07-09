@@ -199,6 +199,17 @@ export const routeSuper = [
 
 ]
 
+const routeTest = [
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [...routeAdmin, ...routeSuper, ...routeTest]
+
 // 基础路由
 const routeBase = [
   { path: '/', name: 'index', component: () => import('@/views/home/index'), hidden: true },
@@ -228,17 +239,17 @@ const routeBase = [
   }
 ]
 
-const routeTest = [
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
-
-export const constantRouterMap = [...routeAdmin, ...routeSuper, ...routeBase, ...routeTest]
+/**
+ * constantRoutes
+ * a base page that does not have permission requirements
+ * all roles can be accessed
+ */
+export const constantRoutes = [...routeBase]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
+  routes: constantRoutes
 })
 
 const router = createRouter()
