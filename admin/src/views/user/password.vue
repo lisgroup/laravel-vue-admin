@@ -2,14 +2,14 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="旧密码" prop="old_pwd" width="200">
-        <el-input v-model="form.old_pwd" type="password"/>
+        <el-input v-model="form.old_pwd" type="password" />
       </el-form-item>
       <el-form-item label="新密码" prop="password" width="200">
-        <el-input v-model="form.password" type="password"/>
+        <el-input v-model="form.password" type="password" />
       </el-form-item>
 
       <el-form-item label="再次输入" prop="repassword" width="200">
-        <el-input v-model="form.repassword" type="password"/>
+        <el-input v-model="form.repassword" type="password" />
       </el-form-item>
 
       <el-form-item>

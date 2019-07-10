@@ -10,8 +10,8 @@
     </el-form>
 
     <el-table
-      v-loading="listLoading"
       ref="multipleTable"
+      v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
       border
@@ -20,8 +20,9 @@
       tooltip-effect="dark"
       style="width: 100%"
       class="currentInfo-table"
-      @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55"/>
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" width="55" />
       <el-table-column align="center" label="ID" width="70">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -51,7 +52,8 @@
         :page-size="perpage"
         layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"/>
+        @current-change="handleCurrentChange"
+      />
     </div>
     <div style="margin: 20px auto">
       <!--<el-button @click="toggleSelection()">取消选择</el-button>-->

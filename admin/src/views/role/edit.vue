@@ -3,17 +3,17 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="220px">
       <el-form-item label="角色名称" prop="name">
         <el-col :span="10">
-          <el-input v-model="form.name"/>
+          <el-input v-model="form.name" />
         </el-col>
-        <el-col :span="14"/>
+        <el-col :span="14" />
       </el-form-item>
 
       <el-form-item label="新增角色赋值权限" prop="roles">
         <template>
           <el-checkbox v-model="checkAll" @change="CheckAll">全选</el-checkbox>
-          <div style="margin: 15px 0;"/>
+          <div style="margin: 15px 0;" />
           <el-checkbox-group v-model="form.checkedPermissions" @change="PerChange">
-            <el-checkbox v-for="permission in form.permissions" :label="permission.id" :key="permission.id">{{ permission.name }}</el-checkbox>
+            <el-checkbox v-for="permission in form.permissions" :key="permission.id" :label="permission.id">{{ permission.name }}</el-checkbox>
           </el-checkbox-group>
         </template>
       </el-form-item>

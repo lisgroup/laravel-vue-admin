@@ -8,8 +8,8 @@
       <el-collapse v-model="activeNames" @change="handleChange">
         <el-collapse-item title="服务器配置" name="1">
           <el-table :data="serve" style="width: 100%">
-            <el-table-column prop="name" label="名称" width=""/>
-            <el-table-column prop="value" label="数值" width=""/>
+            <el-table-column prop="name" label="名称" width="" />
+            <el-table-column prop="value" label="数值" width="" />
           </el-table>
         </el-collapse-item>
       </el-collapse>
@@ -19,14 +19,14 @@
       <el-collapse v-model="activeNames" @change="handleChange">
         <el-collapse-item title="服务器配置" name="2">
           <el-table :data="php" style="width: 100%">
-            <el-table-column prop="name" label="名称" width=""/>
-            <el-table-column prop="value" label="数值" width=""/>
+            <el-table-column prop="name" label="名称" width="" />
+            <el-table-column prop="value" label="数值" width="" />
           </el-table>
         </el-collapse-item>
       </el-collapse>
     </el-card>
 
-    <div class="clearfix"/>
+    <div class="clearfix" />
     <fieldset class="clearfix layui-elem-field layui-field-title" style="margin-top: 20px;">
       <legend>管理员信息</legend>
     </fieldset>
@@ -35,9 +35,9 @@
       <div class="dashboard-text">roles:<span v-for="role in roles" :key="role">{{ role }}</span></div>
     </el-card>
     <el-card class="box-card">
-      <div id="chartLine" style="width:100%; height:400px;"/>
+      <div id="chartLine" style="width:100%; height:400px;" />
     </el-card>
-    <div class="clearfix"/>
+    <div class="clearfix" />
   </div>
 </template>
 

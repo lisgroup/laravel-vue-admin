@@ -2,20 +2,20 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="栏目名称" prop="name">
-        <el-input v-model="form.name"/>
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="关键词" prop="keywords">
-        <el-input v-model="form.keywords"/>
+        <el-input v-model="form.keywords" />
       </el-form-item>
       <el-form-item label="描述" prop="description">
-        <el-input v-model="form.description"/>
+        <el-input v-model="form.description" />
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-col :span="6">
-          <el-input v-model="form.sort"/>
+          <el-input v-model="form.sort" />
         </el-col>
         取值范围 【-128 到 128】 的整数，数值越小越靠前
-        <el-col :span="18"/>
+        <el-col :span="18" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>

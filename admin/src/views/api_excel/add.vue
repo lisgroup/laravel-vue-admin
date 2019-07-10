@@ -11,13 +11,13 @@
 
       <el-form-item label="appkey" prop="appkey">
         <el-col :span="11">
-          <el-input v-model="form.appkey"/>
+          <el-input v-model="form.appkey" />
         </el-col>
-        <el-col :span="13"/>
+        <el-col :span="13" />
       </el-form-item>
       <el-form-item label="并发请求" prop="concurrent">
         <el-col :span="2">
-          <el-input v-model="form.concurrent"/>
+          <el-input v-model="form.concurrent" />
         </el-col>
         <el-col :span="22">
           &nbsp;&nbsp; 任务执行时并发请求的数量，字段必须是数字默认： 5
@@ -34,7 +34,8 @@
           :on-exceed="handleExceed"
           :file-list="fileList"
           multiple
-          class="upload-demo">
+          class="upload-demo"
+        >
           <el-button size="small" type="primary">点击上传</el-button>
           <div slot="tip" class="el-upload__tip">只能上传 xls/xlsx 文件，且不超过 20M</div>
         </el-upload>
@@ -43,16 +44,16 @@
         <el-col :span="11">
           <el-input v-model="form.description" size="medium" placeholder="请输入内容" />
         </el-col>
-        <el-col :span="13"/>
+        <el-col :span="13" />
       </el-form-item>
       <el-form-item label="自动删除时间" prop="auto_delete">
         <el-col :span="2">
-          <el-input v-model="form.auto_delete"/>
+          <el-input v-model="form.auto_delete" />
         </el-col>
         <el-col :span="22">
           &nbsp;&nbsp; 任务执行完成后自动删除的时间（单位：天），默认： 2 天
         </el-col>
-        <el-col :span="13"/>
+        <el-col :span="13" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
@@ -71,7 +72,7 @@ export default {
   data() {
     return {
       // 请求需要携带 token
-      uploadUrl: process.env.BASE_API + '/api/upload?token=' + getToken(),
+      uploadUrl: process.env.VUE_APP_BASE_API + '/api/upload?token=' + getToken(),
       fileList: [],
       item: '',
       apiParam: [],

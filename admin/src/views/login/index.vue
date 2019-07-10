@@ -13,12 +13,13 @@
           <svg-icon icon-class="password" />
         </span>
         <el-input
-          :type="pwdType"
           v-model="loginForm.password"
+          :type="pwdType"
           name="password"
           auto-complete="on"
           placeholder="password"
-          @keyup.enter.native="handleLogin" />
+          @keyup.enter.native="handleLogin"
+        />
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
         </span>
@@ -26,7 +27,7 @@
       <el-form-item>
         <el-row>
           <el-col id="captcha" :span="10" style="height: 42px;">
-            <p id="wait" class="show"/>
+            <p id="wait" class="show" />
             <p id="notice" class="hide">请先完成验证</p>
           </el-col>
         </el-row>
@@ -111,7 +112,7 @@ export default {
           let params = this.mergeJsonObject(this.loginForm, { uuid: this.uuidData })
           params = this.mergeJsonObject(params, this.gtCapValid)
 
-          this.$store.dispatch('Login', params).then(() => {
+          this.$store.dispatch('user/login', params).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {

@@ -9,16 +9,16 @@
         </el-select>
       </el-form-item>
       <el-form-item label="文章标题" prop="title">
-        <el-input v-model="form.title"/>
+        <el-input v-model="form.title" />
       </el-form-item>
       <el-form-item label="作者" prop="author">
-        <el-input v-model="form.author"/>
+        <el-input v-model="form.author" />
       </el-form-item>
       <el-form-item label="关键词" prop="keywords">
-        <el-input v-model="form.keywords"/>
+        <el-input v-model="form.keywords" />
       </el-form-item>
       <el-form-item label="标签" prop="tag_ids">
-        <el-input v-model="form.tag_ids"/>
+        <el-input v-model="form.tag_ids" />
       </el-form-item>
       <el-form-item label="内容" prop="markdown">
         <mavon-editor ref="md" v-model="form.markdown" @imgAdd="imgAdd" @imgDel="imgDel" />

@@ -3,23 +3,23 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="220px">
       <el-form-item label="权限名称" prop="name">
         <el-col :span="10">
-          <el-input v-model="form.name"/>
+          <el-input v-model="form.name" />
         </el-col>
-        <el-col :span="14"/>
+        <el-col :span="14" />
         <br>示例：create-article, update-article, delete-article, show-article
       </el-form-item>
 
       <el-form-item label="路由" prop="route">
         <el-col :span="10">
-          <el-input v-model="form.route"/>
+          <el-input v-model="form.route" />
         </el-col>
-        <el-col :span="14"/>
+        <el-col :span="14" />
       </el-form-item>
 
       <el-form-item label="新增权限赋值角色" prop="roles">
         <template>
           <el-checkbox-group v-model="form.checkedRoles" @change="handleCheckedRolesChange">
-            <el-checkbox v-for="role in form.roles" :label="role.id" :key="role.id">{{ role.name }}</el-checkbox>
+            <el-checkbox v-for="role in form.roles" :key="role.id" :label="role.id">{{ role.name }}</el-checkbox>
           </el-checkbox-group>
         </template>
       </el-form-item>

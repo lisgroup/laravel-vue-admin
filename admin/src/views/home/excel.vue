@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-bar/>
+    <nav-bar />
     <el-upload
       ref="upload"
       :data="dataObj"
@@ -9,7 +9,8 @@
       :on-remove="handleRemove"
       :before-upload="beforeUpload"
       :file-list="fileList"
-      class="upload-demo">
+      class="upload-demo"
+    >
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       <div slot="tip" class="el-upload__tip">只能上传 Excel 文件，且不超过 500kb</div>
     </el-upload>
@@ -20,8 +21,8 @@
       </div>
       <div class="text item">
         <el-table :data="tableData" border highlight-current-row style="width: 100%;">
-          <el-table-column :label="tableTitle" >
-            <el-table-column v-for="item in tableHeader" :prop="item" :label="item" :key="item" min-width="150" />
+          <el-table-column :label="tableTitle">
+            <el-table-column v-for="item in tableHeader" :key="item" :prop="item" :label="item" min-width="150" />
           </el-table-column>
         </el-table>
       </div>

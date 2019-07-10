@@ -11,7 +11,8 @@
       element-loading-text="Loading"
       border
       fit
-      highlight-current-row>
+      highlight-current-row
+    >
       <el-table-column align="center" label="ID" width="70">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -34,7 +35,7 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" width="">
         <template slot-scope="scope">
-          <i class="el-icon-time"/>
+          <i class="el-icon-time" />
           <span>{{ scope.row.created_at }}</span>
         </template>
       </el-table-column>
@@ -43,11 +44,13 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            @click="handleEdit(scope.$index, scope.row)"
+          >编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.$index, scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,7 +62,8 @@
         :page-size="perpage"
         layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"/>
+        @current-change="handleCurrentChange"
+      />
     </div>
   </div>
 </template>

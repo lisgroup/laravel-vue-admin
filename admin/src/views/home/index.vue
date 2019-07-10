@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nav-bar/>
-    <fieldSet/>
+    <nav-bar />
+    <fieldSet />
 
     <el-input v-model="input" placeholder="线路名称，例：快线1, 55" @keyup.enter.native="goSearch">
       <template slot="prepend">线路</template>
@@ -12,7 +12,8 @@
       v-if="isShow"
       :data="tableData"
       border
-      style="width: 100%">
+      style="width: 100%"
+    >
       <el-table-column label="线路" width="100">
         <template slot-scope="scope">
           <el-button type="text" @click="handleCheck(scope.$index, scope.row)">{{ scope.row.bus }}</el-button>
@@ -20,7 +21,7 @@
       </el-table-column>
       <el-table-column label="方向" width="">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleCheck(scope.$index, scope.row)" v-html="scope.row.FromTo"/>
+          <el-button type="text" @click="handleCheck(scope.$index, scope.row)" v-html="scope.row.FromTo" />
         </template>
       </el-table-column>
     </el-table>

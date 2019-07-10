@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-bar/>
+    <nav-bar />
 
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="" prop="description">
@@ -16,7 +16,7 @@
       </el-form-item>
       <el-form-item label="" prop="input">
         <el-col :span="11">
-          <el-input v-model="form.input" :rows="20" type="textarea"/>
+          <el-input v-model="form.input" :rows="20" type="textarea" />
         </el-col>
         <el-col :span="2">
           <span>&nbsp;中文排版输出</span><br><br>&nbsp;
@@ -25,7 +25,7 @@
           <el-button type="warning" @click="resetForm('form')">清空</el-button>
         </el-col>
         <el-col :span="11">
-          <el-input v-model="output" :rows="20" type="textarea"/>
+          <el-input v-model="output" :rows="20" type="textarea" />
         </el-col>
       </el-form-item>
       <el-form-item>
