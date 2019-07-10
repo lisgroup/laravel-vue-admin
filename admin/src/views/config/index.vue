@@ -2,16 +2,16 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="名称" prop="name">
-        <el-input v-model="form.name"/>
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="开启新老接口" prop="default_open">
         <el-col :span="4">
-          <el-input v-model="form.default_open"/>
+          <el-input v-model="form.default_open" />
         </el-col>
         <el-col :span="20">&nbsp;开启公交配置情况--【1: 老接口，2: 新接口，3: 先老接口再新接口，4: 先新接口后老接口】</el-col>
       </el-form-item>
       <el-form-item label="是否启用">
-        <el-switch v-model="form.state"/>
+        <el-switch v-model="form.state" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>

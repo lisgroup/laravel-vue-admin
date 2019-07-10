@@ -1,103 +1,74 @@
 import router from './router'
-import { routeSuper, routeAdmin, routeOther } from './router/router'
 import store from './store'
-import NProgress from 'nprogress' // Progress 进度条
-import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
-import { getToken } from '@/utils/auth' // 验权
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+import { getToken } from '@/utils/auth' // get token from cookie
+import getPageTitle from '@/utils/get-page-title'
 
-if (store.getters.roles.length === 0 && sessionStorage.getItem('roles')) {
-  const roles = JSON.parse(sessionStorage.getItem('roles'))
-  // 设置权限
-  const userLimitRouters = getRouters(roles)
-  store.dispatch('GenerateRoutes', { routers: userLimitRouters, roles })
-  router.addRoutes(userLimitRouters)
-}
+NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-// router.addRoutes(routeAdmin)
-// router.addRoutes(routeSuper)
-
-const whiteList = ['/login', '/index', '/line', '/home', '/404', '/', '', '/echarts', '/md', '/out', '/excel', '/upload'] // 不重定向白名单
-router.beforeEach((to, from, next) => {
+// 不重定向白名单
+const whiteList = ['/login', '/index', '/line', '/home', '/404', '/', '', '/echarts', '/md', '/out', '/excel', '/upload']
+router.beforeEach(async(to, from, next) => {
+  // start progress bar
   NProgress.start()
-  if (getToken()) {
+
+  // set page title
+  document.title = getPageTitle(to.meta.title)
+
+  // determine whether the user has logged in
+  const hasToken = getToken()
+
+  if (hasToken) {
     if (to.path === '/login') {
-      next({ path: '/admin' })
-      NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
+      // if is logged in, redirect to the home page
+      next({ path: '/' })
+      NProgress.done()
     } else {
-      // 步骤： router.addRoutes()
-      // 1. 从 store 中获取 roles
-      // 2. 从 sessionStorage 获取 roles
-      // 3. 添加默认 router
-      if (store.getters.roles.length === 0) {
-        store.dispatch('GetInfo').then(res => { // 拉取用户信息
-          // sessionStorage 不存在
-          // console.log(sessionStorage.getItem('roles'))
-          const userLimitRouters = getRouters(res.data.roles)
-          if (!sessionStorage.getItem('roles')) {
-            router.addRoutes(userLimitRouters)
-          }
-          store.dispatch('GenerateRoutes', { routers: userLimitRouters, roles: res.data.roles })
-          // const roles = res.data.roles
-          // console.log(roles)
-          // store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
-          //   router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-          //   // next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-          // })
-          if (!to.meta.role || whiteList.indexOf(to.path) !== -1 || hasPermission(res.data.roles, to.meta.roles)) {
-            // router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            next({ ...to, replace: true }) // hack 方法 确保 addRoutes 已完成
-          } else {
-            next({ path: '/404' })
-            NProgress.done()
-          }
-        }).catch((err) => {
-          store.dispatch('FedLogOut').then(() => {
-            Message.error(err || 'Verification failed, please login again')
-            next({ path: '/admin' })
-          })
-        })
+      // determine whether the user has obtained his permission roles through getInfo
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
+        next()
       } else {
-        // 动态改变权限
-        if (!to.meta.role || whiteList.indexOf(to.path) !== -1 || hasPermission(store.getters.roles, to.meta.roles)) {
-          next()
-        } else {
-          next({ path: '/404' })
+        try {
+          // get user info
+          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
+          const { roles } = await store.dispatch('user/getInfo')
+
+          // generate accessible routes map based on roles
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+
+          // dynamically add accessible routes
+          router.addRoutes(accessRoutes)
+
+          // hack method to ensure that addRoutes is complete
+          // set the replace: true, so the navigation will not leave a history record
+          next({ ...to, replace: true })
+        } catch (error) {
+          // remove token and go to login page to re-login
+          await store.dispatch('user/resetToken')
+          Message.error(error || 'Has Error')
+          next(`/login?redirect=${to.path}`)
           NProgress.done()
         }
       }
     }
   } else {
+    /* has no token*/
+
     if (whiteList.indexOf(to.path) !== -1) {
+      // in the free login whitelist, go directly
       next()
     } else {
-      next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
+      // other pages that do not have permission to access are redirected to the login page.
+      next(`/login?redirect=${to.path}`)
       NProgress.done()
     }
   }
 })
 
 router.afterEach(() => {
-  NProgress.done() // 结束Progress
+  // finish progress bar
+  NProgress.done()
 })
-
-// permission judge function
-function hasPermission(roles, permissionRoles) {
-  if (roles.indexOf('Super Administrator') >= 0) return true // admin permission passed directly
-  if (!permissionRoles) return true
-  return roles.some(role => permissionRoles.indexOf(role) >= 0)
-}
-
-// 根据角色返回路由列表
-function getRouters(roles) {
-  // 设置权限
-  let userLimitRouters = null
-  if (roles.indexOf('Super Administrator') >= 0) {
-    userLimitRouters = [...routeAdmin, ...routeSuper, ...routeOther]
-  } else if (roles.indexOf('Admin') >= 0) {
-    userLimitRouters = routeAdmin
-  } else {
-    userLimitRouters = routeOther
-  }
-  return userLimitRouters
-}

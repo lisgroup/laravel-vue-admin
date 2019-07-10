@@ -3,36 +3,36 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="220px">
       <el-form-item label="用户名称" prop="name">
         <el-col :span="10">
-          <el-input v-model="form.name"/>
+          <el-input v-model="form.name" />
         </el-col>
-        <el-col :span="14"/>
+        <el-col :span="14" />
       </el-form-item>
 
       <el-form-item label="用户邮箱" prop="email">
         <el-col :span="10">
-          <el-input v-model="form.email"/>
+          <el-input v-model="form.email" />
         </el-col>
-        <el-col :span="14"/>
+        <el-col :span="14" />
       </el-form-item>
 
       <el-form-item label="密码" prop="password">
         <el-col :span="10">
-          <el-input v-model="form.password" type="password"/>
+          <el-input v-model="form.password" type="password" />
         </el-col>
-        <el-col :span="14"/>
+        <el-col :span="14" />
       </el-form-item>
 
       <el-form-item label="确认密码" prop="checkPass">
         <el-col :span="10">
-          <el-input v-model="form.checkPass" type="password"/>
+          <el-input v-model="form.checkPass" type="password" />
         </el-col>
-        <el-col :span="14"/>
+        <el-col :span="14" />
       </el-form-item>
 
       <el-form-item label="赋值角色" prop="roles">
         <template>
           <el-checkbox-group v-model="form.checkedRoles" @change="handleCheckedRolesChange">
-            <el-checkbox v-for="role in form.roles" :label="role.id" :key="role.id">{{ role.name }}</el-checkbox>
+            <el-checkbox v-for="role in form.roles" :key="role.id" :label="role.id">{{ role.name }}</el-checkbox>
           </el-checkbox-group>
         </template>
       </el-form-item>

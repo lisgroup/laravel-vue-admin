@@ -2,26 +2,26 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="接口名称" prop="name">
-        <el-input v-model="form.name"/>
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="接口地址" prop="url">
-        <el-input v-model="form.url"/>
+        <el-input v-model="form.url" />
       </el-form-item>
       <el-form-item label="接口参数" prop="param">
-        <el-input v-model="form.param"/>
+        <el-input v-model="form.param" />
         <span>(多个参数请用英文 , 分割；如： realname,mobile,idcard)</span>
       </el-form-item>
       <el-form-item label="结果集 result" prop="result">
-        <el-input v-model="form.result"/>
+        <el-input v-model="form.result" />
         <span>(多个参数请用英文 , 分割；如： res,msg)</span>
       </el-form-item>
       <el-form-item label="是否处理" prop="is_need">
-        <el-switch v-model="form.is_need"/>
+        <el-switch v-model="form.is_need" />
         <br>
         <span>(开启后，输出的 Excel 最后一栏将根据 result 字段 res 1 展示一致 2 不一致)</span>
       </el-form-item>
       <el-form-item label="网址" prop="website">
-        <el-input v-model="form.website"/>
+        <el-input v-model="form.website" />
       </el-form-item>
       <el-form-item label="请求方式" prop="method">
         <!--<el-input v-model="form.method"/>-->
@@ -35,7 +35,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="是否启用">
-        <el-switch v-model="form.state"/>
+        <el-switch v-model="form.state" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>

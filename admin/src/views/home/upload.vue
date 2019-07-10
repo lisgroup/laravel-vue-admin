@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-bar/>
+    <nav-bar />
 
     <el-container>
       <el-header>图片识别模块</el-header>
@@ -16,7 +16,8 @@
             :before-upload="handleBeforeUpload"
             :on-success="handleSuccess"
             :on-remove="handleRemove"
-            list-type="picture-card">
+            list-type="picture-card"
+          >
             <i class="el-icon-plus" />
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
@@ -25,7 +26,7 @@
 
         </el-aside>
         <el-main>
-          <el-input v-model="desc" type="textarea" rows="50"/>
+          <el-input v-model="desc" type="textarea" rows="50" />
         </el-main>
       </el-container>
     </el-container>

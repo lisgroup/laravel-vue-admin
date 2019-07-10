@@ -19,13 +19,13 @@
 
         <el-form-item label="appkey" prop="appkey">
           <el-col :span="11">
-            <el-input v-model="form.appkey"/>
+            <el-input v-model="form.appkey" />
           </el-col>
-          <el-col :span="13"/>
+          <el-col :span="13" />
         </el-form-item>
         <el-form-item label="并发请求" prop="concurrent">
           <el-col :span="2">
-            <el-input v-model="form.concurrent"/>
+            <el-input v-model="form.concurrent" />
           </el-col>
           <el-col :span="22">
             &nbsp;&nbsp; 任务执行时并发请求的数量，字段必须是数字默认： 5
@@ -42,7 +42,8 @@
             :on-exceed="handleExceed"
             :file-list="fileList"
             multiple
-            class="upload-demo">
+            class="upload-demo"
+          >
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传 xls/xlsx 文件，且不超过 20M</div>
           </el-upload>
@@ -51,16 +52,16 @@
           <el-col :span="11">
             <el-input v-model="form.description" size="medium" placeholder="请输入内容" />
           </el-col>
-          <el-col :span="13"/>
+          <el-col :span="13" />
         </el-form-item>
         <el-form-item label="自动删除时间" prop="auto_delete">
           <el-col :span="2">
-            <el-input v-model="form.auto_delete"/>
+            <el-input v-model="form.auto_delete" />
           </el-col>
           <el-col :span="22">
             &nbsp;&nbsp; 任务执行完成后自动删除的时间（单位：天），默认： 2 天
           </el-col>
-          <el-col :span="13"/>
+          <el-col :span="13" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit('form')">提交</el-button>
@@ -74,7 +75,8 @@
       element-loading-text="Loading"
       border
       fit
-      highlight-current-row>
+      highlight-current-row
+    >
       <el-table-column align="center" label="ID" width="70">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -121,16 +123,16 @@
       <el-table-column label="进度条" width="100" align="center" display="none">
         <template slot-scope="scope">
           <div v-if="scope.row.state === 0">
-            <el-progress :text-inside="true" :stroke-width="18" :percentage="0"/>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="0" />
           </div>
           <div v-else-if="scope.row.state === 1">
-            <el-progress :text-inside="true" :stroke-width="18" :percentage="scope.row.rate"/>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="scope.row.rate" />
           </div>
           <div v-else-if="scope.row.state === 2">
-            <el-progress :text-inside="true" :stroke-width="18" :percentage="100" status="success"/>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="100" status="success" />
           </div>
           <div v-else>
-            <el-progress :text-inside="true" :stroke-width="18" :percentage="scope.row.rate" status="exception"/>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="scope.row.rate" status="exception" />
           </div>
         </template>
       </el-table-column>
@@ -142,26 +144,31 @@
               v-if="scope.row.state === 0"
               size="mini"
               type="warning"
-              @click="openTask(scope.$index, scope.row)">点击开启任务</el-button>
+              @click="openTask(scope.$index, scope.row)"
+            >点击开启任务</el-button>
             <el-button
               v-else-if="scope.row.state === 1"
               size="mini"
-              type="primary">...</el-button>
+              type="primary"
+            >...</el-button>
             <el-button
               v-else-if="scope.row.state === 2"
               size="mini"
               type="success"
-              @click="download(scope.$index, scope.row)">点击下载</el-button>
+              @click="download(scope.$index, scope.row)"
+            >点击下载</el-button>
             <el-button
               v-else-if="scope.row.state === 5"
               size="mini"
               type="info"
-              @click="download_log(scope.$index, scope.row)">下载已测试数据</el-button>
+              @click="download_log(scope.$index, scope.row)"
+            >下载已测试数据</el-button>
 
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="handleDelete(scope.$index, scope.row)"
+            >删除</el-button>
           </div>
           <!--<el-button
             size="mini"
@@ -183,7 +190,8 @@
         :page-size="perpage"
         layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"/>
+        @current-change="handleCurrentChange"
+      />
     </div>
   </div>
 </template>
@@ -210,7 +218,7 @@ export default {
       // Add -- start
       dialogFormVisible: false,
       // 请求需要携带 token
-      uploadUrl: process.env.BASE_API + '/api/upload?token=' + getToken(),
+      uploadUrl: process.env.VUE_APP_BASE_API + '/api/upload?token=' + getToken(),
       fileList: [],
       item: '',
       apiParam: [],
@@ -335,7 +343,7 @@ export default {
     },
     initWebSocket() { // 初始化 weosocket
       if ('WebSocket' in window) {
-        const url = process.env.WEBSOCKET + '?action=api_excel&token=' + getToken() + '&page=' + this.currentpage + '&perPage=' + this.perpage
+        const url = process.env.VUE_APP_WEBSOCKET + '?action=api_excel&token=' + getToken() + '&page=' + this.currentpage + '&perPage=' + this.perpage
         this.websock = new WebSocket(url)
         this.websock.onmessage = this.onmessage
         this.websock.onopen = this.onopen

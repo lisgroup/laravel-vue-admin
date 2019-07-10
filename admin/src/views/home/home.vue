@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nav-bar/>
-    <fieldSet/>
+    <nav-bar />
+    <fieldSet />
     <div id="content">
       <form id="form" class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
@@ -15,7 +15,8 @@
               placeholder="线路名称，例：快线1, 55"
               autocomplete="off"
               class="layui-input"
-              value="">
+              value=""
+            >
             <input id="token" type="hidden" name="__token__" value="a26057366e1dd1eef9c47738fb3f6e11">
           </div>
           <div style="float: left">
@@ -33,7 +34,7 @@
         <!--<button class="layui-btn layui-btn-normal submit-button" data-value="1">1</button>-->
       </div>
     </div>
-    <div id="msg"/>
+    <div id="msg" />
   </div>
 </template>
 

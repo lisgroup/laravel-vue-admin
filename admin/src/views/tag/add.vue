@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="标签名称" prop="name">
-        <el-input v-model="form.name"/>
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>

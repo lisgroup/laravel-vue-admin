@@ -2,13 +2,13 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="导航名称" prop="name">
-        <el-input v-model="form.name"/>
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="链接地址" prop="url">
-        <el-input v-model="form.url"/>
+        <el-input v-model="form.url" />
       </el-form-item>
       <el-form-item label="排序" prop="sort">
-        <el-input v-model="form.sort"/>
+        <el-input v-model="form.sort" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>

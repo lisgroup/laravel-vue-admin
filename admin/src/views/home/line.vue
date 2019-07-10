@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nav-bar/>
-    <fieldSet/>
+    <nav-bar />
+    <fieldSet />
 
     <el-input v-model="input" placeholder="线路名称，例：快线1, 55" @keyup.enter.native="goSearch">
       <template slot="prepend">线路</template>
@@ -13,14 +13,14 @@
       </legend>
     </fieldset>
     <el-table v-loading="loading" :data="tableLine" border style="width: 100%">
-      <el-table-column prop="stationName" label="站台" width=""/>
+      <el-table-column prop="stationName" label="站台" width="" />
       <!--<el-table-column-->
       <!--prop="stationCode"-->
       <!--label="编号"-->
       <!--width="100">-->
       <!--</el-table-column>-->
-      <el-table-column prop="carCode" label="车牌" width=""/>
-      <el-table-column prop="ArrivalTime" label="进站时间" width=""/>
+      <el-table-column prop="carCode" label="车牌" width="" />
+      <el-table-column prop="ArrivalTime" label="进站时间" width="" />
     </el-table>
   </div>
 </template>

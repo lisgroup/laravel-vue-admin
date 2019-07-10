@@ -2,38 +2,38 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="车次名称" prop="name">
-        <el-input v-model="form.name"/>
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="price" prop="price">
-        <el-input v-model="form.price"/>
+        <el-input v-model="form.price" />
       </el-form-item>
       <el-form-item label="类型" prop="car_type">
         <el-select v-model="form.car_type" placeholder="请选择类型">
-          <el-option label="大巴" value="大巴"/>
-          <el-option label="中巴" value="中巴"/>
-          <el-option label="地铁" value="地铁"/>
+          <el-option label="大巴" value="大巴" />
+          <el-option label="中巴" value="中巴" />
+          <el-option label="地铁" value="地铁" />
         </el-select>
       </el-form-item>
       <el-form-item label="发车间隔" prop="depart_time">
-        <el-input v-model="form.depart_time"/>
+        <el-input v-model="form.depart_time" />
       </el-form-item>
       <el-form-item label="营运时间" prop="open_time">
-        <el-input v-model="form.open_time"/>
+        <el-input v-model="form.open_time" />
       </el-form-item>
       <el-form-item label="全程时间" prop="total_time">
-        <el-input v-model="form.total_time"/>
+        <el-input v-model="form.total_time" />
       </el-form-item>
       <el-form-item label="途经道路" prop="via_road">
-        <el-input v-model="form.via_road" type="textarea"/>
+        <el-input v-model="form.via_road" type="textarea" />
       </el-form-item>
       <el-form-item label="公交公司" prop="company">
-        <el-input v-model="form.company"/>
+        <el-input v-model="form.company" />
       </el-form-item>
       <el-form-item label="途经站点(去程)" prop="station">
-        <el-input :rows="4" v-model="form.station" type="textarea" />
+        <el-input v-model="form.station" :rows="4" type="textarea" />
       </el-form-item>
       <el-form-item label="途经站点(返程)" prop="station_back">
-        <el-input :rows="4" v-model="form.station_back" type="textarea" />
+        <el-input v-model="form.station_back" :rows="4" type="textarea" />
       </el-form-item>
       <el-form-item label="编辑原因" prop="reason">
         <el-input v-model="form.reason" />

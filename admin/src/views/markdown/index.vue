@@ -1,14 +1,26 @@
 <template>
   <div id="main">
-    <nav-bar/>
+    <nav-bar />
     <mavon-editor ref="md" v-model="value" @imgAdd="imgAdd" @imgDel="imgDel" />
   </div>
 </template>
 
 <script>
+// import with ES6
+// import mavonEditor from 'mavon-editor'
+import { mavonEditor } from 'mavon-editor'
+// markdown-it对象：md.s_markdown, md => mavonEditor 实例
+//                 or
+//                 mavonEditor.markdownIt
+import 'mavon-editor/dist/css/index.css'
+// use
+// Vue.use(mavonEditor)
 import axios from 'axios'
 
 export default {
+  components: {
+    mavonEditor
+  },
   data() {
     return {
       'value': ''

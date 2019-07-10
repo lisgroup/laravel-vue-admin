@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "888723607f8761a1eacc7e53776990cf",
+    "content-hash": "68d2659d03151644ea550faf72a84601",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1187,12 +1187,12 @@
             "version": "2.0.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ivanakimov/hashids.php.git",
+                "url": "https://github.com/vinkla/hashids.git",
                 "reference": "7a945a5192d4a5c8888364970feece9bc26179df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivanakimov/hashids.php/zipball/7a945a5192d4a5c8888364970feece9bc26179df",
+                "url": "https://api.github.com/repos/vinkla/hashids/zipball/7a945a5192d4a5c8888364970feece9bc26179df",
                 "reference": "7a945a5192d4a5c8888364970feece9bc26179df",
                 "shasum": "",
                 "mirrors": [
@@ -1256,16 +1256,16 @@
         },
         {
             "name": "hhxsv5/laravel-s",
-            "version": "v3.4.4",
+            "version": "v3.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hhxsv5/laravel-s.git",
-                "reference": "026abbd3a42865473cab04285c411a197837644a"
+                "reference": "b3eb75899ee2b9e420393eb05309fc6eaf2ba0c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hhxsv5/laravel-s/zipball/026abbd3a42865473cab04285c411a197837644a",
-                "reference": "026abbd3a42865473cab04285c411a197837644a",
+                "url": "https://api.github.com/repos/hhxsv5/laravel-s/zipball/b3eb75899ee2b9e420393eb05309fc6eaf2ba0c6",
+                "reference": "b3eb75899ee2b9e420393eb05309fc6eaf2ba0c6",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1276,7 +1276,9 @@
             },
             "require": {
                 "ext-json": "*",
+                "ext-pcntl": "*",
                 "php": ">=5.5.9",
+                "swoole/ide-helper": "@dev",
                 "symfony/console": ">=2.7.0"
             },
             "suggest": {
@@ -1309,7 +1311,7 @@
                     "email": "hhxsv5@sina.com"
                 }
             ],
-            "description": "🚀LaravelS is a glue that is used to quickly integrate Swoole into Laravel or Lumen and then give them better performance and more possibilities.",
+            "description": "🚀LaravelS is a glue that is used to quickly integrate Swoole into Laravel or Lumen, and then give them better performance and more possibilities.",
             "homepage": "https://github.com/hhxsv5/laravel-s",
             "keywords": [
                 "async",
@@ -1329,7 +1331,7 @@
                 "udp",
                 "websocket"
             ],
-            "time": "2019-04-04T09:15:32+00:00"
+            "time": "2019-07-05T05:31:11+00:00"
         },
         {
             "name": "jaeger/g-http",
@@ -3793,6 +3795,49 @@
                 "mailer"
             ],
             "time": "2018-09-11T07:12:52+00:00"
+        },
+        {
+            "name": "swoole/ide-helper",
+            "version": "4.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swoole/ide-helper.git",
+                "reference": "d8fcff025cd386635f74fe68fb669be4c5b4a0d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swoole/ide-helper/zipball/d8fcff025cd386635f74fe68fb669be4c5b4a0d4",
+                "reference": "d8fcff025cd386635f74fe68fb669be4c5b4a0d4",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "~3.4.0",
+                "zendframework/zend-code": "~3.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Swoole\\IDEHelper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Team Swoole",
+                    "email": "team@swoole.com"
+                }
+            ],
+            "description": "IDE help files for Swoole.",
+            "time": "2019-07-07T19:43:22+00:00"
         },
         {
             "name": "symfony/console",
@@ -6542,7 +6587,6 @@
                 "mock",
                 "xunit"
             ],
-            "abandoned": true,
             "time": "2018-08-09T05:50:03+00:00"
         },
         {

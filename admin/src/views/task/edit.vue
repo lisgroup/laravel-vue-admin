@@ -2,27 +2,27 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="车次名称" prop="LineInfo">
-        <el-input v-model="form.LineInfo"/>
+        <el-input v-model="form.LineInfo" />
       </el-form-item>
       <el-form-item label="cid" prop="cid">
-        <el-input v-model="form.cid"/>
+        <el-input v-model="form.cid" />
       </el-form-item>
 
       <el-form-item label="LineGuid" prop="LineGuid">
-        <el-input v-model="form.LineGuid"/>
+        <el-input v-model="form.LineGuid" />
       </el-form-item>
 
       <el-form-item label="起始时间" prop="start_at">
         <el-col :span="11">
-          <el-time-picker v-model="form.start_at" value-format="HH:mm:ss" format="HH:mm:ss" type="fixed-time" placeholder="Pick a time" style="width: 100%;"/>
+          <el-time-picker v-model="form.start_at" value-format="HH:mm:ss" format="HH:mm:ss" type="fixed-time" placeholder="Pick a time" style="width: 100%;" />
         </el-col>
         <el-col :span="2" class="line">-</el-col>
         <el-col :span="11">
-          <el-time-picker v-model="form.end_at" value-format="HH:mm:ss" format="HH:mm:ss" type="fixed-time" placeholder="Pick a time" style="width: 100%;"/>
+          <el-time-picker v-model="form.end_at" value-format="HH:mm:ss" format="HH:mm:ss" type="fixed-time" placeholder="Pick a time" style="width: 100%;" />
         </el-col>
       </el-form-item>
       <el-form-item label="是否启动">
-        <el-switch v-model="form.is_task"/>
+        <el-switch v-model="form.is_task" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">提交</el-button>
