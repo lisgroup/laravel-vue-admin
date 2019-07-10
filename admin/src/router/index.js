@@ -244,7 +244,7 @@ const routeBase = [
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [...routeBase, ...asyncRoutes]
+export const constantRoutes = [...routeBase]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
