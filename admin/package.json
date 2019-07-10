@@ -18,11 +18,12 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
-    "axios": "0.18.0",
+    "axios": ">=0.18.1",
     "echarts": "^4.2.1",
     "element-ui": "2.7.2",
     "js-cookie": "2.2.0",
     "layui-src": "^2.5.4",
+    "mavon-editor": "^2.7.5",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
