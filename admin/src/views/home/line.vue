@@ -23,7 +23,7 @@
       <el-table-column prop="ArrivalTime" label="进站时间" width="" />
     </el-table>
 
-    <float-button :text="Flush" @click="handleReload()"></float-button>
+    <float-button :text="Flush" @onFloatBtnClicked="handleReload()" />
   </div>
 </template>
 
