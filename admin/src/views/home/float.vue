@@ -1,12 +1,12 @@
 <template>
   <div
+    ref="div"
     class="ys-float-btn"
     :style="{'width':itemWidth+'px','height':itemHeight+'px','left':left+'px','top':top+'px'}"
-    ref="div"
     @click="onBtnClicked"
   >
     <slot name="icon"></slot>
-    <p>{{text}}</p>
+    <p>{{ text }}</p>
   </div>
 </template>
 
@@ -86,7 +86,7 @@ export default {
       }
     },
     handleScrollEnd() {
-      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
       if (scrollTop === this.currentTop) {
         if (this.left > this.clientWidth / 2) {
           this.left = this.clientWidth - this.itemWidth - this.gapWidth
