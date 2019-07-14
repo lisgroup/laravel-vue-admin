@@ -5,7 +5,7 @@
     :style="{'width':itemWidth+'px','height':itemHeight+'px','left':left+'px','top':top+'px'}"
     @click="onBtnClicked"
   >
-    <slot name="icon"></slot>
+    <slot name="icon" />
     <p>{{ text }}</p>
   </div>
 </template>
@@ -33,6 +33,16 @@ export default {
     coefficientHeight: {
       type: Number,
       default: 0.8
+    }
+  },
+  data() {
+    return {
+      timer: null,
+      currentTop: 0,
+      clientWidth: 0,
+      clientHeight: 0,
+      left: 0,
+      top: 0
     }
   },
   created() {
@@ -94,16 +104,6 @@ export default {
         }
         clearTimeout(this.timer)
       }
-    }
-  },
-  data() {
-    return {
-      timer: null,
-      currentTop: 0,
-      clientWidth: 0,
-      clientHeight: 0,
-      left: 0,
-      top: 0
     }
   }
 }
