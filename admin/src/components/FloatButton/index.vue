@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'FloatImgBtn',
+  name: 'FloatButton',
   props: {
     text: {
       type: String,
@@ -50,7 +50,7 @@ export default {
       })
       div.addEventListener('touchmove', (e) => {
         if (e.targetTouches.length === 1) {
-          let touch = event.targetTouches[0]
+          const touch = event.targetTouches[0]
           this.left = touch.clientX - this.itemWidth / 2
           this.top = touch.clientY - this.itemHeight / 2
         }
@@ -63,7 +63,6 @@ export default {
           this.left = this.gapWidth
         }
       })
-
     })
   },
   beforeDestroy() {
@@ -129,13 +128,13 @@ export default {
   }
 
   .ys-float-btn img {
-      width: 50%;
-      height: 50%;
-      object-fit: contain;
-      margin-bottom: 3px;
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    margin-bottom: 3px;
   }
 
   .ys-float-btn p {
-      font-size: 7px;
+    font-size: 7px;
   }
 </style>
