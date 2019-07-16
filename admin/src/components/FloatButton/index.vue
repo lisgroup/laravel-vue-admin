@@ -6,7 +6,7 @@
     @click="onBtnClicked"
   >
     <slot name="icon" />
-    <p>{{ text }}</p>
+    <p :style="{'font-size': fontSize+'px'}">{{ text }}</p>
   </div>
 </template>
 
@@ -33,6 +33,10 @@ export default {
     coefficientHeight: {
       type: Number,
       default: 0.8
+    },
+    fontSize: {
+      type: Number,
+      default: 12
     }
   },
   data() {
@@ -134,7 +138,4 @@ export default {
     margin-bottom: 3px;
   }
 
-  .ys-float-btn p {
-    font-size: 7px;
-  }
 </style>
