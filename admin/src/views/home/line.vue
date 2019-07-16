@@ -22,17 +22,21 @@
       <el-table-column prop="carCode" label="车牌" width="" />
       <el-table-column prop="ArrivalTime" label="进站时间" width="" />
     </el-table>
+
+    <float-button :text="Flush" :font-size="16" @onFloatBtnClicked="handleReload()" />
   </div>
 </template>
 
 <script>
 import request from '@/utils/request'
 import fieldSet from '../../components/common/fieldSet'
+import FloatButton from '../../components/FloatButton'
 
 export default {
   name: 'Lines',
   components: {
-    fieldSet
+    fieldSet,
+    FloatButton
   },
   data() {
     return {
@@ -42,7 +46,8 @@ export default {
       to: '',
       href: '',
       tableData: [],
-      tableLine: []
+      tableLine: [],
+      Flush: '刷新'
     }
   },
   created() {

@@ -10,12 +10,12 @@ Laravel Vue admin 管理系统
 ### 主要技术栈
 
 - 后端框架： Laravel 5.5.x
-- 前端 MVVM 框架： Vue 2.5.x
-- 开发工作流： Webpack 4.x
+- 前端 MVVM 框架： Vue 2.6.10
+- 前端构建： Vue-cli
 - 路由： Vue-Router 3.x
 - 数据交互： Axios
 - 代码风格检测： Eslint
-- UI框架： Element-UI 2.4.11
+- UI框架： Element-UI 2.7.2
 - Laravel 的运行环境要求 PHP5.6 以上。
 
 ## 案例演示
