@@ -210,6 +210,7 @@ class ExcelRepository
                             }
                         }
 
+                        is_array($val) && $val = json_encode($val);
                         $setActive->setCellValue($i.$number, "\t".$val);
                         $i++;
                     }
