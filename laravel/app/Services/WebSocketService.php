@@ -48,7 +48,7 @@ class WebSocketService implements WebSocketHandlerInterface
         switch ($action) {
             case 'api_excel': // api_excel 列表完成率
                 while (true) {
-                    $user_id = auth('api')->user()['id'];
+                    $user_id = $userInfo['id'];
                     $server->push($request->fd, $this->apiExcel($user_id));
                     sleep(5);
                     $state = ApiExcel::where('state', 1)->first();
