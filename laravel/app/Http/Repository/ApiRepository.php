@@ -119,7 +119,7 @@ class ApiRepository
     public function workProgress($lists)
     {
         foreach ($lists as $key => $list) {
-            $rate = 100;
+            $rate = 0;
             switch ($list['state']) {
                 case '0': // 未开启任务
                     $rate = 0;
@@ -154,7 +154,7 @@ class ApiRepository
             return $rate > 100 ? 100 : $rate;
         }
 
-        return 100;
+        return 0;
     }
 
 }
