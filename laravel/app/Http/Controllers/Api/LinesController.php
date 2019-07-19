@@ -6,7 +6,7 @@ use App\Http\Requests\StoreLineRequest;
 use App\Models\Line;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Vinkla\Hashids\Facades\Hashids;
+// use Vinkla\Hashids\Facades\Hashids;
 
 class LinesController extends Controller
 {

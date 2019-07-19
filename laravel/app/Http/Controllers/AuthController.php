@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 // use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\Controller;
-
 use App\Events\LoginEvent;
 use App\Http\Repository\UserRepository;
-use Hhxsv5\LaravelS\Swoole\Task\Event;
+// use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Jenssegers\Agent\Agent;
 
 class AuthController extends Controller
@@ -112,7 +112,7 @@ class AuthController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
