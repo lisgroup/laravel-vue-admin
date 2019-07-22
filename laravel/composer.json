@@ -18,7 +18,6 @@
         "laravel/tinker": "^1.0",
         "lisgroup/curl-http": "^1.2",
         "orangehill/iseed": "^2.6",
-        "phpoffice/phpexcel": "^1.8",
         "phpoffice/phpspreadsheet": "^1.6",
         "predis/predis": "^1.1",
         "qiniu/php-sdk": "^7.2",
