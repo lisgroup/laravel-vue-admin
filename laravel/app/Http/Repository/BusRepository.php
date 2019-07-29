@@ -237,7 +237,8 @@ class BusRepository
         // $queryList = QueryList::html($html);
         // 实时公交返回的网页数据
         try {
-            $url = 'http://www.szjt.gov.cn/BusQuery/'.$path;
+            // $url = 'http://www.szjt.gov.cn/BusQuery/'.$path;
+            $url = 'http://www.szjt.gov.cn/BusQu/'.$path;
             $queryList = QueryList::get($url, $get, [
                 // 设置超时时间，单位：秒
                 'timeout' => 4,
