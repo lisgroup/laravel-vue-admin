@@ -123,7 +123,8 @@ class BusRepository
         is_dir($path) || mkdir($path, 0777, true);
 
         // 2.0 判断是否已经有此条线路搜索
-        if ($refresh || !file_exists($path.'/serialize_'.$line.'.txt')) {
+        $fileName = $path.'/serialize_'.$line.'.txt';
+        if ($refresh || !file_exists($fileName)) {
             // 1. 获取 Token
             $data = $this->getToken();
 
@@ -163,7 +164,6 @@ class BusRepository
             $arrayData = $queryList->rules($rules)->query()->getData();
             $str = serialize($arrayData->all());
             //缓存 此条线路替换a标签的数据
-            $fileName = $path.'/serialize_'.$line.'.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
             // 车次较多时候数据库操作太频繁，先放入 队列 中批量处理。。。
@@ -184,8 +184,11 @@ class BusRepository
             // }
         } else {
             // 2.1 文件存在直接读取
-            $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
+            $serialize = file_get_contents($fileName);//线路列表
             $arrayData = unserialize($serialize);
+            if (empty($arrayData)) {
+                unlink($fileName);
+            }
         }
 
         return $arrayData;
