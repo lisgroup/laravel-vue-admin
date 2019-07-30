@@ -14,6 +14,7 @@ use App\Models\BusLine;
 use App\Models\Cron;
 use App\Models\CronTask;
 use Carbon\Carbon;
+use Curl\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
@@ -269,6 +270,33 @@ class BusRepository
         // unset($arrayData[0]['to']);
 
         return ['to' => $to, 'line' => $arrayData];
+    }
+
+    public function getLineData2($path, $get)
+    {
+        if (empty($path) || empty($get['cid']) || empty($get['LineGuid']) || empty($get['LineInfo']))
+            return false;
+
+        $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData2';
+        $param = '{"guid":"'. $get['LineGuid']. '"}';
+        $header = [
+            'content-type: Application/json',
+            'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36',
+            'Accept: application/json',
+            'Host: www.szjt.gov.cn',
+            'Origin: http://www.szjt.gov.cn',
+        ];
+        $data = Http::getInstent()->post($url, $param, 4, $header);
+
+        if ($data['content']) {
+            $res = json_decode($data['content'], true);
+            if (isset($res['d'])) {
+                $arr = json_decode($res['d'], true);
+                return $arr['Document'] ?? [];
+            }
+        }
+        return [];
+
     }
 
     /**
