@@ -142,7 +142,7 @@ class IndexController extends CommonController
             }
             unset($post['href']);
 
-            $data = BusRepository::getInstent()->getLine($aspUrl, $post);
+            $data = BusRepository::getInstent()->getLineData2($aspUrl, $post);
         }
 
         return $this->out(200, $data);

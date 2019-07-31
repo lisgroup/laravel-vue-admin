@@ -278,7 +278,7 @@ class BusRepository
             return false;
 
         $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData2';
-        $param = '{"guid":"'. $get['LineGuid']. '"}';
+        $param = '{"guid":"'.$get['LineGuid'].'"}';
         $header = [
             'content-type: Application/json',
             'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36',
@@ -292,7 +292,25 @@ class BusRepository
             $res = json_decode($data['content'], true);
             if (isset($res['d'])) {
                 $arr = json_decode($res['d'], true);
-                return $arr['Document'] ?? [];
+                // 处理数组
+                $return = [];
+                if ($arr['Document']) {
+                    $lName = $arr['Document']['LName'] ?? '';
+                    $lDir = $arr['Document']['LDirection'] ?? '';
+                    $return['to'] = $lName.'-'.$lDir;
+
+                    foreach ($arr['Document']['StandInfo'] as $item) {
+                        $return['line'][] = [
+                            'stationName' => $item['SName'] ?? '',
+                            'stationCode' => $item['SCode'] ?? '',
+                            'carCode' => $item['BusInfo'] ?? '',
+                            'ArrivalTime' => str_replace('/', '-', $item['InTime'] ?? ''),
+                            'OutTime' => str_replace('/', '-', $item['OutTime'] ?? ''),
+                            'SGuid' => $item['SGuid'] ?? '',
+                        ];
+                    }
+                    return $return;
+                }
             }
         }
         return [];
