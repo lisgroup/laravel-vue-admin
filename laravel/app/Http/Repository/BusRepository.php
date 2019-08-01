@@ -216,6 +216,51 @@ class BusRepository
         return $listData;
     }
 
+    public function getListV2($line, $refresh = false)
+    {
+        if (empty($line)) {
+            return [];
+        }
+        // 新版本直接调用接口
+        $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData';
+        $param = '{"num":"'.$line.'"}';
+        $header = [
+            'content-type: Application/json',
+            'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36',
+            'Accept: application/json',
+            'Host: www.szjt.gov.cn',
+            'Origin: http://www.szjt.gov.cn',
+        ];
+        $data = Http::getInstent()->post($url, $param, 4, $header);
+
+        if ($data['content']) {
+            $res = json_decode($data['content'], true);
+            if (isset($res['d'])) {
+                $arr = json_decode($res['d'], true);
+                // 处理数组
+                $return = [];
+                if ($arr['Document']) {
+                    $lName = $arr['Document']['LName'] ?? '';
+                    $lDir = $arr['Document']['LDirection'] ?? '';
+                    $return['to'] = $lName.'-'.$lDir;
+
+                    foreach ($arr['Document']['StandInfo'] as $item) {
+                        $return['line'][] = [
+                            'stationName' => $item['SName'] ?? '',
+                            'stationCode' => $item['SCode'] ?? '',
+                            'carCode' => $item['BusInfo'] ?? '',
+                            'ArrivalTime' => str_replace('/', '-', $item['InTime'] ?? ''),
+                            'OutTime' => str_replace('/', '-', $item['OutTime'] ?? ''),
+                            'SGuid' => $item['SGuid'] ?? '',
+                        ];
+                    }
+                    return $return;
+                }
+            }
+        }
+        return [];
+    }
+
 
     /**
      * 获取实时公交站台数据 table 列表
