@@ -240,18 +240,26 @@ class BusRepository
                 // 处理数组
                 $return = [];
                 if ($arr['Document']) {
-                    $lName = $arr['Document']['LName'] ?? '';
-                    $lDir = $arr['Document']['LDirection'] ?? '';
-                    $return['to'] = $lName.'-'.$lDir;
-
-                    foreach ($arr['Document']['StandInfo'] as $item) {
-                        $return['line'][] = [
-                            'stationName' => $item['SName'] ?? '',
-                            'stationCode' => $item['SCode'] ?? '',
-                            'carCode' => $item['BusInfo'] ?? '',
-                            'ArrivalTime' => str_replace('/', '-', $item['InTime'] ?? ''),
-                            'OutTime' => str_replace('/', '-', $item['OutTime'] ?? ''),
-                            'SGuid' => $item['SGuid'] ?? '',
+                    foreach ($arr['Document']['LineInfo'] as $item) {
+                        // "Guid": "921f91ad-757e-49d6-86ae-8e5f205117be",
+                        // 		"LName": "快线1号",
+                        // 		"LDirection": "星塘公交中心首末站",
+                        // 		"LFStdFTime": "06:00:00",
+                        // 		"LFStdETime": "21:00:00",
+                        // 		"LFStdName": "木渎公交换乘枢纽站",
+                        // 		"LEStdName": "星塘公交中心",
+                        // 		"LineType": ""
+                        $fromTo = $item['LDirection'] ?? '';
+                        $bus = $item['LName'] ?? '';
+                        $Guid = $item['Guid'] ?? '';
+                        $link = 'APTSLine.aspx?cid=&LineInfo='.$bus.'('.$fromTo.')'.'&Guid='.$Guid;
+                        $return[] = [
+                            'FromTo' => $fromTo,
+                            'bus' => $bus,
+                            'link' => $link,
+                            'start_time' => $item['LFStdFTime'] ?? '',
+                            'end_time' => $item['LFStdETime'] ?? '',
+                            'line_type' => $item['LineType'] ?? '',
                         ];
                     }
                     return $return;
