@@ -216,6 +216,12 @@ class BusRepository
         return $listData;
     }
 
+    /**
+     * 公交维护-线路列表 v2
+     * @param $line
+     * @param bool $refresh
+     * @return array
+     */
     public function getListV2($line, $refresh = false)
     {
         if (empty($line)) {
