@@ -227,52 +227,56 @@ class BusRepository
         if (empty($line)) {
             return [];
         }
-        // 新版本直接调用接口
-        $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData';
-        $param = '{"num":"'.$line.'"}';
-        $header = [
-            'content-type: Application/json',
-            'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36',
-            'Accept: application/json',
-            'Host: www.szjt.gov.cn',
-            'Origin: http://www.szjt.gov.cn',
-        ];
-        $data = Http::getInstent()->post($url, $param, 4, $header);
+        if ($refresh) {
+            Cache::forget('line_name:'.$line);
+        }
+        return Cache::remember('line_name:'.$line, 3600 * 24 * 30, function() use ($line) {
+            // 新版本直接调用接口
+            $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData';
+            $param = '{"num":"'.$line.'"}';
+            $header = [
+                'content-type: Application/json',
+                'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36',
+                'Accept: application/json',
+                'Host: www.szjt.gov.cn',
+                'Origin: http://www.szjt.gov.cn',
+            ];
+            $data = Http::getInstent()->post($url, $param, 4, $header);
 
-        if ($data['content']) {
-            $res = json_decode($data['content'], true);
-            if (isset($res['d'])) {
-                $arr = json_decode($res['d'], true);
-                // 处理数组
-                $return = [];
-                if ($arr['Document']) {
-                    foreach ($arr['Document']['LineInfo'] as $item) {
-                        // "Guid": "921f91ad-757e-49d6-86ae-8e5f205117be",
-                        // 		"LName": "快线1号",
-                        // 		"LDirection": "星塘公交中心首末站",
-                        // 		"LFStdFTime": "06:00:00",
-                        // 		"LFStdETime": "21:00:00",
-                        // 		"LFStdName": "木渎公交换乘枢纽站",
-                        // 		"LEStdName": "星塘公交中心",
-                        // 		"LineType": ""
-                        $fromTo = $item['LDirection'] ?? '';
-                        $bus = $item['LName'] ?? '';
-                        $Guid = $item['Guid'] ?? '';
-                        $link = 'APTSLine.aspx?cid=&LineInfo='.$bus.'('.$fromTo.')'.'&Guid='.$Guid;
-                        $return[] = [
-                            'FromTo' => $fromTo,
-                            'bus' => $bus,
-                            'link' => $link,
-                            'start_time' => $item['LFStdFTime'] ?? '',
-                            'end_time' => $item['LFStdETime'] ?? '',
-                            'line_type' => $item['LineType'] ?? '',
-                        ];
+            if ($data['content']) {
+                $res = json_decode($data['content'], true);
+                if (isset($res['d'])) {
+                    $arr = json_decode($res['d'], true);
+                    // 处理数组
+                    $return = [];
+                    if ($arr['Document']) {
+                        foreach ($arr['Document']['LineInfo'] as $item) {
+                            // "Guid": "921f91ad-757e-49d6-86ae-8e5f205117be",
+                            // 		"LName": "快线1号",
+                            // 		"LDirection": "星塘公交中心首末站",
+                            // 		"LFStdFTime": "06:00:00",
+                            // 		"LFStdETime": "21:00:00",
+                            // 		"LFStdName": "木渎公交换乘枢纽站",
+                            // 		"LEStdName": "星塘公交中心",
+                            // 		"LineType": ""
+                            $fromTo = $item['LDirection'] ?? '';
+                            $bus = $item['LName'] ?? '';
+                            $Guid = $item['Guid'] ?? '';
+                            $link = 'APTSLine.aspx?cid=&LineInfo='.$bus.'('.$fromTo.')'.'&Guid='.$Guid;
+                            $return[] = [
+                                'FromTo' => $fromTo,
+                                'bus' => $bus,
+                                'link' => $link,
+                                'start_time' => $item['LFStdFTime'] ?? '',
+                                'end_time' => $item['LFStdETime'] ?? '',
+                                'line_type' => $item['LineType'] ?? '',
+                            ];
+                        }
+                        return $return;
                     }
-                    return $return;
                 }
             }
-        }
-        return [];
+        });
     }
 
 
