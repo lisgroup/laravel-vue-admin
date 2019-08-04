@@ -262,7 +262,7 @@ class BusRepository
                             $fromTo = $item['LDirection'] ?? '';
                             $bus = $item['LName'] ?? '';
                             $Guid = $item['Guid'] ?? '';
-                            $link = 'APTSLine.aspx?cid=&LineInfo='.$bus.'('.$fromTo.')'.'&Guid='.$Guid;
+                            $link = 'APTSLine.aspx?cid=&LineInfo='.$bus.'('.$fromTo.')'.'&LineGuid='.$Guid;
                             $return[] = [
                                 'FromTo' => $fromTo,
                                 'bus' => $bus,
@@ -337,8 +337,8 @@ class BusRepository
 
     public function getLineData2($path, $get)
     {
-        if (empty($path) || empty($get['cid']) || empty($get['LineGuid']) || empty($get['LineInfo']))
-            return false;
+        if (empty($path) || empty($get['LineGuid']) || empty($get['LineInfo']))
+            return [];
 
         $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData2';
         $param = '{"guid":"'.$get['LineGuid'].'"}';
