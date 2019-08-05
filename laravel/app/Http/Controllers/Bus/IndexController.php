@@ -107,7 +107,7 @@ class IndexController extends CommonController
      */
     private function getOldList($line)
     {
-        return BusRepository::getInstent()->getList($line);
+        return BusRepository::getInstent()->getListV2($line);
     }
 
     /**
@@ -137,7 +137,7 @@ class IndexController extends CommonController
                 $parseUrl = parse_url($post['href']);
                 $query = $parseUrl['query'] ?? '';
                 parse_str($query, $params);
-                $post['cid'] = $params['cid'];
+                $post['cid'] = $params['cid'] ?? '';
                 $aspUrl = $parseUrl['path'] ?? 'APTSLine.aspx';
             }
             unset($post['href']);
