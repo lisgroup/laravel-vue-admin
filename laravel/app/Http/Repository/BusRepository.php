@@ -371,7 +371,7 @@ class BusRepository
                             'stationCode' => $item['SCode'] ?? '',
                             'carCode' => $item['BusInfo'] ?? '',
                             'ArrivalTime' => $arrivalTime,
-                            'OutTime' => str_replace('/', '-', $item['OutTime'] ?? ''),
+                            'OutTime' => $outTime,
                             'SGuid' => $item['SGuid'] ?? '',
                         ];
                     }
