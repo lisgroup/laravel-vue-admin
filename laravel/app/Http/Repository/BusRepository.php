@@ -363,11 +363,14 @@ class BusRepository
                     $return['to'] = $lName.'-'.$lDir;
 
                     foreach ($arr['Document']['StandInfo'] as $item) {
+                        // 格式化时间
+                        $arrivalTime = isset($item['InTime']) ? date('H:i:s', strtotime($item['InTime'])) : '';
+                        $outTime = isset($item['OutTime']) ? date('H:i:s', strtotime($item['OutTime'])) : '';
                         $return['line'][] = [
                             'stationName' => $item['SName'] ?? '',
                             'stationCode' => $item['SCode'] ?? '',
                             'carCode' => $item['BusInfo'] ?? '',
-                            'ArrivalTime' => str_replace('/', '-', $item['InTime'] ?? ''),
+                            'ArrivalTime' => $arrivalTime,
                             'OutTime' => str_replace('/', '-', $item['OutTime'] ?? ''),
                             'SGuid' => $item['SGuid'] ?? '',
                         ];
