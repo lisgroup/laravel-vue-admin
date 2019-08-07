@@ -402,7 +402,7 @@ class BusRepository
                 'LineGuid' => $task['LineGuid'],
                 'LineInfo' => $task['LineInfo'],
             ];
-            $data = $this->getLine('APTSLine.aspx', $post)['line'];
+            $data = $this->getLineData2('APTSLine.aspx', $post)['line'];
             $content = json_encode($data, JSON_UNESCAPED_UNICODE);
             if (!empty($content) && strlen($content) > 20) {
                 // 入库操作 1 ----- 木渎
