@@ -230,7 +230,12 @@ class BusRepository
         if ($refresh) {
             Cache::forget('line_name:'.$line);
         }
-        return Cache::remember('line_name:'.$line, 3600 * 24 * 30, function() use ($line) {
+
+        $return = Cache::get('line_name:'.$line);
+        if ($return) {
+            return $return;
+        }
+        try {
             // 新版本直接调用接口
             $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData';
             $param = '{"num":"'.$line.'"}';
@@ -252,13 +257,13 @@ class BusRepository
                     if ($arr['Document']) {
                         foreach ($arr['Document']['LineInfo'] as $item) {
                             // "Guid": "921f91ad-757e-49d6-86ae-8e5f205117be",
-                            // 		"LName": "快线1号",
-                            // 		"LDirection": "星塘公交中心首末站",
-                            // 		"LFStdFTime": "06:00:00",
-                            // 		"LFStdETime": "21:00:00",
-                            // 		"LFStdName": "木渎公交换乘枢纽站",
-                            // 		"LEStdName": "星塘公交中心",
-                            // 		"LineType": ""
+                            // "LName": "快线1号",
+                            // "LDirection": "星塘公交中心首末站",
+                            // "LFStdFTime": "06:00:00",
+                            // "LFStdETime": "21:00:00",
+                            // "LFStdName": "木渎公交换乘枢纽站",
+                            // "LEStdName": "星塘公交中心",
+                            // "LineType": ""
                             $fromTo = $item['LDirection'] ?? '';
                             $bus = $item['LName'] ?? '';
                             $Guid = $item['Guid'] ?? '';
@@ -272,10 +277,17 @@ class BusRepository
                                 'line_type' => $item['LineType'] ?? '',
                             ];
                         }
+                        cache(['line_name:'.$line => $return], 3600 * 24 * 30);
                         return $return;
                     }
                 }
             }
+        } catch (\Exception $e) {
+            return [];
+        }
+        return Cache::remember('line_name:'.$line, 3600 * 24 * 30, function() use ($line) {
+
+            return [];
         });
     }
 
