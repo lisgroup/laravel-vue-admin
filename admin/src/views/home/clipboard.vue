@@ -1,39 +1,30 @@
 <template>
-  <div>
-    <div slot="content" @click="copy">>点击复制</div>
-    <input type="text" class="tag-read" value="" v-model="input">
+  <div class="container">
+    <input v-model="message" type="text">
+    <button type="button" @click="doCopy('add me!')">Copy!</button>
   </div>
 </template>
-
-<script type="text/ecmascript-6">
-import Clipboard from 'clipboard'
-
+<script>
 export default {
-  name: 'Clipboard',
   data() {
     return {
-      input: 'Hello'
+      message: 'Copy These Text'
     }
   },
   methods: {
-    copy() {
-      const clipboard = new Clipboard('.tag-read')
-      clipboard.on('success', e => {
-        console.log('复制成功') // 这里你如果引入了elementui的提示就可以用，没有就注释即可
-        // 释放内存
-        clipboard.destroy()
-      })
-      clipboard.on('error', e => {
-        // 不支持复制
-        console.log('该浏览器不支持自动复制')
-        // 释放内存
-        clipboard.destroy()
+    dataProcessing(val) {
+      this.message = this.message + ' ' + val
+    },
+    doCopy(val) {
+      this.dataProcessing(val)
+      this.$copyText(this.message).then(function(e) {
+        alert('Copied')
+        console.log(e)
+      }, function(e) {
+        alert('Can not copy')
+        console.log(e)
       })
     }
   }
 }
 </script>
-
-<style lang="stylus" rel="stylesheet/stylus">
-
-</style>
