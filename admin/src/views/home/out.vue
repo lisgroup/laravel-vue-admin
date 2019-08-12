@@ -34,6 +34,14 @@
         <el-col :span="0">&nbsp;</el-col>
       </el-form-item>
     </el-form>
+    <el-row>
+      <el-col :span="4">&nbsp;&nbsp;</el-col>
+      <el-col :span="4">
+        <el-button @click="copyInput">一键复制输入内容</el-button>
+      </el-col>
+      <el-col :span="7">&nbsp;&nbsp;</el-col>
+      <el-col :span="1"><el-button @click="copyOutput">一键复制输出内容</el-button></el-col>
+    </el-row>
   </div>
 </template>
 
@@ -60,6 +68,37 @@ export default {
   },
   created() {},
   methods: {
+    copyInput() {
+      const that = this
+      that.$copyText(this.form.input).then(function(e) {
+        that.$message({
+          message: '输入内容复制成功',
+          type: 'success'
+        })
+      }, function(e) {
+        this.$message({
+          message: '复制失败',
+          type: 'error'
+        })
+        console.log(e)
+      })
+    },
+    copyOutput() {
+      const that = this
+      this.$copyText(this.output).then(function(e) {
+        that.$message({
+          message: '输出内容复制成功',
+          type: 'success'
+        })
+        // console.log(e)
+      }, function(e) {
+        this.$message({
+          message: '复制失败',
+          type: 'error'
+        })
+        console.log(e)
+      })
+    },
     onSubmit(form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
