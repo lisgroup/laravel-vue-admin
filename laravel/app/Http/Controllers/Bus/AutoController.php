@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bus;
 
 use App\Http\Repository\AccessToken;
+use AuroraLZDF\Bigfile\Traits\TraitBigfileChunk;
 use Curl\Http;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,6 +12,8 @@ use Qiniu\Auth;
 
 class AutoController extends Controller
 {
+    use TraitBigfileChunk;
+
     /**
      * @var Http 请求类
      */
@@ -20,6 +23,45 @@ class AutoController extends Controller
     {
         $this->http || $this->http = Http::getInstent();
     }
+
+    /**
+     * 展示视图
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     */
+    public function loadView()
+    {
+        $data = [
+            'chunk_size' => config('bigfile.chunk_size'),
+            'max_size' => config('bigfile.max_size'),
+            'user_id' => Auth()->id(),
+        ];
+        return view('bigfile.bigfile', compact('data'));
+    }
+
+    /**
+     * 上传操作
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Exception
+     */
+    public function upload(Request $request)
+    {
+        $data = $request->all();
+        $action = $request->input('act');
+
+        if (isset($action) && $action == 'upload') {
+
+            $result = $this->uploadToServer($data);
+            return response()->json($result);
+        }
+
+        $result = $this->uploadChunk($request);
+        return response()->json($result);
+    }
+
     /**
      * 获取七牛 Token 的方法
      *

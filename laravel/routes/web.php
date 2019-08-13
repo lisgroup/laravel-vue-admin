@@ -78,6 +78,6 @@ Route::get('/test', function () {
     return view('test');
 });
 
-Route::middleware('web')->get('/upload/bigfile', '\AuroraLZDF\Bigfile\Controllers\BigfileController@loadView')->name('bigfile_view');
+Route::middleware('web')->get('/upload/bigfile', 'Bus\AutoController@loadView')->name('bigfile_view');
 // bindings:不限制API访问次数限制，不需要 csrf_token 验证
-Route::middleware('bindings')->post('/upload/bigfile', '\AuroraLZDF\Bigfile\Controllers\BigfileController@upload')->name('bigfile_upload');
+Route::middleware('bindings')->post('/upload/bigfile', 'Bus\AutoController@upload')->name('bigfile_upload');
