@@ -14,6 +14,7 @@ use App\Models\BusLine;
 use App\Models\Cron;
 use App\Models\CronTask;
 use Carbon\Carbon;
+use Curl\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
@@ -123,7 +124,8 @@ class BusRepository
         is_dir($path) || mkdir($path, 0777, true);
 
         // 2.0 判断是否已经有此条线路搜索
-        if ($refresh || !file_exists($path.'/serialize_'.$line.'.txt')) {
+        $fileName = $path.'/serialize_'.$line.'.txt';
+        if ($refresh || !file_exists($fileName)) {
             // 1. 获取 Token
             $data = $this->getToken();
 
@@ -163,7 +165,6 @@ class BusRepository
             $arrayData = $queryList->rules($rules)->query()->getData();
             $str = serialize($arrayData->all());
             //缓存 此条线路替换a标签的数据
-            $fileName = $path.'/serialize_'.$line.'.txt';
             file_put_contents($fileName, $str);
             //抛出异常if (!$rs)
             // 车次较多时候数据库操作太频繁，先放入 队列 中批量处理。。。
@@ -184,8 +185,11 @@ class BusRepository
             // }
         } else {
             // 2.1 文件存在直接读取
-            $serialize = file_get_contents($path.'/serialize_'.$line.'.txt');//线路列表
+            $serialize = file_get_contents($fileName);//线路列表
             $arrayData = unserialize($serialize);
+            if (empty($arrayData)) {
+                unlink($fileName);
+            }
         }
 
         return $arrayData;
@@ -212,6 +216,81 @@ class BusRepository
         return $listData;
     }
 
+    /**
+     * 公交维护-线路列表 v2
+     * @param $line
+     * @param bool $refresh
+     * @return array
+     */
+    public function getListV2($line, $refresh = false)
+    {
+        if (empty($line)) {
+            return [];
+        }
+        if ($refresh) {
+            Cache::forget('line_name:'.$line);
+        }
+
+        $return = Cache::get('line_name:'.$line);
+        if ($return) {
+            return $return;
+        }
+        try {
+            // 新版本直接调用接口
+            $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData';
+            $param = '{"num":"'.$line.'"}';
+            $header = [
+                'content-type: Application/json',
+                'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36',
+                'Accept: application/json',
+                'Host: www.szjt.gov.cn',
+                'Origin: http://www.szjt.gov.cn',
+            ];
+            $data = Http::getInstent()->post($url, $param, 4, $header);
+
+            if ($data['content']) {
+                $res = json_decode($data['content'], true);
+                if (isset($res['d'])) {
+                    $arr = json_decode($res['d'], true);
+                    // 处理数组
+                    $return = [];
+                    if ($arr['Document']) {
+                        foreach ($arr['Document']['LineInfo'] as $item) {
+                            // "Guid": "921f91ad-757e-49d6-86ae-8e5f205117be",
+                            // "LName": "快线1号",
+                            // "LDirection": "星塘公交中心首末站",
+                            // "LFStdFTime": "06:00:00",
+                            // "LFStdETime": "21:00:00",
+                            // "LFStdName": "木渎公交换乘枢纽站",
+                            // "LEStdName": "星塘公交中心",
+                            // "LineType": ""
+                            $fromTo = $item['LDirection'] ?? '';
+                            $bus = $item['LName'] ?? '';
+                            $Guid = $item['Guid'] ?? '';
+                            $link = 'APTSLine.aspx?cid=&LineInfo='.$bus.'('.$fromTo.')'.'&LineGuid='.$Guid;
+                            $return[] = [
+                                'FromTo' => $fromTo,
+                                'bus' => $bus,
+                                'link' => $link,
+                                'start_time' => $item['LFStdFTime'] ?? '',
+                                'end_time' => $item['LFStdETime'] ?? '',
+                                'line_type' => $item['LineType'] ?? '',
+                            ];
+                        }
+                        cache(['line_name:'.$line => $return], 3600 * 24 * 30);
+                        return $return;
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            return [];
+        }
+        return Cache::remember('line_name:'.$line, 3600 * 24 * 30, function() use ($line) {
+
+            return [];
+        });
+    }
+
 
     /**
      * 获取实时公交站台数据 table 列表
@@ -234,7 +313,8 @@ class BusRepository
         // $queryList = QueryList::html($html);
         // 实时公交返回的网页数据
         try {
-            $url = 'http://www.szjt.gov.cn/BusQuery/'.$path;
+            // $url = 'http://www.szjt.gov.cn/BusQuery/'.$path;
+            $url = 'http://www.szjt.gov.cn/BusQu/'.$path;
             $queryList = QueryList::get($url, $get, [
                 // 设置超时时间，单位：秒
                 'timeout' => 4,
@@ -267,6 +347,54 @@ class BusRepository
         return ['to' => $to, 'line' => $arrayData];
     }
 
+    public function getLineData2($path, $get)
+    {
+        if (empty($path) || empty($get['LineGuid']) || empty($get['LineInfo']))
+            return [];
+
+        $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData2';
+        $param = '{"guid":"'.$get['LineGuid'].'"}';
+        $header = [
+            'content-type: Application/json',
+            'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36',
+            'Accept: application/json',
+            'Host: www.szjt.gov.cn',
+            'Origin: http://www.szjt.gov.cn',
+        ];
+        $data = Http::getInstent()->post($url, $param, 4, $header);
+
+        if ($data['content']) {
+            $res = json_decode($data['content'], true);
+            if (isset($res['d'])) {
+                $arr = json_decode($res['d'], true);
+                // 处理数组
+                $return = [];
+                if ($arr['Document']) {
+                    $lName = $arr['Document']['LName'] ?? '';
+                    $lDir = $arr['Document']['LDirection'] ?? '';
+                    $return['to'] = $lName.'-'.$lDir;
+
+                    foreach ($arr['Document']['StandInfo'] as $item) {
+                        // 格式化时间
+                        $arrivalTime = isset($item['InTime']) ? date('H:i:s', strtotime($item['InTime'])) : '';
+                        $outTime = isset($item['OutTime']) ? date('H:i:s', strtotime($item['OutTime'])) : '';
+                        $return['line'][] = [
+                            'stationName' => $item['SName'] ?? '',
+                            'stationCode' => $item['SCode'] ?? '',
+                            'carCode' => $item['BusInfo'] ?? '',
+                            'ArrivalTime' => $arrivalTime,
+                            'OutTime' => $outTime,
+                            'SGuid' => $item['SGuid'] ?? '',
+                        ];
+                    }
+                    return $return;
+                }
+            }
+        }
+        return [];
+
+    }
+
     /**
      * 定时任务：artisan 执行入库操作
      */
@@ -286,7 +414,7 @@ class BusRepository
                 'LineGuid' => $task['LineGuid'],
                 'LineInfo' => $task['LineInfo'],
             ];
-            $data = $this->getLine('APTSLine.aspx', $post)['line'];
+            $data = $this->getLineData2('APTSLine.aspx', $post)['line'];
             $content = json_encode($data, JSON_UNESCAPED_UNICODE);
             if (!empty($content) && strlen($content) > 20) {
                 // 入库操作 1 ----- 木渎

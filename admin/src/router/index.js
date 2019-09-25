@@ -220,6 +220,7 @@ const routeBase = [
   { path: '/excel', name: 'excel', component: () => import('@/views/home/excel'), hidden: true },
   { path: '/upload', name: 'upload', component: () => import('@/views/home/upload'), hidden: true },
   { path: '/websocket', name: 'websocket', component: () => import('@/views/home/websocket'), hidden: true },
+  { path: '/clipboard', name: 'clipboard', component: () => import('@/views/home/clipboard'), hidden: true },
   { path: '/echarts', name: 'echarts', component: () => import('@/views/echarts/index'), hidden: true },
   // { path: '/index', component: () => import('@/views/home/index'), hidden: true },
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
