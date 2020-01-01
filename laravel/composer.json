@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.0",
+        "auroralzdf/big-file-upload": "^2.0",
         "baijunyao/laravel-scout-elasticsearch": "^2.1",
         "barryvdh/laravel-cors": "^0.11.2",
         "fideloper/proxy": "^3.0",

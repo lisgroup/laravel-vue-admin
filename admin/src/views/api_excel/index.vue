@@ -492,7 +492,7 @@ export default {
       this.$emit('getItem', this.form.apiParam)
     },
     init() {
-      getListParam({ perPage: 20 }).then(response => {
+      getListParam({ perPage: 100 }).then(response => {
         this.apiParam = response.data.data
       })
     },

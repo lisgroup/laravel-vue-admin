@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "735d586206be25fd4abb1041dd06e871",
+    "content-hash": "93d7b8751900d5dff6dcd4b08b22cad9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -63,6 +63,45 @@
                 "stack"
             ],
             "time": "2017-12-20T14:37:45+00:00"
+        },
+        {
+            "name": "auroralzdf/big-file-upload",
+            "version": "V2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AuroraLZDF/webupoloader-bigFile.git",
+                "reference": "c84dd4f3a406b458807c9ff4fd2fe4145d56ce32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AuroraLZDF/webupoloader-bigFile/zipball/c84dd4f3a406b458807c9ff4fd2fe4145d56ce32",
+                "reference": "c84dd4f3a406b458807c9ff4fd2fe4145d56ce32",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AuroraLZDF\\Bigfile\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "aurora",
+                    "email": "18862324237@163.com"
+                }
+            ],
+            "description": "chunk upload big file...",
+            "time": "2019-02-28T06:04:23+00:00"
         },
         {
             "name": "baijunyao/laravel-scout-elasticsearch",
