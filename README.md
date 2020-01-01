@@ -98,7 +98,7 @@ php artisan elasticsearch:import "App\Models\Line"
   mbstring
 ```
 
-安装方法参见：[TNTSearch+jieba-php 实现中文全文搜索](laravel/readme/5. 2018-12-17-TNTSearch 使用.md)
+安装方法参见：[TNTSearch+jieba-php 实现中文全文搜索](laravel/readme/5.%202018-12-17-TNTSearch%20使用.md)
 
 ### 5. 启动 laravels 服务 (可选)
 需安装 swoole 扩展，开启后监听 5200 端口。laravels 升级后命令如下：
