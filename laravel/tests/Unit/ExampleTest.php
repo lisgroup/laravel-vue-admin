@@ -100,7 +100,7 @@ class ExampleTest extends TestCase
     public function initDataProvider()
     {
         return [
-            ['学院君1'],
+            ['学院君'],
             ['Laravel学院']
         ];
     }
