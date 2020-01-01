@@ -28,7 +28,7 @@
             },
             "require": {
                 "php": ">=5.5.9",
-                "symfony/http-foundation": "~2.7|~3.0|~4.0",
+                "symfony/http-foundation": "~3.4.35|~4.0",
                 "symfony/http-kernel": "~2.7|~3.0|~4.0"
             },
             "require-dev": {
@@ -182,7 +182,7 @@
                 "asm89/stack-cors": "^1.2",
                 "illuminate/support": "5.5.x|5.6.x|5.7.x|5.8.x",
                 "php": ">=7",
-                "symfony/http-foundation": "^3.1|^4",
+                "symfony/http-foundation": "^3.4.35|^4",
                 "symfony/http-kernel": "^3.1|^4"
             },
             "require-dev": {
@@ -1897,7 +1897,7 @@
                 "symfony/console": "~3.3",
                 "symfony/debug": "~3.3",
                 "symfony/finder": "~3.3",
-                "symfony/http-foundation": "~3.3",
+                "symfony/http-foundation": "~3.4.35",
                 "symfony/http-kernel": "~3.3",
                 "symfony/process": "~3.3",
                 "symfony/routing": "~3.3",
@@ -4112,7 +4112,7 @@
                 "symfony/config": "~3.4|~4.0",
                 "symfony/dependency-injection": "~3.4|~4.0",
                 "symfony/expression-language": "~3.4|~4.0",
-                "symfony/http-foundation": "^3.4|^4.0",
+                "symfony/http-foundation": "^3.4.35|^4.0",
                 "symfony/service-contracts": "^1.1",
                 "symfony/stopwatch": "~3.4|~4.0"
             },
@@ -4273,7 +4273,7 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.4.29",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
@@ -4356,7 +4356,7 @@
                 "psr/log": "~1.0",
                 "symfony/debug": "^3.3.3|~4.0",
                 "symfony/event-dispatcher": "~2.8|~3.0|~4.0",
-                "symfony/http-foundation": "~3.4.12|~4.0.12|^4.1.1",
+                "symfony/http-foundation": "^3.4.35|~4.0.12|^4.1.1",
                 "symfony/polyfill-ctype": "~1.8"
             },
             "conflict": {
@@ -5023,7 +5023,7 @@
                 "symfony/config": "^3.3.1|~4.0",
                 "symfony/dependency-injection": "~3.3|~4.0",
                 "symfony/expression-language": "~2.8|~3.0|~4.0",
-                "symfony/http-foundation": "~2.8|~3.0|~4.0",
+                "symfony/http-foundation": "~3.4.35|~4.0",
                 "symfony/yaml": "~3.4|~4.0"
             },
             "suggest": {
