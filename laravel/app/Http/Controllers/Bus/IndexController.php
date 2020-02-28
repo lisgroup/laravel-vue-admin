@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Bus;
 
 use App\Http\Repository\BusRepository;
 use App\Http\Repository\NewBusRepository;
+use App\Models\Line;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -161,7 +162,7 @@ class IndexController extends CommonController
         if (empty($params['wd'])) {
             return $this->out(200, [], 'param error');
         }
-        $list = \App\Models\Line::search($params['wd'])->get()->toArray();
+        $list = Line::search($params['wd'])->get()->toArray();
         return $this->out(200, $list);
     }
 

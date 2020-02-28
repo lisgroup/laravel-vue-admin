@@ -20,6 +20,7 @@
     </el-table>
 
     <float-button :text="Flush" :font-size="16" @onFloatBtnClicked="handleReload()" />
+    <Footer/>
   </div>
 </template>
 
@@ -27,12 +28,14 @@
 import request from '@/utils/request'
 import fieldSet from '../../components/common/fieldSet'
 import FloatButton from '../../components/FloatButton'
+import { Footer } from '../../layout/components'
 
 export default {
   name: 'Lines',
   components: {
     fieldSet,
-    FloatButton
+    FloatButton,
+    Footer
   },
   data() {
     return {

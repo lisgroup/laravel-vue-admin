@@ -27,14 +27,20 @@
         </el-table>
       </div>
     </el-card>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import XLSX from 'xlsx'
 import request from '../../utils/request'
+import { Footer } from '../../layout/components'
 
 export default {
+  name: 'Excel',
+  components: {
+    Footer
+  },
   data() {
     return {
       fileList: [],

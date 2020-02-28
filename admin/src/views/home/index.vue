@@ -25,17 +25,20 @@
         </template>
       </el-table-column>
     </el-table>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import request from '@/utils/request'
 import fieldSet from '../../components/common/fieldSet'
+import { Footer } from '../../layout/components'
 
 export default {
   name: 'Index',
   components: {
-    fieldSet
+    fieldSet,
+    Footer
   },
   data() {
     return {
