@@ -62,7 +62,7 @@ export default {
       }
 
       const query = { linename: line }
-      this.$router.push({ name: 'index', query })
+      this.$router.push({ name: 'bus', query })
 
       this.isShow = true
       const url = '/api/getList?linename=' + line
