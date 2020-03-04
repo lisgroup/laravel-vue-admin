@@ -86,7 +86,7 @@ export default {
         })
         return false
       }
-      this.$router.push({ name: 'index', query: { linename: line }})
+      this.$router.push({ name: 'bus', query: { linename: line }})
     }
   }
 }
