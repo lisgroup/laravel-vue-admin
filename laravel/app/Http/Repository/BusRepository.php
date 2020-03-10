@@ -369,7 +369,7 @@ class BusRepository
                 $arr = json_decode($res['d'], true);
                 // 处理数组
                 $return = [];
-                if ($arr['Document']) {
+                if (isset($arr['Document']['StandInfo'])) {
                     $lName = $arr['Document']['LName'] ?? '';
                     $lDir = $arr['Document']['LDirection'] ?? '';
                     $return['to'] = $lName.'-'.$lDir;
