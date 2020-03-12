@@ -212,7 +212,7 @@ export const asyncRoutes = [...routeAdmin, ...routeSuper, ...routeTest]
 
 // 基础路由
 const routeBase = [
-  { path: '/', name: 'article', component: () => import('@/views/home/article'), hidden: true },
+  { path: '/', name: 'bus', component: () => import('@/views/home/index'), hidden: true },
   { path: '/bus', name: 'bus', component: () => import('@/views/home/index'), hidden: true },
   { path: '/line', name: 'line', component: () => import('@/views/home/line'), hidden: true },
   { path: '/home', component: () => import('@/views/home/home'), hidden: true },
