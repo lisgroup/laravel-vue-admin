@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <a href="http://www.beian.miit.gov.cn/" target="_blank">苏ICP备19019285号-1</a>
-    <a href="www.guke1.com">© guke1.com</a>
+    <a href="https://www.guke1.com/#/">© guke1.com</a>
     <span class="copy-right">版权所有</span>
   </footer>
 </template>
