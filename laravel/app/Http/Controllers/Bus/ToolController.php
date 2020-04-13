@@ -43,10 +43,17 @@ class ToolController extends CommonController
     {
         $hex = strtoupper($request->input('input'));
         $hex = str_replace('\\X', '', $hex);
+        if (!preg_match("/^[A-Fa-f0-9]+$/", $hex)) {
+            return $this->out(1006);
+        }
         $str = "";
         for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
             $str .= chr(hexdec($hex[$i].$hex[$i + 1]));
         }
-        return $this->out(200, ['output' => $str]);
+        if (preg_match('~[\x{4e00}-\x{9fa5}]+~u', $str, $tmp)) {
+            return $this->out(200, ['output' => (string)$str]);
+        }
+        return $this->out(4009);
     }
+
 }
