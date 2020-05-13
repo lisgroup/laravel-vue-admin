@@ -126,6 +126,9 @@ class UserController extends Controller
      */
     public function update(Update $request, $id)
     {
+        if (env('APP_ENV') == 'demo' && $id == User::ADMIN_ID) {
+            return $this->out(4000, [], 'Password modification is not allowed for demo account');
+        }
         $user = User::findOrFail($id);
         // 新增角色操作
         $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段

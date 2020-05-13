@@ -10,6 +10,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    const ADMIN_ID = 1; // 超级管理员 ID
+
     /**
      * The attributes that are mass assignable.
      *
