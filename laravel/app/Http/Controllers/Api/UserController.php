@@ -202,8 +202,8 @@ class UserController extends Controller
     private function demoForbid($id)
     {
         if (env('APP_ENV') == 'demo' && $id == User::ADMIN_ID) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }
