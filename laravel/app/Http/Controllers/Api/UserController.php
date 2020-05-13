@@ -126,8 +126,8 @@ class UserController extends Controller
      */
     public function update(Update $request, $id)
     {
-        if (env('APP_ENV') == 'demo' && $id == User::ADMIN_ID) {
-            return $this->out(4000, [], 'Password modification is not allowed for demo account');
+        if ($this->demoForbid($id)) {
+            return $this->out(4000, [], 'demo account Do Not Operate');
         }
         $user = User::findOrFail($id);
         // 新增角色操作
@@ -161,6 +161,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if ($this->demoForbid($id)) {
+            return $this->out(4000, [], 'demo account Do Not Operate');
+        }
         if (User::findOrFail($id)->delete()) {
             $data = ['msg' => '删除成功', 'errno' => 0];
         } else {
@@ -189,5 +192,18 @@ class UserController extends Controller
     {
         $faker = \Faker\Factory::create();
         return $faker->email;
+    }
+
+    /**
+     * demo do not operate
+     * @param $id
+     * @return bool
+     */
+    private function demoForbid($id)
+    {
+        if (env('APP_ENV') == 'demo' && $id == User::ADMIN_ID) {
+            return false;
+        }
+        return true;
     }
 }
