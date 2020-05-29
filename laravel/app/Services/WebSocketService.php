@@ -68,7 +68,7 @@ class WebSocketService implements WebSocketHandlerInterface
                             // 设置过期时间
                             $this->redis->expire($redisKey, 6000);
                         }
-                        if ($count > 200) { // 防止刷单的安全拦截
+                        if ($count > 20000) { // 防止刷单的安全拦截
                             break; // 超出就跳出循环
                         }
                     } else {
