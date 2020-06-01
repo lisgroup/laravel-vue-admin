@@ -89,7 +89,7 @@ class ApiRepository
                 continue;
             }
             // 记录完成率
-            $finish = ($excel->total_excel / ($excel->sort_index + 1)) * 100;
+            $finish = (($excel->sort_index + 1) / $excel->total_excel) * 100;
             $finish = sprintf("%.2f", $finish);
             if (($finish > '96' && strtotime($excel->created_at) + 5 < time()) || ($finish > '50' && strtotime($excel->created_at) + 60 < time()) || ($finish > '10' && strtotime($excel->created_at) + 300 < time()) || ($finish > '1' && strtotime($excel->created_at) + 600 < time())) {
                 ApiExcel::where('id', $excel->id)->update(['state' => 5]);
