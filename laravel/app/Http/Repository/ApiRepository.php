@@ -78,8 +78,7 @@ class ApiRepository
         // 2. 完成率 50% -- 1 分钟不再增加
         // 3. 完成率 10% -- 5 分钟不再增加
         // 4. 完成率 1%  -- 10 分钟不再增加
-        $excels = DB::connection()->select('SELECT ae.id,ae.api_param_id,ae.state,ae.total_excel,ael.api_excel_id,ael.sort_index,ael.created_at FROM `boss_api_excel` ae LEFT JOIN boss_api_excel_logs ael ON ae.id=ael.api_excel_id AND ael.id=(SELECT c.id FROM boss_api_excel_logs c WHERE ael.api_excel_id=c.api_excel_id ORDER BY sort_index DESC LIMIT 1)
-WHERE ae.state=1 AND ae.`deleted_at` IS NULL ');
+        $excels = DB::connection()->select('SELECT ae.id,ae.api_param_id,ae.state,ae.total_excel,ael.api_excel_id,ael.sort_index,ael.created_at FROM `boss_api_excel` ae LEFT JOIN boss_api_excel_logs ael ON ae.id=ael.api_excel_id AND ael.id=(SELECT id FROM boss_api_excel_logs WHERE boss_api_excel_logs.api_excel_id=ae.id ORDER BY sort_index DESC LIMIT 1) WHERE ae.state=1 AND ae.`deleted_at` IS NULL ');
 
         foreach ($excels as $excel) {
             // 开启任务后 10 分钟未查询出结果=》失败
