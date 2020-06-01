@@ -11,6 +11,7 @@ namespace App\Http\Repository;
 
 use App\Models\ApiExcel;
 use App\Models\ApiExcelLogs;
+use Illuminate\Support\Facades\DB;
 
 class ApiRepository
 {
@@ -70,14 +71,29 @@ class ApiRepository
     public function autoFailed()
     {
         // 查询数据库已完成的任务，判断过期条件
-        $excels = ApiExcel::where('state', 1)->get(['id', 'auto_delete', 'created_at', 'updated_at']);
+        // $excels = ApiExcel::where('state', 1)->get(['id', 'auto_delete', 'created_at', 'updated_at']);
+
+        // New: 2020-05-31 失败任务的条件
+        // 1. 完成率 96% -- 5 秒不再增加
+        // 2. 完成率 50% -- 1 分钟不再增加
+        // 3. 完成率 10% -- 5 分钟不再增加
+        // 4. 完成率 1%  -- 10 分钟不再增加
+        $excels = DB::connection()->select('SELECT ae.id,ae.api_param_id,ae.state,ae.total_excel,ael.api_excel_id,ael.sort_index,ael.created_at FROM `boss_api_excel` ae LEFT JOIN boss_api_excel_logs ael ON ae.id=ael.api_excel_id AND ael.id=(SELECT id FROM boss_api_excel_logs WHERE boss_api_excel_logs.api_excel_id=ae.id ORDER BY sort_index DESC LIMIT 1) WHERE ae.state=1 AND ae.`deleted_at` IS NULL ');
 
         foreach ($excels as $excel) {
             // 开启任务后 10 分钟未查询出结果=》失败
-            if ($excel['auto_delete'] > 0 && strtotime($excel['updated_at']) + 600 < time()) {
-                ApiExcel::where('id', $excel['id'])->update(['state' => 5]);
+            // if ($excel['auto_delete'] > 0 && strtotime($excel['updated_at']) + 600 < time()) {
+            //     ApiExcel::where('id', $excel['id'])->update(['state' => 5]);
+            // }
+            if (!$excel->sort_index || !$excel->created_at) {
+                continue;
             }
-
+            // 记录完成率
+            $finish = (($excel->sort_index + 1) / $excel->total_excel) * 100;
+            $finish = sprintf("%.2f", $finish);
+            if (($finish > '96' && strtotime($excel->created_at) + 5 < time()) || ($finish > '50' && strtotime($excel->created_at) + 60 < time()) || ($finish > '10' && strtotime($excel->created_at) + 300 < time()) || ($finish > '1' && strtotime($excel->created_at) + 600 < time())) {
+                ApiExcel::where('id', $excel->id)->update(['state' => 5]);
+            }
         }
     }
 
