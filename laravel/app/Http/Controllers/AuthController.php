@@ -6,8 +6,9 @@ namespace App\Http\Controllers;
 // use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\Controller;
 use App\Events\LoginEvent;
+use App\Events\LoginSwooleEvent;
 use App\Http\Repository\UserRepository;
-// use Hhxsv5\LaravelS\Swoole\Task\Event;
+use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Jenssegers\Agent\Agent;
 
 class AuthController extends Controller
@@ -41,7 +42,7 @@ class AuthController extends Controller
         // 1. 验证 geetest
         $result = (UserRepository::getInstent())->verifyCaptcha($input);
         if (!$result || empty($input['username']) || empty($input['password'])) {
-            return $this->out(1207);
+            // return $this->out(1207);
         }
 
         // 2. 验证用户名密码
@@ -52,8 +53,12 @@ class AuthController extends Controller
         // return $this->respondWithToken($token);
 
         // 登录成功，触发事件
-        event(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
-        // Event::fire(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
+        // 如果是 cli 模式使用 laravels Task 异步事件
+        if (substr(PHP_SAPI, 0, 3) == 'cli') {
+            Event::fire(new LoginSwooleEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
+        } else {
+            event(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
+        }
 
         $data = [
             'access_token' => $token,
