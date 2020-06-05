@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\ApiExcelEvent;
+use App\Events\ApiExcelSwooleEvent;
 use App\Http\Repository\ApiRepository;
 use App\Http\Repository\ExcelRepository;
 use App\Http\Requests\ApiExcel\Store;
 use App\Http\Requests\ApiExcel\Update;
 use App\Models\ApiExcel;
 use App\Http\Controllers\Controller;
+use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -131,15 +133,33 @@ class ApiExcelController extends Controller
         if (!$task || $task['state'] != 0) {
             return $this->out(4007);
         }
-        $task->state = 1;
+
         // 3. 更新表字段状态
-        $task->save();
+        $task->state = 1;
 
         // 4. 写入事件中处理
-        $task = $task->toArray();
-        event(new ApiExcelEvent($task));
+        $data = $task->toArray();
 
-        return $this->out(200, [], '任务加入成功，请稍后下载处理结果');
+        // 如果是 cli 模式使用 laravels Task 异步事件
+        if (substr(PHP_SAPI, 0, 3) == 'cli') {
+            // 触发事件--实例化并通过fire触发，此操作是异步的，触发后立即返回，由Task进程继续处理监听器中的handle逻辑
+            $event = new ApiExcelSwooleEvent($data);
+            // $event = new TestEvent('event data');
+            // $event->delay(10); // 延迟10秒触发
+            $event->setTries(2); // 出现异常时，累计尝试3次
+            $success = Event::fire($event);
+            // var_dump($success);// 判断是否触发成功
+        } else {
+            $success = event(new ApiExcelEvent($data));
+        }
+        $code = 200;
+        if (!$success) {
+            $code = 5000;
+            $task->state = 0;
+        }
+        $task->save();
+
+        return $this->out($code, [], '任务加入成功，请稍后下载处理结果');
     }
 
     /**
@@ -191,7 +211,7 @@ class ApiExcelController extends Controller
      * Show the form for editing the specified resource.
      * 编辑展示数据
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -205,8 +225,8 @@ class ApiExcelController extends Controller
      * Update the specified resource in storage.
      * 更新数据
      *
-     * @param  Update $request
-     * @param  int $id
+     * @param Update $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Update $request, $id)
@@ -226,7 +246,7 @@ class ApiExcelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -269,7 +289,7 @@ class ApiExcelController extends Controller
 
     /**
      * 下载已完成数据
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function downloadLog()
