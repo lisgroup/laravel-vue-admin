@@ -34,7 +34,7 @@ return [
             // \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
             // 两种配置参数的方式：
             // [\App\Jobs\Timer\TestCronJob::class, [1000, true]], // 注册时传入参数
-            \App\Jobs\Timer\TestCronJob::class, // 重载对应的方法来返回参数
+            // \App\Jobs\Timer\TestCronJob::class, // 重载对应的方法来返回参数
             // Enable LaravelScheduleJob to run `php artisan schedule:run` every 1 minute, replace Linux Crontab
             //\Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
             // Two ways to configure parameters:
