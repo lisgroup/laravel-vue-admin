@@ -146,7 +146,7 @@ class ApiExcelController extends Controller
             $event = new ApiExcelSwooleEvent($data);
             // $event = new TestEvent('event data');
             // $event->delay(10); // 延迟10秒触发
-            $event->setTries(2); // 出现异常时，累计尝试3次
+            // $event->setTries(2); // 出现异常时，累计尝试3次
             $success = Event::fire($event);
             // var_dump($success);// 判断是否触发成功
         } else {
