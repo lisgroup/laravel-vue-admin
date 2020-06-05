@@ -49,9 +49,12 @@ return [
         \App\Events\TestEvent::class => [
             \App\Listeners\TestListener::class,
         ],
-        // App\Events\LoginEvent::class => [
-        //     App\Listeners\LoginListener::class,
-        // ],
+        \App\Events\ApiExcelSwooleEvent::class => [
+            \App\Listeners\ApiExcelSwooleListener::class,
+        ],
+        App\Events\LoginSwooleEvent::class => [
+            App\Listeners\LoginSwooleListener::class,
+        ],
     ],
     'swoole_tables'            => [
     ],
