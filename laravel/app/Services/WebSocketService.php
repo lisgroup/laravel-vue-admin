@@ -106,7 +106,7 @@ class WebSocketService implements WebSocketHandlerInterface
      * @param array $data
      * @param string $reason
      *
-     * @return array
+     * @return false|string
      */
     public function outJson($code = 200, $data = [], $reason = 'success')
     {
@@ -123,7 +123,7 @@ class WebSocketService implements WebSocketHandlerInterface
      *
      * @param $id
      *
-     * @return array
+     * @return false|string
      */
     protected function getRateById($id)
     {
@@ -140,7 +140,7 @@ class WebSocketService implements WebSocketHandlerInterface
      *
      * @param int $user_id 用户 id
      *
-     * @return array
+     * @return false|string
      */
     private function apiExcel($user_id)
     {
