@@ -131,7 +131,7 @@ class ApiExcelController extends Controller
         // 2. 查询数据库中任务真实状态
         $task = ApiExcel::find($data['id']);
         if (!$task || $task['state'] != 0) {
-            return $this->out(4007);
+            return $this->out(4009);
         }
 
         // 3. 更新表字段状态
