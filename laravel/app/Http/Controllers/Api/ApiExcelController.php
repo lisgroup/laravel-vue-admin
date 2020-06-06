@@ -21,7 +21,7 @@ class ApiExcelController extends Controller
      */
     public $perPage = 10;
 
-    private $request = null;
+    // private $request = null;
 
     /**
      * Create a new AuthController instance.
@@ -42,7 +42,6 @@ class ApiExcelController extends Controller
         $perPage = intval($request->input('perPage'));
         $this->perPage = $perPage ?? 11;
 
-        $this->request || $this->request = $request;
     }
 
     /**
@@ -50,7 +49,7 @@ class ApiExcelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user_id = auth('api')->user()['id'];
 
@@ -59,7 +58,9 @@ class ApiExcelController extends Controller
         if ($user_id != 1) {
             $where = ['uid' => $user_id];
         }
-        $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($this->perPage);
+        $perPage = intval($request->input('perPage'));
+        $perPage = $perPage ?? 11;
+        $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($perPage);
         // 获取完成进度情况
         $list = ApiRepository::getInstent()->workProgress($list);
 
@@ -82,7 +83,7 @@ class ApiExcelController extends Controller
         // 上传文件
         if ($request->isMethod('post')) {
 
-            $file = $this->request->file('file');
+            $file = $request->file('file');
             // 文件是否上传成功
             if ($file->isValid()) {
 
@@ -114,9 +115,9 @@ class ApiExcelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function startTask()
+    public function startTask(Request $request)
     {
-        $data = $this->request->all();
+        $data = $request->all();
         // $data = ['id' => 2, 'api_excel_id' => 1, 'appkey' => '123','upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
         // 1. 检测参数是否正常
         if (empty($data['id']) || !isset($data['state']) || empty($data['upload_url'])) {
@@ -292,9 +293,9 @@ class ApiExcelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function downloadLog()
+    public function downloadLog(Request $request)
     {
-        $api_excel_id = $this->request->input('id');
+        $api_excel_id = $request->input('id');
         // 判断用户有没有下载权限
         $user_id = auth('api')->user()['id'];
         // $user_id = 1;
