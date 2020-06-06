@@ -27,7 +27,7 @@
         </el-table>
       </div>
     </el-card>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 

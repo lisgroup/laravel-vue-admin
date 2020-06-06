@@ -2,7 +2,7 @@
   <div class="container">
     <input v-model="message" type="text">
     <button type="button" @click="doCopy('add me!')">Copy!</button>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 <script>

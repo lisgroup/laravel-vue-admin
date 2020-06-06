@@ -25,7 +25,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 

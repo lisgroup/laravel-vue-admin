@@ -30,7 +30,7 @@
         </el-main>
       </el-container>
     </el-container>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 

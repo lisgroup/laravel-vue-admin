@@ -20,7 +20,7 @@
     </el-table>
 
     <float-button :text="Flush" :font-size="16" @onFloatBtnClicked="handleReload()" />
-    <Footer/>
+    <Footer />
   </div>
 </template>
 

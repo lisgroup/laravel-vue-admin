@@ -44,7 +44,7 @@
       <el-col :span="7">&nbsp;&nbsp;</el-col>
       <el-col :span="1"><el-button @click="copyOutput">一键复制输出内容</el-button></el-col>
     </el-row>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 

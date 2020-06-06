@@ -35,7 +35,7 @@
       </div>
     </div>
     <div id="msg" />
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
