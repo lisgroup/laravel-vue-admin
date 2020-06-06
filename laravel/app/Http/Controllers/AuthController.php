@@ -54,7 +54,7 @@ class AuthController extends Controller
 
         // 登录成功，触发事件
         // 如果是 cli 模式使用 laravels Task 异步事件
-        if (substr(PHP_SAPI, 0, 3) == 'cli') {
+        if (PHP_SAPI == 'cli') {
             Event::fire(new LoginSwooleEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
         } else {
             event(new LoginEvent(auth('api')->user(), new Agent(), \Request::getClientIp(), time()));
