@@ -669,7 +669,7 @@ class MultithreadingRepository
     /**
      * BusRepository constructor.
      */
-    private function __construct()
+    public function __construct()
     {
         //$this->ql || $this->ql = QueryList::getInstance();
     }

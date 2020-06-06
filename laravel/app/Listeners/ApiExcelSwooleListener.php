@@ -38,7 +38,8 @@ class ApiExcelSwooleListener extends Listener
                     $apiExcel = ApiExcel::find($data['id']);
                     $param = $apiExcel->apiParam()->first();
                     if ($param) {
-                        $multi = MultithreadingRepository::getInstent();
+                        // $multi = MultithreadingRepository::getInstent();
+                        $multi = new MultithreadingRepository();
                         $multi->setApiExcelId($data['id']);
                         $multi->setParam($path, ['concurrent' => $apiExcel->concurrent]);
                         $is_open = $apiExcel->concurrent > 1;
@@ -59,6 +60,8 @@ class ApiExcelSwooleListener extends Listener
                         $fileName = $multi->saveExcel($param, $result);
 
                         if (!$fileName) {
+                            $apiExcel->state = 5;
+                            $apiExcel->save();
                             throw new \Exception(date('Y-m-d H:i:s').' 任务失败： Writer\Exception～！');
                         }
 
