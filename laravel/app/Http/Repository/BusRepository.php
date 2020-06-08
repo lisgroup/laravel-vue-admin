@@ -415,8 +415,12 @@ class BusRepository
                 'LineGuid' => $task['LineGuid'],
                 'LineInfo' => $task['LineInfo'],
             ];
-            $data = $this->getLineData2('APTSLine.aspx', $post)['line'];
-            $content = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $result = $this->getLineData2('APTSLine.aspx', $post);
+            if (!isset($result['line'])) {
+                continue;
+            }
+
+            $content = json_encode($result['line'], JSON_UNESCAPED_UNICODE);
             if (!empty($content) && strlen($content) > 20) {
                 // 入库操作 1 ----- 木渎
                 $cron = ['line_info' => $post['LineInfo'], 'content' => $content];
