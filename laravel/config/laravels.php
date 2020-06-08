@@ -31,15 +31,12 @@ return [
         'enable' => true, // 开启定时任务类
         'jobs'   => [
             // 启用LaravelScheduleJob来执行`php artisan schedule:run`，每分钟一次，替代Linux Crontab
-            \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
+            // \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
             // 两种配置参数的方式：
             // [\App\Jobs\Timer\TestCronJob::class, [1000, true]], // 注册时传入参数
             // \App\Jobs\Timer\TestCronJob::class, // 重载对应的方法来返回参数
-            // Enable LaravelScheduleJob to run `php artisan schedule:run` every 1 minute, replace Linux Crontab
-            //\Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
-            // Two ways to configure parameters:
-            // [\App\Jobs\XxxCronJob::class, [1000, true]], // Pass in parameters when registering
-            // \App\Jobs\XxxCronJob::class, // Override the corresponding method to return the configuration
+            App\Jobs\Timer\FiveMinutesCronJob::class,
+            App\Jobs\Timer\HourlyCronJob::class,
         ],
         'pid_file'      => storage_path('laravels-timer.pid'),
         'max_wait_time' => 5, // Reload 时最大等待时间
