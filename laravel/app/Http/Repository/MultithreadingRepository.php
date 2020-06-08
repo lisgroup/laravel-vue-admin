@@ -458,7 +458,7 @@ class MultithreadingRepository
             $returnArray[$k]['param'] = $this->dataSet['data'][$k];
             $returnArray[$k]['result'] = $v;
         }
-        Log::info('return-array', $returnArray);
+        // Log::info('return-array', $returnArray);
         return $returnArray;
     }
 

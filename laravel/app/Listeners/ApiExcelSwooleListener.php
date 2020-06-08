@@ -48,7 +48,7 @@ class ApiExcelSwooleListener extends Listener
                         ksort($result);
 
                         // 正式上线后注释下一行
-                        \Log::info('ID-'.$data['id'].'-result: ', $result);
+                        // \Log::info('ID-'.$data['id'].'-result: ', $result);
                         if (!$result) {
                             // 更新任务失败
                             $apiExcel->state = 5;
