@@ -237,16 +237,17 @@ class BusRepository
         }
         try {
             // 新版本直接调用接口
-            $url = 'http://www.szjt.gov.cn/BusQu/APTSLine.aspx/GetData';
-            $param = '{"num":"'.$line.'"}';
+            $param = http_build_query(['LineName' => $line]);
+            $url = 'http://jtj.suzhou.gov.cn/szinf/interfaceJtj/gjxlcx?'.$param;
             $header = [
                 'content-type: Application/json',
                 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36',
                 'Accept: application/json',
-                'Host: www.szjt.gov.cn',
-                'Origin: http://www.szjt.gov.cn',
+                'Host: jtj.suzhou.gov.cn/',
+                'Origin: http://jtj.suzhou.gov.cn/',
+                'X-Requested-With: XMLHttpRequest',
             ];
-            $data = Http::getInstent()->post($url, $param, 4, $header);
+            $data = Http::getInstent()->post($url, [], 4, $header);
 
             if ($data['content']) {
                 $res = json_decode($data['content'], true);
