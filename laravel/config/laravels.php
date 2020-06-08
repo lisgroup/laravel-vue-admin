@@ -35,8 +35,8 @@ return [
             // 两种配置参数的方式：
             // [\App\Jobs\Timer\TestCronJob::class, [1000, true]], // 注册时传入参数
             // \App\Jobs\Timer\TestCronJob::class, // 重载对应的方法来返回参数
-            App\Jobs\Timer\FiveMinutesCronJob::class,
-            App\Jobs\Timer\HourlyCronJob::class,
+            // App\Jobs\Timer\FiveMinutesCronJob::class,
+            // App\Jobs\Timer\HourlyCronJob::class,
         ],
         'pid_file'      => storage_path('laravels-timer.pid'),
         'max_wait_time' => 5, // Reload 时最大等待时间
