@@ -42,7 +42,7 @@ class AuthController extends Controller
         // 1. 验证 geetest
         $result = (UserRepository::getInstent())->verifyCaptcha($input);
         if (!$result || empty($input['username']) || empty($input['password'])) {
-            // return $this->out(1207);
+            return $this->out(1207);
         }
 
         // 2. 验证用户名密码
