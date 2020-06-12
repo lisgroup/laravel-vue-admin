@@ -65,9 +65,7 @@ export default {
         markdown: '',
         content: '0',
         is_top: 0,
-        loading: false,
-        // 请求需要携带 token
-        uploadUrl: process.env.VUE_APP_BASE_API + '/api/upload?token=' + getToken()
+        loading: false
       },
       rules: {
         title: [
@@ -166,9 +164,9 @@ export default {
     imgAdd(pos, $file) {
       // 第一步.将图片上传到服务器.
       var formdata = new FormData()
-      formdata.append('image', $file)
+      formdata.append('file', $file)
       axios({
-        url: this.uploadUrl,
+        url: process.env.VUE_APP_BASE_API + '/api/upload?token=' + getToken(),
         method: 'post',
         data: formdata,
         headers: { 'Content-Type': 'multipart/form-data' }
