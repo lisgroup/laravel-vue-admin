@@ -38,10 +38,20 @@
 </template>
 
 <script>
+// import with ES6
+// import mavonEditor from 'mavon-editor'
+import { mavonEditor } from 'mavon-editor'
+// markdown-it对象：md.s_markdown, md => mavonEditor 实例
+import 'mavon-editor/dist/css/index.css'
+import { getToken } from '@/utils/auth'
+
 import { axios, edit, postEdit } from '@/api/article'
 import { getList } from '@/api/category'
 
 export default {
+  components: {
+    mavonEditor
+  },
   data() {
     return {
       item: '',
@@ -55,7 +65,9 @@ export default {
         markdown: '',
         content: '0',
         is_top: 0,
-        loading: false
+        loading: false,
+        // 请求需要携带 token
+        uploadUrl: process.env.VUE_APP_BASE_API + '/api/upload?token=' + getToken()
       },
       rules: {
         title: [
@@ -156,7 +168,7 @@ export default {
       var formdata = new FormData()
       formdata.append('image', $file)
       axios({
-        url: 'http://localhost/',
+        url: this.uploadUrl,
         method: 'post',
         data: formdata,
         headers: { 'Content-Type': 'multipart/form-data' }
