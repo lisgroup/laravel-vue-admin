@@ -10,10 +10,16 @@
 
 namespace App\Events;
 
+use App\Listeners\TestListener;
 use Hhxsv5\LaravelS\Swoole\Task\Event;
 
 class TestEvent extends Event
 {
+    protected $listeners = [
+        // Listener list
+        TestListener::class,
+    ];
+
     private $data;
 
     public function __construct($data)

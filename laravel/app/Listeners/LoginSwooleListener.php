@@ -3,17 +3,17 @@
 namespace App\Listeners;
 
 
-use Hhxsv5\LaravelS\Swoole\Task\Event;
+use App\Events\LoginSwooleEvent;
 use Hhxsv5\LaravelS\Swoole\Task\Listener;
 use Illuminate\Support\Facades\DB;
 use Zhuzhichao\IpLocationZh\Ip;
 
 class LoginSwooleListener extends Listener
 {
-    // 声明没有参数的构造函数
-    public function __construct()
-    {
-    }
+    /**
+     * @var LoginSwooleEvent
+     */
+    protected $event;
 
     /**
      * 失败重试次数
@@ -24,11 +24,10 @@ class LoginSwooleListener extends Listener
 
     /**
      * handle 方法中处理事件
-     *
-     * @param Event $event
      */
-    public function handle(Event $event)
+    public function handle()
     {
+        $event = $this->event;
         // 获取事件中保存的信息
         $user = $event->getUser();
         $agent = $event->getAgent();

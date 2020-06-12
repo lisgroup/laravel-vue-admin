@@ -144,6 +144,7 @@ class ApiExcelController extends Controller
         // 如果是 cli 模式使用 laravels Task 异步事件
         if (PHP_SAPI == 'cli' && extension_loaded('swoole')) {
             // 触发事件--实例化并通过fire触发，此操作是异步的，触发后立即返回，由Task进程继续处理监听器中的handle逻辑
+            // \Log::info(__CLASS__.': start task', $data);
             $event = new ApiExcelSwooleEvent($data);
             // $event = new TestEvent('event data');
             // $event->delay(10); // 延迟10秒触发

@@ -3,6 +3,7 @@
 namespace App\Events;
 
 
+use App\Listeners\LoginSwooleListener;
 use Hhxsv5\LaravelS\Swoole\Task\Event;
 // use Illuminate\Queue\SerializesModels;
 // use Illuminate\Foundation\Events\Dispatchable;
@@ -13,7 +14,9 @@ use Jenssegers\Agent\Agent;
 
 class LoginSwooleEvent extends Event
 {
-    // use Dispatchable, InteractsWithSockets, SerializesModels;
+    protected $listeners = [
+        LoginSwooleListener::class,
+    ];
 
     /**
      * @var User 用户模型

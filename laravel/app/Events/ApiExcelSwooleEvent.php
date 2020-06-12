@@ -10,10 +10,15 @@
 
 namespace App\Events;
 
+use App\Listeners\ApiExcelSwooleListener;
 use Hhxsv5\LaravelS\Swoole\Task\Event;
 
 class ApiExcelSwooleEvent extends Event
 {
+    protected $listeners = [
+        ApiExcelSwooleListener::class,
+    ];
+
     private $data;
 
     public function __construct($data)

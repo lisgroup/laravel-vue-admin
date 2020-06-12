@@ -10,24 +10,25 @@
 namespace App\Listeners;
 
 
+use App\Events\ApiExcelSwooleEvent;
 use App\Http\Repository\MultithreadingRepository;
 use App\Models\ApiExcel;
-use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Hhxsv5\LaravelS\Swoole\Task\Listener;
 
 class ApiExcelSwooleListener extends Listener
 {
-    // 声明没有参数的构造函数
-    public function __construct()
-    {
-    }
+    /**
+     * @var ApiExcelSwooleEvent
+     */
+    protected $event;
 
-    public function handle(Event $event)
+    public function handle()
     {
-        \Log::info(__CLASS__.':handle start', [$event->getData()]);
+        $data = $this->event->getData();
+        \Log::info(__CLASS__.': handle start', [$data]);
         // 获取事件中保存的数据
         // $data = ['id' => 6, 'state' => 1, 'upload_url' => '/storage/20190318_103542_5c8f03fe14d89.xlsx'];
-        $data = $event->getData();
+        // $data = $event->getData();
         // 根据状态处理数据
         switch ($data['state']) {
             case 1:
@@ -53,7 +54,9 @@ class ApiExcelSwooleListener extends Listener
                             // 更新任务失败
                             $apiExcel->state = 5;
                             $apiExcel->save();
-                            throw new \Exception(date('Y-m-d H:i:s').' 任务失败： 第三方请求错误～！'.$param['url']);
+                            \Log::error(__CLASS__.': Line '.__LINE__.' - error'.date('Y-m-d H:i:s').' 任务失败： 第三方请求错误～！'.$param['url'], []);
+                            return;
+                            // throw new \Exception(date('Y-m-d H:i:s').' 任务失败： 第三方请求错误～！'.$param['url']);
                         }
 
                         /************************* 2. 写入 Excel 文件 ******************************/
@@ -62,7 +65,9 @@ class ApiExcelSwooleListener extends Listener
                         if (!$fileName) {
                             $apiExcel->state = 5;
                             $apiExcel->save();
-                            throw new \Exception(date('Y-m-d H:i:s').' 任务失败： Writer\Exception～！');
+                            \Log::error(__CLASS__.': Line '.__LINE__.' - error'.date('Y-m-d H:i:s').' 任务失败： Writer\Exception～！', []);
+                            return;
+                            // throw new \Exception(date('Y-m-d H:i:s').' 任务失败： Writer\Exception～！');
                         }
 
                         // 更新任务状态
@@ -71,7 +76,7 @@ class ApiExcelSwooleListener extends Listener
                         $apiExcel->save();
                     }
                 } else {
-                    \Log::info(__CLASS__.':handle out', [$event->getData()]);
+                    \Log::info(__CLASS__.': No Task Work, Line '.__LINE__, [$data]);
                 }
                 break;
             default:

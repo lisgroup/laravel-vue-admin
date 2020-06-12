@@ -31,6 +31,15 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    /**
      * @return mixed|string
      */
     public function generateToken()
@@ -109,9 +118,36 @@ class User extends Authenticatable implements JWTSubject
      * @param $permissions []
      * @param $option [] valid_all 是否判断全部权限
      *
-     * @var array
+     * @return array|bool|null
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    function hasPermission($permissions, $option = [])
+    {
+        $option = array_merge(['valid_all' => false,], $option);
+        if (!is_array($permissions)) $permissions = [$permissions];
+        $gates = cacheUserRolesAndPermissions(\Auth::id(), false);
+
+        foreach ($permissions as $permission) {
+            if (in_array($permission, $gates['permissions'])) {
+                if (!$option['valid_all']) {
+                    return true;
+                }
+            } else {
+                if ($option['valid_all']) {
+                    return false;
+                }
+            }
+        }
+        if ($option['valid_all'])
+            return true;
+        else
+            return false;
+    }
+
+    // 给用户分配角色
+    public function assignRole($role)
+    {
+        return $this->roles()->save(
+            Role::whereName($role)->firstOrFail()
+        );
+    }
 }
