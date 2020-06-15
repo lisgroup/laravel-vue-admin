@@ -36,12 +36,12 @@ return [
         'enable'        => env('LARAVELS_TIMER', true),
         'jobs'          => [
             // 启用LaravelScheduleJob来执行`php artisan schedule:run`，每分钟一次，替代 Linux Crontab
-            // \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
+             \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
             // 两种配置参数的方式：
             // [\App\Jobs\Timer\TestCronJob::class, [1000, true]], // 注册时传入参数
             // \App\Jobs\Timer\TestCronJob::class, // 重载对应的方法来返回参数
-            App\Jobs\Timer\FiveMinutesCronJob::class,
-            App\Jobs\Timer\HourlyCronJob::class,
+            // \App\Jobs\Timer\FiveMinutesCronJob::class,
+           // \App\Jobs\Timer\HourlyCronJob::class,
         ],
         'max_wait_time' => 5,
     ],
@@ -86,9 +86,9 @@ return [
         'http_compression'   => false,
 
         // Slow log
-        // 'request_slowlog_timeout' => 2,
-        // 'request_slowlog_file'    => storage_path(sprintf('logs/slow-%s.log', date('Y-m'))),
-        // 'trace_event_worker'      => true,
+        'request_slowlog_timeout' => 2,
+        'request_slowlog_file'    => storage_path(sprintf('logs/slow-%s.log', date('Y-m'))),
+        'trace_event_worker'      => true,
 
         /**
          * More settings of Swoole
