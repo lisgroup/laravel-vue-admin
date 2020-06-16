@@ -47,40 +47,40 @@ class WebSocketService implements WebSocketHandlerInterface
         $action = $req['action'] ?? '';
         switch ($action) {
             case 'api_excel': // api_excel 列表完成率
-                while (true) {
-                    $user_id = $userInfo['id'];
-                    $server->push($request->fd, $this->apiExcel($user_id));
-                    sleep(5);
-                    $state = ApiExcel::where('state', 1)->first();
-                    if (!$state) {
-                        $server->push($request->fd, $this->apiExcel($user_id));
-                        break;
-                    }
-                    // 每个用户 fd 限制请求次数
-                    $redisKey = 'websocket_fd_'.$request->fd;
-                    if (empty($this->redis)) {
-                        $this->redis = Redis::connection();
-                    }
-                    // 如果获取不到 redis 实例，使用总计数次数
-                    if ($this->redis) {
-                        $count = $this->redis->incr($redisKey);
-                        if ($count == 1) {
-                            // 设置过期时间
-                            $this->redis->expire($redisKey, 6000);
-                        }
-                        if ($count > 20000) { // 防止刷单的安全拦截
-                            break; // 超出就跳出循环
-                        }
-                    } else {
-                        $count_fd = 'count_'.$request->fd;
-                        $this->incrKey($count_fd);
-                        // 单fd超过 1000 次跳出循环
-                        if ($this->$count_fd > 1000) {
-                            unset($this->$count_fd);
-                            break;
-                        }
-                    }
-                }
+                $user_id = $userInfo['id'];
+                $server->push($request->fd, $this->apiExcel($user_id));
+                // while (true) {
+                //     sleep(5);
+                //     $state = ApiExcel::where('state', 1)->first();
+                //     if (!$state) {
+                //         $server->push($request->fd, $this->apiExcel($user_id));
+                //         break;
+                //     }
+                //     // 每个用户 fd 限制请求次数
+                //     $redisKey = 'websocket_fd_'.$request->fd;
+                //     if (empty($this->redis)) {
+                //         $this->redis = Redis::connection();
+                //     }
+                //     // 如果获取不到 redis 实例，使用总计数次数
+                //     if ($this->redis) {
+                //         $count = $this->redis->incr($redisKey);
+                //         if ($count == 1) {
+                //             // 设置过期时间
+                //             $this->redis->expire($redisKey, 6000);
+                //         }
+                //         if ($count > 20000) { // 防止刷单的安全拦截
+                //             break; // 超出就跳出循环
+                //         }
+                //     } else {
+                //         $count_fd = 'count_'.$request->fd;
+                //         $this->incrKey($count_fd);
+                //         // 单fd超过 1000 次跳出循环
+                //         if ($this->$count_fd > 1000) {
+                //             unset($this->$count_fd);
+                //             break;
+                //         }
+                //     }
+                // }
         }
         return '';
 
