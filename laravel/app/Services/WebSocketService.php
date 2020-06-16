@@ -31,7 +31,7 @@ class WebSocketService implements WebSocketHandlerInterface
     {
     }
 
-    public function onOpen($server, $request)
+    public function onOpen(Server $server, Request $request)
     {
         $userInfo = auth('api')->user();
         if (empty($userInfo)) {
@@ -47,54 +47,58 @@ class WebSocketService implements WebSocketHandlerInterface
         $action = $req['action'] ?? '';
         switch ($action) {
             case 'api_excel': // api_excel 列表完成率
-                while (true) {
-                    $user_id = $userInfo['id'];
-                    $server->push($request->fd, $this->apiExcel($user_id));
-                    sleep(5);
-                    $state = ApiExcel::where('state', 1)->first();
-                    if (!$state) {
-                        $server->push($request->fd, $this->apiExcel($user_id));
-                        break;
-                    }
-                    // 每个用户 fd 限制请求次数
-                    $redisKey = 'websocket_fd_'.$request->fd;
-                    if (empty($this->redis)) {
-                        $this->redis = Redis::connection();
-                    }
-                    // 如果获取不到 redis 实例，使用总计数次数
-                    if ($this->redis) {
-                        $count = $this->redis->incr($redisKey);
-                        if ($count == 1) {
-                            // 设置过期时间
-                            $this->redis->expire($redisKey, 6000);
+                $user_id = $userInfo['id'];
+                $server->push($request->fd, $this->apiExcel($user_id));
+                go(function() use ($server, $request, $user_id) {
+                    while (true) {
+                        // 创建协程 - 睡眠操作影响 worker 进程
+                        // Coroutine::sleep(5);
+                        sleep(5);
+                        $state = ApiExcel::where('state', 1)->first();
+                        if (!$state) {
+                            $server->push($request->fd, $this->apiExcel($user_id));
+                            return;
                         }
-                        if ($count > 20000) { // 防止刷单的安全拦截
-                            break; // 超出就跳出循环
+                        // 每个用户 fd 限制请求次数
+                        $redisKey = 'websocket_fd_'.$request->fd;
+                        if (empty($this->redis)) {
+                            $this->redis = Redis::connection();
                         }
-                    } else {
-                        $count_fd = 'count_'.$request->fd;
-                        $this->incrKey($count_fd);
-                        // 单fd超过 1000 次跳出循环
-                        if ($this->$count_fd > 1000) {
-                            unset($this->$count_fd);
-                            break;
+                        // 如果获取不到 redis 实例，使用总计数次数
+                        if ($this->redis) {
+                            $count = $this->redis->incr($redisKey);
+                            if ($count == 1) {
+                                // 设置过期时间
+                                $this->redis->expire($redisKey, 600);
+                            }
+                            if ($count > 20000) { // 防止刷单的安全拦截
+                                return; // 超出就跳出循环
+                            }
+                        } else {
+                            $count_fd = 'count_'.$request->fd;
+                            $this->incrKey($count_fd);
+                            // 单fd超过 1000 次跳出循环
+                            if ($this->$count_fd > 1000) {
+                                unset($this->$count_fd);
+                                return;
+                            }
                         }
                     }
-                }
+                });
         }
         return '';
 
         // throw new \Exception('an exception');// 此时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
     }
 
-    public function onMessage($server, $frame)
+    public function onMessage(Server $server, Frame $frame)
     {
         // \Log::info('Received message', [$frame->fd, $frame->data, $frame->opcode, $frame->finish]);
         $server->push($frame->fd, date('Y-m-d H:i:s'));
         // throw new \Exception('an exception');// 此时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
     }
 
-    public function onClose($server, $fd, $reactorId)
+    public function onClose(Server $server, $fd, $reactorId)
     {
         // throw new \Exception('an exception');// 此时抛出的异常上层会忽略，并记录到Swoole日志，需要开发者try/catch捕获处理
     }
