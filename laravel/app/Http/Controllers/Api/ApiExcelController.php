@@ -38,10 +38,6 @@ class ApiExcelController extends Controller
         $this->middleware(['auth:api', 'role'], ['except' => ['login']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
-
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
-
     }
 
     /**
@@ -59,7 +55,7 @@ class ApiExcelController extends Controller
             $where = ['uid' => $user_id];
         }
         $perPage = intval($request->input('perPage'));
-        $perPage = $perPage ?? 11;
+        $perPage = $perPage ?? 20;
         $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($perPage);
         // 获取完成进度情况
         $list = ApiRepository::getInstent()->workProgress($list);
