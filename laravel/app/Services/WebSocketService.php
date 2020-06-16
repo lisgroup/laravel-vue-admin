@@ -47,44 +47,40 @@ class WebSocketService implements WebSocketHandlerInterface
         $action = $req['action'] ?? '';
         switch ($action) {
             case 'api_excel': // api_excel 列表完成率
-                $user_id = $userInfo['id'];
-                $server->push($request->fd, $this->apiExcel($user_id));
-                // go(function() use ($server, $request, $user_id) {
-                    while (true) {
-                        // 创建协程 - 睡眠操作影响 worker 进程
-                        // Coroutine::sleep(5);
-                        sleep(5);
-                        $state = ApiExcel::where('state', 1)->first();
-                        if (!$state) {
-                            $server->push($request->fd, $this->apiExcel($user_id));
-                            return '';
+                while (true) {
+                    $user_id = $userInfo['id'];
+                    $server->push($request->fd, $this->apiExcel($user_id));
+                    sleep(5);
+                    $state = ApiExcel::where('state', 1)->first();
+                    if (!$state) {
+                        $server->push($request->fd, $this->apiExcel($user_id));
+                        break;
+                    }
+                    // 每个用户 fd 限制请求次数
+                    $redisKey = 'websocket_fd_'.$request->fd;
+                    if (empty($this->redis)) {
+                        $this->redis = Redis::connection();
+                    }
+                    // 如果获取不到 redis 实例，使用总计数次数
+                    if ($this->redis) {
+                        $count = $this->redis->incr($redisKey);
+                        if ($count == 1) {
+                            // 设置过期时间
+                            $this->redis->expire($redisKey, 6000);
                         }
-                        // 每个用户 fd 限制请求次数
-                        $redisKey = 'websocket_fd_'.$request->fd;
-                        if (empty($this->redis)) {
-                            $this->redis = Redis::connection();
+                        if ($count > 20000) { // 防止刷单的安全拦截
+                            break; // 超出就跳出循环
                         }
-                        // 如果获取不到 redis 实例，使用总计数次数
-                        if ($this->redis) {
-                            $count = $this->redis->incr($redisKey);
-                            if ($count == 1) {
-                                // 设置过期时间
-                                $this->redis->expire($redisKey, 600);
-                            }
-                            if ($count > 20000) { // 防止刷单的安全拦截
-                                return ''; // 超出就跳出循环
-                            }
-                        } else {
-                            $count_fd = 'count_'.$request->fd;
-                            $this->incrKey($count_fd);
-                            // 单fd超过 1000 次跳出循环
-                            if ($this->$count_fd > 1000) {
-                                unset($this->$count_fd);
-                                return '';
-                            }
+                    } else {
+                        $count_fd = 'count_'.$request->fd;
+                        $this->incrKey($count_fd);
+                        // 单fd超过 1000 次跳出循环
+                        if ($this->$count_fd > 1000) {
+                            unset($this->$count_fd);
+                            break;
                         }
                     }
-                // });
+                }
         }
         return '';
 
