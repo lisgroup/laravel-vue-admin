@@ -49,7 +49,7 @@ class WebSocketService implements WebSocketHandlerInterface
             case 'api_excel': // api_excel 列表完成率
                 $user_id = $userInfo['id'];
                 $server->push($request->fd, $this->apiExcel($user_id));
-                go(function() use ($server, $request, $user_id) {
+                // go(function() use ($server, $request, $user_id) {
                     while (true) {
                         // 创建协程 - 睡眠操作影响 worker 进程
                         // Coroutine::sleep(5);
@@ -57,7 +57,7 @@ class WebSocketService implements WebSocketHandlerInterface
                         $state = ApiExcel::where('state', 1)->first();
                         if (!$state) {
                             $server->push($request->fd, $this->apiExcel($user_id));
-                            return;
+                            return '';
                         }
                         // 每个用户 fd 限制请求次数
                         $redisKey = 'websocket_fd_'.$request->fd;
@@ -72,7 +72,7 @@ class WebSocketService implements WebSocketHandlerInterface
                                 $this->redis->expire($redisKey, 600);
                             }
                             if ($count > 20000) { // 防止刷单的安全拦截
-                                return; // 超出就跳出循环
+                                return ''; // 超出就跳出循环
                             }
                         } else {
                             $count_fd = 'count_'.$request->fd;
@@ -80,11 +80,11 @@ class WebSocketService implements WebSocketHandlerInterface
                             // 单fd超过 1000 次跳出循环
                             if ($this->$count_fd > 1000) {
                                 unset($this->$count_fd);
-                                return;
+                                return '';
                             }
                         }
                     }
-                });
+                // });
         }
         return '';
 
