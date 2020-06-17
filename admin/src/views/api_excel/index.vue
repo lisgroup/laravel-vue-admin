@@ -342,6 +342,7 @@ export default {
       })
     },
     initWebSocket() { // 初始化 weosocket
+      const that = this
       if ('WebSocket' in window) {
         const url = process.env.VUE_APP_WEBSOCKET + '?action=api_excel&token=' + getToken() + '&page=' + this.currentpage + '&perPage=' + this.perpage
         this.websock = new WebSocket(url)
@@ -349,6 +350,13 @@ export default {
         this.websock.onopen = this.onopen
         this.websock.onerror = this.onerror
         this.websock.onclose = this.close
+
+        setInterval(function() {
+          if (that.websock && that.websock.readyState === that.websock.OPEN) {
+            // console.log('inSend')
+            that.send('{"page":1}')
+          }
+        }, 5000)
       } else {
         this.fetchData()
         // 浏览器不支持 WebSocket，使用 ajax 轮询
@@ -359,6 +367,10 @@ export default {
       // const actions = { 'id': '7' }
       // const rs = this.send(JSON.stringify(actions))
       // console.log(rs)
+      setTimeout(() => {
+        this.reload = false
+        this.reload_name = '刷新'
+      }, 800)
     },
     onerror() {
       // 连接建立失败, 发送 http 请求获取数据
@@ -366,27 +378,25 @@ export default {
       this.fetchData()
     },
     onmessage(e) { // 数据接收
-      // console.log(e.data)
       const data = JSON.parse(e.data)
-      // this.list[2].rate = parseInt(data.data.rate)
-      // console.log(this.list[2].rate)
-      // console.log(data)
-      // websocket 返回的数据
-      this.list = data.data.data
-      this.listLoading = false
-      this.total = data.data.total
-      this.url = data.data.appUrl
-      // console.log('type', Object.prototype.toString.call(this.list))
-      setTimeout(() => {
-        this.reload = false
-        this.reload_name = '刷新'
-      }, 800)
+      // console.log(data.data)
+      if (data && data.data) {
+        // this.list[2].rate = parseInt(data.data.rate)
+        // console.log(this.list[2].rate)
+        // console.log(data)
+        // websocket 返回的数据
+        this.list = data.data.data
+        this.listLoading = false
+        this.total = data.data.total
+        this.url = data.data.appUrl
+        // console.log('type', Object.prototype.toString.call(this.list))
+      }
     },
     send(Data) {
       this.websock.send(Data)
     },
     close() { // 关闭
-      // console.log('断开连接')
+      console.log('断开连接')
     },
     download(index, row) {
       window.location.href = this.url + row.finish_url
