@@ -78,6 +78,7 @@ class ApiRepository
         // 2. 完成率 50% -- 1 分钟不再增加
         // 3. 完成率 10% -- 5 分钟不再增加
         // 4. 完成率 1%  -- 10 分钟不再增加
+        // 5. 完成率 0%  -- 30 分钟不再增加
         $excels = DB::connection()->select('SELECT ae.id,ae.api_param_id,ae.state,ae.total_excel,ael.api_excel_id,ael.sort_index,ael.created_at FROM `boss_api_excel` ae LEFT JOIN boss_api_excel_logs ael ON ae.id=ael.api_excel_id AND ael.id=(SELECT id FROM boss_api_excel_logs WHERE boss_api_excel_logs.api_excel_id=ae.id ORDER BY sort_index DESC LIMIT 1) WHERE ae.state=1 AND ae.`deleted_at` IS NULL ');
 
         foreach ($excels as $excel) {
@@ -91,7 +92,7 @@ class ApiRepository
             // 记录完成率
             $finish = (($excel->sort_index + 1) / $excel->total_excel) * 100;
             $finish = sprintf("%.2f", $finish);
-            if (($finish > '96' && strtotime($excel->created_at) + 5 < time()) || ($finish > '50' && strtotime($excel->created_at) + 60 < time()) || ($finish > '10' && strtotime($excel->created_at) + 300 < time()) || ($finish > '1' && strtotime($excel->created_at) + 600 < time())) {
+            if (($finish > '96' && strtotime($excel->created_at) + 5 < time()) || ($finish > '50' && strtotime($excel->created_at) + 60 < time()) || ($finish > '10' && strtotime($excel->created_at) + 300 < time()) || ($finish > '1' && strtotime($excel->created_at) + 600 < time()) || ($finish >= 0 && strtotime($excel->created_at) + 1800 < time())) {
                 ApiExcel::where('id', $excel->id)->update(['state' => 5]);
             }
         }
