@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Laravel-vue-admin 后台管理系统',
+  title: '个人技术分享',
 
   /**
    * @type {boolean} true | false

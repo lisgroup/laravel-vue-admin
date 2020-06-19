@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
-    private $request = null;
+    // private $request = null;
+    private $mySqlVersion = null;
 
     /**
      * IndexController constructor.
@@ -25,7 +26,6 @@ class IndexController extends Controller
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
 
-        $this->request || $this->request = $request;
     }
 
     /**
@@ -35,11 +35,12 @@ class IndexController extends Controller
      */
     public function index()
     {
+        $this->mySqlVersion || $this->mySqlVersion = DB::select('SHOW VARIABLES LIKE "version"')[0]->Value;
         $data['serve'] = [
             ['name' => '服务器操作系统', 'value' => PHP_OS],
             ['name' => '服务器解译引擎', 'value' => $_SERVER['SERVER_SOFTWARE'] ?? ''],
             ['name' => '服务器主机名', 'value' => $_SERVER['SERVER_NAME'] ?? ''],
-            ['name' => 'MySQL 版本', 'value' => DB::select('SHOW VARIABLES LIKE "version"')[0]->Value],
+            ['name' => 'MySQL 版本', 'value' => $this->mySqlVersion],
         ];
         // PHP相关参数
         $data['php'] = [
@@ -69,9 +70,9 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function report()
+    public function report(Request $request)
     {
-        $input = $this->request->all();
+        $input = $request->all();
         // start, end 传递参数时
         // if (empty($input['start']) || empty($input['end']) || $input['start'] > $input['end'] || $input['end'] > date('Y-m-d')) {
         //     return $this->out(1006);

@@ -25,7 +25,7 @@ class Update extends FormRequest
     {
         return [
             'name' => 'required|between:3,80',
-            'email' => 'nullable|email|max:255',
+            'email' => 'email|max:255',
             'password' => 'max:80',
         ];
     }

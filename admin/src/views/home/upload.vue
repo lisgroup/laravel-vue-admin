@@ -30,14 +30,19 @@
         </el-main>
       </el-container>
     </el-container>
+    <Footer />
   </div>
 </template>
 
 <script>
 import request from '../../utils/request'
+import { Footer } from '../../layout/components'
 
 export default {
   name: 'Upload',
+  components: {
+    Footer
+  },
   data() {
     return {
       uploadUrl: 'https://up.qiniup.com',

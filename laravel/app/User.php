@@ -10,6 +10,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    const ADMIN_ID = 1; // 超级管理员 ID
+
     /**
      * The attributes that are mass assignable.
      *
@@ -26,6 +28,15 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
 
     /**

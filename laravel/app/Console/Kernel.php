@@ -42,14 +42,15 @@ class Kernel extends ConsoleKernel
             // is_dir($path) || mkdir($path, 777, true);
             // file_put_contents($path.'/cache.txt', $query->getHtml().PHP_EOL, FILE_APPEND);
             // // 每隔五分钟入库操作
-            BusRepository::getInstent()->cronTaskTable();
+            // BusRepository::getInstent()->cronTaskTable();
             ApiRepository::getInstent()->autoFailed();
-        })->everyFiveMinutes()->between('5:00', '23:00');
+            \Log::info('every five minutes task', []);
+        })->everyFiveMinutes()->between('5:00', '23:00')->runInBackground();
 
         // 每隔一小时检测需要自动处理的任务
         $schedule->call(function() {
             ApiRepository::getInstent()->handleAutoDelete();
-        })->hourly()->between('4:00', '23:59');
+        })->hourly()->between('4:00', '23:59')->runInBackground();
     }
 
     /**

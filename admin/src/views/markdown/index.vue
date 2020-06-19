@@ -15,7 +15,7 @@ import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 // use
 // Vue.use(mavonEditor)
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   components: {
@@ -29,25 +29,7 @@ export default {
   methods: {
     // 绑定@imgAdd event
     imgAdd(pos, $file) {
-      // 第一步.将图片上传到服务器.
-      var formdata = new FormData()
-      formdata.append('image', $file)
-      axios({
-        url: 'http://localhost/',
-        method: 'post',
-        data: formdata,
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }).then((url) => {
-        // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
-        /**
-         * $vm 指为 mavonEditor 实例，可以通过如下两种方式获取
-         * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
-         * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
-         */
-        // console.log(pos)
-        // console.log(url)
-        this.$refs.md.$img2Url(pos, url.data)
-      })
+      // 图片不上传服务器
     },
     imgDel(pos) {
       // delete this.img_file[pos]

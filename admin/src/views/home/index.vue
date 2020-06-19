@@ -25,17 +25,20 @@
         </template>
       </el-table-column>
     </el-table>
+    <Footer />
   </div>
 </template>
 
 <script>
 import request from '@/utils/request'
 import fieldSet from '../../components/common/fieldSet'
+import { Footer } from '../../layout/components'
 
 export default {
   name: 'Index',
   components: {
-    fieldSet
+    fieldSet,
+    Footer
   },
   data() {
     return {
@@ -59,7 +62,7 @@ export default {
       }
 
       const query = { linename: line }
-      this.$router.push({ name: 'index', query })
+      this.$router.push({ name: 'bus', query })
 
       this.isShow = true
       const url = '/api/getList?linename=' + line

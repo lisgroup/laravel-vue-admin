@@ -5,7 +5,14 @@
         <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4">
           <div class="grid-content">
             <el-menu-item index="1">
-              <router-link :to="{name: 'index'}">公交-首页</router-link>
+              <router-link :to="{name: 'bus'}">首页</router-link>
+            </el-menu-item>
+          </div>
+        </el-col>
+        <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4">
+          <div class="grid-content">
+            <el-menu-item index="1">
+              <router-link :to="{name: 'md'}">Markdown</router-link>
             </el-menu-item>
           </div>
         </el-col>

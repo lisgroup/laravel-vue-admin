@@ -12,7 +12,7 @@ return [
     'handle_static'            => env('LARAVELS_HANDLE_STATIC', false),
     'laravel_base_path'        => env('LARAVEL_BASE_PATH', base_path()),
     'inotify_reload'           => [
-        'enable'        => env('LARAVELS_INOTIFY_RELOAD', true),
+        'enable'        => env('LARAVELS_INOTIFY_RELOAD', false),
         'watch_path'    => base_path(),
         'file_types'    => ['.php'],
         'excluded_dirs' => [],
@@ -23,44 +23,42 @@ return [
         'enable'  => true, // 看清楚，这里是true
         'handler' => \App\Services\WebSocketService::class,
     ],
-    'sockets'                  => [
-    ],
+    'sockets'                  => [],
     'processes'                => [
+        //[
+        //    'class'    => \App\Processes\TestProcess::class,
+        //    'redirect' => false, // Whether redirect stdin/stdout, true or false
+        //    'pipe'     => 0 // The type of pipeline, 0: no pipeline 1: SOCK_STREAM 2: SOCK_DGRAM
+        //    'enable'   => true // Whether to enable, default true
+        //],
     ],
     'timer'                    => [
-        'enable' => true, // 开启定时任务类
-        'jobs'   => [
-            // 启用LaravelScheduleJob来执行`php artisan schedule:run`，每分钟一次，替代Linux Crontab
-            // \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
+        'enable'        => env('LARAVELS_TIMER', true),
+        'jobs'          => [
+            // 启用LaravelScheduleJob来执行`php artisan schedule:run`，每分钟一次，替代 Linux Crontab
+            \Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
             // 两种配置参数的方式：
             // [\App\Jobs\Timer\TestCronJob::class, [1000, true]], // 注册时传入参数
-            \App\Jobs\Timer\TestCronJob::class, // 重载对应的方法来返回参数
-            // Enable LaravelScheduleJob to run `php artisan schedule:run` every 1 minute, replace Linux Crontab
-            //\Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
-            // Two ways to configure parameters:
-            // [\App\Jobs\XxxCronJob::class, [1000, true]], // Pass in parameters when registering
-            // \App\Jobs\XxxCronJob::class, // Override the corresponding method to return the configuration
+            // \App\Jobs\Timer\TestCronJob::class, // 重载对应的方法来返回参数
+            // \App\Jobs\Timer\FiveMinutesCronJob::class,
+            // \App\Jobs\Timer\HourlyCronJob::class,
         ],
-        'pid_file'      => storage_path('laravels-timer.pid'),
-        'max_wait_time' => 5, // Reload 时最大等待时间
+        'max_wait_time' => 5,
     ],
-    // 绑定事件与监听器，一个事件可以有多个监听器，多个监听器按顺序执行
-    'events' => [
-        \App\Events\TestEvent::class => [
-            \App\Listeners\TestListener::class,
-        ],
-        // App\Events\LoginEvent::class => [
-        //     App\Listeners\LoginListener::class,
-        // ],
-    ],
-    'swoole_tables'            => [
-    ],
-    'cleaners' => [
-        //Hhxsv5\LaravelS\Illuminate\Cleaners\SessionCleaner::class, // 如果你的项目中使用到了Session或Authentication，请解除这行注释
-        //Hhxsv5\LaravelS\Illuminate\Cleaners\AuthCleaner::class, // 如果你的项目中使用到了Authentication或Passport，请解除这行注释
+    'swoole_tables'            => [],
+    'register_providers'       => [],
+    'cleaners'                 => [
+        // See LaravelS's built-in cleaners: https://github.com/hhxsv5/laravel-s/blob/master/Settings.md#cleaners
+        Hhxsv5\LaravelS\Illuminate\Cleaners\SessionCleaner::class, // 如果你的项目中使用到了Session或Authentication，请解除这行注释
+        Hhxsv5\LaravelS\Illuminate\Cleaners\AuthCleaner::class, // 如果你的项目中使用到了Authentication或Passport，请解除这行注释
         Hhxsv5\LaravelS\Illuminate\Cleaners\JWTCleaner::class, // 如果你的项目中使用到了包"tymon/jwt-auth"，请解除这行注释
-        Hhxsv5\LaravelS\Illuminate\Cleaners\RequestCleaner::class,
-        //...
+        // Hhxsv5\LaravelS\Illuminate\Cleaners\RequestCleaner::class,
+    ],
+    'destroy_controllers'      => [
+        'enable'        => false,
+        'excluded_list' => [
+            //\App\Http\Controllers\TestController::class,
+        ],
     ],
     'swoole'                   => [
         'daemonize'          => env('LARAVELS_DAEMONIZE', false),
@@ -70,9 +68,9 @@ return [
         'worker_num'         => function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8,
         'task_worker_num'    => function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8,
         'task_ipc_mode'      => 1,
-        'task_max_request'   => 8000,
+        'task_max_request'   => env('LARAVELS_TASK_MAX_REQUEST', 8000),
         'task_tmpdir'        => @is_writable('/dev/shm/') ? '/dev/shm' : '/tmp',
-        'max_request'        => 8000,
+        'max_request'        => env('LARAVELS_MAX_REQUEST', 8000),
         'open_tcp_nodelay'   => true,
         'pid_file'           => storage_path('laravels.pid'),
         'log_file'           => storage_path(sprintf('logs/swoole-%s.log', date('Y-m'))),
@@ -87,9 +85,14 @@ return [
         'enable_coroutine'   => false,
         'http_compression'   => false,
 
+        // Slow log
+        'request_slowlog_timeout' => 2,
+        'request_slowlog_file'    => storage_path(sprintf('logs/slow-%s.log', date('Y-m'))),
+        'trace_event_worker'      => true,
+
         /**
          * More settings of Swoole
-         * @see https://wiki.swoole.com/wiki/page/274.html  Chinese
+         * @see https://wiki.swoole.com/#/server/setting  Chinese
          * @see https://www.swoole.co.uk/docs/modules/swoole-server/configuration  English
          */
     ],

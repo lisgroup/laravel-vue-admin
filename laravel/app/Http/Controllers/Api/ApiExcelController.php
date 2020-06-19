@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\ApiExcelEvent;
+use App\Events\ApiExcelSwooleEvent;
 use App\Http\Repository\ApiRepository;
 use App\Http\Repository\ExcelRepository;
 use App\Http\Requests\ApiExcel\Store;
 use App\Http\Requests\ApiExcel\Update;
 use App\Models\ApiExcel;
 use App\Http\Controllers\Controller;
+use Hhxsv5\LaravelS\Swoole\Task\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +21,7 @@ class ApiExcelController extends Controller
      */
     public $perPage = 10;
 
-    private $request = null;
+    // private $request = null;
 
     /**
      * Create a new AuthController instance.
@@ -36,11 +38,6 @@ class ApiExcelController extends Controller
         $this->middleware(['auth:api', 'role'], ['except' => ['login']]);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
-
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
-
-        $this->request || $this->request = $request;
     }
 
     /**
@@ -48,7 +45,7 @@ class ApiExcelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user_id = auth('api')->user()['id'];
 
@@ -57,7 +54,9 @@ class ApiExcelController extends Controller
         if ($user_id != 1) {
             $where = ['uid' => $user_id];
         }
-        $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($this->perPage);
+        $perPage = intval($request->input('perPage'));
+        $perPage = $perPage ?? 20;
+        $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($perPage);
         // 获取完成进度情况
         $list = ApiRepository::getInstent()->workProgress($list);
 
@@ -80,7 +79,7 @@ class ApiExcelController extends Controller
         // 上传文件
         if ($request->isMethod('post')) {
 
-            $file = $this->request->file('file');
+            $file = $request->file('file');
             // 文件是否上传成功
             if ($file->isValid()) {
 
@@ -112,9 +111,9 @@ class ApiExcelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function startTask()
+    public function startTask(Request $request)
     {
-        $data = $this->request->all();
+        $data = $request->all();
         // $data = ['id' => 2, 'api_excel_id' => 1, 'appkey' => '123','upload_url' => '/storage/20190130_114747_5c511e632efe8.xlsx', 'state' => 0];
         // 1. 检测参数是否正常
         if (empty($data['id']) || !isset($data['state']) || empty($data['upload_url'])) {
@@ -129,17 +128,36 @@ class ApiExcelController extends Controller
         // 2. 查询数据库中任务真实状态
         $task = ApiExcel::find($data['id']);
         if (!$task || $task['state'] != 0) {
-            return $this->out(4007);
+            return $this->out(4009);
         }
-        $task->state = 1;
+
         // 3. 更新表字段状态
-        $task->save();
+        $task->state = 1;
 
         // 4. 写入事件中处理
-        $task = $task->toArray();
-        event(new ApiExcelEvent($task));
+        $data = $task->toArray();
 
-        return $this->out(200, [], '任务加入成功，请稍后下载处理结果');
+        // 如果是 cli 模式使用 laravels Task 异步事件
+        if (PHP_SAPI == 'cli' && extension_loaded('swoole')) {
+            // 触发事件--实例化并通过fire触发，此操作是异步的，触发后立即返回，由Task进程继续处理监听器中的handle逻辑
+            // \Log::info(__CLASS__.': start task', $data);
+            $event = new ApiExcelSwooleEvent($data);
+            // $event = new TestEvent('event data');
+            // $event->delay(10); // 延迟10秒触发
+            // $event->setTries(2); // 出现异常时，累计尝试3次
+            $success = Event::fire($event);
+            // var_dump($success);// 判断是否触发成功
+        } else {
+            $success = event(new ApiExcelEvent($data));
+        }
+        $code = 200;
+        if (!$success) {
+            $code = 5000;
+            $task->state = 0;
+        }
+        $task->save();
+
+        return $this->out($code, [], '任务加入成功，请稍后下载处理结果');
     }
 
     /**
@@ -191,7 +209,7 @@ class ApiExcelController extends Controller
      * Show the form for editing the specified resource.
      * 编辑展示数据
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -205,8 +223,8 @@ class ApiExcelController extends Controller
      * Update the specified resource in storage.
      * 更新数据
      *
-     * @param  Update $request
-     * @param  int $id
+     * @param Update $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Update $request, $id)
@@ -226,7 +244,7 @@ class ApiExcelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -269,12 +287,12 @@ class ApiExcelController extends Controller
 
     /**
      * 下载已完成数据
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
-    public function downloadLog()
+    public function downloadLog(Request $request)
     {
-        $api_excel_id = $this->request->input('id');
+        $api_excel_id = $request->input('id');
         // 判断用户有没有下载权限
         $user_id = auth('api')->user()['id'];
         // $user_id = 1;

@@ -117,6 +117,9 @@ class RoleController extends Controller
      */
     public function update(Update $request, $id)
     {
+        if (env('APP_ENV') == 'demo' && $id == 1) {
+            return $this->out(4000, [], 'demo account Do Not Operate');
+        }
         $role = Role::findOrFail($id); // 通过给定id获取角色
         // 验证 name 和 permission 字段
         // $this->validate($request, [

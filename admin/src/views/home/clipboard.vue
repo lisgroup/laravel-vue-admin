@@ -2,10 +2,16 @@
   <div class="container">
     <input v-model="message" type="text">
     <button type="button" @click="doCopy('add me!')">Copy!</button>
+    <Footer />
   </div>
 </template>
 <script>
+import { Footer } from '../../layout/components'
+
 export default {
+  components: {
+    Footer
+  },
   data() {
     return {
       message: 'Copy These Text'

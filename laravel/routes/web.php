@@ -47,6 +47,10 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
     Route::any('output', 'NewApiController@output');
     Route::any('test', 'NewApiController@jwt');
 
+    // 工具类接口
+    Route::any('hex-to-string', 'ToolController@hexToString');
+    Route::any('string-to-hex', 'ToolController@stringToHex');
+
     // 1. 获取七牛上传操作的 token
     Route::get('getToken', 'AutoController@getToken');
     // 2. 七牛 303 状态码 回调上传完成文件信息

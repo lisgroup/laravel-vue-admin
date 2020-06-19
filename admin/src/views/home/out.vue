@@ -21,8 +21,10 @@
         <el-col :span="2">
           <span>&nbsp;中文排版输出</span><br><br>&nbsp;
           <el-button type="primary" @click="onSubmit('form')">输出</el-button>
-          <br><br><br>&nbsp;
+          <br><br>&nbsp;
           <el-button type="warning" @click="resetForm('form')">清空</el-button>
+          <br><br>
+          <el-button type="primary" @click="hexToString()">16进制转中文</el-button>
         </el-col>
         <el-col :span="11">
           <el-input v-model="output" :rows="20" type="textarea" />
@@ -42,20 +44,26 @@
       <el-col :span="7">&nbsp;&nbsp;</el-col>
       <el-col :span="1"><el-button @click="copyOutput">一键复制输出内容</el-button></el-col>
     </el-row>
+    <Footer />
   </div>
 </template>
 
 <script>
 import request from '@/utils/request'
+import { Footer } from '../../layout/components'
 
 export default {
   name: 'Lines',
+  components: {
+    Footer
+  },
   data() {
     return {
       form: {
         input: '',
         output: ''
       },
+      convert: '',
       rules: {
         input: [
           { required: true, message: '请输入内容', trigger: 'blur' }
@@ -103,7 +111,12 @@ export default {
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.loading = true
-          request.post('/api/output', { input: this.form.input }).then(res => {
+          let uri = '/api/output'
+          console.log(this.convert)
+          if (this.convert) {
+            uri = '/api/' + this.convert
+          }
+          request.post(uri, { input: this.form.input }).then(res => {
             // this.loading = false
             // console.log(res.data)
             if (res.data.to) {
@@ -123,6 +136,11 @@ export default {
           return false
         }
       })
+      this.convert = ''
+    },
+    hexToString() {
+      this.convert = 'hex-to-string'
+      this.onSubmit('form')
     },
     onCancel() {
       this.$message({

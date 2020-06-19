@@ -35,16 +35,19 @@
       </div>
     </div>
     <div id="msg" />
+    <Footer />
   </div>
 </template>
 
 <script>
 import fieldSet from '../../components/common/fieldSet'
+import { Footer } from '../../layout/components'
 
 export default {
   name: 'Home',
   components: {
-    fieldSet
+    fieldSet,
+    Footer
   },
   data() {
     return {

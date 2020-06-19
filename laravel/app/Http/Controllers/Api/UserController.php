@@ -126,6 +126,9 @@ class UserController extends Controller
      */
     public function update(Update $request, $id)
     {
+        if ($this->demoForbid($id)) {
+            return $this->out(4000, [], 'demo account Do Not Operate');
+        }
         $user = User::findOrFail($id);
         // 新增角色操作
         $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段
@@ -158,6 +161,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if ($this->demoForbid($id)) {
+            return $this->out(4000, [], 'demo account Do Not Operate');
+        }
         if (User::findOrFail($id)->delete()) {
             $data = ['msg' => '删除成功', 'errno' => 0];
         } else {
@@ -186,5 +192,18 @@ class UserController extends Controller
     {
         $faker = \Faker\Factory::create();
         return $faker->email;
+    }
+
+    /**
+     * demo do not operate
+     * @param $id
+     * @return bool
+     */
+    private function demoForbid($id)
+    {
+        if (env('APP_ENV') == 'demo' && $id == User::ADMIN_ID) {
+            return true;
+        }
+        return false;
     }
 }

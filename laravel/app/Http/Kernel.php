@@ -17,9 +17,12 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
 
+        // 修正代理服务器后的服务器参数
+        \App\Http\Middleware\TrustProxies::class,
+
         // 检测是否应用是否进入『维护模式』
         // 见：https://d.laravel-china.org/docs/5.5/configuration#maintenance-mode
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \App\Http\Middleware\CheckForMaintenanceMode::class,
 
         // 检测请求的数据是否过大
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -34,8 +37,8 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
 
         // 跨域访问中间件
-        // \App\Http\Middleware\Cors::class,
-        \Barryvdh\Cors\HandleCors::class,
+        \App\Http\Middleware\Cors::class,
+        // \Barryvdh\Cors\HandleCors::class,
 
         // 执行时间记录和统计工具
         \RunningTime\Middleware\RunningTimeMiddleware::class,
@@ -77,8 +80,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:60,1',
-            'bindings',
-
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
@@ -94,7 +96,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
 
         // 只有登录用户才能访问，我们在控制器的构造方法中大量使用
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth' => \App\Http\Middleware\Authenticate::class,
 
         // HTTP Basic Auth 认证
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
@@ -103,16 +105,41 @@ class Kernel extends HttpKernel
         // 见：https://d.laravel-china.org/docs/5.5/routing#route-model-binding
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+
         // 用户授权功能
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
 
         // 只有游客才能访问，在 register 和 login 请求中使用，只有未登录用户才能访问这些页面
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 
+        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+
         // 访问节流，类似于 『1 分钟只能请求 10 次』的需求，一般在 API 中使用
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
         // 增加权限中间件
         'role' => \App\Http\Middleware\PermissionAuth::class,
+    ];
+
+    /**
+     * The priority-sorted list of middleware.
+     *
+     * This forces non-global middleware to always be in the given order.
+     *
+     * @var array
+     */
+    protected $middlewarePriority = [
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \App\Http\Middleware\Authenticate::class,
+        \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        \Illuminate\Session\Middleware\AuthenticateSession::class,
+        \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        \Illuminate\Auth\Middleware\Authorize::class,
     ];
 }

@@ -116,6 +116,9 @@ class PermissionController extends Controller
      */
     public function update(Update $request, $id)
     {
+        if (env('APP_ENV') == 'demo' && $id < 50) {
+            return $this->out(4000, [], 'demo account Do Not Operate');
+        }
         $input = $request->all();
         is_null($input['route']) && $input['route'] = '';
         // $model = new Category();$model->save($input, ['id' => $id]);

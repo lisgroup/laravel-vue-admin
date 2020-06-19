@@ -68,3 +68,18 @@ if (!function_exists('cacheTotalExcel')) {
         }
     }
 }
+
+/**
+ * 判断是否是中文名称
+ *
+ * @param $realname
+ * @return int
+ */
+if (!function_exists('isName')) {
+    function isName($name)
+    {
+        $name = str_replace('.', '', $name);
+        $name = str_replace('·', '', $name);
+        return preg_match('/^[\x{2E80}-\x{FE4F}]{2,16}$/u', $name);
+    }
+}

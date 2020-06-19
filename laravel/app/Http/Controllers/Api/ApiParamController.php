@@ -30,9 +30,6 @@ class ApiParamController extends Controller
         $this->middleware(['auth:api', 'role']);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
-
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
     }
 
     /**
@@ -40,9 +37,11 @@ class ApiParamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $list = ApiParam::orderBy('id', 'desc')->paginate($this->perPage);
+        $perPage = intval($request->input('perPage'));
+        $perPage = $perPage ?? 20;
+        $list = ApiParam::orderBy('id', 'desc')->paginate($perPage);
         return $this->out(200, $list);
     }
 
