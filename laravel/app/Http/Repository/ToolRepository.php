@@ -56,7 +56,7 @@ class ToolRepository
         $hex = strtoupper($input);
         $hex = str_replace('\\X', '', $hex);
         if (!preg_match("/^[A-Fa-f0-9]+$/", $hex)) {
-            return $this->out(1006);
+            return '';
         }
         $str = "";
         for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
