@@ -48,8 +48,7 @@ Route::group(['namespace' => 'Bus', 'prefix' => 'api'], function () {
     Route::any('test', 'NewApiController@jwt');
 
     // 工具类接口
-    Route::any('hex-to-string', 'ToolController@hexToString');
-    Route::any('string-to-hex', 'ToolController@stringToHex');
+    Route::any('tool', 'ToolController@tool');
 
     // 1. 获取七牛上传操作的 token
     Route::get('getToken', 'AutoController@getToken');
