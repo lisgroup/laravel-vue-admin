@@ -12,7 +12,7 @@
     "lint": "eslint --ext .js,.vue src",
     "build": "vue-cli-service build && npm run move && npm run git",
     "move": "rm -rf ../laravel/public/static && cp -r dist/* ../laravel/public",
-    "git": "git add ../laravel/public/static/* && git add ../laravel/public/index.html && git commit -m \"chore(view): 构建前端\"",
+    "git": "git add ../laravel/public/static/* && git add ../laravel/public/index.html && git commit -m \"chore(view): Build front end\"",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "test:ci": "npm run lint && npm run test:unit",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
