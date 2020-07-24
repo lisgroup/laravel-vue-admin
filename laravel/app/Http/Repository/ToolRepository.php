@@ -78,21 +78,37 @@ class ToolRepository
         return substr(md5($input), 0, 16);
     }
 
+    /**
+     * @param $input
+     * @return string
+     */
     public function base64Encode($input)
     {
         return base64_encode($input);
     }
 
+    /**
+     * @param $input
+     * @return false|string
+     */
     public function base64Decode($input)
     {
         return base64_decode($input);
     }
 
+    /**
+     * @param $input
+     * @return string
+     */
     public function urlEncode($input)
     {
         return urlencode($input);
     }
 
+    /**
+     * @param $input
+     * @return string
+     */
     public function urlDecode($input)
     {
         return urldecode($input);

@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
 
 class ToolController extends CommonController
 {
+    /**
+     * 公共函数输出方法
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function tool(Request $request)
     {
         $func = $request->input('operation');
