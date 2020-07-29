@@ -54,7 +54,7 @@ class ToolRepository
     public function hexToString($input)
     {
         $hex = strtoupper($input);
-        $hex = str_replace('\\X', '', $hex);
+        $hex = str_replace(['\\X', 'X'], '', $hex);
         if (!preg_match("/^[A-Fa-f0-9]+$/", $hex)) {
             return '';
         }
