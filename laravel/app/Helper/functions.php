@@ -117,7 +117,7 @@ function humpToLine($str)
  * @param string $iv
  * @return string
  */
-function encrypt($aesKey, $data, $iv = '')
+function aesEncrypt($aesKey, $data, $iv = '')
 {
     $encrypted = openssl_encrypt($data, 'aes-128-ecb', $aesKey, OPENSSL_RAW_DATA, $iv);
     return base64_encode($encrypted);
@@ -130,7 +130,7 @@ function encrypt($aesKey, $data, $iv = '')
  * @param string $iv
  * @return false|string
  */
-function decrypt($aesKey, $data, $iv = '')
+function aesDecrypt($aesKey, $data, $iv = '')
 {
     $encrypted = base64_decode($data);
     return openssl_decrypt($encrypted, 'aes-128-ecb', $aesKey, OPENSSL_RAW_DATA, $iv);

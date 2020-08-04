@@ -82,7 +82,7 @@ class ToolRepository
                 parse_str($params[1], $query);
                 $encrypt = '';
                 foreach ($query as $key => $value) {
-                    $encrypt .= '&'.$key.'='.encrypt($aesKey, $value);
+                    $encrypt .= '&'.$key.'='.aesEncrypt($aesKey, $value);
                 }
                 $encrypt = trim($encrypt, '&');
                 break;
