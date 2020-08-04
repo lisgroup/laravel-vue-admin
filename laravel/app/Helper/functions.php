@@ -109,3 +109,29 @@ function humpToLine($str)
     }, $str);
     return $str;
 }
+
+/**
+ * 加密算法： AES/ECB/PKCS5Padding
+ * @param $aesKey
+ * @param $data
+ * @param string $iv
+ * @return string
+ */
+function encrypt($aesKey, $data, $iv = '')
+{
+    $encrypted = openssl_encrypt($data, 'aes-128-ecb', $aesKey, OPENSSL_RAW_DATA, $iv);
+    return base64_encode($encrypted);
+}
+
+/**
+ * 解密算法： AES/ECB/PKCS5Padding
+ * @param $aesKey
+ * @param $data
+ * @param string $iv
+ * @return false|string
+ */
+function decrypt($aesKey, $data, $iv = '')
+{
+    $encrypted = base64_decode($data);
+    return openssl_decrypt($encrypted, 'aes-128-ecb', $aesKey, OPENSSL_RAW_DATA, $iv);
+}

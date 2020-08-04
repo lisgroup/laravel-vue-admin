@@ -75,7 +75,23 @@ class ToolRepository
      */
     public function openidSecret($input)
     {
-        return substr(md5($input), 0, 16);
+        $params = explode("\n", $input);
+        $aesKey = substr(md5($params[0]), 0, 16);
+        switch (count($params)) {
+            case 2:
+                parse_str($params[1], $query);
+                $encrypt = '';
+                foreach ($query as $key => $value) {
+                    $encrypt .= '&'.$key.'='.encrypt($aesKey, $value);
+                }
+                $encrypt = trim($encrypt, '&');
+                break;
+            case 1:
+            default:
+                return $aesKey;
+                break;
+        }
+        return $aesKey."\n".$encrypt;
     }
 
     /**
