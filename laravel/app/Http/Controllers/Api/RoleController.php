@@ -12,18 +12,9 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-
-    /**
-     * @var int 默认分页条数
-     */
-    public $perPage = 10;
-
     public function __construct(Request $request)
     {
         $this->middleware(['auth:api', 'role']); // role 中间件让具备指定权限的用户才能访问该资源
-
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
     }
 
     /**
@@ -33,7 +24,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $list = Role::paginate($this->perPage);
+        $list = Role::paginate($this->getPerPage());
         return $this->out(200, $list);
     }
 

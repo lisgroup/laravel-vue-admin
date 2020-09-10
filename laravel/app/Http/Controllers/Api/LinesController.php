@@ -11,17 +11,12 @@ use Illuminate\Http\Request;
 class LinesController extends Controller
 {
     /**
-     * @var int 默认分页条数
-     */
-    public $perPage = 10;
-
-    /**
      * Create a new AuthController instance.
      * 要求附带email和password（数据来源users表）
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
         // 这里额外注意了：官方文档样例中只除外了『login』
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
@@ -30,9 +25,6 @@ class LinesController extends Controller
         $this->middleware(['auth:api', 'role']);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
-
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
     }
 
     /**
@@ -42,7 +34,7 @@ class LinesController extends Controller
      */
     public function index()
     {
-        $list = Line::paginate($this->perPage);
+        $list = Line::paginate($this->getPerPage());
         return $this->out(200, $list);
     }
 

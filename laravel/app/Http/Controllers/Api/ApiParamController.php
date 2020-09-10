@@ -6,7 +6,6 @@ use App\Http\Requests\ApiParam\Store;
 use App\Http\Requests\ApiParam\Update;
 use App\Models\ApiParam;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ApiParamController extends Controller
 {
@@ -21,7 +20,7 @@ class ApiParamController extends Controller
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
         // 这里额外注意了：官方文档样例中只除外了『login』
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
@@ -37,10 +36,9 @@ class ApiParamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = intval($request->input('perPage'));
-        $perPage = $perPage ?? 20;
+        $perPage = $this->getPerPage();
         $list = ApiParam::orderBy('id', 'desc')->paginate($perPage);
         return $this->out(200, $list);
     }

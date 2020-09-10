@@ -11,17 +11,12 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     /**
-     * @var int 默认分页条数
-     */
-    public $perPage = 10;
-
-    /**
      * Create a new AuthController instance.
      * 要求附带email和password（数据来源users表）
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
         // 这里额外注意了：官方文档样例中只除外了『login』
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
@@ -30,9 +25,6 @@ class CategoryController extends Controller
         $this->middleware(['auth:api', 'role']);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
-
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
     }
 
     /**
@@ -42,7 +34,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $list = Category::orderBy('sort')->paginate($this->perPage);
+        $list = Category::orderBy('sort')->paginate($this->getPerPage());
         return $this->out(200, $list);
     }
 
@@ -95,7 +87,7 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      * 编辑展示数据
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -109,8 +101,8 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      * 更新数据
      *
-     * @param  Update $request
-     * @param  int $id
+     * @param Update $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Update $request, $id)
@@ -130,7 +122,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */

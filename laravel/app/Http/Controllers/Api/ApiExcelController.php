@@ -45,7 +45,7 @@ class ApiExcelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $user_id = auth('api')->user()['id'];
 
@@ -54,8 +54,7 @@ class ApiExcelController extends Controller
         if ($user_id != 1) {
             $where = ['uid' => $user_id];
         }
-        $perPage = intval($request->input('perPage'));
-        $perPage = $perPage ?? 20;
+        $perPage = $this->getPerPage();
         $list = ApiExcel::with('apiParam')->where($where)->orderBy('id', 'desc')->paginate($perPage);
         // 获取完成进度情况
         $list = ApiRepository::getInstent()->workProgress($list);

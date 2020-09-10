@@ -11,11 +11,6 @@ use App\Http\Controllers\Controller;
 class CronTaskController extends Controller
 {
     /**
-     * @var int 默认分页条数
-     */
-    public $perPage = 11;
-
-    /**
      * Create a new AuthController instance.
      * 要求附带email和password（数据来源users表）
      *
@@ -30,8 +25,6 @@ class CronTaskController extends Controller
         $this->middleware(['auth:api', 'role']);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
     }
 
     /**
@@ -41,7 +34,7 @@ class CronTaskController extends Controller
      */
     public function index()
     {
-        $list = CronTask::paginate($this->perPage);
+        $list = CronTask::paginate($this->getPerPage());
         return $this->out(200, $list);
     }
 
