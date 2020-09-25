@@ -242,7 +242,7 @@ class MultithreadingRepository
                     continue;
                 }
                 $str = (is_object($vv)) ? trim($vv->__toString()) : trim($vv);
-                $temp[$this->dataSet['param'][$kk]] = str_replace(["\n", "\r\n", " "], '', $str);
+                $temp[$this->dataSet['param'][$kk]] = trim(str_replace(["\n", "\r\n"], '', $str));
             }
             if ($temp) {
                 $newData[] = $temp;
