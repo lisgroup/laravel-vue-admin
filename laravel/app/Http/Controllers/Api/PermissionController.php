@@ -19,7 +19,7 @@ class PermissionController extends Controller
     /**
      * 权限列表
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -30,7 +30,7 @@ class PermissionController extends Controller
     /**
      * 显示创建权限表单
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -44,7 +44,7 @@ class PermissionController extends Controller
      *
      * @param Store $store
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Store $request)
     {
@@ -76,7 +76,7 @@ class PermissionController extends Controller
      *
      * @param  Permission $permission
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Permission $permission)
     {
@@ -87,7 +87,7 @@ class PermissionController extends Controller
      * 显示编辑权限表单
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -102,7 +102,7 @@ class PermissionController extends Controller
      *
      * @param  Update $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Update $request, $id)
     {
@@ -126,7 +126,7 @@ class PermissionController extends Controller
      * 删除给定权限
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {

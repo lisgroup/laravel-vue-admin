@@ -29,7 +29,7 @@ class LinesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -40,7 +40,7 @@ class LinesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -52,7 +52,7 @@ class LinesController extends Controller
      * 新增入库操作
      *
      * @param  StoreLineRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreLineRequest $request)
     {
@@ -76,7 +76,7 @@ class LinesController extends Controller
      *
      * @param Line $line
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Line $line)
     {
@@ -89,7 +89,7 @@ class LinesController extends Controller
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -103,7 +103,7 @@ class LinesController extends Controller
      *
      * @param  StoreLineRequest $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(StoreLineRequest $request, $id)
     {
@@ -126,7 +126,7 @@ class LinesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function destroy($id)
@@ -145,7 +145,7 @@ class LinesController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function busLineSearch(\Illuminate\Http\Request $request)
     {
@@ -160,7 +160,7 @@ class LinesController extends Controller
     /**
      * bus_line 列表数据
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function busLineList()
     {
@@ -173,7 +173,7 @@ class LinesController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function search(\Illuminate\Http\Request $request)
     {
@@ -208,7 +208,7 @@ class LinesController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function clearCache(\Illuminate\Http\Request $request)
     {

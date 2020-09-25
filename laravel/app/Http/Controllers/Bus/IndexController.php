@@ -37,7 +37,7 @@ class IndexController extends CommonController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getList(Request $request)
     {
@@ -117,7 +117,7 @@ class IndexController extends CommonController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function busLine(Request $request)
     {
@@ -154,7 +154,7 @@ class IndexController extends CommonController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function search(Request $request)
     {

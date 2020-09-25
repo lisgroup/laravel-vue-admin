@@ -43,7 +43,7 @@ class ApiExcelController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -71,7 +71,7 @@ class ApiExcelController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function upload(Request $request)
     {
@@ -108,7 +108,7 @@ class ApiExcelController extends Controller
     /**
      * 将任务放入队列处理
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function startTask(Request $request)
     {
@@ -162,7 +162,7 @@ class ApiExcelController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -174,7 +174,7 @@ class ApiExcelController extends Controller
      * 新增入库操作
      *
      * @param Store $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Store $request)
     {
@@ -197,7 +197,7 @@ class ApiExcelController extends Controller
      *
      * @param ApiExcel $apiExcel
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(ApiExcel $apiExcel)
     {
@@ -210,7 +210,7 @@ class ApiExcelController extends Controller
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -224,7 +224,7 @@ class ApiExcelController extends Controller
      *
      * @param Update $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Update $request, $id)
     {
@@ -244,7 +244,7 @@ class ApiExcelController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
@@ -261,7 +261,7 @@ class ApiExcelController extends Controller
      *
      * @param $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function restore($id)
     {
@@ -275,7 +275,7 @@ class ApiExcelController extends Controller
      *
      * @param $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function forceDelete($id)
     {
@@ -287,7 +287,7 @@ class ApiExcelController extends Controller
     /**
      * 下载已完成数据
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function downloadLog(Request $request)
     {

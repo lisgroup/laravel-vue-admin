@@ -17,7 +17,7 @@ class Controller extends BaseController
      * @param int $code
      * @param array $data
      * @param string $reason
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function out($code = 200, $data = [], $reason = 'success')
     {

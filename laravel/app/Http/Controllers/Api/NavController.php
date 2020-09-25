@@ -29,7 +29,7 @@ class NavController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -40,7 +40,7 @@ class NavController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -52,7 +52,7 @@ class NavController extends Controller
      * 新增入库操作
      *
      * @param Store $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Store $request)
     {
@@ -74,7 +74,7 @@ class NavController extends Controller
      *
      * @param Nav $nav
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Nav $nav)
     {
@@ -87,7 +87,7 @@ class NavController extends Controller
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -101,7 +101,7 @@ class NavController extends Controller
      *
      * @param  Update $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Update $request, $id)
     {
@@ -121,7 +121,7 @@ class NavController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function destroy($id)

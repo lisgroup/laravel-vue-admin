@@ -30,7 +30,7 @@ class CronTaskController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -41,7 +41,7 @@ class CronTaskController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -53,7 +53,7 @@ class CronTaskController extends Controller
      * 新增入库操作
      *
      * @param  StoreCronTask $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreCronTask $request)
     {
@@ -75,7 +75,7 @@ class CronTaskController extends Controller
      * 展示某个详情数据
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -88,7 +88,7 @@ class CronTaskController extends Controller
      * 编辑展示数据
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -102,7 +102,7 @@ class CronTaskController extends Controller
      *
      * @param  StoreCronTask $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(StoreCronTask $request, $id)
     {
@@ -124,7 +124,7 @@ class CronTaskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function destroy($id)
@@ -141,7 +141,7 @@ class CronTaskController extends Controller
     /**
      * 展示所有任务 不分页
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function list()
     {
@@ -153,7 +153,7 @@ class CronTaskController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postCrontask(Request $request)
     {
