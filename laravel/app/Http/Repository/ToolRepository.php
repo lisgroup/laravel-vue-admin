@@ -89,7 +89,6 @@ class ToolRepository
             case 1:
             default:
                 return $aesKey;
-                break;
         }
         return $aesKey."\n".$encrypt;
     }
