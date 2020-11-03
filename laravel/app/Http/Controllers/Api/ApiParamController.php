@@ -39,7 +39,8 @@ class ApiParamController extends Controller
     public function index()
     {
         $perPage = $this->getPerPage();
-        $list = ApiParam::orderBy('id', 'desc')->paginate($perPage);
+        // 1. 增加customer用户，并增加排序操作
+        $list = ApiParam::orderBy('sort_index', 'desc')->orderBy('id', 'desc')->where('state', 1)->paginate($perPage);
         return $this->out(200, $list);
     }
 
