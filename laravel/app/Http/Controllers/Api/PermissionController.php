@@ -7,40 +7,30 @@ use App\Http\Requests\Permission\Store;
 use App\Http\Requests\Permission\Update;
 use App\Permission;
 use App\Role;
-use Illuminate\Http\Request;
 
 
 class PermissionController extends Controller
 {
-
-    /**
-     * @var int 默认分页条数
-     */
-    public $perPage = 10;
-
-    public function __construct(Request $request)
+    public function __construct()
     {
         $this->middleware(['auth:api', 'role']); // role 中间件让具备指定权限的用户才能访问该资源
-
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
     }
 
     /**
      * 权限列表
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        $list = Permission::paginate($this->perPage);
+        $list = Permission::paginate($this->getPerPage());
         return $this->out(200, $list);
     }
 
     /**
      * 显示创建权限表单
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -54,7 +44,7 @@ class PermissionController extends Controller
      *
      * @param Store $store
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Store $request)
     {
@@ -86,7 +76,7 @@ class PermissionController extends Controller
      *
      * @param  Permission $permission
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Permission $permission)
     {
@@ -97,7 +87,7 @@ class PermissionController extends Controller
      * 显示编辑权限表单
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -112,7 +102,7 @@ class PermissionController extends Controller
      *
      * @param  Update $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Update $request, $id)
     {
@@ -136,7 +126,7 @@ class PermissionController extends Controller
      * 删除给定权限
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {

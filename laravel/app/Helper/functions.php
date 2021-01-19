@@ -30,10 +30,10 @@ if (!function_exists('cacheUserRolesAndPermissions')) {
     function cacheUserRolesAndPermissions($user_id, $flash = false)
     {
         if ($flash) {
-            Cache::forget('user_r_p_'.$user_id);
+            Cache::forget('user_r_p_' . $user_id);
             return cacheUserRolesAndPermissions($user_id, false);
         } else {
-            return Cache::remember('user_r_p_'.$user_id, 3600 * 24 * 30, function() use ($user_id) {
+            return Cache::remember('user_r_p_' . $user_id, 3600 * 24 * 30, function () use ($user_id) {
                 $res = collect(DB::table('role_user')
                     ->where('role_user.user_id', $user_id)
                     ->join('roles', 'roles.id', '=', 'role_user.role_id')
@@ -57,10 +57,10 @@ if (!function_exists('cacheTotalExcel')) {
     function cacheTotalExcel($api_excel_id, $file_path, $flash = false)
     {
         if ($flash) {
-            Cache::forget('api_excel_total_'.$api_excel_id);
+            Cache::forget('api_excel_total_' . $api_excel_id);
             return cacheTotalExcel($api_excel_id, false);
         } else {
-            return Cache::remember('api_excel_total_'.$api_excel_id, 60, function() use ($api_excel_id, $file_path) {
+            return Cache::remember('api_excel_total_' . $api_excel_id, 60, function () use ($api_excel_id, $file_path) {
                 $excel = \App\Http\Repository\MultithreadingRepository::getInstent();
                 $data = $excel->getExcelData($file_path);
                 return isset($data['data']) ? count($data['data']) : 0;
@@ -91,7 +91,7 @@ if (!function_exists('isName')) {
  */
 function convertUnderline($str)
 {
-    $str = preg_replace_callback('/([-_]+([a-z]{1}))/i', function($matches) {
+    $str = preg_replace_callback('/([-_]+([a-z]{1}))/i', function ($matches) {
         return strtoupper($matches[2]);
     }, $str);
     return $str;
@@ -104,8 +104,34 @@ function convertUnderline($str)
  */
 function humpToLine($str)
 {
-    $str = preg_replace_callback('/([A-Z]{1})/', function($matches) {
-        return '_'.strtolower($matches[0]);
+    $str = preg_replace_callback('/([A-Z]{1})/', function ($matches) {
+        return '_' . strtolower($matches[0]);
     }, $str);
     return $str;
+}
+
+/**
+ * 加密算法： AES/ECB/PKCS5Padding
+ * @param $aesKey
+ * @param $data
+ * @param string $iv
+ * @return string
+ */
+function aesEncrypt($aesKey, $data, $iv = '')
+{
+    $encrypted = openssl_encrypt($data, 'aes-128-ecb', $aesKey, OPENSSL_RAW_DATA, $iv);
+    return base64_encode($encrypted);
+}
+
+/**
+ * 解密算法： AES/ECB/PKCS5Padding
+ * @param $aesKey
+ * @param $data
+ * @param string $iv
+ * @return false|string
+ */
+function aesDecrypt($aesKey, $data, $iv = '')
+{
+    $encrypted = base64_decode($data);
+    return openssl_decrypt($encrypted, 'aes-128-ecb', $aesKey, OPENSSL_RAW_DATA, $iv);
 }

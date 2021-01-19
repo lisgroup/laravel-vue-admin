@@ -16,7 +16,7 @@ class IndexController extends Controller
      *
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
         // 这里额外注意了：官方文档样例中只除外了『login』
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
@@ -31,7 +31,7 @@ class IndexController extends Controller
     /**
      * 服务器信息
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -56,7 +56,7 @@ class IndexController extends Controller
     /**
      * 获取内存使用情况
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function memory()
     {
@@ -68,7 +68,7 @@ class IndexController extends Controller
     /**
      * 日志报告
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function report(Request $request)
     {

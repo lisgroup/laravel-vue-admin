@@ -49,7 +49,7 @@ class NewApiController extends CommonController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getList(Request $request)
     {
@@ -66,7 +66,7 @@ class NewApiController extends CommonController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function newBusLine(Request $request)
     {
@@ -121,7 +121,7 @@ class NewApiController extends CommonController
      * 验证器示例
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function jwt(Request $request)
     {

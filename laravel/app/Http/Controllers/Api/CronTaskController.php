@@ -11,11 +11,6 @@ use App\Http\Controllers\Controller;
 class CronTaskController extends Controller
 {
     /**
-     * @var int 默认分页条数
-     */
-    public $perPage = 11;
-
-    /**
      * Create a new AuthController instance.
      * 要求附带email和password（数据来源users表）
      *
@@ -30,25 +25,23 @@ class CronTaskController extends Controller
         $this->middleware(['auth:api', 'role']);
         // 另外关于上面的中间件，官方文档写的是『auth:api』
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        $list = CronTask::paginate($this->perPage);
+        $list = CronTask::paginate($this->getPerPage());
         return $this->out(200, $list);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -60,7 +53,7 @@ class CronTaskController extends Controller
      * 新增入库操作
      *
      * @param  StoreCronTask $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreCronTask $request)
     {
@@ -82,7 +75,7 @@ class CronTaskController extends Controller
      * 展示某个详情数据
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -95,7 +88,7 @@ class CronTaskController extends Controller
      * 编辑展示数据
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -109,7 +102,7 @@ class CronTaskController extends Controller
      *
      * @param  StoreCronTask $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(StoreCronTask $request, $id)
     {
@@ -131,7 +124,7 @@ class CronTaskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function destroy($id)
@@ -148,7 +141,7 @@ class CronTaskController extends Controller
     /**
      * 展示所有任务 不分页
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function list()
     {
@@ -160,7 +153,7 @@ class CronTaskController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postCrontask(Request $request)
     {

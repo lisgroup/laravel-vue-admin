@@ -53,14 +53,14 @@ class ToolRepository
      */
     public function hexToString($input)
     {
-        $hex = strtoupper($input);
-        $hex = str_replace('\\X', '', $hex);
+        $hex = strtoupper(trim($input));
+        $hex = str_replace(['\\X', 'X'], '', $hex);
         if (!preg_match("/^[A-Fa-f0-9]+$/", $hex)) {
-            return $this->out(1006);
+            return '';
         }
         $str = "";
         for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $str .= chr(hexdec($hex[$i].$hex[$i + 1]));
+            $str .= chr(hexdec($hex[$i] . $hex[$i + 1]));
         }
         if (preg_match('~[\x{4e00}-\x{9fa5}]+~u', $str, $tmp)) {
             return (string)$str;
@@ -75,24 +75,55 @@ class ToolRepository
      */
     public function openidSecret($input)
     {
-        return substr(md5($input), 0, 16);
+        $params = explode("\n", $input);
+        $aesKey = substr(md5($params[0]), 0, 16);
+        switch (count($params)) {
+            case 2:
+                parse_str($params[1], $query);
+                $encrypt = '';
+                foreach ($query as $key => $value) {
+                    $encrypt .= '&' . $key . '=' . aesEncrypt($aesKey, $value);
+                }
+                $encrypt = trim($encrypt, '&');
+                break;
+            case 1:
+            default:
+                return $aesKey;
+        }
+        return $aesKey . "\n" . $encrypt;
     }
 
+    /**
+     * @param $input
+     * @return string
+     */
     public function base64Encode($input)
     {
         return base64_encode($input);
     }
 
+    /**
+     * @param $input
+     * @return false|string
+     */
     public function base64Decode($input)
     {
         return base64_decode($input);
     }
 
+    /**
+     * @param $input
+     * @return string
+     */
     public function urlEncode($input)
     {
         return urlencode($input);
     }
 
+    /**
+     * @param $input
+     * @return string
+     */
     public function urlDecode($input)
     {
         return urldecode($input);
