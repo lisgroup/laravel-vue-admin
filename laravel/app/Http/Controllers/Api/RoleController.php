@@ -12,35 +12,26 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-
-    /**
-     * @var int 默认分页条数
-     */
-    public $perPage = 10;
-
     public function __construct(Request $request)
     {
         $this->middleware(['auth:api', 'role']); // role 中间件让具备指定权限的用户才能访问该资源
-
-        $perPage = intval($request->input('perPage'));
-        $this->perPage = $perPage ?? 11;
     }
 
     /**
      * 角色列表
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        $list = Role::paginate($this->perPage);
+        $list = Role::paginate($this->getPerPage());
         return $this->out(200, $list);
     }
 
     /**
      * 显示创建角色
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -54,7 +45,7 @@ class RoleController extends Controller
      *
      * @param Store $store
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Store $request)
     {
@@ -85,7 +76,7 @@ class RoleController extends Controller
      *
      * @param  Role $role
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Role $role)
     {
@@ -97,7 +88,7 @@ class RoleController extends Controller
      * 显示编辑角色
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -113,7 +104,7 @@ class RoleController extends Controller
      *
      * @param  Update $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Update $request, $id)
     {
@@ -165,7 +156,7 @@ class RoleController extends Controller
      * 删除给定角色
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {

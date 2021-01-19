@@ -6,7 +6,6 @@ use App\Http\Requests\ApiParam\Store;
 use App\Http\Requests\ApiParam\Update;
 use App\Models\ApiParam;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ApiParamController extends Controller
 {
@@ -21,7 +20,7 @@ class ApiParamController extends Controller
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
         // 这里额外注意了：官方文档样例中只除外了『login』
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
@@ -35,20 +34,20 @@ class ApiParamController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = intval($request->input('perPage'));
-        $perPage = $perPage ?? 20;
-        $list = ApiParam::orderBy('id', 'desc')->paginate($perPage);
+        $perPage = $this->getPerPage();
+        // 1. 增加customer用户，并增加排序操作
+        $list = ApiParam::orderBy('sort_index', 'desc')->orderBy('id', 'desc')->where('state', 1)->paginate($perPage);
         return $this->out(200, $list);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -60,7 +59,7 @@ class ApiParamController extends Controller
      * 新增入库操作
      *
      * @param Store $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Store $request)
     {
@@ -83,7 +82,7 @@ class ApiParamController extends Controller
      *
      * @param ApiParam $apiParam
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(ApiParam $apiParam)
     {
@@ -96,7 +95,7 @@ class ApiParamController extends Controller
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit($id)
     {
@@ -110,7 +109,7 @@ class ApiParamController extends Controller
      *
      * @param  Update $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Update $request, $id)
     {
@@ -130,7 +129,7 @@ class ApiParamController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function destroy($id)

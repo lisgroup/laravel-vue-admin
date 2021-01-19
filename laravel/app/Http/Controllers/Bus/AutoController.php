@@ -65,7 +65,7 @@ class AutoController extends Controller
     /**
      * 获取七牛 Token 的方法
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getToken()
     {
@@ -93,7 +93,7 @@ class AutoController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function qiniuCallback(Request $request)
     {

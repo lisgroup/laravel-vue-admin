@@ -9,51 +9,36 @@
 namespace App\Http\Controllers\Bus;
 
 
+use App\Http\Repository\ToolRepository;
 use Illuminate\Http\Request;
 
 class ToolController extends CommonController
 {
     /**
-     * 字符串转十六进制函数
-     *
+     * 公共函数输出方法
      * @param Request $request
-     *
-     * @return string
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function stringToHex(Request $request)
+    public function tool(Request $request)
     {
-        $str = $request->input('input');
-        $hex = "";
-        for ($i = 0; $i < strlen($str); $i++) {
-            $hex .= dechex(ord($str[$i]));
-        }
-        $hex = strtoupper($hex);
+        $func = $request->input('operation');
+        $input = $request->input('input');
+        // 下划线转驼峰
+        $convert = convertUnderline($func);
 
-        return $this->out(200, ['output' => $hex]);
-    }
+        $toolRepository = ToolRepository::getInstent();
+        if ($convert && $input) {
+            if (is_callable([$toolRepository, $convert])) {
+                $out = $toolRepository->$convert($input);
+                if (!$out) {
+                    return $this->out(4009);
+                }
 
-    /**
-     * 十六进制转字符串函数
-     *
-     * @param $request
-     *
-     * @return string
-     */
-    public function hexToString(Request $request)
-    {
-        $hex = strtoupper($request->input('input'));
-        $hex = str_replace('\\X', '', $hex);
-        if (!preg_match("/^[A-Fa-f0-9]+$/", $hex)) {
-            return $this->out(1006);
+                return $this->out(200, ['output' => $out]);
+            }
         }
-        $str = "";
-        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $str .= chr(hexdec($hex[$i].$hex[$i + 1]));
-        }
-        if (preg_match('~[\x{4e00}-\x{9fa5}]+~u', $str, $tmp)) {
-            return $this->out(200, ['output' => (string)$str]);
-        }
-        return $this->out(4009);
+
+        return $this->out(1006);
     }
 
 }

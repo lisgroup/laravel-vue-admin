@@ -12,7 +12,7 @@
         <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4">
           <div class="grid-content">
             <el-menu-item index="1">
-              <router-link :to="{name: 'md'}">Markdown</router-link>
+              <router-link :to="{name: 'tool'}">在线工具</router-link>
             </el-menu-item>
           </div>
         </el-col>
