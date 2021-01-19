@@ -5,12 +5,15 @@ namespace App\Listeners;
 use App\Events\ApiExcelEvent;
 use App\Http\Repository\MultithreadingRepository;
 use App\Models\ApiExcel;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 
 class ApiExcelListener implements ShouldQueue
 {
+    public $connection = 'redis';
+
+    public $queue = 'cha_queue_excel';
+
     /**
      * 任务运行的超时时间。
      *
