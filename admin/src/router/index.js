@@ -32,6 +32,7 @@ import Layout from '@/layout'
  */
 const Super = 'Super Administrator'
 const Admin = 'Admin'
+const Customer = 'Customer'
 
 // 管理一般路由
 export const routeAdmin = [
@@ -40,20 +41,20 @@ export const routeAdmin = [
     component: Layout,
     redirect: '/api_excel/index',
     name: 'Excel-List',
-    meta: { title: '批量测试管理', icon: 'ico-table', roles: [Super, Admin] },
+    meta: { title: '批量测试管理', icon: 'ico-table', roles: [Super, Admin, Customer] },
     children: [
       { path: '/api_excel/edit/:id', name: 'EditExcel', component: () => import('@/views/api_excel/edit'), hidden: true },
       {
         path: '/api_excel/add',
         name: 'AddExcel',
         component: () => import('@/views/api_excel/add'),
-        meta: { title: '上传测试', icon: 'excel', roles: [Super, Admin] }
+        meta: { title: '上传测试', icon: 'excel', roles: [Super, Admin, Customer] }
       },
       {
         path: '/api_excel/index',
         name: 'Excel',
         component: () => import('@/views/api_excel/index'),
-        meta: { title: '测试管理', icon: 'ico-aliyun', roles: [Super, Admin] }
+        meta: { title: '测试管理', icon: 'ico-aliyun', roles: [Super, Admin, Customer] }
       },
       { path: '/api_param/add', name: 'AddApiParam', component: () => import('@/views/api_param/add'), hidden: true },
       { path: '/api_param/edit/:id', name: 'EditApiParam', component: () => import('@/views/api_param/edit'), hidden: true },
