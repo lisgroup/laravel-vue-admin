@@ -202,7 +202,7 @@ class ExcelRepository
                             $val = $array['result'][$item] ?? '';
                             if (strpos($item, '.') !== false) {
                                 $kems = explode('.', $item);
-                                $val = $array['result'];
+                                $val = $array['result'] ?? '';
                                 foreach ($kems as $kem) {
                                     $val = $val[$kem] ?? '';
                                 }
